@@ -1,5 +1,8 @@
 from django.shortcuts import render
-from django.http import HttpResponse
 
 def index(request):
-    return HttpResponse("Pokémon test")
+    return render(request, 'education/base.html')
+
+def education_home(request):
+    return render(request, 'education/education.html')
+
