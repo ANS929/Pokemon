@@ -5,4 +5,18 @@ app_name = 'learning'
 
 urlpatterns = [
     path('', views.learning_home, name='learning_home'),
+    path('students/', views.students_home, name='students_home'),
+    path('teachers/', views.teachers, name='teachers'),
+    path('parents/', views.parents, name='parents'),
+    path('teachers/classes', views.classes, name='classes'),
+    path('teachers/students', views.students, name='students'),
+    path('parents/children', views.children, name='children'),
+    path('students/gr1', views.gr1, name='gr1'),
+    path('students/gr2', views.gr2, name='gr2'),
+    path('students/gr3', views.gr3, name='gr3'),
+    path('students/gr4', views.gr4, name='gr4'),
+    path('students/gr5', views.gr5, name='gr5'),
+    path('students/gr6', views.gr6, name='gr6'),
+    path('students/gr7', views.gr7, name='gr7'),
+    path('students/gr8', views.gr8, name='gr8'),
 ]

@@ -5,3 +5,9 @@ def index(request):
 
 def community_home(request):
     return render(request, 'community/community.html')
+
+def maths_forum(request):
+    return render(request, 'community/maths_forum.html')
+
+def tcg_forum(request):
+    return render(request, 'community/tcg_forum.html')

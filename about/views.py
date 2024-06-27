@@ -5,3 +5,9 @@ def index(request):
 
 def about_home(request):
     return render(request, 'about/about.html')
+
+def site(request):
+    return render(request, 'about/site.html')
+
+def tcg(request):
+    return render(request, 'about/tcg.html')

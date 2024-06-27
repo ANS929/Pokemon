@@ -5,4 +5,6 @@ app_name = 'about'
 
 urlpatterns = [
     path('', views.about_home, name='about'),
+    path('site/', views.site, name='site'),
+    path('tcg/', views.tcg, name='tcg'),
 ]
