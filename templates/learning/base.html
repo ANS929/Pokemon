@@ -1,4 +1,7 @@
 <!DOCTYPE html>
+
+{% load static %}
+
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -6,6 +9,11 @@
   <title>Homepage</title>
 </head>
 <body>
-  <p>Main page</p>
+  <p>Welcome to the main page! </p>
+  <a href="{% url 'learning:learning_home' %}">Learning Hub</a> &nbsp;&nbsp;
+  <a href="{% url 'community:community' %}">Community</a> &nbsp;&nbsp;
+  <a href="{% url 'about:about' %}">About</a> &nbsp;&nbsp;
+  <a href="{% url 'account:account' %}">Account</a>
+  <br> <img src="{% static 'images/pokemon_logo.png' %}" alt="Pokemon logo" />
 </body>
 </html>

@@ -5,4 +5,3 @@ def index(request):
 
 def learning_home(request):
     return render(request, 'learning/learning.html')
-
