@@ -47,3 +47,6 @@ def gr7(request):
 
 def gr8(request):
     return render(request, 'learning/gr8.html')
+
+def dashboard(request):
+    return render(request, 'learning/dashboard.html')

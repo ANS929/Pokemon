@@ -19,4 +19,5 @@ urlpatterns = [
     path('students/gr6', views.gr6, name='gr6'),
     path('students/gr7', views.gr7, name='gr7'),
     path('students/gr8', views.gr8, name='gr8'),
+    path('students/dashboard', views.dashboard, name='dashboard'),
 ]
