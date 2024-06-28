@@ -50,3 +50,39 @@ def gr8(request):
 
 def dashboard(request):
     return render(request, 'learning/dashboard.html')
+
+def comparing_whole(request):
+    return render(request, 'learning/comparing_whole.html')
+
+def comparing_decimal(request):
+    return render(request, 'learning/comparing_decimal.html')
+
+def add_subtract(request):
+    return render(request, 'learning/add_subtract.html')
+
+def multiplication(request):
+    return render(request, 'learning/multiplication.html')
+
+def rw_whole(request):
+    return render(request, 'learning/rw_whole.html')
+
+def rw_fraction(request):
+    return render(request, 'learning/rw_fraction.html')
+
+def symmetry(request):
+    return render(request, 'learning/symmetry.html')
+
+def classifying_shapes(request):
+    return render(request, 'learning/classifying_shapes.html')
+
+def converting_units(request):
+    return render(request, 'learning/converting_units.html')
+
+def area_perimeter(request):
+    return render(request, 'learning/area_perimeter.html')
+
+def representing(request):
+    return render(request, 'learning/representing.html')
+
+def interpreting(request):
+    return render(request, 'learning/interpreting.html')
