@@ -32,4 +32,5 @@ urlpatterns = [
     path('students/gr4/area_perimeter', views.area_perimeter, name='area_perimeter'),
     path('students/gr4/representing_data', views.representing, name='representing'),
     path('students/gr4/interpreting_data', views.interpreting, name='interpreting'),
+    path('students/gr4/number_sense_quiz', views.ns_quiz, name='ns_quiz'),
 ]

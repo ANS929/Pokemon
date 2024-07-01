@@ -86,3 +86,6 @@ def representing(request):
 
 def interpreting(request):
     return render(request, 'learning/interpreting.html')
+
+def ns_quiz(request):
+    return render(request, 'learning/ns_quiz.html')
