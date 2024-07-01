@@ -5,7 +5,7 @@ app_name = 'community'
 
 urlpatterns = [
     path('', views.community_home, name='community'),
-    path('maths/', views.maths_forum, name='maths_forum'),
+    path('math/', views.math_forum, name='math_forum'),
     path('tcg/', views.tcg_forum, name='tcg_forum'),
 
 ]
