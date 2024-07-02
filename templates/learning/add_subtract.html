@@ -1,15 +1,172 @@
 <!DOCTYPE html>
+
+{% load static %}
+
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <title>Computation: Addition and Subtraction of Whole Numbers</title>
+    <title>Computation: Additition and Subtraction of Whole Numbers</title>
+    <script>
+        function validateForm(event) {
+            event.preventDefault(); // prevent default form submission
+
+            var remainingHP = document.getElementById('remainingHP').value.trim();
+            var correctAnswer = '90';
+            var feedbackDiv = document.getElementById('feedback');
+            var inputField = document.getElementById('remainingHP');
+            var submitButton = document.getElementById('submitBtn');
+
+            var allowedInput = /^\d+$/;
+
+            // validate input
+            if (!allowedInput.test(remainingHP)) {
+                feedbackDiv.textContent = 'Invalid input. Please enter a whole number';
+                return;
+            }
+
+            // check for correct answer and provide feedback
+            if (remainingHP === correctAnswer) {
+                feedbackDiv.textContent = 'Correct! 310 - 220 = 90. Well done!';
+                inputField.disabled = true; // disable input field
+                submitButton.disabled = true; // disable submit button
+            } else {
+                feedbackDiv.textContent = 'Incorrect. Please try again.';
+            }
+        }
+    </script>
+
+    <!-- first You Try problem -->
+    <script>
+        function validateForm(event) {
+            event.preventDefault(); // prevent default form submission
+
+            var damageOutput = document.getElementById('damageOutput').value.trim();
+            var correctAnswer = '380';
+            var feedbackDiv = document.getElementById('feedback');
+            var inputField = document.getElementById('damageOutput');
+            var submitButton = document.getElementById('submitBtn');
+
+            var allowedInput = /^\d+$/;
+
+            // validate input
+            if (!allowedInput.test(damageOutput)) {
+                feedbackDiv.textContent = 'Invalid input. Please enter a whole number';
+                return;
+            }
+
+            // check for correct answer and provide feedback
+            if (damageOutput === correctAnswer) {
+                feedbackDiv.textContent = 'Correct! 190 * 2 = 380. Well done!';
+                inputField.disabled = true; // disable input field
+                submitButton.disabled = true; // disable submit button
+            } else {
+                feedbackDiv.textContent = 'Incorrect. Please try again.';
+            }
+        }
+    </script>
+
+    <!-- second You Try problem -->
+    <script>
+        function validateForm2(event) {
+            event.preventDefault(); // prevent default form submission
+
+            var remainingHP = document.getElementById('remainingHP').value.trim();
+            var correctAnswer = '90';
+            var feedbackDiv = document.getElementById('feedback');
+            var inputField = document.getElementById('remainingHP');
+            var submitButton = document.getElementById('submitBtn');
+
+            var allowedInput = /^\d+$/;
+
+            // validate input
+            if (!allowedInput.test(remainingHP)) {
+                feedbackDiv.textContent = 'Invalid input. Please enter a whole number';
+                return;
+            }
+
+            // check for correct answer and provide feedback
+            if (remainingHP === correctAnswer) {
+                feedbackDiv.textContent = 'Correct! 310 - 220 = 90. Well done!';
+                inputField.disabled = true; // disable input field
+                submitButton.disabled = true; // disable submit button
+            } else {
+                feedbackDiv.textContent = 'Incorrect. Please try again.';
+            }
+        }
+    </script>
 </head>
-<body>
-    <p>Addition and Subtraction of Whole Numbers</p>
+
+<header>
+    <h1>Addition and Subtraction of Whole Numbers</h1>
+</header>
+
+<main>
+    <section>
+        <h2>Introduction:</h2>
+        <p> Addition is combining two numbers together to get a new total (called the sum). Subtraction is when you take
+            one number away from another number to get a new number (called the difference).
+        </p>
+    </section>
+
+    <section>
+        <h2>Addition:</h2>
+        <p>Begin by lining up the rightmost digit (tens position) of each number. Add from right to left, carrying as
+            needed. <br>
+            Example:
+        </p>
+    </section>
+
+    <section>
+        <h2>Subtraction:</h2>
+        <p>Begin by lining up the rightmost digit (tens position) of each number. Subtract from right to left, borrowing
+            as needed. <br>
+            Example:
+        </p>
+
+    </section>
+
+    <section>
+        <h2>You Try:</h2>
+        <figure>
+            <img src="{% static 'images/Miraidon.png' %}" alt="Miraidon ex">
+            <img src="{% static 'images/Gardevoir.png' %}" alt="Gardevoir ex">
+            <img src="{% static 'images/Koraidon.png' %}" alt="Koraidon ex">
+        </figure>
+
+        <p>Question 1: <br>
+            Your Gardevoir ex attacks your opponent's Koraidon ex with Miracle Force. How much damage will the attack
+            do? (Hint: notice that Koraidon has psychic weakness)
+        </p>
+
+        <!-- Question 1 submission -->
+        <form onsubmit="validateForm(event)">
+            <label for="comparisonSymbol">Miracle Force's damage output</label>
+            <input type="text" id="remainingHP" name="remainingHP" style="width: 40px;">
+            <input type="submit" value="Submit" id="submitBtn">
+        </form>
+        <p id="feedback"></p>
+
+        <p> Question 2: <br>
+            Your Gardevoir ex currently has full health. If your opponent's Miraidon ex attacks it with
+            Photon Blaster, how many hit points would your Gardevoir have left?
+        </p>
+
+        <!-- Question 2 submission -->
+        <form onsubmit="validateForm2(event)">
+            <label for="comparisonSymbol">Gardevoir ex's remaining HP</label>
+            <input type="text" id="remainingHP" name="remainingHP" style="width: 40px;">
+            <input type="submit" value="Submit" id="submitBtn">
+        </form>
+        <p id="feedback"></p>
+    </section>
+</main>
+<footer>
     <a href="{% url 'learning:gr4' %}">Return to Grade 4 Homepage</a> <br>
     <a href="{% url 'learning:dashboard' %}">Student Dashboard</a> <br>
     <a href="{% url 'learning:students_home' %}">Student Home</a> <br>
     <a href="{% url 'learning:learning_home' %}">Learning Home</a> <br>
     <a href="{% url 'index' %}">Home</a>
-</body>
+</footer>
+
 </html>

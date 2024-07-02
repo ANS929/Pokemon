@@ -1,15 +1,94 @@
 <!DOCTYPE html>
+
+{% load static %}
+
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>Measurement: Area and Perimeter of Rectangles</title>
+
+    <!-- need to fix this -->
+    <script>
+        function validateForm(event) {
+            event.preventDefault(); // prevent default form submission
+
+            var remainingHP = document.getElementById('remainingHP').value.trim();
+            var correctAnswer = '90';
+            var feedbackDiv = document.getElementById('feedback');
+            var inputField = document.getElementById('remainingHP');
+            var submitButton = document.getElementById('submitBtn');
+
+            var allowedInput = /^\d+$/;
+
+            // validate input
+            if (!allowedInput.test(remainingHP)) {
+                feedbackDiv.textContent = 'Invalid input. Please enter a whole number';
+                return;
+            }
+
+            // check for correct answer and provide feedback
+            if (remainingHP === correctAnswer) {
+                feedbackDiv.textContent = 'Correct! 310 - 220 = 90. Well done!';
+                inputField.disabled = true; // disable input field
+                submitButton.disabled = true; // disable submit button
+            } else {
+                feedbackDiv.textContent = 'Incorrect. Please try again.';
+            }
+        }
+    </script>
 </head>
-<body>
-    <p>Area and Perimeter of Rectangles</p>
+
+<header>
+    <h1>Area and Perimeter of Rectangles</h1>
+</header>
+
+<main>
+    <section>
+        <h2>Introduction:</h2>
+        <p> 
+        </p>
+    </section>
+
+    <section>
+        <h2>Example 1: </h2>
+        <p>
+
+        </p>
+    </section>
+
+    <section>
+        <h2>Example 2:</h2>
+        <p>
+
+    </section>
+
+    <!-- need to fix this -->
+    <section>
+        <h2>You Try:</h2>
+        <p> 
+        </p>
+        <figure>
+            <img src="{% static 'images/Miraidon.png' %}" alt="Miraidon ex">
+            <img src="{% static 'images/Gardevoir.png' %}" alt="Gardevoir ex">
+        </figure>
+        <p>
+
+        </p>
+        <form onsubmit="validateForm(event)">
+            <label for="comparisonSymbol">Gardevoir ex's remaining HP</label>
+            <input type="text" id="remainingHP" name="remainingHP" style="width: 40px;">
+            <input type="submit" value="Submit" id="submitBtn">
+        </form>
+        <p id="feedback"></p>
+    </section>
+</main>
+<footer>
     <a href="{% url 'learning:gr4' %}">Return to Grade 4 Homepage</a> <br>
     <a href="{% url 'learning:dashboard' %}">Student Dashboard</a> <br>
     <a href="{% url 'learning:students_home' %}">Student Home</a> <br>
     <a href="{% url 'learning:learning_home' %}">Learning Home</a> <br>
     <a href="{% url 'index' %}">Home</a>
-</body>
+</footer>
+
 </html>
