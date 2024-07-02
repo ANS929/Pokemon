@@ -6,16 +6,16 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Computation: Additition and Subtraction of Whole Numbers</title>
+    <title>Computation: Addition and Subtraction of Whole Numbers</title>
     <script>
-        function validateForm(event) {
+        function validateForm1(event) {
             event.preventDefault(); // prevent default form submission
 
-            var remainingHP = document.getElementById('remainingHP').value.trim();
-            var correctAnswer = '90';
-            var feedbackDiv = document.getElementById('feedback');
-            var inputField = document.getElementById('remainingHP');
-            var submitButton = document.getElementById('submitBtn');
+            var remainingHP = document.getElementById('remainingHP1').value.trim();
+            var correctAnswer = '380';
+            var feedbackDiv = document.getElementById('feedback1');
+            var inputField = document.getElementById('remainingHP1');
+            var submitButton = document.getElementById('submitBtn1');
 
             var allowedInput = /^\d+$/;
 
@@ -27,36 +27,6 @@
 
             // check for correct answer and provide feedback
             if (remainingHP === correctAnswer) {
-                feedbackDiv.textContent = 'Correct! 310 - 220 = 90. Well done!';
-                inputField.disabled = true; // disable input field
-                submitButton.disabled = true; // disable submit button
-            } else {
-                feedbackDiv.textContent = 'Incorrect. Please try again.';
-            }
-        }
-    </script>
-
-    <!-- first You Try problem -->
-    <script>
-        function validateForm(event) {
-            event.preventDefault(); // prevent default form submission
-
-            var damageOutput = document.getElementById('damageOutput').value.trim();
-            var correctAnswer = '380';
-            var feedbackDiv = document.getElementById('feedback');
-            var inputField = document.getElementById('damageOutput');
-            var submitButton = document.getElementById('submitBtn');
-
-            var allowedInput = /^\d+$/;
-
-            // validate input
-            if (!allowedInput.test(damageOutput)) {
-                feedbackDiv.textContent = 'Invalid input. Please enter a whole number';
-                return;
-            }
-
-            // check for correct answer and provide feedback
-            if (damageOutput === correctAnswer) {
                 feedbackDiv.textContent = 'Correct! 190 * 2 = 380. Well done!';
                 inputField.disabled = true; // disable input field
                 submitButton.disabled = true; // disable submit button
@@ -64,18 +34,15 @@
                 feedbackDiv.textContent = 'Incorrect. Please try again.';
             }
         }
-    </script>
 
-    <!-- second You Try problem -->
-    <script>
         function validateForm2(event) {
             event.preventDefault(); // prevent default form submission
 
-            var remainingHP = document.getElementById('remainingHP').value.trim();
+            var remainingHP = document.getElementById('remainingHP2').value.trim();
             var correctAnswer = '90';
-            var feedbackDiv = document.getElementById('feedback');
-            var inputField = document.getElementById('remainingHP');
-            var submitButton = document.getElementById('submitBtn');
+            var feedbackDiv = document.getElementById('feedback2');
+            var inputField = document.getElementById('remainingHP2');
+            var submitButton = document.getElementById('submitBtn2');
 
             var allowedInput = /^\d+$/;
 
@@ -140,12 +107,12 @@
         </p>
 
         <!-- Question 1 submission -->
-        <form onsubmit="validateForm(event)">
+        <form onsubmit="validateForm1(event)">
             <label for="comparisonSymbol">Miracle Force's damage output</label>
-            <input type="text" id="remainingHP" name="remainingHP" style="width: 40px;">
-            <input type="submit" value="Submit" id="submitBtn">
+            <input type="text" id="remainingHP1" name="remainingHP1" style="width: 40px;">
+            <input type="submit" value="Submit" id="submitBtn1">
         </form>
-        <p id="feedback"></p>
+        <p id="feedback1"></p>
 
         <p> Question 2: <br>
             Your Gardevoir ex currently has full health. If your opponent's Miraidon ex attacks it with
@@ -155,10 +122,10 @@
         <!-- Question 2 submission -->
         <form onsubmit="validateForm2(event)">
             <label for="comparisonSymbol">Gardevoir ex's remaining HP</label>
-            <input type="text" id="remainingHP" name="remainingHP" style="width: 40px;">
-            <input type="submit" value="Submit" id="submitBtn">
+            <input type="text" id="remainingHP2" name="remainingHP2" style="width: 40px;">
+            <input type="submit" value="Submit" id="submitBtn2">
         </form>
-        <p id="feedback"></p>
+        <p id="feedback2"></p>
     </section>
 </main>
 <footer>
