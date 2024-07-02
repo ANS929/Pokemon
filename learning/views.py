@@ -89,3 +89,18 @@ def interpreting(request):
 
 def ns_quiz(request):
     return render(request, 'learning/ns_quiz.html')
+
+def at_quiz(request):
+    return render(request, 'learning/at_quiz.html')
+
+def comp_quiz(request):
+    return render(request, 'learning/comp_quiz.html')
+
+def da_quiz(request):
+    return render(request, 'learning/da_quiz.html')
+
+def geo_quiz(request):
+    return render(request, 'learning/geo_quiz.html')
+
+def meas_quiz(request):
+    return render(request, 'learning/meas_quiz.html')
