@@ -8,13 +8,12 @@
     <meta charset="UTF-8">
     <title>Algebraic Thinking: Real-World Problems with Whole Numbers</title>
 
-    <!-- need to fix this -->
     <script>
         function validateForm(event) {
             event.preventDefault(); // prevent default form submission
 
             var remainingHP = document.getElementById('remainingHP').value.trim();
-            var correctAnswer = '90';
+            var correctAnswer = '10';
             var feedbackDiv = document.getElementById('feedback');
             var inputField = document.getElementById('remainingHP');
             var submitButton = document.getElementById('submitBtn');
@@ -29,7 +28,7 @@
 
             // check for correct answer and provide feedback
             if (remainingHP === correctAnswer) {
-                feedbackDiv.textContent = 'Correct! 310 - 220 = 90. Well done!';
+                feedbackDiv.textContent = 'Correct! 70 * 3 = 210 and 220 - 210 = 10. Well done!';
                 inputField.disabled = true; // disable input field
                 submitButton.disabled = true; // disable submit button
             } else {
@@ -46,12 +45,12 @@
 <main>
     <section>
         <h2>Introduction:</h2>
-        <p> 
+        <p>
         </p>
     </section>
 
     <section>
-        <h2>Example 1: </h2>
+        <h2>Example 1:</h2>
         <p>
 
         </p>
@@ -63,20 +62,21 @@
 
     </section>
 
-    <!-- need to fix this -->
     <section>
         <h2>You Try:</h2>
-        <p> 
+        <p> Your opponent attacks your Iron Leaves ex with Raging Bolt ex's Bellowing Thunder, discarding 3 Basic
+            Energy. Your opponent claims this is enough damage to knock out your Iron Leaves, but you disagree. How many
+            hit points does your Iron Leaves have left after the attack?
         </p>
         <figure>
-            <img src="{% static 'images/Miraidon.png' %}" alt="Miraidon ex">
-            <img src="{% static 'images/Gardevoir.png' %}" alt="Gardevoir ex">
+            <img src="{% static 'images/IronLeaves.png' %}" alt="Iron Leaves ex">
+            <img src="{% static 'images/RagingBolt.png' %}" alt="Raging Bolt ex">
         </figure>
         <p>
 
         </p>
         <form onsubmit="validateForm(event)">
-            <label for="comparisonSymbol">Gardevoir ex's remaining HP</label>
+            <label for="inputField">Iron Leaves' remaining HP</label>
             <input type="text" id="remainingHP" name="remainingHP" style="width: 40px;">
             <input type="submit" value="Submit" id="submitBtn">
         </form>

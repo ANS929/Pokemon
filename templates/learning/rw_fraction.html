@@ -13,23 +13,15 @@
         function validateForm(event) {
             event.preventDefault(); // prevent default form submission
 
-            var remainingHP = document.getElementById('remainingHP').value.trim();
-            var correctAnswer = '90';
+            var notTrainers = document.getElementById('notTrainers').value.trim();
+            var correctAnswer = '2/5';
             var feedbackDiv = document.getElementById('feedback');
-            var inputField = document.getElementById('remainingHP');
+            var inputField = document.getElementById('notTrainers');
             var submitButton = document.getElementById('submitBtn');
 
-            var allowedInput = /^\d+$/;
-
-            // validate input
-            if (!allowedInput.test(remainingHP)) {
-                feedbackDiv.textContent = 'Invalid input. Please enter a whole number';
-                return;
-            }
-
             // check for correct answer and provide feedback
-            if (remainingHP === correctAnswer) {
-                feedbackDiv.textContent = 'Correct! 310 - 220 = 90. Well done!';
+            if (notTrainers === correctAnswer) {
+                feedbackDiv.textContent = 'Correct! 36/60 cards are Trainers, so 24/60 (or 2/5) are not. Well done!';
                 inputField.disabled = true; // disable input field
                 submitButton.disabled = true; // disable submit button
             } else {
@@ -46,7 +38,7 @@
 <main>
     <section>
         <h2>Introduction:</h2>
-        <p> 
+        <p>
         </p>
     </section>
 
@@ -66,18 +58,18 @@
     <!-- need to fix this -->
     <section>
         <h2>You Try:</h2>
-        <p> 
+        <p> 36 of the cards in your deck are Trainer cards. What fraction of your cards are NOT Trainer cards? Please
+            write your answer as a fraction in simplest terms (for example: 3/14).
         </p>
         <figure>
-            <img src="{% static 'images/Miraidon.png' %}" alt="Miraidon ex">
-            <img src="{% static 'images/Gardevoir.png' %}" alt="Gardevoir ex">
+            <img src="{% static 'images/PrimeCatcher.png' %}" alt="Prime Catcher">
         </figure>
         <p>
 
         </p>
         <form onsubmit="validateForm(event)">
-            <label for="comparisonSymbol">Gardevoir ex's remaining HP</label>
-            <input type="text" id="remainingHP" name="remainingHP" style="width: 40px;">
+            <label for="notTrainers">Fraction of cards that are not Trainers</label>
+            <input type="text" id="notTrainers" name="notTrainers" style="width: 40px;">
             <input type="submit" value="Submit" id="submitBtn">
         </form>
         <p id="feedback"></p>
