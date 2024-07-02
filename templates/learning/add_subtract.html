@@ -7,27 +7,30 @@
 <head>
     <meta charset="UTF-8">
     <title>Computation: Addition and Subtraction of Whole Numbers</title>
+
     <script>
+
+        // Question 1 logic (addition)
         function validateForm1(event) {
             event.preventDefault(); // prevent default form submission
 
-            var remainingHP = document.getElementById('remainingHP1').value.trim();
-            var correctAnswer = '380';
+            var damageOutput = document.getElementById('damageOutput').value.trim();
+            var correctAnswer = '220';
             var feedbackDiv = document.getElementById('feedback1');
-            var inputField = document.getElementById('remainingHP1');
+            var inputField = document.getElementById('damageOutput');
             var submitButton = document.getElementById('submitBtn1');
 
             var allowedInput = /^\d+$/;
 
             // validate input
-            if (!allowedInput.test(remainingHP)) {
+            if (!allowedInput.test(damageOutput)) {
                 feedbackDiv.textContent = 'Invalid input. Please enter a whole number';
                 return;
             }
 
             // check for correct answer and provide feedback
-            if (remainingHP === correctAnswer) {
-                feedbackDiv.textContent = 'Correct! 190 * 2 = 380. Well done!';
+            if (damageOutput === correctAnswer) {
+                feedbackDiv.textContent = 'Correct! 80 + 140 = 220. Well done!';
                 inputField.disabled = true; // disable input field
                 submitButton.disabled = true; // disable submit button
             } else {
@@ -35,30 +38,31 @@
             }
         }
 
+        //Question 2 logic (subtraction)
         function validateForm2(event) {
             event.preventDefault(); // prevent default form submission
 
-            var remainingHP = document.getElementById('remainingHP2').value.trim();
+            var remainingHP = document.getElementById('remainingHP').value.trim();
             var correctAnswer = '90';
-            var feedbackDiv = document.getElementById('feedback2');
-            var inputField = document.getElementById('remainingHP2');
+            var feedbackDiv2 = document.getElementById('feedback2');
+            var inputField = document.getElementById('remainingHP');
             var submitButton = document.getElementById('submitBtn2');
 
             var allowedInput = /^\d+$/;
 
             // validate input
             if (!allowedInput.test(remainingHP)) {
-                feedbackDiv.textContent = 'Invalid input. Please enter a whole number';
+                feedbackDiv2.textContent = 'Invalid input. Please enter a whole number';
                 return;
             }
 
             // check for correct answer and provide feedback
             if (remainingHP === correctAnswer) {
-                feedbackDiv.textContent = 'Correct! 310 - 220 = 90. Well done!';
+                feedbackDiv2.textContent = 'Correct! 180 - 90 = 90. Well done!';
                 inputField.disabled = true; // disable input field
                 submitButton.disabled = true; // disable submit button
             } else {
-                feedbackDiv.textContent = 'Incorrect. Please try again.';
+                feedbackDiv2.textContent = 'Incorrect. Please try again.';
             }
         }
     </script>
@@ -96,33 +100,30 @@
     <section>
         <h2>You Try:</h2>
         <figure>
-            <img src="{% static 'images/Miraidon.png' %}" alt="Miraidon ex">
-            <img src="{% static 'images/Gardevoir.png' %}" alt="Gardevoir ex">
-            <img src="{% static 'images/Koraidon.png' %}" alt="Koraidon ex">
+            <img src="{% static 'images/Cetitan.png' %}" alt="Cetitan">
+            <img src="{% static 'images/Tyranitar.png' %}" alt="Tyranitar">
         </figure>
 
         <p>Question 1: <br>
-            Your Gardevoir ex attacks your opponent's Koraidon ex with Miracle Force. How much damage will the attack
-            do? (Hint: notice that Koraidon has psychic weakness)
+            If your Cetitan has a Special Energy attached, how much damage will its Special Horn attack do?
         </p>
 
         <!-- Question 1 submission -->
         <form onsubmit="validateForm1(event)">
-            <label for="comparisonSymbol">Miracle Force's damage output</label>
-            <input type="text" id="remainingHP1" name="remainingHP1" style="width: 40px;">
+            <label for="damageOutput">Special Horn's damage output</label>
+            <input type="text" id="damageOutput" name="damageOutput" style="width: 40px;">
             <input type="submit" value="Submit" id="submitBtn1">
         </form>
         <p id="feedback1"></p>
 
         <p> Question 2: <br>
-            Your Gardevoir ex currently has full health. If your opponent's Miraidon ex attacks it with
-            Photon Blaster, how many hit points would your Gardevoir have left?
+            Your opponent's Tyranitar attacks your Cetitan with Rout, doing 90 damage. How many hit points does your Cetitan have left?
         </p>
 
         <!-- Question 2 submission -->
         <form onsubmit="validateForm2(event)">
-            <label for="comparisonSymbol">Gardevoir ex's remaining HP</label>
-            <input type="text" id="remainingHP2" name="remainingHP2" style="width: 40px;">
+            <label for="remainingHP">Cetitan's remaining HP</label>
+            <input type="text" id="remainingHP" name="remainingHP" style="width: 40px;">
             <input type="submit" value="Submit" id="submitBtn2">
         </form>
         <p id="feedback2"></p>
