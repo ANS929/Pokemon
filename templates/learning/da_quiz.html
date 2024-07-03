@@ -12,9 +12,9 @@
 <body>
     <h1>Data Analysis Quiz</h1>
     <p>
-    <h2>Instructions: Use the cards to answer the five questions below.</h2>
-    <img src="{% static 'images/Inkay.png' %}" alt="Inkay">
-    <img src="{% static 'images/Wattrel.png' %}" alt="Wattrel">
+    <h2>Instructions: The following data was collected from EUIC 2024. These are the decks that made Day 2. Use the data
+        to answer the questions below.</h2>
+    <img src="{% static 'images/EUIC.jpeg' %}" alt="EUIC 2024 meta share">
     </p>
     <form id="quiz-form">
         <div id="quiz-container"></div>
@@ -32,28 +32,36 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-
-            // array of quiz questions and answers
             const questions = [
+
                 {
-                    question: "1.) Fill in the blank with the correct symbol (<, >, or =). Inkay's weight ____ Wattrel's weight.",
-                    answer: '<'
+                    question: "1.) Which deck has the second greatest meta share?",
+                    type: 'multiple-choice',
+                    options: ['Chien-Pao ex', 'Other', 'Charizard ex'],
+                    answer: ['Chien-Pao ex']
                 },
                 {
-                    question: "2.) Fill in the blank with the correct symbol (<, >, or =). Inkay's set number ____ Wattrel's set number.",
-                    answer: '>'
+                    question: "2.) True or False: Charizard ex, Chien-Pao ex, and Arceus VSTAR make up half of the meta.",
+                    type: 'multiple-choice',
+                    options: ['True', 'False'],
+                    answer: ['False']
                 },
                 {
-                    question: "3.) Fill in the blank with the correct symbol (<, >, or =). Inkay's HP ____ Wattrel's HP.",
-                    answer: '='
+                    question: "3.) Ancient Box and another deck are tied for the lowest meta share. What is the other deck?",
+                    type: 'multiple-choice',
+                    options: ['Snorlax Stall', 'Pidgeot Control', 'None of the above'],
+                    answer: ['Snorlax Stall']
                 },
                 {
-                    question: "4.) True or false: Hug's damage output < Peck's damage output",
-                    answer: 'false'
+                    question: "4.) Charizard ex makes up approximately what percentage of the meta?",
+                    type: 'multiple-choice',
+                    options: ['25', '20', '10'],
+                    answer: ['20']
                 },
                 {
-                    question: "5.) True or false: Inkay's retreat cost = Wattrel's retreat cost.",
-                    answer: 'true'
+                    question: "5.) What is another data representation that could be used to display this information?",
+                    type: 'short-answer',
+                    answer: ['bar graph']
                 }
             ];
 
@@ -61,51 +69,82 @@
             const resultContainer = document.getElementById('result-container');
             const submitButton = document.getElementById('submit-button');
 
-            // function to generate the quiz based on the 'questions' array
             function generateQuiz() {
                 const output = [];
                 questions.forEach((currentQuestion, questionIndex) => {
-                    output.push(
-                        `<div class="question">${currentQuestion.question}</div>
-                        <div class="options">
-                            <input type="text" name="question${questionIndex}" id="question${questionIndex}" style="width: 40px;">
-                        </div><br>`
-                    );
+                    if (currentQuestion.type === 'short-answer') {
+                        output.push(
+                            `<div class="question">${currentQuestion.question}</div>
+                            <div class="options">
+                                <input type="text" name="question${questionIndex}" id="question${questionIndex}" style="width: 100px;">
+                            </div><br>`
+                        );
+                    } else if (currentQuestion.type === 'multiple-choice') {
+                        output.push(
+                            `<div class="question">${currentQuestion.question}</div>
+                            <div class="options">`
+                        );
+                        currentQuestion.options.forEach((option, index) => {
+                            output.push(
+                                `<input type="radio" name="question${questionIndex}" id="question${questionIndex}_${index}" value="${option}">
+                                <label for="question${questionIndex}_${index}">${option}</label><br>`
+                            );
+                        });
+                        output.push(`</div><br>`);
+                    }
                 });
                 quizContainer.innerHTML = output.join('');
             }
 
-            // function to calculate and display the quiz results
             function showResults(event) {
                 event.preventDefault();
                 let score = 0;
                 questions.forEach((currentQuestion, questionIndex) => {
-                    const userAnswer = document.getElementById(`question${questionIndex}`).value.trim().toLowerCase();
-                    const correctAnswer = currentQuestion.answer.toLowerCase();
-                    if (userAnswer === correctAnswer) {
-                        score++;
+                    if (currentQuestion.type === 'short-answer') {
+                        const userAnswer = document.getElementById(`question${questionIndex}`).value.trim().toLowerCase();
+                        const correctAnswers = currentQuestion.answer.map(ans => ans.toLowerCase());
+                        if (correctAnswers.includes(userAnswer)) {
+                            score++;
+                        }
+
+
+                    } else if (currentQuestion.type === 'multiple-choice') {
+                        const selectedOption = document.querySelector(`input[name="question${questionIndex}"]:checked`);
+                        if (selectedOption) {
+                            const userAnswer = selectedOption.value;
+                            const correctAnswer = currentQuestion.answer[0];
+                            if (userAnswer === correctAnswer) {
+                                score++;
+                            }
+                        }
                     }
                 });
-                resultContainer.innerHTML = `You scored ${score} out of ${questions.length}.`;
+                let message = "";
+                if (score <= 3) {
+                    message = "Good effort! Keep practicing and try the quiz again.";
+                } else if (score === 4) {
+                    message = "Good job!";
+                } else if (score === 5) {
+                    message = "Way to go!";
+                }
+                resultContainer.innerHTML = `You scored ${score} out of ${questions.length}. ${message}`;
                 disableQuiz();
                 explanations(score);
             }
 
-            // function to disable the quiz inputs after submission 
             function disableQuiz() {
-                const inputs = document.querySelectorAll('#quiz-form input');
+                const inputs = document.querySelectorAll('#quiz-form input[type="text"], #quiz-form input[type="radio"]');
                 inputs.forEach(input => input.disabled = true);
                 submitButton.disabled = true;
             }
 
-            // function to display the answer explanations
             function explanations(score) {
                 let explanationText = "<p>Answer explanations:</p>";
-                explanationText += `<p>Question 1: 7.7 < 7.9</p>`;
-                explanationText += `<p>Question 2: 137 > 80</p>`;
-                explanationText += `<p>Question 3: 60 = 60</p>`;
-                explanationText += `<p>Question 4: This is false because 30 > 10</p>`;
-                explanationText += `<p>Question 5: This is true because 1 = 1</p>`;
+                explanationText += `<p>Question 1:       </p>`;
+                explanationText += `<p>Question 2:       </p>`;
+                explanationText += `<p>Question 3:       </p>`;
+                explanationText += `<p>Question 4:       </p>`;
+                explanationText += `<p>Question 5:       </p>`;
                 resultContainer.innerHTML += explanationText;
             }
 

@@ -8,29 +8,20 @@
     <meta charset="UTF-8">
     <title>Data Analysis: Representing Data</title>
 
-    <!-- need to fix this -->
     <script>
         function validateForm(event) {
             event.preventDefault(); // prevent default form submission
 
-            var remainingHP = document.getElementById('remainingHP').value.trim();
-            var correctAnswer = '90';
+            var representation = document.getElementById('representation').value;
+            var correctAnswer = 'line plot';
             var feedbackDiv = document.getElementById('feedback');
-            var inputField = document.getElementById('remainingHP');
+            var selectField = document.getElementById('representation');
             var submitButton = document.getElementById('submitBtn');
 
-            var allowedInput = /^\d+$/;
-
-            // validate input
-            if (!allowedInput.test(remainingHP)) {
-                feedbackDiv.textContent = 'Invalid input. Please enter a whole number';
-                return;
-            }
-
             // check for correct answer and provide feedback
-            if (remainingHP === correctAnswer) {
-                feedbackDiv.textContent = 'Correct! 310 - 220 = 90. Well done!';
-                inputField.disabled = true; // disable input field
+            if (representation === correctAnswer) {
+                feedbackDiv.textContent = 'Correct! REASONING. Well done!';
+                selectField.disabled = true; // disable select field
                 submitButton.disabled = true; // disable submit button
             } else {
                 feedbackDiv.textContent = 'Incorrect. Please try again.';
@@ -46,38 +37,47 @@
 <main>
     <section>
         <h2>Introduction:</h2>
-        <p> 
+        <p>
         </p>
     </section>
 
     <section>
-        <h2>Example 1: </h2>
+        <h2>Frequency Table: </h2>
         <p>
 
         </p>
     </section>
 
     <section>
-        <h2>Example 2:</h2>
+        <h2>Line Plot:</h2>
         <p>
 
     </section>
 
-    <!-- need to fix this -->
+    <section>
+        <h2>Bar Graph:</h2>
+        <p>
+
+    </section>
+
     <section>
         <h2>You Try:</h2>
-        <p> 
+        <p> The following data was collected from NAIC 2024. These are the decks that made Day 2. Which of the following
+            data representations would NOT be a good way to display this data?
         </p>
         <figure>
-            <img src="{% static 'images/Miraidon.png' %}" alt="Miraidon ex">
-            <img src="{% static 'images/Gardevoir.png' %}" alt="Gardevoir ex">
+            <img src="{% static 'images/NAIC.jpeg' %}" alt="NAIC meta share">
         </figure>
         <p>
 
-        </p>
         <form onsubmit="validateForm(event)">
-            <label for="comparisonSymbol">Gardevoir ex's remaining HP</label>
-            <input type="text" id="remainingHP" name="remainingHP" style="width: 40px;">
+            <label for="representation">Incorrect data representation</label>
+            <select id="representation" name="representation">
+                <option value="" selected disabled>Select data representation</option>
+                <option value="frequency table">frequency table</option>
+                <option value="line plot">line plot</option>
+                <option value="bar graph">bar graph</option>
+            </select>
             <input type="submit" value="Submit" id="submitBtn">
         </form>
         <p id="feedback"></p>
