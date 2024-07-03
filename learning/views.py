@@ -72,8 +72,8 @@ def rw_fraction(request):
 def symmetry(request):
     return render(request, 'learning/symmetry.html')
 
-def classifying_shapes(request):
-    return render(request, 'learning/classifying_shapes.html')
+def identifying_shapes(request):
+    return render(request, 'learning/identifying_shapes.html')
 
 def converting_units(request):
     return render(request, 'learning/converting_units.html')
