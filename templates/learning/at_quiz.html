@@ -8,13 +8,17 @@
 </head>
 
 <body>
-    <h1>Algebraic Thinking Quiz</h1>
-    <p>
-    <h2>Instructions: Use the cards to answer the five questions below.</h2>
-    <img src="{% static 'images/Venusaur151.png' %}" alt="Venusaur ex">
-    <img src="{% static 'images/Charizard151.png' %}" alt="Charizard ex">
-    <img src="{% static 'images/Blastoise151.png' %}" alt="Blastoise ex">
-    </p>
+    <header>
+        <h1>Algebraic Thinking Quiz</h1>
+    </header>
+
+    <h2>Instructions:</h2>
+    <p>Use the cards to answer the five questions below.</p>
+    <img src="{% static 'images/Venusaur151.png' %}" alt="Venusaur ex Pokémon card">
+    <img src="{% static 'images/Charizard151.png' %}" alt="Charizard ex Pokémon card">
+    <img src="{% static 'images/Blastoise151.png' %}" alt="Blastoise ex Pokémon card">
+
+    <!-- quiz submission and result display -->
     <form id="quiz-form">
         <div id="quiz-container"></div>
         <button type="submit" id="submit-button">Submit Quiz</button>
@@ -23,15 +27,18 @@
     <div id="result-container"></div>
 
     <footer>
-        <a href="{% url 'learning:gr4' %}">Return to Grade 4 Homepage</a> <br>
-        <a href="{% url 'learning:dashboard' %}">Student Dashboard</a> <br>
-        <a href="{% url 'learning:students_home' %}">Student Home</a> <br>
-        <a href="{% url 'learning:learning_home' %}">Learning Home</a> <br>
-        <a href="{% url 'index' %}">Home</a>
+        <nav>
+            <a href="{% url 'learning:gr4' %}">Return to Grade 4 Homepage</a> <br>
+            <a href="{% url 'learning:dashboard' %}">Student Dashboard</a> <br>
+            <a href="{% url 'learning:students_home' %}">Student Home</a> <br>
+            <a href="{% url 'learning:learning_home' %}">Learning Home</a> <br>
+            <a href="{% url 'index' %}">Home</a>
+        </nav>
     </footer>
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
+            // array of quiz questions
             const questions = [
                 {
                     question: "1.) Your Venusaur ex was attacked for 250 damage. At the beginning of your turn, you use its Tranquil Flower ability. How many Hit Points does your Venusaur ex now have?",
@@ -66,9 +73,11 @@
             const resultContainer = document.getElementById('result-container');
             const submitButton = document.getElementById('submit-button');
 
+            // function to generate the quiz based on the question array
             function generateQuiz() {
                 const output = [];
                 questions.forEach((currentQuestion, questionIndex) => {
+                    // short answer questions
                     if (currentQuestion.type === 'short-answer') {
                         output.push(
                             `<div class="question">${currentQuestion.question}</div>
@@ -76,6 +85,8 @@
                                 <input type="text" name="question${questionIndex}" id="question${questionIndex}" style="width: 40px;">
                             </div><br>`
                         );
+
+                        // multiple choice questions
                     } else if (currentQuestion.type === 'multiple-choice') {
                         output.push(
                             `<div class="question">${currentQuestion.question}</div>
@@ -92,6 +103,7 @@
                 quizContainer.innerHTML = output.join('');
             }
 
+            // function to display the quiz results
             function showResults(event) {
                 event.preventDefault();
                 let score = 0;
@@ -125,12 +137,14 @@
                 explanations(score);
             }
 
+            // function to prevent the user from a second attempt
             function disableQuiz() {
                 const inputs = document.querySelectorAll('#quiz-form input, #quiz-form select');
                 inputs.forEach(input => input.disabled = true);
                 submitButton.disabled = true;
             }
 
+            // function to print answer explanations
             function explanations(score) {
                 let explanationText = "<p>Answer explanations:</p>";
                 explanationText += `<p>Question 1: 340 - 250 = 90. 90 + 60 = 150</p>`;

@@ -11,7 +11,7 @@
     <script>
 
         // Question 1 logic (addition)
-        function validateForm1(event) {
+        function checkAnswer1(event) {
             event.preventDefault(); // prevent default form submission
 
             var damageOutput = document.getElementById('damageOutput').value.trim();
@@ -39,7 +39,7 @@
         }
 
         //Question 2 logic (subtraction)
-        function validateForm2(event) {
+        function checkAnswer2(event) {
             event.preventDefault(); // prevent default form submission
 
             var remainingHP = document.getElementById('remainingHP').value.trim();
@@ -68,73 +68,81 @@
     </script>
 </head>
 
-<header>
-    <h1>Addition and Subtraction of Whole Numbers</h1>
-</header>
+<body>
+    <header>
+        <h1>Addition and Subtraction of Whole Numbers</h1>
+    </header>
 
-<main>
-    <section>
-        <h2>Introduction:</h2>
-        <p> Addition is combining two numbers together to get a new total (called the sum). Subtraction is when you take
-            one number away from another number to get a new number (called the difference).
-        </p>
-    </section>
+    <main>
+        <section>
+            <h2>Introduction:</h2>
+            <p> Addition is combining two numbers together to get a new total (called the sum). Subtraction is when you
+                take
+                one number away from another number to get a new number (called the difference).
+            </p>
+        </section>
 
-    <section>
-        <h2>Addition:</h2>
-        <p>Begin by lining up the rightmost digit (tens position) of each number. Add from right to left, carrying as
-            needed. <br>
-            Example:
-        </p>
-    </section>
+        <section>
+            <h2>Addition:</h2>
+            <p>Begin by lining up the rightmost digit (tens position) of each number. Add from right to left, carrying
+                as
+                needed. <br>
+                Example:
+            </p>
+        </section>
 
-    <section>
-        <h2>Subtraction:</h2>
-        <p>Begin by lining up the rightmost digit (tens position) of each number. Subtract from right to left, borrowing
-            as needed. <br>
-            Example:
-        </p>
+        <section>
+            <h2>Subtraction:</h2>
+            <p>Begin by lining up the rightmost digit (tens position) of each number. Subtract from right to left,
+                borrowing
+                as needed. <br>
+                Example:
+            </p>
 
-    </section>
+        </section>
 
-    <section>
-        <h2>You Try:</h2>
-        <figure>
-            <img src="{% static 'images/Cetitan.png' %}" alt="Cetitan">
-            <img src="{% static 'images/Tyranitar.png' %}" alt="Tyranitar">
-        </figure>
+        <section>
+            <h2>You Try:</h2>
+            <figure>
+                <img src="{% static 'images/Cetitan.png' %}" alt="Cetitan Pokémon card">
+                <img src="{% static 'images/Tyranitar.png' %}" alt="Tyranitar Pokémon card">
+            </figure>
 
-        <p>Question 1: <br>
-            If your Cetitan has a Special Energy attached, how much damage will its Special Horn attack do?
-        </p>
+            <p><b>Question 1:</b><br>
+                If your Cetitan has a Special Energy attached, how much damage will its Special Horn attack do?
+            </p>
 
-        <!-- Question 1 submission -->
-        <form onsubmit="validateForm1(event)">
-            <label for="damageOutput">Special Horn's damage output</label>
-            <input type="text" id="damageOutput" name="damageOutput" style="width: 40px;">
-            <input type="submit" value="Submit" id="submitBtn1">
-        </form>
-        <p id="feedback1"></p>
+            <!-- Question 1 submission -->
+            <form onsubmit="checkAnswer1(event)">
+                <label for="damageOutput">Special Horn's damage output</label>
+                <input type="text" id="damageOutput" name="damageOutput" style="width: 40px;">
+                <input type="submit" value="Submit" id="submitBtn1">
+            </form>
+            <p id="feedback1"></p>
 
-        <p> Question 2: <br>
-            Your opponent's Tyranitar attacks your Cetitan with Rout, doing 90 damage. How many hit points does your Cetitan have left?
-        </p>
+            <p><b>Question 2:</b><br>
+                Your opponent's Tyranitar attacks your Cetitan with Rout, doing 90 damage. How many hit points does your
+                Cetitan have left?
+            </p>
 
-        <!-- Question 2 submission -->
-        <form onsubmit="validateForm2(event)">
-            <label for="remainingHP">Cetitan's remaining HP</label>
-            <input type="text" id="remainingHP" name="remainingHP" style="width: 40px;">
-            <input type="submit" value="Submit" id="submitBtn2">
-        </form>
-        <p id="feedback2"></p>
-    </section>
-</main>
+            <!-- Question 2 submission -->
+            <form onsubmit="checkAnswer2(event)">
+                <label for="remainingHP">Cetitan's remaining HP</label>
+                <input type="text" id="remainingHP" name="remainingHP" style="width: 40px;">
+                <input type="submit" value="Submit" id="submitBtn2">
+            </form>
+            <p id="feedback2"></p>
+        </section>
+    </main>
+</body>
 <footer>
-    <a href="{% url 'learning:gr4' %}">Return to Grade 4 Homepage</a> <br>
-    <a href="{% url 'learning:dashboard' %}">Student Dashboard</a> <br>
-    <a href="{% url 'learning:students_home' %}">Student Home</a> <br>
-    <a href="{% url 'learning:learning_home' %}">Learning Home</a> <br>
-    <a href="{% url 'index' %}">Home</a>
+    <nav>
+        <a href="{% url 'learning:gr4' %}">Return to Grade 4 Homepage</a> <br>
+        <a href="{% url 'learning:dashboard' %}">Student Dashboard</a> <br>
+        <a href="{% url 'learning:students_home' %}">Student Home</a> <br>
+        <a href="{% url 'learning:learning_home' %}">Learning Home</a> <br>
+        <a href="{% url 'index' %}">Home</a>
+    </nav>
 </footer>
 
 </html>

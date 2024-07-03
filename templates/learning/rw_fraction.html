@@ -7,80 +7,79 @@
 <head>
     <meta charset="UTF-8">
     <title>Algebraic Thinking: Real-World Problems with Fractions</title>
-
-    <!-- need to fix this -->
-    <script>
-        function validateForm(event) {
-            event.preventDefault(); // prevent default form submission
-
-            var notTrainers = document.getElementById('notTrainers').value.trim();
-            var correctAnswer = '2/5';
-            var feedbackDiv = document.getElementById('feedback');
-            var inputField = document.getElementById('notTrainers');
-            var submitButton = document.getElementById('submitBtn');
-
-            // check for correct answer and provide feedback
-            if (notTrainers === correctAnswer) {
-                feedbackDiv.textContent = 'Correct! 36/60 cards are Trainers, so 24/60 (or 2/5) are not. Well done!';
-                inputField.disabled = true; // disable input field
-                submitButton.disabled = true; // disable submit button
-            } else {
-                feedbackDiv.textContent = 'Incorrect. Please try again.';
-            }
-        }
-    </script>
 </head>
+<script>
+    function checkAnswer(event) {
+        event.preventDefault(); // prevent default form submission
 
-<header>
-    <h1>Real-World Problems with Fractions</h1>
-</header>
+        var notTrainers = document.getElementById('notTrainers').value.trim();
+        var correctAnswer = '2/5';
+        var feedbackDiv = document.getElementById('feedback');
+        var inputField = document.getElementById('notTrainers');
+        var submitButton = document.getElementById('submitBtn');
 
-<main>
-    <section>
-        <h2>Introduction:</h2>
-        <p>
-        </p>
-    </section>
+        // check for correct answer and provide feedback
+        if (notTrainers === correctAnswer) {
+            feedbackDiv.textContent = 'Correct! 36/60 cards are Trainers, so 24/60 (or 2/5) are not. Well done!';
+            inputField.disabled = true; // disable input field
+            submitButton.disabled = true; // disable submit button
+        } else {
+            feedbackDiv.textContent = 'Incorrect. Please try again.';
+        }
+    }
+</script>
 
-    <section>
-        <h2>Example 1: </h2>
-        <p>
+<body>
+    <header>
+        <h1>Real-World Problems with Fractions</h1>
+    </header>
 
-        </p>
-    </section>
+    <main>
+        <section>
+            <h2>Introduction:</h2>
+            <p>Content here</p>
+        </section>
 
-    <section>
-        <h2>Example 2:</h2>
-        <p>
+        <section>
+            <h2>Example 1: </h2>
+            <p>Content here</p>
+        </section>
 
-    </section>
+        <section>
+            <h2>Example 2:</h2>
+            <p>Content here</p>
 
-    <!-- need to fix this -->
-    <section>
-        <h2>You Try:</h2>
-        <p> 36 of the cards in your deck are Trainer cards. What fraction of your cards are NOT Trainer cards? Please
-            write your answer as a fraction in simplest terms (for example: 3/14).
-        </p>
-        <figure>
-            <img src="{% static 'images/PrimeCatcher.png' %}" alt="Prime Catcher">
-        </figure>
-        <p>
+        </section>
 
-        </p>
-        <form onsubmit="validateForm(event)">
-            <label for="notTrainers">Fraction of cards that are not Trainers</label>
-            <input type="text" id="notTrainers" name="notTrainers" style="width: 40px;">
-            <input type="submit" value="Submit" id="submitBtn">
-        </form>
-        <p id="feedback"></p>
-    </section>
-</main>
-<footer>
-    <a href="{% url 'learning:gr4' %}">Return to Grade 4 Homepage</a> <br>
-    <a href="{% url 'learning:dashboard' %}">Student Dashboard</a> <br>
-    <a href="{% url 'learning:students_home' %}">Student Home</a> <br>
-    <a href="{% url 'learning:learning_home' %}">Learning Home</a> <br>
-    <a href="{% url 'index' %}">Home</a>
-</footer>
+        <section>
+            <h2>You Try:</h2>
+            <p> 36 of the cards in your deck are Trainer cards. What fraction of your cards are NOT Trainer cards?
+                Please
+                write your answer as a fraction in simplest terms (for example: 3/14).
+            </p>
+            <figure>
+                <img src="{% static 'images/PrimeCatcher.png' %}" alt="Prime Catcher">
+            </figure>
+            <p>
+
+            </p>
+            <form onsubmit="checkAnswer(event)">
+                <label for="notTrainers">Fraction of cards that are not Trainers</label>
+                <input type="text" id="notTrainers" name="notTrainers" style="width: 40px;">
+                <input type="submit" value="Submit" id="submitBtn">
+            </form>
+            <p id="feedback"></p>
+        </section>
+    </main>
+    <footer>
+        <nav>
+            <a href="{% url 'learning:gr4' %}">Return to Grade 4 Homepage</a> <br>
+            <a href="{% url 'learning:dashboard' %}">Student Dashboard</a> <br>
+            <a href="{% url 'learning:students_home' %}">Student Home</a> <br>
+            <a href="{% url 'learning:learning_home' %}">Learning Home</a> <br>
+            <a href="{% url 'index' %}">Home</a>
+        </nav>
+    </footer>
+</body>
 
 </html>

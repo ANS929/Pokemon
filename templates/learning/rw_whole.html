@@ -9,7 +9,7 @@
     <title>Algebraic Thinking: Real-World Problems with Whole Numbers</title>
 
     <script>
-        function validateForm(event) {
+        function checkAnswer(event) {
             event.preventDefault(); // prevent default form submission
 
             var remainingHP = document.getElementById('remainingHP').value.trim();
@@ -38,57 +38,62 @@
     </script>
 </head>
 
-<header>
-    <h1>Real-World Problems with Whole Numbers</h1>
-</header>
+<body>
+    <header>
+        <h1>Real-World Problems with Whole Numbers</h1>
+    </header>
 
-<main>
-    <section>
-        <h2>Introduction:</h2>
-        <p>
-        </p>
-    </section>
+    <main>
+        <section>
+            <h2>Introduction:</h2>
+            <p> Content here
+            </p>
+        </section>
 
-    <section>
-        <h2>Example 1:</h2>
-        <p>
+        <section>
+            <h2>Example 1:</h2>
+            <p>Content here
 
-        </p>
-    </section>
+            </p>
+        </section>
 
-    <section>
-        <h2>Example 2:</h2>
-        <p>
+        <section>
+            <h2>Example 2:</h2>
+            <p>Content here</p>
 
-    </section>
+        </section>
 
-    <section>
-        <h2>You Try:</h2>
-        <p> Your opponent attacks your Iron Leaves ex with Raging Bolt ex's Bellowing Thunder, discarding 3 Basic
-            Energy. Your opponent claims this is enough damage to knock out your Iron Leaves, but you disagree. How many
-            hit points does your Iron Leaves have left after the attack?
-        </p>
-        <figure>
-            <img src="{% static 'images/IronLeaves.png' %}" alt="Iron Leaves ex">
-            <img src="{% static 'images/RagingBolt.png' %}" alt="Raging Bolt ex">
-        </figure>
-        <p>
+        <section>
+            <h2>You Try:</h2>
+            <p> Your opponent attacks your Iron Leaves ex with Raging Bolt ex's Bellowing Thunder, discarding 3 Basic
+                Energy. Your opponent claims this is enough damage to knock out your Iron Leaves, but you disagree. How
+                many
+                hit points does your Iron Leaves have left after the attack?
+            </p>
+            <figure>
+                <img src="{% static 'images/IronLeaves.png' %}" alt="Iron Leaves ex Pokémon card">
+                <img src="{% static 'images/RagingBolt.png' %}" alt="Raging Bolt ex Pokémon card">
+            </figure>
 
-        </p>
-        <form onsubmit="validateForm(event)">
-            <label for="inputField">Iron Leaves' remaining HP</label>
-            <input type="text" id="remainingHP" name="remainingHP" style="width: 40px;">
-            <input type="submit" value="Submit" id="submitBtn">
-        </form>
-        <p id="feedback"></p>
-    </section>
-</main>
+
+            <!-- answer input and submission -->
+            <form onsubmit="checkAnswer(event)">
+                <label for="inputField">Iron Leaves' remaining HP</label>
+                <input type="text" id="remainingHP" name="remainingHP" style="width: 40px;">
+                <input type="submit" value="Submit" id="submitBtn">
+            </form>
+            <p id="feedback"></p>
+        </section>
+    </main>
+</body>
 <footer>
-    <a href="{% url 'learning:gr4' %}">Return to Grade 4 Homepage</a> <br>
-    <a href="{% url 'learning:dashboard' %}">Student Dashboard</a> <br>
-    <a href="{% url 'learning:students_home' %}">Student Home</a> <br>
-    <a href="{% url 'learning:learning_home' %}">Learning Home</a> <br>
-    <a href="{% url 'index' %}">Home</a>
+    <nav>
+        <a href="{% url 'learning:gr4' %}">Return to Grade 4 Homepage</a> <br>
+        <a href="{% url 'learning:dashboard' %}">Student Dashboard</a> <br>
+        <a href="{% url 'learning:students_home' %}">Student Home</a> <br>
+        <a href="{% url 'learning:learning_home' %}">Learning Home</a> <br>
+        <a href="{% url 'index' %}">Home</a>
+    </nav>
 </footer>
 
 </html>

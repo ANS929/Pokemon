@@ -11,12 +11,14 @@
 
 <body>
     <h1>Computation Quiz</h1>
-    <p>
-    <h2>Instructions: Use the cards to answer the five questions below.</h2>
-    <img src="{% static 'images/Lucario.png' %}" alt="Lucario">
-    <img src="{% static 'images/Maushold.png' %}" alt="Maushold">
-    <img src="{% static 'images/Dodrio.png' %}" alt="Dodrio">
-    </p>
+
+    <h2>Instructions:</h2>
+    <p>Use the cards to answer the five questions below.</p>
+    <img src="{% static 'images/Lucario.png' %}" alt="Lucario Pokémon card">
+    <img src="{% static 'images/Maushold.png' %}" alt="Maushold Pokémon card">
+    <img src="{% static 'images/Dodrio.png' %}" alt="Dodrio Pokémon card">
+
+    <!-- quiz submission and results -->
     <form id="quiz-form">
         <div id="quiz-container"></div>
         <button type="submit" id="submit-button">Submit Quiz</button>
@@ -24,11 +26,13 @@
     <div id="result-container"></div>
 
     <footer>
-        <a href="{% url 'learning:gr4' %}">Return to Grade 4 Homepage</a> <br>
-        <a href="{% url 'learning:dashboard' %}">Student Dashboard</a> <br>
-        <a href="{% url 'learning:students_home' %}">Student Home</a> <br>
-        <a href="{% url 'learning:learning_home' %}">Learning Home</a> <br>
-        <a href="{% url 'index' %}">Home</a>
+        <nav>
+            <a href="{% url 'learning:gr4' %}">Return to Grade 4 Homepage</a> <br>
+            <a href="{% url 'learning:dashboard' %}">Student Dashboard</a> <br>
+            <a href="{% url 'learning:students_home' %}">Student Home</a> <br>
+            <a href="{% url 'learning:learning_home' %}">Learning Home</a> <br>
+            <a href="{% url 'index' %}">Home</a>
+        </nav>
     </footer>
 
     <script>
@@ -97,7 +101,7 @@
                     }
                 });
 
-                if (score <= 3){
+                if (score <= 3) {
                     message = "Good effort! Keep practicing and try the quiz again."
                 }
 

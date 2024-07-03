@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <title>Number Sense: Comparing Decimals</title>
     <script>
-        function validateForm(event) {
+        function checkAnswer(event) {
             event.preventDefault(); // prevent default form submission
 
             var comparisonSymbol = document.getElementById('comparisonSymbol').value.trim();
@@ -76,8 +76,7 @@
 
                     <u>Example 1</u>: Let's compare 2.2 and 2.9. Since both decimals have a whole part of 2, we must
                     compare the fractional part of each. The first number has a 2 in the tenths position, while the
-                    second
-                    number has a 9 in the tenths position. Since 2 > 9, we say that 2.2 < 2.9. <br><br>
+                    second number has a 9 in the tenths position. Since 2 < 9, we say that 2.2 < 2.9. <br><br>
 
                         <u>Example 2</u>: Let's compare 3.14. and 3.15. Since both decimals have a whole part of 1, we
                         must compare the fractional part of each. The numbers in the tenths position are also the same
@@ -99,13 +98,13 @@
                 Look at the weights of Charizard ex and Pidgeot ex.
             </p>
             <figure>
-                <img src="{% static 'images/Fletchling.png' %}" alt="Fletchling">
-                <img src="{% static 'images/Rowlet.png' %}" alt="Rowlet">
+                <img src="{% static 'images/Fletchling.png' %}" alt="Fletchling Pokémon card">
+                <img src="{% static 'images/Rowlet.png' %}" alt="Rowlet Pokémon card">
             </figure>
             <p>
                 Compare the two values using <b>&gt;</b>, <b>=</b>, or <b>&lt;</b>.
             </p>
-            <form onsubmit="validateForm(event)">
+            <form onsubmit="checkAnswer(event)">
                 <label for="comparisonSymbol">Fletching's weight</label>
                 <input type="text" id="comparisonSymbol" name="comparisonSymbol" style="width: 40px;">
                 Rowlet's weight

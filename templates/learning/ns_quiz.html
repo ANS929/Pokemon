@@ -10,24 +10,41 @@
 </head>
 
 <body>
-    <h1>Number Sense Quiz</h1>
-    <p>
-    <h2>Instructions: Use the cards to answer the five questions below.</h2>
-    <img src="{% static 'images/Inkay.png' %}" alt="Inkay">
-    <img src="{% static 'images/Wattrel.png' %}" alt="Wattrel">
-    </p>
-    <form id="quiz-form">
-        <div id="quiz-container"></div>
-        <button type="submit" id="submit-button">Submit Quiz</button>
-    </form> <br>
-    <div id="result-container"></div>
+    <header>
+        <h1>Number Sense Quiz</h1>
+    </header>
 
+    <main>
+        <section>
+
+
+            <h2>Instructions:</h2>
+            <p>Use the cards to answer the five questions below.</p>
+            <figure>
+                <img src="{% static 'images/Inkay.png' %}" alt="Inkay Pokémon card">
+                <img src="{% static 'images/Wattrel.png' %}" alt="Wattrel Pokémon card">
+            </figure>
+
+        </section>
+
+        <!-- quiz submission and results -->
+        <section>
+            <form id="quiz-form">
+                <div id="quiz-container"></div>
+                <button type="submit" id="submit-button">Submit Quiz</button>
+            </form>
+            <div id="result-container"></div>
+        </section>
+
+    </main>
     <footer>
-        <a href="{% url 'learning:gr4' %}">Return to Grade 4 Homepage</a> <br>
-        <a href="{% url 'learning:dashboard' %}">Student Dashboard</a> <br>
-        <a href="{% url 'learning:students_home' %}">Student Home</a> <br>
-        <a href="{% url 'learning:learning_home' %}">Learning Home</a> <br>
-        <a href="{% url 'index' %}">Home</a>
+        <nav>
+            <a href="{% url 'learning:gr4' %}">Return to Grade 4 Homepage</a> <br>
+            <a href="{% url 'learning:dashboard' %}">Student Dashboard</a> <br>
+            <a href="{% url 'learning:students_home' %}">Student Home</a> <br>
+            <a href="{% url 'learning:learning_home' %}">Learning Home</a> <br>
+            <a href="{% url 'index' %}">Home</a>
+        </nav>
     </footer>
 
     <script>
