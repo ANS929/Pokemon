@@ -8,28 +8,27 @@
     <meta charset="UTF-8">
     <title>Measurement: Converting Units</title>
 
-    <!-- need to fix this -->
     <script>
         function validateForm(event) {
             event.preventDefault(); // prevent default form submission
 
-            var remainingHP = document.getElementById('remainingHP').value.trim();
-            var correctAnswer = '90';
+            var height = document.getElementById('height').value.trim();
+            var correctAnswer = '228';
             var feedbackDiv = document.getElementById('feedback');
-            var inputField = document.getElementById('remainingHP');
+            var inputField = document.getElementById('height');
             var submitButton = document.getElementById('submitBtn');
 
             var allowedInput = /^\d+$/;
 
             // validate input
-            if (!allowedInput.test(remainingHP)) {
+            if (!allowedInput.test(height)) {
                 feedbackDiv.textContent = 'Invalid input. Please enter a whole number';
                 return;
             }
 
             // check for correct answer and provide feedback
-            if (remainingHP === correctAnswer) {
-                feedbackDiv.textContent = 'Correct! 310 - 220 = 90. Well done!';
+            if (height === correctAnswer) {
+                feedbackDiv.textContent = 'Correct! 19 * 12 = 228. Well done!';
                 inputField.disabled = true; // disable input field
                 submitButton.disabled = true; // disable submit button
             } else {
@@ -63,21 +62,19 @@
 
     </section>
 
-    <!-- need to fix this -->
     <section>
         <h2>You Try:</h2>
-        <p> 
+        <p> Yveltal is 19 feet tall. How many inches is that?
         </p>
         <figure>
-            <img src="{% static 'images/Miraidon.png' %}" alt="Miraidon ex">
-            <img src="{% static 'images/Gardevoir.png' %}" alt="Gardevoir ex">
+            <img src="{% static 'images/Yveltal.png' %}" alt="Yveltal">
         </figure>
         <p>
 
         </p>
         <form onsubmit="validateForm(event)">
-            <label for="comparisonSymbol">Gardevoir ex's remaining HP</label>
-            <input type="text" id="remainingHP" name="remainingHP" style="width: 40px;">
+            <label for="comparisonSymbol">Yveltal's height in inches</label>
+            <input type="text" id="height" name="height" style="width: 40px;">
             <input type="submit" value="Submit" id="submitBtn">
         </form>
         <p id="feedback"></p>

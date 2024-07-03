@@ -1,25 +1,22 @@
 <!DOCTYPE html>
-
 {% load static %}
-
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <title>Measurement: Quiz</title>
 </head>
-
 <body>
     <h1>Measurement Quiz</h1>
-    <p>
-    <h2>Instructions: Use the cards to answer the five questions below.</h2>
-    <img src="{% static 'images/Inkay.png' %}" alt="Inkay">
-    <img src="{% static 'images/Wattrel.png' %}" alt="Wattrel">
-    </p>
+    <h2>Instructions: Use the images to answer the five questions below.</h2>
+    <img src="{% static 'images/dragonair.png' %}" alt="Dragonair">
+    <img src="{% static 'images/doublemat.jpg' %}" alt="Double playmat">
+    <img src="{% static 'images/decidueye.png' %}" alt="Decidueye ex">
+
     <form id="quiz-form">
         <div id="quiz-container"></div>
         <button type="submit" id="submit-button">Submit Quiz</button>
-    </form> <br>
+    </form>
+    <br>
     <div id="result-container"></div>
 
     <footer>
@@ -32,28 +29,32 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-
-            // array of quiz questions and answers
             const questions = [
                 {
-                    question: "1.) Fill in the blank with the correct symbol (<, >, or =). Inkay's weight ____ Wattrel's weight.",
-                    answer: '<'
+                    question: "1.) Dragonair is approximately 13 feet long. How many inches is that?",
+                    type: 'short-answer',
+                    answer: '156'
                 },
                 {
-                    question: "2.) Fill in the blank with the correct symbol (<, >, or =). Inkay's set number ____ Wattrel's set number.",
-                    answer: '>'
+                    question: "2.) A double playmat is approximately 23 inches wide and 24 inches tall. What is the area (in square inches) of the playmat?",
+                    type: 'short-answer',
+                    answer: '552'
                 },
                 {
-                    question: "3.) Fill in the blank with the correct symbol (<, >, or =). Inkay's HP ____ Wattrel's HP.",
-                    answer: '='
+                    question: "3.) What is the perimeter (in inches) of the playmat?",
+                    type: 'short-answer',
+                    answer: '94'
                 },
                 {
-                    question: "4.) True or false: Hug's damage output < Peck's damage output",
-                    answer: 'false'
+                    question: "4.) A Pokémon card is approximately 63 millimeters wide and 88 millimeters tall. What is the area (in square millimeters) of a Pokémon card?",
+                    type: 'short-answer',
+                    answer: '5544'
                 },
                 {
-                    question: "5.) True or false: Inkay's retreat cost = Wattrel's retreat cost.",
-                    answer: 'true'
+                    question: "5.) You are 5 feet tall. Decidueye is 63 inches tall. Who is taller?",
+                    type: 'multiple-choice',
+                    options: ['You', 'Decidueye', 'You are the same height as Decidueye'],
+                    answer: 'Decidueye'
                 }
             ];
 
@@ -61,21 +62,32 @@
             const resultContainer = document.getElementById('result-container');
             const submitButton = document.getElementById('submit-button');
 
-            // function to generate the quiz based on the 'questions' array
             function generateQuiz() {
                 const output = [];
                 questions.forEach((currentQuestion, questionIndex) => {
-                    output.push(
-                        `<div class="question">${currentQuestion.question}</div>
-                        <div class="options">
-                            <input type="text" name="question${questionIndex}" id="question${questionIndex}" style="width: 40px;">
-                        </div><br>`
-                    );
+                    if (currentQuestion.type === 'short-answer') {
+                        output.push(
+                            `<div class="question">${currentQuestion.question}</div>
+                            <div class="options">
+                                <input type="text" name="question${questionIndex}" id="question${questionIndex}" style="width: 50px;">
+                            </div><br>`
+                        );
+                    } else if (currentQuestion.type === 'multiple-choice') {
+                        output.push(
+                            `<div class="question">${currentQuestion.question}</div>
+                            <div class="options">
+                                <select name="question${questionIndex}" id="question${questionIndex}">
+                                    <option value="">Select an answer</option>`
+                        );
+                        currentQuestion.options.forEach(option => {
+                            output.push(`<option value="${option}">${option}</option>`);
+                        });
+                        output.push(`</select></div><br>`);
+                    }
                 });
                 quizContainer.innerHTML = output.join('');
             }
 
-            // function to calculate and display the quiz results
             function showResults(event) {
                 event.preventDefault();
                 let score = 0;
@@ -91,21 +103,19 @@
                 explanations(score);
             }
 
-            // function to disable the quiz inputs after submission 
             function disableQuiz() {
                 const inputs = document.querySelectorAll('#quiz-form input');
                 inputs.forEach(input => input.disabled = true);
                 submitButton.disabled = true;
             }
 
-            // function to display the answer explanations
             function explanations(score) {
                 let explanationText = "<p>Answer explanations:</p>";
-                explanationText += `<p>Question 1: 7.7 < 7.9</p>`;
-                explanationText += `<p>Question 2: 137 > 80</p>`;
-                explanationText += `<p>Question 3: 60 = 60</p>`;
-                explanationText += `<p>Question 4: This is false because 30 > 10</p>`;
-                explanationText += `<p>Question 5: This is true because 1 = 1</p>`;
+                explanationText += `<p>Question 1: 13 * 12 = 156</p>`;
+                explanationText += `<p>Question 2: 23 * 24 = 552</p>`;
+                explanationText += `<p>Question 3: 2*23 + 2*24 = 94</p>`;
+                explanationText += `<p>Question 4: 63 * 88 = 5544</p>`;
+                explanationText += `<p>Question 5: You are 5 * 12 = 60 inches tall, so Decidueye is taller.</p>`;
                 resultContainer.innerHTML += explanationText;
             }
 
@@ -114,5 +124,4 @@
         });
     </script>
 </body>
-
 </html>
