@@ -1,11 +1,14 @@
-from django.urls import path
-from account import views
+# account/urls.py
+
+from django.urls import path, include
+from . import views
 
 app_name = 'account'
 
 urlpatterns = [
-    path('', views.account_home, name='account'),
-    path('login/', views.login, name='login'),
+    path('', views.account, name='account'),
+    path('login/', views.user_login, name='login'),
     path('register/', views.register, name='register'),
-    path('settings/', views.settings, name='settings'),
+    path('logout/', views.user_logout, name='logout'),
+    path('settings/', views.settings, name='settings'),  
 ]

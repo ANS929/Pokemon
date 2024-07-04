@@ -1,4 +1,6 @@
 from django.shortcuts import render
+from django.contrib.auth.decorators import login_required
+from django.http import HttpResponse
 
 def index(request):
     return render(request, 'learning/base.html')
@@ -47,9 +49,6 @@ def gr7(request):
 
 def gr8(request):
     return render(request, 'learning/gr8.html')
-
-def student_dashboard(request):
-    return render(request, 'learning/student_dashboard.html')
 
 def comparing_whole(request):
     return render(request, 'learning/comparing_whole.html')
@@ -108,5 +107,16 @@ def meas_quiz(request):
 def parent_dashboard(request):
     return render(request, 'learning/parent_dashboard.html')
 
+@login_required
+def student_dashboard(request):
+    if request.user.profile.is_student:
+        return render(request, 'dashboard/student.html')
+    else:
+        return HttpResponse("You do not have permission to view this page.")
+
+@login_required
 def teacher_dashboard(request):
-    return render(request, 'learning/teacher_dashboard.html')
+    if request.user.profile.is_teacher:
+        return render(request, 'dashboard/teacher.html')
+    else:
+        return HttpResponse("You do not have permission to view this page.")

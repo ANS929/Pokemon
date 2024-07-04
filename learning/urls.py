@@ -4,12 +4,12 @@ from learning import views
 app_name = 'learning'
 
 urlpatterns = [
-    path('', views.learning_home, name='learning_home'),
+    path('', views.learning_home, name='index'),
     path('students/', views.students, name='students'),
     path('teachers/', views.teachers, name='teachers'),
     path('parents/', views.parents, name='parents'),
     path('parents/dashbaord', views.parent_dashboard, name='parent_dashboard'),
-    path('teachers/dashbaord', views.teacher_dashboard, name='teacher_dashboard'),
+    path('teachers/dashboard', views.teacher_dashboard, name='teacher_dashboard'),
     path('teachers/dashboard/your_classes', views.your_classes, name='your_classes'),
     path('teachers/dashboard/your_students', views.your_students, name='your_students'),
     path('parents/dashboard/your_children', views.your_children, name='your_children'),

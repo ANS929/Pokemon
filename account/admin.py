@@ -1,9 +1,7 @@
 from django.contrib import admin
+from django.contrib.auth.models import User
+from .models import Profile
 
-# Register your models here.
-
-from django.contrib import admin
-from account.models import Category, Page
-
-admin.site.register(Category)
-admin.site.register(Page)
+@admin.register(Profile)
+class ProfileAdmin(admin.ModelAdmin):
+    pass

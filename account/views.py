@@ -1,21 +1,22 @@
 from django.shortcuts import render, redirect
-from account.forms import UserForm
 from django.http import HttpResponse
-from django.contrib.auth import authenticate, login,logout
+from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 from .forms import UserRegistrationForm
+from .models import Profile
 
 def index(request):
     return render(request, 'learning/base.html')
 
-def account_home(request):
+def account(request):
     return render(request, 'account/account.html')
 
-def login(request):
+def login_page(request):
     return render(request, 'account/login.html')
 
-def register(request):
+def register_page(request):
     return render(request, 'account/register.html')
 
 def settings(request):
@@ -25,57 +26,71 @@ def register(request):
     if request.method == 'POST':
         form = UserRegistrationForm(request.POST)
         if form.is_valid():
-            user = form.save()
-            profile = user.profile  # Access the profile related to this user
-            profile.is_student = form.cleaned_data.get('is_student')
-            profile.is_teacher = form.cleaned_data.get('is_teacher')
-            profile.save()
+            user = form.save(commit=False)
+            user.set_password(form.cleaned_data['password'])
+            user.save()
+
+            role = form.cleaned_data.get('role')
+            if role == 'student' or role == 'teacher':
+                # Create profile only if role is student or teacher
+                profile = Profile(user=user)
+                if role == 'student':
+                    profile.is_student = True
+                elif role == 'teacher':
+                    profile.is_teacher = True
+                profile.save()
+
             username = form.cleaned_data.get('username')
-            messages.success(request, f'Account created for {username}. You can now log in.')
-            return redirect('account-login')  # Redirect to login page after successful registration
+            messages.success(request, f"Account created for {username}. You can now log in.")
+            return redirect('account:login')
     else:
         form = UserRegistrationForm()
-    
-    return render(request, 'account/register.html', {'form': form})
+
+    return render(request, 'account/register.html', {'user_form': form})
 
 def user_login(request):
     if request.method == 'POST':
         username = request.POST.get('username')
         password = request.POST.get('password')
-        
+
         user = authenticate(username=username, password=password)
-        
+
         if user:
             if user.is_active:
-                login(request, user)
-                return redirect(reverse('learning:index'))
+                auth_login(request, user)
+                if user.is_superuser:
+                    return redirect('admin:index')  # Redirect admin to Django admin panel
+                else:
+                    return redirect('learning:index')  # Redirect others to main app index
             else:
-                return HttpResponse("Your Pokemon account is disabled.")
+                return HttpResponse("Your account is disabled.")
         else:
-            print(f"Invalid login details: {username}, {password}")
-            return HttpResponse("Invalid login details supplied.")
+            messages.error(request, "Invalid login details supplied.")
+            return redirect('account:login')
     else:
         return render(request, 'account/login.html')
 
 @login_required    
 def user_logout(request):
-    logout(request)
-    return redirect(reverse('learning:index;'))
+    auth_logout(request)
+    return redirect(reverse('learning:index'))
 
-@login_required
+@login_required    
 def student_dashboard(request):
-    if request.user.profile.is_student:
-        # Render student dashboard
-        return render(request, 'learning:student_dashboard')
-    else:
-        # Redirect or show access denied message
+    try:
+        if request.user.profile.is_student:
+            return render(request, 'learning/student_dashboard.html')
+        else:
+            return HttpResponse("You do not have permission to view this page.")
+    except Profile.DoesNotExist:
         return HttpResponse("You do not have permission to view this page.")
 
 @login_required
 def teacher_dashboard(request):
-    if request.user.profile.is_teacher:
-        # Render teacher dashboard
-        return render(request, 'learning:teacher_dashboard')
-    else:
-        # Redirect or show access denied message
+    try:
+        if request.user.profile.is_teacher:
+            return render(request, 'learning/teacher_dashboard.html')
+        else:
+            return HttpResponse("You do not have permission to view this page.")
+    except Profile.DoesNotExist:
         return HttpResponse("You do not have permission to view this page.")
