@@ -7,11 +7,68 @@
 <head>
     <meta charset="UTF-8">
     <title>Measurement: Area and Perimeter of Rectangles</title>
+</head>
+
+<body>
+
+    <header>
+        <h1>Area and Perimeter of Rectangles</h1>
+    </header>
+
+    <main>
+        <section>
+            <h2>Introduction:</h2>
+            <p>Content here</p>
+        </section>
+
+        <section>
+            <h2>Example 1: </h2>
+            <p>Content here</p>
+        </section>
+
+        <section>
+            <h2>Example 2:</h2>
+            <p>Content here</p>
+        </section>
+
+        <section>
+            <h2>You Try:</h2>
+            <p> A Pokémon playmat is approximately 61 centimeters wide and 36 centimeters long. Find the area and
+                perimeter of a playmat.</p>
+            <figure>
+                <img src="{% static 'images/playmat.jpg' %}" alt="playmat">
+            </figure>
+
+            <!-- Question 1 submission -->
+            <form onsubmit="checkAnswer1(event)">
+                <label for="area">Area of a playmat (in square centimeters, ex: 1234)</label>
+                <input type="text" id="area" name="area" style="width: 50px;">
+                <input type="submit" value="Submit" id="submitBtn1">
+            </form>
+            <p id="feedback1"></p>
+
+            <!-- Question 2 submission -->
+            <form onsubmit="checkAnswer2(event)">
+                <label for="perimeter">Perimeter of a playmat (in centimeters, ex: 567)</label>
+                <input type="text" id="perimeter" name="perimeter" style="width: 50px;">
+                <input type="submit" value="Submit" id="submitBtn2">
+            </form>
+            <p id="feedback2"></p>
+        </section>
+    </main>
+    <footer>
+        <nav>
+            <a href="{% url 'learning:gr4' %}">Return to Grade 4 Homepage</a> <br>
+            <a href="{% url 'learning:dashboard' %}">Student Dashboard</a> <br>
+            <a href="{% url 'learning:students_home' %}">Student Home</a> <br>
+            <a href="{% url 'learning:learning_home' %}">Learning Home</a> <br>
+            <a href="{% url 'index' %}">Home</a>
+        </nav>
+    </footer>
 
     <script>
-
         // Question 1 logic (area)
-        function validateForm1(event) {
+        function checkAnswer1(event) {
             event.preventDefault(); // prevent default form submission
 
             var area = document.getElementById('area').value.trim();
@@ -39,7 +96,7 @@
         }
 
         //Question 2 logic (perimeter)
-        function validateForm2(event) {
+        function checkAnswer2(event) {
             event.preventDefault(); // prevent default form submission
 
             var perimeter = document.getElementById('perimeter').value.trim();
@@ -66,65 +123,6 @@
             }
         }
     </script>
-</head>
-
-<header>
-    <h1>Area and Perimeter of Rectangles</h1>
-</header>
-
-<main>
-    <section>
-        <h2>Introduction:</h2>
-        <p>
-        </p>
-    </section>
-
-    <section>
-        <h2>Example 1: </h2>
-        <p>
-
-        </p>
-    </section>
-
-    <section>
-        <h2>Example 2:</h2>
-        <p>
-
-    </section>
-
-    <section>
-        <h2>You Try:</h2>
-        <p> A Pokémon playmat is approximately 61 centimeters wide and 36 centimeters long. Find the area and perimeter of a playmat.
-        </p>
-        <figure>
-            <img src="{% static 'images/playmat.jpg' %}" alt="playmat">
-        </figure>
-        <p>
-
-        </p>
-        <!-- Question 1 submission -->
-        <form onsubmit="validateForm1(event)">
-            <label for="area">Area of a playmat (in square centimeters, ex: 1234)</label>
-            <input type="text" id="area" name="area" style="width: 50px;">
-            <input type="submit" value="Submit" id="submitBtn1">
-        </form>
-        <p id="feedback1"></p>
-
-        <!-- Question 2 submission -->
-        <form onsubmit="validateForm2(event)">
-            <label for="perimeter">Perimeter of a playmat (in centimeters, ex: 567)</label>
-            <input type="text" id="perimeter" name="perimeter" style="width: 50px;">
-            <input type="submit" value="Submit" id="submitBtn2">
-        </form>
-        <p id="feedback2"></p>
-    </section>
-</main>
-<footer>
-    <a href="{% url 'learning:gr4' %}">Return to Grade 4 Homepage</a> <br>
-    <a href="{% url 'learning:dashboard' %}">Student Dashboard</a> <br>
-    <a href="{% url 'learning:students_home' %}">Student Home</a> <br>
-    <a href="{% url 'learning:learning_home' %}">Learning Home</a> <br>
-    <a href="{% url 'index' %}">Home</a>
-</footer>
+</body>
 
 </html>

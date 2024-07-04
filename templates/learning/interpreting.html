@@ -7,9 +7,58 @@
 <head>
     <meta charset="UTF-8">
     <title>Data Analysis: Interpreting Data</title>
+</head>
 
+<body>
+
+    <header>
+        <h1>Interpreting Data</h1>
+    </header>
+
+    <main>
+        <section>
+            <h2>Introduction:</h2>
+            <p>Content here</p>
+        </section>
+
+        <section>
+            <h2>Circle Graphs: </h2>
+            <p>Content here</p>
+        </section>
+
+        <section>
+            <h2>You Try:</h2>
+            <p> The following data was collected from the 2024 Indianapolis Regional. These are the decks that made Day
+                2. Which deck had the greatest share of the meta?</p>
+            <figure>
+                <img src="{% static 'images/Indianapolis.jpeg' %}" alt="Indianapolis Regional meta share data">
+            </figure>
+
+            <!-- answer submission and feedback-->
+            <form onsubmit="checkAnswer(event)">
+                <label for="greatest">Deck with the greatest meta share</label>
+                <select id="greatest" name="greatest">
+                    <option value="" selected disabled>Select deck</option>
+                    <option value="Other">Other</option>
+                    <option value="Charizard ex">Charizard ex</option>
+                    <option value="Chien-Pao ex">Chien-Pao ex</option>
+                    <option value="Arceus VSTAR">Arceus VSTAR</option>
+                </select>
+                <input type="submit" value="Submit" id="submitBtn">
+            </form>
+            <p id="feedback"></p>
+        </section>
+    </main>
+    <footer>
+        <a href="{% url 'learning:gr4' %}">Return to Grade 4 Homepage</a> <br>
+        <a href="{% url 'learning:dashboard' %}">Student Dashboard</a> <br>
+        <a href="{% url 'learning:students_home' %}">Student Home</a> <br>
+        <a href="{% url 'learning:learning_home' %}">Learning Home</a> <br>
+        <a href="{% url 'index' %}">Home</a>
+    </footer>
     <script>
-        function validateForm(event) {
+        // function to check the answer for the You Try problem
+        function checkAnswer(event) {
             event.preventDefault(); // prevent default form submission
 
             var greatest = document.getElementById('greatest').value;
@@ -28,58 +77,6 @@
             }
         }
     </script>
-</head>
-
-<header>
-    <h1>Interpreting Data</h1>
-</header>
-
-<main>
-    <section>
-        <h2>Introduction:</h2>
-        <p>
-        </p>
-    </section>
-
-    <section>
-        <h2>Circle Graphs: </h2>
-        <p>
-
-        </p>
-    </section>
-
-    <section>
-        <h2>You Try:</h2>
-        <p> The following data was collected from the 2024 Indianapolis Regional. These are the decks that made Day 2. Which deck had the greatest share of the meta?
-
-        </p>
-        <figure>
-            <img src="{% static 'images/Indianapolis.jpeg' %}" alt="Indianapolis Regional meta share">
-        </figure>
-        <p>
-
-        </p>
-        <form onsubmit="validateForm(event)">
-            <label for="greatest">Deck with the greatest meta share</label>
-            <select id="greatest" name="greatest">
-                <option value="" selected disabled>Select deck</option>
-                <option value="Other">Other</option>
-                <option value="Charizard ex">Charizard ex</option>
-                <option value="Chien-Pao ex">Chien-Pao ex</option>
-                <option value="Arceus VSTAR">Arceus VSTAR</option>
-                
-            </select>
-            <input type="submit" value="Submit" id="submitBtn">
-        </form>
-        <p id="feedback"></p>
-    </section>
-</main>
-<footer>
-    <a href="{% url 'learning:gr4' %}">Return to Grade 4 Homepage</a> <br>
-    <a href="{% url 'learning:dashboard' %}">Student Dashboard</a> <br>
-    <a href="{% url 'learning:students_home' %}">Student Home</a> <br>
-    <a href="{% url 'learning:learning_home' %}">Learning Home</a> <br>
-    <a href="{% url 'index' %}">Home</a>
-</footer>
+</body>
 
 </html>

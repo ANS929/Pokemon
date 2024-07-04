@@ -7,9 +7,68 @@
 <head>
     <meta charset="UTF-8">
     <title>Data Analysis: Representing Data</title>
+</head>
 
+<body>
+    <header>
+        <h1>Representing Data</h1>
+    </header>
+
+    <main>
+        <section>
+            <h2>Introduction:</h2>
+            <p>Content here</p>
+        </section>
+
+        <section>
+            <h2>Frequency Table: </h2>
+            <p>Content here</p>
+        </section>
+
+        <section>
+            <h2>Line Plot:</h2>
+            <p>Content here</p>
+        </section>
+
+        <section>
+            <h2>Bar Graph:</h2>
+            <p>Content here</p>
+        </section>
+
+        <section>
+            <h2>You Try:</h2>
+            <p> The following data was collected from NAIC 2024. These are the decks that made Day 2. Which of the
+                following data representations would NOT be a good way to display this data?</p>
+            <figure>
+                <img src="{% static 'images/NAIC.jpeg' %}" alt="NAIC meta share data">
+            </figure>
+
+            <!-- answer submission and feedback -->
+            <form onsubmit="checkAnswer(event)">
+                <label for="representation">Incorrect data representation</label>
+                <select id="representation" name="representation">
+                    <option value="" selected disabled>Select data representation</option>
+                    <option value="frequency table">frequency table</option>
+                    <option value="line plot">line plot</option>
+                    <option value="bar graph">bar graph</option>
+                </select>
+                <input type="submit" value="Submit" id="submitBtn">
+            </form>
+            <p id="feedback"></p>
+        </section>
+    </main>
+    <footer>
+        <nav>
+            <a href="{% url 'learning:gr4' %}">Return to Grade 4 Homepage</a> <br>
+            <a href="{% url 'learning:dashboard' %}">Student Dashboard</a> <br>
+            <a href="{% url 'learning:students_home' %}">Student Home</a> <br>
+            <a href="{% url 'learning:learning_home' %}">Learning Home</a> <br>
+            <a href="{% url 'index' %}">Home</a>
+        </nav>
+    </footer>
     <script>
-        function validateForm(event) {
+        // function to check the answer for You Try problem
+        function checkAnswer(event) {
             event.preventDefault(); // prevent default form submission
 
             var representation = document.getElementById('representation').value;
@@ -28,67 +87,6 @@
             }
         }
     </script>
-</head>
-
-<header>
-    <h1>Representing Data</h1>
-</header>
-
-<main>
-    <section>
-        <h2>Introduction:</h2>
-        <p>
-        </p>
-    </section>
-
-    <section>
-        <h2>Frequency Table: </h2>
-        <p>
-
-        </p>
-    </section>
-
-    <section>
-        <h2>Line Plot:</h2>
-        <p>
-
-    </section>
-
-    <section>
-        <h2>Bar Graph:</h2>
-        <p>
-
-    </section>
-
-    <section>
-        <h2>You Try:</h2>
-        <p> The following data was collected from NAIC 2024. These are the decks that made Day 2. Which of the following
-            data representations would NOT be a good way to display this data?
-        </p>
-        <figure>
-            <img src="{% static 'images/NAIC.jpeg' %}" alt="NAIC meta share">
-        </figure>
-        <p>
-
-        <form onsubmit="validateForm(event)">
-            <label for="representation">Incorrect data representation</label>
-            <select id="representation" name="representation">
-                <option value="" selected disabled>Select data representation</option>
-                <option value="frequency table">frequency table</option>
-                <option value="line plot">line plot</option>
-                <option value="bar graph">bar graph</option>
-            </select>
-            <input type="submit" value="Submit" id="submitBtn">
-        </form>
-        <p id="feedback"></p>
-    </section>
-</main>
-<footer>
-    <a href="{% url 'learning:gr4' %}">Return to Grade 4 Homepage</a> <br>
-    <a href="{% url 'learning:dashboard' %}">Student Dashboard</a> <br>
-    <a href="{% url 'learning:students_home' %}">Student Home</a> <br>
-    <a href="{% url 'learning:learning_home' %}">Learning Home</a> <br>
-    <a href="{% url 'index' %}">Home</a>
-</footer>
+</body>
 
 </html>

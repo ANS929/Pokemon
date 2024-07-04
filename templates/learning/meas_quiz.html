@@ -1,16 +1,18 @@
 <!DOCTYPE html>
 {% load static %}
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>Measurement: Quiz</title>
 </head>
+
 <body>
     <h1>Measurement Quiz</h1>
     <h2>Instructions: Use the images to answer the five questions below.</h2>
-    <img src="{% static 'images/dragonair.png' %}" alt="Dragonair">
+    <img src="{% static 'images/dragonair.png' %}" alt="Dragonair Pokémon card">
     <img src="{% static 'images/doublemat.jpg' %}" alt="Double playmat">
-    <img src="{% static 'images/decidueye.png' %}" alt="Decidueye ex">
+    <img src="{% static 'images/decidueye.png' %}" alt="Decidueye ex Pokémon card">
 
     <form id="quiz-form">
         <div id="quiz-container"></div>
@@ -20,15 +22,19 @@
     <div id="result-container"></div>
 
     <footer>
-        <a href="{% url 'learning:gr4' %}">Return to Grade 4 Homepage</a> <br>
-        <a href="{% url 'learning:dashboard' %}">Student Dashboard</a> <br>
-        <a href="{% url 'learning:students_home' %}">Student Home</a> <br>
-        <a href="{% url 'learning:learning_home' %}">Learning Home</a> <br>
-        <a href="{% url 'index' %}">Home</a>
+        <nav>
+            <a href="{% url 'learning:gr4' %}">Return to Grade 4 Homepage</a> <br>
+            <a href="{% url 'learning:dashboard' %}">Student Dashboard</a> <br>
+            <a href="{% url 'learning:students_home' %}">Student Home</a> <br>
+            <a href="{% url 'learning:learning_home' %}">Learning Home</a> <br>
+            <a href="{% url 'index' %}">Home</a>
+        </nav>
     </footer>
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
+
+            // array of quiz questions
             const questions = [
                 {
                     question: "1.) Dragonair is approximately 13 feet long. How many inches is that?",
@@ -62,6 +68,7 @@
             const resultContainer = document.getElementById('result-container');
             const submitButton = document.getElementById('submit-button');
 
+            // function to generate the quiz based on the array
             function generateQuiz() {
                 const output = [];
                 questions.forEach((currentQuestion, questionIndex) => {
@@ -88,6 +95,7 @@
                 quizContainer.innerHTML = output.join('');
             }
 
+            // function to display the quiz score
             function showResults(event) {
                 event.preventDefault();
                 let score = 0;
@@ -103,12 +111,14 @@
                 explanations(score);
             }
 
+            // function to prevent multiple attempts
             function disableQuiz() {
                 const inputs = document.querySelectorAll('#quiz-form input');
                 inputs.forEach(input => input.disabled = true);
                 submitButton.disabled = true;
             }
 
+            // function to display answer explanations
             function explanations(score) {
                 let explanationText = "<p>Answer explanations:</p>";
                 explanationText += `<p>Question 1: 13 * 12 = 156</p>`;
@@ -124,4 +134,5 @@
         });
     </script>
 </body>
+
 </html>

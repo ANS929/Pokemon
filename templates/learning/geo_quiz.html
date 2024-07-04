@@ -10,27 +10,35 @@
 </head>
 
 <body>
-    <h1>Geometry Quiz</h1>
-    <p>
-    <h2>Instructions: Use the cards to answer the five questions below.</h2>
-    <img src="{% static 'images/basicenergy.jpg' %}" alt="Basic Energy">
-    </p>
-    <form id="quiz-form">
-        <div id="quiz-container"></div>
-        <button type="submit" id="submit-button">Submit Quiz</button>
-    </form> <br>
-    <div id="result-container"></div>
+    <header>
+        <h1>Geometry Quiz</h1>
+        <h2>Instructions: Use the cards to answer the five questions below.</h2>
+    </header>
 
+    <main>
+        <img src="{% static 'images/basicenergy.jpg' %}" alt="8 types of Pokémon Basic Energy">
+
+        <!-- quiz submission and results-->
+        <form id="quiz-form">
+            <div id="quiz-container"></div>
+            <button type="submit" id="submit-button">Submit Quiz</button>
+        </form> <br>
+        <div id="result-container"></div>
+    </main>
     <footer>
-        <a href="{% url 'learning:gr4' %}">Return to Grade 4 Homepage</a> <br>
-        <a href="{% url 'learning:dashboard' %}">Student Dashboard</a> <br>
-        <a href="{% url 'learning:students_home' %}">Student Home</a> <br>
-        <a href="{% url 'learning:learning_home' %}">Learning Home</a> <br>
-        <a href="{% url 'index' %}">Home</a>
+        <nav>
+            <a href="{% url 'learning:gr4' %}">Return to Grade 4 Homepage</a> <br>
+            <a href="{% url 'learning:dashboard' %}">Student Dashboard</a> <br>
+            <a href="{% url 'learning:students_home' %}">Student Home</a> <br>
+            <a href="{% url 'learning:learning_home' %}">Learning Home</a> <br>
+            <a href="{% url 'index' %}">Home</a>
+        </nav>
     </footer>
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
+
+            // array of quiz questions
             const questions = [
                 {
                     question: "1.) Yes or No: Do any of the Basic Energy symbols have BOTH vertical and horizontal symmmetry?",
@@ -66,6 +74,7 @@
             const resultContainer = document.getElementById('result-container');
             const submitButton = document.getElementById('submit-button');
 
+            // function to generate the quiz based on the array
             function generateQuiz() {
                 const output = [];
                 questions.forEach((currentQuestion, questionIndex) => {
@@ -93,6 +102,7 @@
                 quizContainer.innerHTML = output.join('');
             }
 
+            // function to display the quiz score
             function showResults(event) {
                 event.preventDefault();
                 let score = 0;
@@ -129,12 +139,14 @@
                 explanations(score);
             }
 
+            // function to disallow multiple attemps
             function disableQuiz() {
                 const inputs = document.querySelectorAll('#quiz-form input[type="text"], #quiz-form input[type="radio"]');
                 inputs.forEach(input => input.disabled = true);
                 submitButton.disabled = true;
             }
 
+            // function to display answer explanations
             function explanations(score) {
                 let explanationText = "<p>Answer explanations:</p>";
                 explanationText += `<p>Question 1:       </p>`;
