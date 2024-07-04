@@ -1,13 +1,42 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Registration</title>
+    <meta charset="UTF-8">
+    <title>User Registration</title>
 </head>
+
 <body>
-  <p>Registration page</p>
-  <a href="{% url 'account:account' %}">Account Home</a> <br>
-  <a href="{% url 'index' %}">Home</a>
+    <h2>User Registration</h2>
+
+    {% if registered %}
+    <p>Registration successful!</p>
+    <!-- You can add additional instructions or links here -->
+    {% else %}
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ user_form.as_p }}
+
+        <button type="submit">Register</button>
+    </form>
+
+    {% if user_form.errors %}
+    <p>Errors:</p>
+    <ul>
+        {% for field, errors in user_form.errors.items %}
+        {% for error in errors %}
+        <li>{{ field }}: {{ error }}</li>
+        {% endfor %}
+        {% endfor %}
+    </ul>
+    {% endif %}
+    {% endif %}
+    <footer>
+        <nav>
+            <a href="{% url 'account:account' %}">Account Home</a> <br>
+            <a href="{% url 'index' %}">Home</a>
+        </nav>
+    </footer>
 </body>
+
 </html>
