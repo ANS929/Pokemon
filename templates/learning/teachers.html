@@ -2,12 +2,11 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Teacher homepage</title>
+    <title>Teachers Home</title>
 </head>
 <body>
-    <p>Teachers home page</p>
-    <a href="{% url 'learning:students' %}">Your Students</a>
-    <a href="{% url 'learning:classes' %}">Your Classes</a> <br>
+    <p>Teachers homepage</p>    
+    <a href="{% url 'learning:teacher_dashboard' %}">Teacher Dashboard</a> <br>
     <a href="{% url 'learning:learning_home' %}">Learning Home</a> <br>
     <a href="{% url 'index' %}">Home</a>
 </body>

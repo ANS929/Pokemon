@@ -4,6 +4,7 @@ from django.http import HttpResponse
 from django.contrib.auth import authenticate, login,logout
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
+from .forms import UserRegistrationForm
 
 def index(request):
     return render(request, 'learning/base.html')
@@ -21,24 +22,21 @@ def settings(request):
     return render(request, 'account/settings.html')
 
 def register(request):
-    registered = False
-    
     if request.method == 'POST':
-        user_form = UserForm(request.POST)
-        
-        if user_form.is_valid():
-            user = user_form.save()
-            registered = True
-            return redirect('registration_success')  # Replace with your success URL or logic
-        else:
-            print(user_form.errors)
+        form = UserRegistrationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            profile = user.profile  # Access the profile related to this user
+            profile.is_student = form.cleaned_data.get('is_student')
+            profile.is_teacher = form.cleaned_data.get('is_teacher')
+            profile.save()
+            username = form.cleaned_data.get('username')
+            messages.success(request, f'Account created for {username}. You can now log in.')
+            return redirect('account-login')  # Redirect to login page after successful registration
     else:
-        user_form = UserForm()
+        form = UserRegistrationForm()
     
-    return render(request, 'account/register.html', {
-        'user_form': user_form,
-        'registered': registered
-    })
+    return render(request, 'account/register.html', {'form': form})
 
 def user_login(request):
     if request.method == 'POST':
@@ -63,3 +61,21 @@ def user_login(request):
 def user_logout(request):
     logout(request)
     return redirect(reverse('learning:index;'))
+
+@login_required
+def student_dashboard(request):
+    if request.user.profile.is_student:
+        # Render student dashboard
+        return render(request, 'learning:student_dashboard')
+    else:
+        # Redirect or show access denied message
+        return HttpResponse("You do not have permission to view this page.")
+
+@login_required
+def teacher_dashboard(request):
+    if request.user.profile.is_teacher:
+        # Render teacher dashboard
+        return render(request, 'learning:teacher_dashboard')
+    else:
+        # Redirect or show access denied message
+        return HttpResponse("You do not have permission to view this page.")

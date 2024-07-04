@@ -9,20 +9,20 @@ def learning_home(request):
 def parents(request):
     return render(request, 'learning/parents.html')
 
-def students_home(request):
-    return render(request, 'learning/students_home.html')
+def students(request):
+    return render(request, 'learning/students.html')
 
 def teachers(request):
     return render(request, 'learning/teachers.html')
 
-def classes(request):
-    return render(request, 'learning/classes.html')
+def your_classes(request):
+    return render(request, 'learning/your_classes.html')
 
-def students(request):
-    return render(request, 'learning/students.html')
+def your_students(request):
+    return render(request, 'learning/your_students.html')
 
-def children(request):
-    return render(request, 'learning/children.html')
+def your_children(request):
+    return render(request, 'learning/your_children.html')
 
 def gr1(request):
     return render(request, 'learning/gr1.html')
@@ -48,8 +48,8 @@ def gr7(request):
 def gr8(request):
     return render(request, 'learning/gr8.html')
 
-def dashboard(request):
-    return render(request, 'learning/dashboard.html')
+def student_dashboard(request):
+    return render(request, 'learning/student_dashboard.html')
 
 def comparing_whole(request):
     return render(request, 'learning/comparing_whole.html')
@@ -104,3 +104,9 @@ def geo_quiz(request):
 
 def meas_quiz(request):
     return render(request, 'learning/meas_quiz.html')
+
+def parent_dashboard(request):
+    return render(request, 'learning/parent_dashboard.html')
+
+def teacher_dashboard(request):
+    return render(request, 'learning/teacher_dashboard.html')
