@@ -1,148 +1,132 @@
-<!DOCTYPE html>
-
+{% extends 'learning/students.html' %}
 {% load static %}
 
-<html lang="en">
+{% block title_block %}
+Addition and Subtraction of Whole Numbers
+{% endblock %}
 
-<head>
-    <meta charset="UTF-8">
-    <title>Computation: Addition and Subtraction of Whole Numbers</title>
+{% block body_block %}
+<header>
+    <h1>Addition and Subtraction of Whole Numbers</h1>
+</header>
 
-    <script>
+<main>
+    <section>
+        <h2>Introduction:</h2>
+        <p> Addition is combining two numbers together to get a new total (called the sum). Subtraction is when you
+            take
+            one number away from another number to get a new number (called the difference).
+        </p>
+    </section>
 
-        // Question 1 logic (addition)
-        function checkAnswer1(event) {
-            event.preventDefault(); // prevent default form submission
+    <section>
+        <h2>Addition:</h2>
+        <p>Begin by lining up the rightmost digit (tens position) of each number. Add from right to left, carrying
+            as
+            needed. <br>
+            Example:
+        </p>
+    </section>
 
-            var damageOutput = document.getElementById('damageOutput').value.trim();
-            var correctAnswer = '220';
-            var feedbackDiv = document.getElementById('feedback1');
-            var inputField = document.getElementById('damageOutput');
-            var submitButton = document.getElementById('submitBtn1');
+    <section>
+        <h2>Subtraction:</h2>
+        <p>Begin by lining up the rightmost digit (tens position) of each number. Subtract from right to left,
+            borrowing
+            as needed. <br>
+            Example:
+        </p>
 
-            var allowedInput = /^\d+$/;
+    </section>
 
-            // validate input
-            if (!allowedInput.test(damageOutput)) {
-                feedbackDiv.textContent = 'Invalid input. Please enter a whole number';
-                return;
-            }
+    <section>
+        <h2>You Try:</h2>
+        <figure>
+            <img src="{% static 'images/Cetitan.png' %}" alt="Cetitan Pokémon card">
+            <img src="{% static 'images/Tyranitar.png' %}" alt="Tyranitar Pokémon card">
+        </figure>
 
-            // check for correct answer and provide feedback
-            if (damageOutput === correctAnswer) {
-                feedbackDiv.textContent = 'Correct! 80 + 140 = 220. Well done!';
-                inputField.disabled = true; // disable input field
-                submitButton.disabled = true; // disable submit button
-            } else {
-                feedbackDiv.textContent = 'Incorrect. Please try again.';
-            }
+        <p><b>Question 1:</b><br>
+            If your Cetitan has a Special Energy attached, how much damage will its Special Horn attack do?
+        </p>
+
+        <!-- Question 1 submission -->
+        <form onsubmit="checkAnswer1(event)">
+            <label for="damageOutput">Special Horn's damage output</label>
+            <input type="text" id="damageOutput" name="damageOutput" style="width: 40px;">
+            <input type="submit" value="Submit" id="submitBtn1">
+        </form>
+        <p id="feedback1"></p>
+
+        <p><b>Question 2:</b><br>
+            Your opponent's Tyranitar attacks your Cetitan with Rout, doing 90 damage. How many hit points does your
+            Cetitan have left?
+        </p>
+
+        <!-- Question 2 submission -->
+        <form onsubmit="checkAnswer2(event)">
+            <label for="remainingHP">Cetitan's remaining HP</label>
+            <input type="text" id="remainingHP" name="remainingHP" style="width: 40px;">
+            <input type="submit" value="Submit" id="submitBtn2">
+        </form>
+        <p id="feedback2"></p>
+    </section>
+</main>
+<script>
+
+    // Question 1 logic (addition)
+    function checkAnswer1(event) {
+        event.preventDefault(); // prevent default form submission
+
+        var damageOutput = document.getElementById('damageOutput').value.trim();
+        var correctAnswer = '220';
+        var feedbackDiv = document.getElementById('feedback1');
+        var inputField = document.getElementById('damageOutput');
+        var submitButton = document.getElementById('submitBtn1');
+
+        var allowedInput = /^\d+$/;
+
+        // validate input
+        if (!allowedInput.test(damageOutput)) {
+            feedbackDiv.textContent = 'Invalid input. Please enter a whole number';
+            return;
         }
 
-        //Question 2 logic (subtraction)
-        function checkAnswer2(event) {
-            event.preventDefault(); // prevent default form submission
-
-            var remainingHP = document.getElementById('remainingHP').value.trim();
-            var correctAnswer = '90';
-            var feedbackDiv2 = document.getElementById('feedback2');
-            var inputField = document.getElementById('remainingHP');
-            var submitButton = document.getElementById('submitBtn2');
-
-            var allowedInput = /^\d+$/;
-
-            // validate input
-            if (!allowedInput.test(remainingHP)) {
-                feedbackDiv2.textContent = 'Invalid input. Please enter a whole number';
-                return;
-            }
-
-            // check for correct answer and provide feedback
-            if (remainingHP === correctAnswer) {
-                feedbackDiv2.textContent = 'Correct! 180 - 90 = 90. Well done!';
-                inputField.disabled = true; // disable input field
-                submitButton.disabled = true; // disable submit button
-            } else {
-                feedbackDiv2.textContent = 'Incorrect. Please try again.';
-            }
+        // check for correct answer and provide feedback
+        if (damageOutput === correctAnswer) {
+            feedbackDiv.textContent = 'Correct! 80 + 140 = 220. Well done!';
+            inputField.disabled = true; // disable input field
+            submitButton.disabled = true; // disable submit button
+        } else {
+            feedbackDiv.textContent = 'Incorrect. Please try again.';
         }
-    </script>
-</head>
+    }
 
-<body>
-    <header>
-        <h1>Addition and Subtraction of Whole Numbers</h1>
-    </header>
+    //Question 2 logic (subtraction)
+    function checkAnswer2(event) {
+        event.preventDefault(); // prevent default form submission
 
-    <main>
-        <section>
-            <h2>Introduction:</h2>
-            <p> Addition is combining two numbers together to get a new total (called the sum). Subtraction is when you
-                take
-                one number away from another number to get a new number (called the difference).
-            </p>
-        </section>
+        var remainingHP = document.getElementById('remainingHP').value.trim();
+        var correctAnswer = '90';
+        var feedbackDiv2 = document.getElementById('feedback2');
+        var inputField = document.getElementById('remainingHP');
+        var submitButton = document.getElementById('submitBtn2');
 
-        <section>
-            <h2>Addition:</h2>
-            <p>Begin by lining up the rightmost digit (tens position) of each number. Add from right to left, carrying
-                as
-                needed. <br>
-                Example:
-            </p>
-        </section>
+        var allowedInput = /^\d+$/;
 
-        <section>
-            <h2>Subtraction:</h2>
-            <p>Begin by lining up the rightmost digit (tens position) of each number. Subtract from right to left,
-                borrowing
-                as needed. <br>
-                Example:
-            </p>
+        // validate input
+        if (!allowedInput.test(remainingHP)) {
+            feedbackDiv2.textContent = 'Invalid input. Please enter a whole number';
+            return;
+        }
 
-        </section>
-
-        <section>
-            <h2>You Try:</h2>
-            <figure>
-                <img src="{% static 'images/Cetitan.png' %}" alt="Cetitan Pokémon card">
-                <img src="{% static 'images/Tyranitar.png' %}" alt="Tyranitar Pokémon card">
-            </figure>
-
-            <p><b>Question 1:</b><br>
-                If your Cetitan has a Special Energy attached, how much damage will its Special Horn attack do?
-            </p>
-
-            <!-- Question 1 submission -->
-            <form onsubmit="checkAnswer1(event)">
-                <label for="damageOutput">Special Horn's damage output</label>
-                <input type="text" id="damageOutput" name="damageOutput" style="width: 40px;">
-                <input type="submit" value="Submit" id="submitBtn1">
-            </form>
-            <p id="feedback1"></p>
-
-            <p><b>Question 2:</b><br>
-                Your opponent's Tyranitar attacks your Cetitan with Rout, doing 90 damage. How many hit points does your
-                Cetitan have left?
-            </p>
-
-            <!-- Question 2 submission -->
-            <form onsubmit="checkAnswer2(event)">
-                <label for="remainingHP">Cetitan's remaining HP</label>
-                <input type="text" id="remainingHP" name="remainingHP" style="width: 40px;">
-                <input type="submit" value="Submit" id="submitBtn2">
-            </form>
-            <p id="feedback2"></p>
-        </section>
-    </main>
-</body>
-<footer>
-    <nav>
-        <a href="{% url 'learning:gr4' %}">Return to Grade 4 Homepage</a> <br>
-        <a href="{% url 'learning:student_dashboard' %}">Student Dashboard</a> <br>
-        <a href="{% url 'learning:students' %}">Student Home</a> <br>
-        <a href="{% url 'learning:index' %}">Learning Home</a> <br>
-        <a href="{% url 'index' %}">Home</a>
-    </nav>
-</footer>
-
-</html>
+        // check for correct answer and provide feedback
+        if (remainingHP === correctAnswer) {
+            feedbackDiv2.textContent = 'Correct! 180 - 90 = 90. Well done!';
+            inputField.disabled = true; // disable input field
+            submitButton.disabled = true; // disable submit button
+        } else {
+            feedbackDiv2.textContent = 'Incorrect. Please try again.';
+        }
+    }
+</script>
+{% endblock %}

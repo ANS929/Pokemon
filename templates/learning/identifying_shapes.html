@@ -1,94 +1,77 @@
-<!DOCTYPE html>
-
+{% extends 'learning/students.html' %}
 {% load static %}
 
-<html lang="en">
+{% block title_block %}
+Identifying Geometric Shapes
+{% endblock %}
 
-<head>
-    <meta charset="UTF-8">
-    <title>Geometry: Identifying Geometric Shapes</title>
-</head>
+{% block body_block %}
+<header>
+    <h1>Identifying Geometric Shapes</h1>
+</header>
 
-<body>
-    <header>
-        <h1>Identifying Geometric Shapes</h1>
-    </header>
+<main>
+    <section>
+        <h2>Introduction:</h2>
+        <p>Content here</p>
+    </section>
 
-    <main>
-        <section>
-            <h2>Introduction:</h2>
-            <p>Content here</p>
-        </section>
+    <section>
+        <h2>Parallelograms: </h2>
+        <p>Content here</p>
+    </section>
 
-        <section>
-            <h2>Parallelograms: </h2>
-            <p>Content here</p>
-        </section>
+    <section>
+        <h2>Rhombuses:</h2>
+        <p>Content here</p>
+    </section>
 
-        <section>
-            <h2>Rhombuses:</h2>
-            <p>Content here</p>
-        </section>
+    <section>
+        <h2>Trapezoids:</h2>
+        <p>Content here</p>
+    </section>
 
-        <section>
-            <h2>Trapezoids:</h2>
-            <p>Content here</p>
-        </section>
+    <section>
+        <h2>You Try:</h2>
+        <p>Content here</p>
+        <figure>
+            <img src="{% static 'images/Turo.png' %}" alt="Professor's Research (Turo) Pokémon card">
+        </figure>
 
-        <section>
-            <h2>You Try:</h2>
-            <p>Content here</p>
-            <figure>
-                <img src="{% static 'images/Turo.png' %}" alt="Professor's Research (Turo) Pokémon card">
-            </figure>
-            <p>
+        <!-- answer entry and submission -->
+        <form onsubmit="checkAnswer(event)">
+            <label for="shape">Shape of a Pokémon card</label>
+            <select id="shape" name="shape">
+                <option value="" selected disabled>Select shape</option>
+                <option value="parallelogram">parallelogram</option>
+                <option value="rhombus">rhombus</option>
+                <option value="trapezoid">trapezoid</option>
+            </select>
+            <input type="submit" value="Submit" id="submitBtn">
+        </form>
+        <p id="feedback"></p>
+    </section>
+</main>
 
-            </p>
+<script>
+    // function to check the answer to the You Try problem
+    function checkAnswer(event) {
+        event.preventDefault(); // prevent default form submission
 
-            <!-- answer entry and submission -->
-            <form onsubmit="checkAnswer(event)">
-                <label for="shape">Shape of a Pokémon card</label>
-                <select id="shape" name="shape">
-                    <option value="" selected disabled>Select shape</option>
-                    <option value="parallelogram">parallelogram</option>
-                    <option value="rhombus">rhombus</option>
-                    <option value="trapezoid">trapezoid</option>
-                </select>
-                <input type="submit" value="Submit" id="submitBtn">
-            </form>
-            <p id="feedback"></p>
-        </section>
-    </main>
-    <footer>
-        <nav>
-            <a href="{% url 'learning:gr4' %}">Return to Grade 4 Homepage</a> <br>
-            <a href="{% url 'learning:student_dashboard' %}">Student Dashboard</a> <br>
-            <a href="{% url 'learning:students' %}">Student Home</a> <br>
-            <a href="{% url 'learning:index' %}">Learning Home</a> <br>
-            <a href="{% url 'index' %}">Home</a>
-        </nav>
-    </footer>
-    <script>
-        // function to check the answer to the You Try problem
-        function checkAnswer(event) {
-            event.preventDefault(); // prevent default form submission
+        var shape = document.getElementById('shape').value;
+        var correctAnswer = 'parallelogram';
+        var feedbackDiv = document.getElementById('feedback');
+        var selectField = document.getElementById('shape');
+        var submitButton = document.getElementById('submitBtn');
 
-            var shape = document.getElementById('shape').value;
-            var correctAnswer = 'parallelogram';
-            var feedbackDiv = document.getElementById('feedback');
-            var selectField = document.getElementById('shape');
-            var submitButton = document.getElementById('submitBtn');
-
-            // check for correct answer and provide feedback
-            if (shape === correctAnswer) {
-                feedbackDiv.textContent = 'Correct! A Pokémon card is a rectangle, which is a parallelogram. Well done!';
-                selectField.disabled = true; // disable select field
-                submitButton.disabled = true; // disable submit button
-            } else {
-                feedbackDiv.textContent = 'Incorrect. Please try again.';
-            }
+        // check for correct answer and provide feedback
+        if (shape === correctAnswer) {
+            feedbackDiv.textContent = 'Correct! A Pokémon card is a rectangle, which is a parallelogram. Well done!';
+            selectField.disabled = true; // disable select field
+            submitButton.disabled = true; // disable submit button
+        } else {
+            feedbackDiv.textContent = 'Incorrect. Please try again.';
         }
-    </script>
-</body>
-
-</html>
+    }
+</script>
+{% endblock %}

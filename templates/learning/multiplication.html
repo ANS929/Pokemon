@@ -1,98 +1,83 @@
-<!DOCTYPE html>
-
+{% extends 'learning/students.html' %}
 {% load static %}
 
-<html lang="en">
+{% block title_block %}
+Multiplication of Whole Numbers
+{% endblock %}
 
-<head>
-    <meta charset="UTF-8">
-    <title>Computation: Multiplication of Whole Numbers</title>
+{% block body_block %}
+<header>
+    <h1>Multiplication of Whole Numbers</h1>
+</header>
 
-    <script>
-        function checkAnswer(event) {
-            event.preventDefault(); // prevent default form submission
+<main>
+    <section>
+        <h2>Introduction:</h2>
+        <p> Multiplication is
+        </p>
+    </section>
 
-            var damageOutput = document.getElementById('damageOutput').value.trim();
-            var correctAnswer = '380';
-            var feedbackDiv = document.getElementById('feedback');
-            var inputField = document.getElementById('damageOutput');
-            var submitButton = document.getElementById('submitBtn');
+    <section>
+        <h2>Example 1: (whole of up to 4 digits by one digit) </h2>
+        <p> Content here
 
-            var allowedInput = /^\d+$/;
+        </p>
+    </section>
 
-            // validate input
-            if (!allowedInput.test(damageOutput)) {
-                feedbackDiv.textContent = 'Invalid input. Please enter a whole number';
-                return;
-            }
+    <section>
+        <h2>Example 2: (two 2 digit)</h2>
+        <p>Content here</p>
 
-            // check for correct answer and provide feedback
-            if (damageOutput === correctAnswer) {
-                feedbackDiv.textContent = 'Correct! 190 * 2 = 380. Well done!';
-                inputField.disabled = true; // disable input field
-                submitButton.disabled = true; // disable submit button
-            } else {
-                feedbackDiv.textContent = 'Incorrect. Please try again.';
-            }
+    </section>
+
+    <section>
+        <h2>You Try:</h2>
+        <p> Your Gardevoir ex attacks your opponent's Koraidon ex with Miracle Force. How much damage will the
+            attack
+            do? (Hint: notice that Koraidon has psychic weakness)
+        </p>
+        <figure>
+            <img src="{% static 'images/Gardevoir.png' %}" alt="Gardevoir ex">
+            <img src="{% static 'images/Koraidon.png' %}" alt="Koraidon ex">
+        </figure>
+        <p>
+
+        </p>
+        <form onsubmit="checkAnswer(event)">
+            <label for="inputField">Miracle Force's damage output</label>
+            <input type="text" id="damageOutput" name="damageOutput" style="width: 40px;">
+            <input type="submit" value="Submit" id="submitBtn">
+        </form>
+        <p id="feedback"></p>
+    </section>
+</main>
+
+<script>
+    function checkAnswer(event) {
+        event.preventDefault(); // prevent default form submission
+
+        var damageOutput = document.getElementById('damageOutput').value.trim();
+        var correctAnswer = '380';
+        var feedbackDiv = document.getElementById('feedback');
+        var inputField = document.getElementById('damageOutput');
+        var submitButton = document.getElementById('submitBtn');
+
+        var allowedInput = /^\d+$/;
+
+        // validate input
+        if (!allowedInput.test(damageOutput)) {
+            feedbackDiv.textContent = 'Invalid input. Please enter a whole number';
+            return;
         }
-    </script>
-</head>
 
-<body>
-    <header>
-        <h1>Multiplication of Whole Numbers</h1>
-    </header>
-
-    <main>
-        <section>
-            <h2>Introduction:</h2>
-            <p> Multiplication is
-            </p>
-        </section>
-
-        <section>
-            <h2>Example 1: (whole of up to 4 digits by one digit) </h2>
-            <p> Content here
-
-            </p>
-        </section>
-
-        <section>
-            <h2>Example 2: (two 2 digit)</h2>
-            <p>Content here</p>
-
-        </section>
-
-        <section>
-            <h2>You Try:</h2>
-            <p> Your Gardevoir ex attacks your opponent's Koraidon ex with Miracle Force. How much damage will the
-                attack
-                do? (Hint: notice that Koraidon has psychic weakness)
-            </p>
-            <figure>
-                <img src="{% static 'images/Gardevoir.png' %}" alt="Gardevoir ex">
-                <img src="{% static 'images/Koraidon.png' %}" alt="Koraidon ex">
-            </figure>
-            <p>
-
-            </p>
-            <form onsubmit="checkAnswer(event)">
-                <label for="inputField">Miracle Force's damage output</label>
-                <input type="text" id="damageOutput" name="damageOutput" style="width: 40px;">
-                <input type="submit" value="Submit" id="submitBtn">
-            </form>
-            <p id="feedback"></p>
-        </section>
-    </main>
-</body>
-<footer>
-    <nav>
-        <a href="{% url 'learning:gr4' %}">Return to Grade 4 Homepage</a> <br>
-        <a href="{% url 'learning:student_dashboard' %}">Student Dashboard</a> <br>
-        <a href="{% url 'learning:students' %}">Student Home</a> <br>
-        <a href="{% url 'learning:index' %}">Learning Home</a> <br>
-        <a href="{% url 'index' %}">Home</a>
-    </nav>
-</footer>
-
-</html>
+        // check for correct answer and provide feedback
+        if (damageOutput === correctAnswer) {
+            feedbackDiv.textContent = 'Correct! 190 * 2 = 380. Well done!';
+            inputField.disabled = true; // disable input field
+            submitButton.disabled = true; // disable submit button
+        } else {
+            feedbackDiv.textContent = 'Incorrect. Please try again.';
+        }
+    }
+</script>
+{% endblock %}

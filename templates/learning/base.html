@@ -2,18 +2,32 @@
 
 {% load static %}
 
-<html lang="en">
+<html>
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Homepage</title>
+  <title>
+    {% block title_block %}
+    Homepage
+    {% endblock %}
+  </title>
 </head>
+
 <body>
-  <p>Welcome to the main page! </p>
-  <a href="{% url 'learning:index' %}">Learning Hub</a> &nbsp;&nbsp;
-  <a href="{% url 'community:community' %}">Community</a> &nbsp;&nbsp;
-  <a href="{% url 'about:about' %}">About</a> &nbsp;&nbsp;
-  <a href="{% url 'account:account' %}">Account</a>
-  <br> <img src="{% static 'images/pokemon_logo.png' %}" alt="Pokemon logo" />
+  <div>
+    {% block body_block %}
+    <img src="{% static 'images/pokemon_logo.png' %}" alt="Pokémon logo"> <br>
+    *Homepage content here*
+    {% endblock %}
+  </div>
+  <hr />
+  <div>
+    <ul>
+      <li><a href="{% url 'learning:index' %}">Learning Hub</a></li>
+      <li><a href="{% url 'community:community' %}">Community</a></li>
+      <li><a href="{% url 'about:about' %}">About</a></li>
+      <li><a href="{% url 'account:account' %}">Account</a></li>
+    </ul>
+  </div>
 </body>
+
 </html>

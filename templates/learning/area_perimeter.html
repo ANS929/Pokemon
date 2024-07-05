@@ -1,128 +1,112 @@
-<!DOCTYPE html>
-
+{% extends 'learning/students.html' %}
 {% load static %}
 
-<html lang="en">
+{% block title_block %}
+Area and Perimeter of Rectangles
+{% endblock %}
 
-<head>
-    <meta charset="UTF-8">
-    <title>Measurement: Area and Perimeter of Rectangles</title>
-</head>
+{% block body_block %}
+<header>
+    <h1>Area and Perimeter of Rectangles</h1>
+</header>
 
-<body>
+<main>
+    <section>
+        <h2>Introduction:</h2>
+        <p>Content here</p>
+    </section>
 
-    <header>
-        <h1>Area and Perimeter of Rectangles</h1>
-    </header>
+    <section>
+        <h2>Example 1: </h2>
+        <p>Content here</p>
+    </section>
 
-    <main>
-        <section>
-            <h2>Introduction:</h2>
-            <p>Content here</p>
-        </section>
+    <section>
+        <h2>Example 2:</h2>
+        <p>Content here</p>
+    </section>
 
-        <section>
-            <h2>Example 1: </h2>
-            <p>Content here</p>
-        </section>
+    <section>
+        <h2>You Try:</h2>
+        <p> A Pokémon playmat is approximately 61 centimeters wide and 36 centimeters long. Find the area and
+            perimeter of a playmat.</p>
+        <figure>
+            <img src="{% static 'images/playmat.jpg' %}" alt="playmat">
+        </figure>
 
-        <section>
-            <h2>Example 2:</h2>
-            <p>Content here</p>
-        </section>
+        <!-- Question 1 submission -->
+        <form onsubmit="checkAnswer1(event)">
+            <label for="area">Area of a playmat (in square centimeters, ex: 1234)</label>
+            <input type="text" id="area" name="area" style="width: 50px;">
+            <input type="submit" value="Submit" id="submitBtn1">
+        </form>
+        <p id="feedback1"></p>
 
-        <section>
-            <h2>You Try:</h2>
-            <p> A Pokémon playmat is approximately 61 centimeters wide and 36 centimeters long. Find the area and
-                perimeter of a playmat.</p>
-            <figure>
-                <img src="{% static 'images/playmat.jpg' %}" alt="playmat">
-            </figure>
+        <!-- Question 2 submission -->
+        <form onsubmit="checkAnswer2(event)">
+            <label for="perimeter">Perimeter of a playmat (in centimeters, ex: 567)</label>
+            <input type="text" id="perimeter" name="perimeter" style="width: 50px;">
+            <input type="submit" value="Submit" id="submitBtn2">
+        </form>
+        <p id="feedback2"></p>
+    </section>
+</main>
 
-            <!-- Question 1 submission -->
-            <form onsubmit="checkAnswer1(event)">
-                <label for="area">Area of a playmat (in square centimeters, ex: 1234)</label>
-                <input type="text" id="area" name="area" style="width: 50px;">
-                <input type="submit" value="Submit" id="submitBtn1">
-            </form>
-            <p id="feedback1"></p>
+<script>
+    // Question 1 logic (area)
+    function checkAnswer1(event) {
+        event.preventDefault(); // prevent default form submission
 
-            <!-- Question 2 submission -->
-            <form onsubmit="checkAnswer2(event)">
-                <label for="perimeter">Perimeter of a playmat (in centimeters, ex: 567)</label>
-                <input type="text" id="perimeter" name="perimeter" style="width: 50px;">
-                <input type="submit" value="Submit" id="submitBtn2">
-            </form>
-            <p id="feedback2"></p>
-        </section>
-    </main>
-    <footer>
-        <nav>
-            <a href="{% url 'learning:gr4' %}">Return to Grade 4 Homepage</a> <br>
-            <a href="{% url 'learning:student_dashboard' %}">Student Dashboard</a> <br>
-            <a href="{% url 'learning:students' %}">Student Home</a> <br>
-            <a href="{% url 'learning:index' %}">Learning Home</a> <br>
-            <a href="{% url 'index' %}">Home</a>
-        </nav>
-    </footer>
+        var area = document.getElementById('area').value.trim();
+        var correctAnswer = '2196';
+        var feedbackDiv = document.getElementById('feedback1');
+        var inputField = document.getElementById('area');
+        var submitButton = document.getElementById('submitBtn1');
 
-    <script>
-        // Question 1 logic (area)
-        function checkAnswer1(event) {
-            event.preventDefault(); // prevent default form submission
+        var allowedInput = /^\d+$/;
 
-            var area = document.getElementById('area').value.trim();
-            var correctAnswer = '2196';
-            var feedbackDiv = document.getElementById('feedback1');
-            var inputField = document.getElementById('area');
-            var submitButton = document.getElementById('submitBtn1');
-
-            var allowedInput = /^\d+$/;
-
-            // validate input
-            if (!allowedInput.test(area)) {
-                feedbackDiv.textContent = 'Invalid input. Please enter a whole number';
-                return;
-            }
-
-            // check for correct answer and provide feedback
-            if (area === correctAnswer) {
-                feedbackDiv.textContent = 'Correct! 61 * 36 = 2196. Well done!';
-                inputField.disabled = true; // disable input field
-                submitButton.disabled = true; // disable submit button
-            } else {
-                feedbackDiv.textContent = 'Incorrect. Please try again.';
-            }
+        // validate input
+        if (!allowedInput.test(area)) {
+            feedbackDiv.textContent = 'Invalid input. Please enter a whole number';
+            return;
         }
 
-        //Question 2 logic (perimeter)
-        function checkAnswer2(event) {
-            event.preventDefault(); // prevent default form submission
-
-            var perimeter = document.getElementById('perimeter').value.trim();
-            var correctAnswer = '194';
-            var feedbackDiv2 = document.getElementById('feedback2');
-            var inputField = document.getElementById('perimeter');
-            var submitButton = document.getElementById('submitBtn2');
-
-            var allowedInput = /^\d+$/;
-
-            // validate input
-            if (!allowedInput.test(perimeter)) {
-                feedbackDiv2.textContent = 'Invalid input. Please enter a whole number';
-                return;
-            }
-
-            // check for correct answer and provide feedback
-            if (perimeter === correctAnswer) {
-                feedbackDiv2.textContent = 'Correct! 2*61 + 2*36 = 194. Well done!';
-                inputField.disabled = true; // disable input field
-                submitButton.disabled = true; // disable submit button
-            } else {
-                feedbackDiv2.textContent = 'Incorrect. Please try again.';
-            }
+        // check for correct answer and provide feedback
+        if (area === correctAnswer) {
+            feedbackDiv.textContent = 'Correct! 61 * 36 = 2196. Well done!';
+            inputField.disabled = true; // disable input field
+            submitButton.disabled = true; // disable submit button
+        } else {
+            feedbackDiv.textContent = 'Incorrect. Please try again.';
         }
-    </script>
-</body>
+    }
 
-</html>
+    //Question 2 logic (perimeter)
+    function checkAnswer2(event) {
+        event.preventDefault(); // prevent default form submission
+
+        var perimeter = document.getElementById('perimeter').value.trim();
+        var correctAnswer = '194';
+        var feedbackDiv2 = document.getElementById('feedback2');
+        var inputField = document.getElementById('perimeter');
+        var submitButton = document.getElementById('submitBtn2');
+
+        var allowedInput = /^\d+$/;
+
+        // validate input
+        if (!allowedInput.test(perimeter)) {
+            feedbackDiv2.textContent = 'Invalid input. Please enter a whole number';
+            return;
+        }
+
+        // check for correct answer and provide feedback
+        if (perimeter === correctAnswer) {
+            feedbackDiv2.textContent = 'Correct! 2*61 + 2*36 = 194. Well done!';
+            inputField.disabled = true; // disable input field
+            submitButton.disabled = true; // disable submit button
+        } else {
+            feedbackDiv2.textContent = 'Incorrect. Please try again.';
+        }
+    }
+</script>
+{% endblock %}

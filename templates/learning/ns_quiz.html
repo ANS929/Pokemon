@@ -1,135 +1,117 @@
-<!DOCTYPE html>
-
+{% extends 'learning/students.html' %}
 {% load static %}
 
-<html lang="en">
+{% block title_block %}
+Number Sense Quiz
+{% endblock %}
 
-<head>
-    <meta charset="UTF-8">
-    <title>Number Sense: Quiz</title>
-</head>
+{% block body_block %}
+<header>
+    <h1>Number Sense Quiz</h1>
+</header>
 
-<body>
-    <header>
-        <h1>Number Sense Quiz</h1>
-    </header>
+<main>
+    <section>
+        <h2>Instructions:</h2>
+        <p>Use the cards to answer the five questions below.</p>
+        <figure>
+            <img src="{% static 'images/Inkay.png' %}" alt="Inkay Pokémon card">
+            <img src="{% static 'images/Wattrel.png' %}" alt="Wattrel Pokémon card">
+        </figure>
 
-    <main>
-        <section>
+    </section>
 
+    <!-- quiz submission and results -->
+    <section>
+        <form id="quiz-form">
+            <div id="quiz-container"></div>
+            <button type="submit" id="submit-button">Submit Quiz</button>
+        </form>
+        <div id="result-container"></div>
+    </section>
 
-            <h2>Instructions:</h2>
-            <p>Use the cards to answer the five questions below.</p>
-            <figure>
-                <img src="{% static 'images/Inkay.png' %}" alt="Inkay Pokémon card">
-                <img src="{% static 'images/Wattrel.png' %}" alt="Wattrel Pokémon card">
-            </figure>
+</main>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
 
-        </section>
+        // array of quiz questions and answers
+        const questions = [
+            {
+                question: "1.) Fill in the blank with the correct symbol (<, >, or =). Inkay's weight ____ Wattrel's weight.",
+                answer: '<'
+            },
+            {
+                question: "2.) Fill in the blank with the correct symbol (<, >, or =). Inkay's set number ____ Wattrel's set number.",
+                answer: '>'
+            },
+            {
+                question: "3.) Fill in the blank with the correct symbol (<, >, or =). Inkay's HP ____ Wattrel's HP.",
+                answer: '='
+            },
+            {
+                question: "4.) True or false: Hug's damage output < Peck's damage output",
+                answer: 'false'
+            },
+            {
+                question: "5.) True or false: Inkay's retreat cost = Wattrel's retreat cost.",
+                answer: 'true'
+            }
+        ];
 
-        <!-- quiz submission and results -->
-        <section>
-            <form id="quiz-form">
-                <div id="quiz-container"></div>
-                <button type="submit" id="submit-button">Submit Quiz</button>
-            </form>
-            <div id="result-container"></div>
-        </section>
+        const quizContainer = document.getElementById('quiz-container');
+        const resultContainer = document.getElementById('result-container');
+        const submitButton = document.getElementById('submit-button');
 
-    </main>
-    <footer>
-        <nav>
-            <a href="{% url 'learning:gr4' %}">Return to Grade 4 Homepage</a> <br>
-            <a href="{% url 'learning:student_dashboard' %}">Student Dashboard</a> <br>
-            <a href="{% url 'learning:students' %}">Student Home</a> <br>
-            <a href="{% url 'learning:index' %}">Learning Home</a> <br>
-            <a href="{% url 'index' %}">Home</a>
-        </nav>
-    </footer>
+        // function to generate the quiz based on the 'questions' array
+        function generateQuiz() {
+            const output = [];
+            questions.forEach((currentQuestion, questionIndex) => {
+                output.push(
+                    `<div class="question">${currentQuestion.question}</div>
+                    <div class="options">
+                        <input type="text" name="question${questionIndex}" id="question${questionIndex}" style="width: 40px;">
+                    </div><br>`
+                );
+            });
+            quizContainer.innerHTML = output.join('');
+        }
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-
-            // array of quiz questions and answers
-            const questions = [
-                {
-                    question: "1.) Fill in the blank with the correct symbol (<, >, or =). Inkay's weight ____ Wattrel's weight.",
-                    answer: '<'
-                },
-                {
-                    question: "2.) Fill in the blank with the correct symbol (<, >, or =). Inkay's set number ____ Wattrel's set number.",
-                    answer: '>'
-                },
-                {
-                    question: "3.) Fill in the blank with the correct symbol (<, >, or =). Inkay's HP ____ Wattrel's HP.",
-                    answer: '='
-                },
-                {
-                    question: "4.) True or false: Hug's damage output < Peck's damage output",
-                    answer: 'false'
-                },
-                {
-                    question: "5.) True or false: Inkay's retreat cost = Wattrel's retreat cost.",
-                    answer: 'true'
+        // function to calculate and display the quiz results
+        function showResults(event) {
+            event.preventDefault();
+            let score = 0;
+            questions.forEach((currentQuestion, questionIndex) => {
+                const userAnswer = document.getElementById(`question${questionIndex}`).value.trim().toLowerCase();
+                const correctAnswer = currentQuestion.answer.toLowerCase();
+                if (userAnswer === correctAnswer) {
+                    score++;
                 }
-            ];
+            });
+            resultContainer.innerHTML = `You scored ${score} out of ${questions.length}.`;
+            disableQuiz();
+            explanations(score);
+        }
 
-            const quizContainer = document.getElementById('quiz-container');
-            const resultContainer = document.getElementById('result-container');
-            const submitButton = document.getElementById('submit-button');
+        // function to disable the quiz inputs after submission 
+        function disableQuiz() {
+            const inputs = document.querySelectorAll('#quiz-form input');
+            inputs.forEach(input => input.disabled = true);
+            submitButton.disabled = true;
+        }
 
-            // function to generate the quiz based on the 'questions' array
-            function generateQuiz() {
-                const output = [];
-                questions.forEach((currentQuestion, questionIndex) => {
-                    output.push(
-                        `<div class="question">${currentQuestion.question}</div>
-                        <div class="options">
-                            <input type="text" name="question${questionIndex}" id="question${questionIndex}" style="width: 40px;">
-                        </div><br>`
-                    );
-                });
-                quizContainer.innerHTML = output.join('');
-            }
+        // function to display the answer explanations
+        function explanations(score) {
+            let explanationText = "<p>Answer explanations:</p>";
+            explanationText += `<p>Question 1: 7.7 < 7.9</p>`;
+            explanationText += `<p>Question 2: 137 > 80</p>`;
+            explanationText += `<p>Question 3: 60 = 60</p>`;
+            explanationText += `<p>Question 4: This is false because 30 > 10</p>`;
+            explanationText += `<p>Question 5: This is true because 1 = 1</p>`;
+            resultContainer.innerHTML += explanationText;
+        }
 
-            // function to calculate and display the quiz results
-            function showResults(event) {
-                event.preventDefault();
-                let score = 0;
-                questions.forEach((currentQuestion, questionIndex) => {
-                    const userAnswer = document.getElementById(`question${questionIndex}`).value.trim().toLowerCase();
-                    const correctAnswer = currentQuestion.answer.toLowerCase();
-                    if (userAnswer === correctAnswer) {
-                        score++;
-                    }
-                });
-                resultContainer.innerHTML = `You scored ${score} out of ${questions.length}.`;
-                disableQuiz();
-                explanations(score);
-            }
-
-            // function to disable the quiz inputs after submission 
-            function disableQuiz() {
-                const inputs = document.querySelectorAll('#quiz-form input');
-                inputs.forEach(input => input.disabled = true);
-                submitButton.disabled = true;
-            }
-
-            // function to display the answer explanations
-            function explanations(score) {
-                let explanationText = "<p>Answer explanations:</p>";
-                explanationText += `<p>Question 1: 7.7 < 7.9</p>`;
-                explanationText += `<p>Question 2: 137 > 80</p>`;
-                explanationText += `<p>Question 3: 60 = 60</p>`;
-                explanationText += `<p>Question 4: This is false because 30 > 10</p>`;
-                explanationText += `<p>Question 5: This is true because 1 = 1</p>`;
-                resultContainer.innerHTML += explanationText;
-            }
-
-            generateQuiz();
-            submitButton.addEventListener('click', showResults);
-        });
-    </script>
-</body>
-
-</html>
+        generateQuiz();
+        submitButton.addEventListener('click', showResults);
+    });
+</script>
+{% endblock %}

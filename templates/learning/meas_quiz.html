@@ -1,13 +1,12 @@
-<!DOCTYPE html>
+{% extends 'learning/students.html' %}
 {% load static %}
-<html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <title>Measurement: Quiz</title>
-</head>
+{% block title_block %}
+Measurement Quiz
+{% endblock %}
 
-<body>
+{% block body_block %}
+<main>
     <h1>Measurement Quiz</h1>
     <h2>Instructions: Use the images to answer the five questions below.</h2>
     <img src="{% static 'images/dragonair.png' %}" alt="Dragonair Pokémon card">
@@ -20,119 +19,108 @@
     </form>
     <br>
     <div id="result-container"></div>
+</main>
 
-    <footer>
-        <nav>
-            <a href="{% url 'learning:gr4' %}">Return to Grade 4 Homepage</a> <br>
-            <a href="{% url 'learning:student_dashboard' %}">Student Dashboard</a> <br>
-            <a href="{% url 'learning:students' %}">Student Home</a> <br>
-            <a href="{% url 'learning:index' %}">Learning Home</a> <br>
-            <a href="{% url 'index' %}">Home</a>
-        </nav>
-    </footer>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
+        // array of quiz questions
+        const questions = [
+            {
+                question: "1.) Dragonair is approximately 13 feet long. How many inches is that?",
+                type: 'short-answer',
+                answer: '156'
+            },
+            {
+                question: "2.) A double playmat is approximately 23 inches wide and 24 inches tall. What is the area (in square inches) of the playmat?",
+                type: 'short-answer',
+                answer: '552'
+            },
+            {
+                question: "3.) What is the perimeter (in inches) of the playmat?",
+                type: 'short-answer',
+                answer: '94'
+            },
+            {
+                question: "4.) A Pokémon card is approximately 63 millimeters wide and 88 millimeters tall. What is the area (in square millimeters) of a Pokémon card?",
+                type: 'short-answer',
+                answer: '5544'
+            },
+            {
+                question: "5.) You are 5 feet tall. Decidueye is 63 inches tall. Who is taller?",
+                type: 'multiple-choice',
+                options: ['You', 'Decidueye', 'You are the same height as Decidueye'],
+                answer: 'Decidueye'
+            }
+        ];
 
-            // array of quiz questions
-            const questions = [
-                {
-                    question: "1.) Dragonair is approximately 13 feet long. How many inches is that?",
-                    type: 'short-answer',
-                    answer: '156'
-                },
-                {
-                    question: "2.) A double playmat is approximately 23 inches wide and 24 inches tall. What is the area (in square inches) of the playmat?",
-                    type: 'short-answer',
-                    answer: '552'
-                },
-                {
-                    question: "3.) What is the perimeter (in inches) of the playmat?",
-                    type: 'short-answer',
-                    answer: '94'
-                },
-                {
-                    question: "4.) A Pokémon card is approximately 63 millimeters wide and 88 millimeters tall. What is the area (in square millimeters) of a Pokémon card?",
-                    type: 'short-answer',
-                    answer: '5544'
-                },
-                {
-                    question: "5.) You are 5 feet tall. Decidueye is 63 inches tall. Who is taller?",
-                    type: 'multiple-choice',
-                    options: ['You', 'Decidueye', 'You are the same height as Decidueye'],
-                    answer: 'Decidueye'
-                }
-            ];
+        const quizContainer = document.getElementById('quiz-container');
+        const resultContainer = document.getElementById('result-container');
+        const submitButton = document.getElementById('submit-button');
 
-            const quizContainer = document.getElementById('quiz-container');
-            const resultContainer = document.getElementById('result-container');
-            const submitButton = document.getElementById('submit-button');
-
-            // function to generate the quiz based on the array
-            function generateQuiz() {
-                const output = [];
-                questions.forEach((currentQuestion, questionIndex) => {
-                    if (currentQuestion.type === 'short-answer') {
-                        output.push(
-                            `<div class="question">${currentQuestion.question}</div>
+        // function to generate the quiz based on the array
+        function generateQuiz() {
+            const output = [];
+            questions.forEach((currentQuestion, questionIndex) => {
+                if (currentQuestion.type === 'short-answer') {
+                    output.push(
+                        `<div class="question">${currentQuestion.question}</div>
                             <div class="options">
                                 <input type="text" name="question${questionIndex}" id="question${questionIndex}" style="width: 50px;">
                             </div><br>`
-                        );
-                    } else if (currentQuestion.type === 'multiple-choice') {
-                        output.push(
-                            `<div class="question">${currentQuestion.question}</div>
+                    );
+                } else if (currentQuestion.type === 'multiple-choice') {
+                    output.push(
+                        `<div class="question">${currentQuestion.question}</div>
                             <div class="options">
                                 <select name="question${questionIndex}" id="question${questionIndex}">
                                     <option value="">Select an answer</option>`
-                        );
-                        currentQuestion.options.forEach(option => {
-                            output.push(`<option value="${option}">${option}</option>`);
-                        });
-                        output.push(`</select></div><br>`);
-                    }
-                });
-                quizContainer.innerHTML = output.join('');
-            }
+                    );
+                    currentQuestion.options.forEach(option => {
+                        output.push(`<option value="${option}">${option}</option>`);
+                    });
+                    output.push(`</select></div><br>`);
+                }
+            });
+            quizContainer.innerHTML = output.join('');
+        }
 
-            // function to display the quiz score
-            function showResults(event) {
-                event.preventDefault();
-                let score = 0;
-                questions.forEach((currentQuestion, questionIndex) => {
-                    const userAnswer = document.getElementById(`question${questionIndex}`).value.trim().toLowerCase();
-                    const correctAnswer = currentQuestion.answer.toLowerCase();
-                    if (userAnswer === correctAnswer) {
-                        score++;
-                    }
-                });
-                resultContainer.innerHTML = `You scored ${score} out of ${questions.length}.`;
-                disableQuiz();
-                explanations(score);
-            }
+        // function to display the quiz score
+        function showResults(event) {
+            event.preventDefault();
+            let score = 0;
+            questions.forEach((currentQuestion, questionIndex) => {
+                const userAnswer = document.getElementById(`question${questionIndex}`).value.trim().toLowerCase();
+                const correctAnswer = currentQuestion.answer.toLowerCase();
+                if (userAnswer === correctAnswer) {
+                    score++;
+                }
+            });
+            resultContainer.innerHTML = `You scored ${score} out of ${questions.length}.`;
+            disableQuiz();
+            explanations(score);
+        }
 
-            // function to prevent multiple attempts
-            function disableQuiz() {
-                const inputs = document.querySelectorAll('#quiz-form input');
-                inputs.forEach(input => input.disabled = true);
-                submitButton.disabled = true;
-            }
+        // function to prevent multiple attempts
+        function disableQuiz() {
+            const inputs = document.querySelectorAll('#quiz-form input');
+            inputs.forEach(input => input.disabled = true);
+            submitButton.disabled = true;
+        }
 
-            // function to display answer explanations
-            function explanations(score) {
-                let explanationText = "<p>Answer explanations:</p>";
-                explanationText += `<p>Question 1: 13 * 12 = 156</p>`;
-                explanationText += `<p>Question 2: 23 * 24 = 552</p>`;
-                explanationText += `<p>Question 3: 2*23 + 2*24 = 94</p>`;
-                explanationText += `<p>Question 4: 63 * 88 = 5544</p>`;
-                explanationText += `<p>Question 5: You are 5 * 12 = 60 inches tall, so Decidueye is taller.</p>`;
-                resultContainer.innerHTML += explanationText;
-            }
+        // function to display answer explanations
+        function explanations(score) {
+            let explanationText = "<p>Answer explanations:</p>";
+            explanationText += `<p>Question 1: 13 * 12 = 156</p>`;
+            explanationText += `<p>Question 2: 23 * 24 = 552</p>`;
+            explanationText += `<p>Question 3: 2*23 + 2*24 = 94</p>`;
+            explanationText += `<p>Question 4: 63 * 88 = 5544</p>`;
+            explanationText += `<p>Question 5: You are 5 * 12 = 60 inches tall, so Decidueye is taller.</p>`;
+            resultContainer.innerHTML += explanationText;
+        }
 
-            generateQuiz();
-            submitButton.addEventListener('click', showResults);
-        });
-    </script>
-</body>
-
-</html>
+        generateQuiz();
+        submitButton.addEventListener('click', showResults);
+    });
+</script>
+{% endblock %}

@@ -1,13 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Your Students</title>
-</head>
-<body>
-    <p>Students of a teacher page</p>
-    <a href="{% url 'learning:teachers' %}">Teacher Home</a> <br>
-    <a href="{% url 'learning:index' %}">Learning Home</a> <br>
-    <a href="{% url 'index' %}">Home</a>
-</body>
-</html>
+{% extends 'learning/base.html' %}
+
+{% block title_block %}
+Your Students
+{% endblock %}
+
+{% block body_block %}
+<header>
+    <h1>Your Students</h1>
+</header>
+{% endblock %}

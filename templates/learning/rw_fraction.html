@@ -1,13 +1,53 @@
-<!DOCTYPE html>
-
+{% extends 'learning/students.html' %}
 {% load static %}
 
-<html lang="en">
+{% block title_block %}
+Real-World Problems with Fractions
+{% endblock %}
 
-<head>
-    <meta charset="UTF-8">
-    <title>Algebraic Thinking: Real-World Problems with Fractions</title>
-</head>
+{% block body_block %}
+<header>
+    <h1>Real-World Problems with Fractions</h1>
+</header>
+
+<main>
+    <section>
+        <h2>Introduction:</h2>
+        <p>Content here</p>
+    </section>
+
+    <section>
+        <h2>Example 1: </h2>
+        <p>Content here</p>
+    </section>
+
+    <section>
+        <h2>Example 2:</h2>
+        <p>Content here</p>
+
+    </section>
+
+    <section>
+        <h2>You Try:</h2>
+        <p> 36 of the cards in your deck are Trainer cards. What fraction of your cards are NOT Trainer cards?
+            Please
+            write your answer as a fraction in simplest terms (for example: 3/14).
+        </p>
+        <figure>
+            <img src="{% static 'images/PrimeCatcher.png' %}" alt="Prime Catcher">
+        </figure>
+        <p>
+
+        </p>
+        <form onsubmit="checkAnswer(event)">
+            <label for="notTrainers">Fraction of cards that are not Trainers</label>
+            <input type="text" id="notTrainers" name="notTrainers" style="width: 40px;">
+            <input type="submit" value="Submit" id="submitBtn">
+        </form>
+        <p id="feedback"></p>
+    </section>
+</main>
+
 <script>
     function checkAnswer(event) {
         event.preventDefault(); // prevent default form submission
@@ -28,58 +68,4 @@
         }
     }
 </script>
-
-<body>
-    <header>
-        <h1>Real-World Problems with Fractions</h1>
-    </header>
-
-    <main>
-        <section>
-            <h2>Introduction:</h2>
-            <p>Content here</p>
-        </section>
-
-        <section>
-            <h2>Example 1: </h2>
-            <p>Content here</p>
-        </section>
-
-        <section>
-            <h2>Example 2:</h2>
-            <p>Content here</p>
-
-        </section>
-
-        <section>
-            <h2>You Try:</h2>
-            <p> 36 of the cards in your deck are Trainer cards. What fraction of your cards are NOT Trainer cards?
-                Please
-                write your answer as a fraction in simplest terms (for example: 3/14).
-            </p>
-            <figure>
-                <img src="{% static 'images/PrimeCatcher.png' %}" alt="Prime Catcher">
-            </figure>
-            <p>
-
-            </p>
-            <form onsubmit="checkAnswer(event)">
-                <label for="notTrainers">Fraction of cards that are not Trainers</label>
-                <input type="text" id="notTrainers" name="notTrainers" style="width: 40px;">
-                <input type="submit" value="Submit" id="submitBtn">
-            </form>
-            <p id="feedback"></p>
-        </section>
-    </main>
-    <footer>
-        <nav>
-            <a href="{% url 'learning:gr4' %}">Return to Grade 4 Homepage</a> <br>
-            <a href="{% url 'learning:student_dashboard' %}">Student Dashboard</a> <br>
-            <a href="{% url 'learning:students' %}">Student Home</a> <br>
-            <a href="{% url 'learning:index' %}">Learning Home</a> <br>
-            <a href="{% url 'index' %}">Home</a>
-        </nav>
-    </footer>
-</body>
-
-</html>
+{% endblock %}

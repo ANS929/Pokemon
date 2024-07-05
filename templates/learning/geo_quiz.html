@@ -1,166 +1,151 @@
-<!DOCTYPE html>
-
+{% extends 'learning/students.html' %}
 {% load static %}
 
-<html lang="en">
+{% block title_block %}
+Geometry Quiz
+{% endblock %}
 
-<head>
-    <meta charset="UTF-8">
-    <title>Geometry: Quiz</title>
-</head>
+{% block body_block %}
+<header>
+    <h1>Geometry Quiz</h1>
+    <h2>Instructions: Use the cards to answer the five questions below.</h2>
+</header>
 
-<body>
-    <header>
-        <h1>Geometry Quiz</h1>
-        <h2>Instructions: Use the cards to answer the five questions below.</h2>
-    </header>
+<main>
+    <img src="{% static 'images/basicenergy.jpg' %}" alt="8 types of Pokémon Basic Energy">
 
-    <main>
-        <img src="{% static 'images/basicenergy.jpg' %}" alt="8 types of Pokémon Basic Energy">
+    <!-- quiz submission and results-->
+    <form id="quiz-form">
+        <div id="quiz-container"></div>
+        <button type="submit" id="submit-button">Submit Quiz</button>
+    </form> <br>
+    <div id="result-container"></div>
+</main>
 
-        <!-- quiz submission and results-->
-        <form id="quiz-form">
-            <div id="quiz-container"></div>
-            <button type="submit" id="submit-button">Submit Quiz</button>
-        </form> <br>
-        <div id="result-container"></div>
-    </main>
-    <footer>
-        <nav>
-            <a href="{% url 'learning:gr4' %}">Return to Grade 4 Homepage</a> <br>
-            <a href="{% url 'learning:student_dashboard' %}">Student Dashboard</a> <br>
-            <a href="{% url 'learning:students' %}">Student Home</a> <br>
-            <a href="{% url 'learning:index' %}">Learning Home</a> <br>
-            <a href="{% url 'index' %}">Home</a>
-        </nav>
-    </footer>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-
-            // array of quiz questions
-            const questions = [
-                {
-                    question: "1.) Yes or No: Do any of the Basic Energy symbols have BOTH vertical and horizontal symmmetry?",
-                    type: 'short-answer',
-                    answer: ['no']
-                },
-                {
-                    question: "2.) How many of the Basic Energy symbols are symmetrical?",
-                    type: 'short-answer',
-                    answer: ['2', 'two']
-                },
-                {
-                    question: "3.) The shape of a Pokémon cad has what kind of symmetry?",
-                    type: 'multiple-choice',
-                    options: ['vertical', 'horizontal', 'both'],
-                    answer: ['both']
-                },
-                {
-                    question: "4.) True or False: The Pyschic Energy symbol is symmetrical.",
-                    type: 'multiple-choice',
-                    options: ['True', 'False'],
-                    answer: ['False']
-                },
-                {
-                    question: "5.) Of the following Basic Energy symbols, which does NOT have vertical symmetry?",
-                    type: 'multiple-choice',
-                    options: ['Darkness', 'Metal', 'Fighting'],
-                    answer: ['Fighting']
-                }
-            ];
-
-            const quizContainer = document.getElementById('quiz-container');
-            const resultContainer = document.getElementById('result-container');
-            const submitButton = document.getElementById('submit-button');
-
-            // function to generate the quiz based on the array
-            function generateQuiz() {
-                const output = [];
-                questions.forEach((currentQuestion, questionIndex) => {
-                    if (currentQuestion.type === 'short-answer') {
-                        output.push(
-                            `<div class="question">${currentQuestion.question}</div>
-                            <div class="options">
-                                <input type="text" name="question${questionIndex}" id="question${questionIndex}" style="width: 100px;">
-                            </div><br>`
-                        );
-                    } else if (currentQuestion.type === 'multiple-choice') {
-                        output.push(
-                            `<div class="question">${currentQuestion.question}</div>
-                            <div class="options">`
-                        );
-                        currentQuestion.options.forEach((option, index) => {
-                            output.push(
-                                `<input type="radio" name="question${questionIndex}" id="question${questionIndex}_${index}" value="${option}">
-                                <label for="question${questionIndex}_${index}">${option}</label><br>`
-                            );
-                        });
-                        output.push(`</div><br>`);
-                    }
-                });
-                quizContainer.innerHTML = output.join('');
+        // array of quiz questions
+        const questions = [
+            {
+                question: "1.) Yes or No: Do any of the Basic Energy symbols have BOTH vertical and horizontal symmmetry?",
+                type: 'short-answer',
+                answer: ['no']
+            },
+            {
+                question: "2.) How many of the Basic Energy symbols are symmetrical?",
+                type: 'short-answer',
+                answer: ['2', 'two']
+            },
+            {
+                question: "3.) The shape of a Pokémon cad has what kind of symmetry?",
+                type: 'multiple-choice',
+                options: ['vertical', 'horizontal', 'both'],
+                answer: ['both']
+            },
+            {
+                question: "4.) True or False: The Pyschic Energy symbol is symmetrical.",
+                type: 'multiple-choice',
+                options: ['True', 'False'],
+                answer: ['False']
+            },
+            {
+                question: "5.) Of the following Basic Energy symbols, which does NOT have vertical symmetry?",
+                type: 'multiple-choice',
+                options: ['Darkness', 'Metal', 'Fighting'],
+                answer: ['Fighting']
             }
+        ];
 
-            // function to display the quiz score
-            function showResults(event) {
-                event.preventDefault();
-                let score = 0;
-                questions.forEach((currentQuestion, questionIndex) => {
-                    if (currentQuestion.type === 'short-answer') {
-                        const userAnswer = document.getElementById(`question${questionIndex}`).value.trim().toLowerCase();
-                        const correctAnswers = currentQuestion.answer.map(ans => ans.toLowerCase());
-                        if (correctAnswers.includes(userAnswer)) {
+        const quizContainer = document.getElementById('quiz-container');
+        const resultContainer = document.getElementById('result-container');
+        const submitButton = document.getElementById('submit-button');
+
+        // function to generate the quiz based on the array
+        function generateQuiz() {
+            const output = [];
+            questions.forEach((currentQuestion, questionIndex) => {
+                if (currentQuestion.type === 'short-answer') {
+                    output.push(
+                        `<div class="question">${currentQuestion.question}</div>
+                        <div class="options">
+                            <input type="text" name="question${questionIndex}" id="question${questionIndex}" style="width: 100px;">
+                        </div><br>`
+                    );
+                } else if (currentQuestion.type === 'multiple-choice') {
+                    output.push(
+                        `<div class="question">${currentQuestion.question}</div>
+                        <div class="options">`
+                    );
+                    currentQuestion.options.forEach((option, index) => {
+                        output.push(
+                            `<input type="radio" name="question${questionIndex}" id="question${questionIndex}_${index}" value="${option}">
+                            <label for="question${questionIndex}_${index}">${option}</label><br>`
+                        );
+                    });
+                    output.push(`</div><br>`);
+                }
+            });
+            quizContainer.innerHTML = output.join('');
+        }
+
+        // function to display the quiz score
+        function showResults(event) {
+            event.preventDefault();
+            let score = 0;
+            questions.forEach((currentQuestion, questionIndex) => {
+                if (currentQuestion.type === 'short-answer') {
+                    const userAnswer = document.getElementById(`question${questionIndex}`).value.trim().toLowerCase();
+                    const correctAnswers = currentQuestion.answer.map(ans => ans.toLowerCase());
+                    if (correctAnswers.includes(userAnswer)) {
+                        score++;
+                    }
+
+
+                } else if (currentQuestion.type === 'multiple-choice') {
+                    const selectedOption = document.querySelector(`input[name="question${questionIndex}"]:checked`);
+                    if (selectedOption) {
+                        const userAnswer = selectedOption.value;
+                        const correctAnswer = currentQuestion.answer[0];
+                        if (userAnswer === correctAnswer) {
                             score++;
                         }
-
-
-                    } else if (currentQuestion.type === 'multiple-choice') {
-                        const selectedOption = document.querySelector(`input[name="question${questionIndex}"]:checked`);
-                        if (selectedOption) {
-                            const userAnswer = selectedOption.value;
-                            const correctAnswer = currentQuestion.answer[0];
-                            if (userAnswer === correctAnswer) {
-                                score++;
-                            }
-                        }
                     }
-                });
-                let message = "";
-                if (score <= 3) {
-                    message = "Good effort! Keep practicing and try the quiz again.";
-                } else if (score === 4) {
-                    message = "Good job!";
-                } else if (score === 5) {
-                    message = "Way to go!";
                 }
-                resultContainer.innerHTML = `You scored ${score} out of ${questions.length}. ${message}`;
-                disableQuiz();
-                explanations(score);
+            });
+            let message = "";
+            if (score <= 3) {
+                message = "Good effort! Keep practicing and try the quiz again.";
+            } else if (score === 4) {
+                message = "Good job!";
+            } else if (score === 5) {
+                message = "Way to go!";
             }
+            resultContainer.innerHTML = `You scored ${score} out of ${questions.length}. ${message}`;
+            disableQuiz();
+            explanations(score);
+        }
 
-            // function to disallow multiple attemps
-            function disableQuiz() {
-                const inputs = document.querySelectorAll('#quiz-form input[type="text"], #quiz-form input[type="radio"]');
-                inputs.forEach(input => input.disabled = true);
-                submitButton.disabled = true;
-            }
+        // function to disallow multiple attemps
+        function disableQuiz() {
+            const inputs = document.querySelectorAll('#quiz-form input[type="text"], #quiz-form input[type="radio"]');
+            inputs.forEach(input => input.disabled = true);
+            submitButton.disabled = true;
+        }
 
-            // function to display answer explanations
-            function explanations(score) {
-                let explanationText = "<p>Answer explanations:</p>";
-                explanationText += `<p>Question 1:       </p>`;
-                explanationText += `<p>Question 2:       </p>`;
-                explanationText += `<p>Question 3:       </p>`;
-                explanationText += `<p>Question 4: False. The small, black dot is not centered, so the symbol is not symmetrical.</p>`;
-                explanationText += `<p>Question 5: The Fighting Energy symbol is not symmetrical due to the space in the bottom part.</p>`;
-                resultContainer.innerHTML += explanationText;
-            }
+        // function to display answer explanations
+        function explanations(score) {
+            let explanationText = "<p>Answer explanations:</p>";
+            explanationText += `<p>Question 1:       </p>`;
+            explanationText += `<p>Question 2:       </p>`;
+            explanationText += `<p>Question 3:       </p>`;
+            explanationText += `<p>Question 4: False. The small, black dot is not centered, so the symbol is not symmetrical.</p>`;
+            explanationText += `<p>Question 5: The Fighting Energy symbol is not symmetrical due to the space in the bottom part.</p>`;
+            resultContainer.innerHTML += explanationText;
+        }
 
-            generateQuiz();
-            submitButton.addEventListener('click', showResults);
-        });
-    </script>
-</body>
-
-</html>
+        generateQuiz();
+        submitButton.addEventListener('click', showResults);
+    });
+</script>
+{% endblock %}

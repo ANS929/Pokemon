@@ -1,129 +1,114 @@
-<!DOCTYPE html>
+{% extends 'learning/students.html' %}
 {% load static %}
-<html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <title>Number Sense: Comparing Decimals</title>
-    <script>
-        function checkAnswer(event) {
-            event.preventDefault(); // prevent default form submission
+{% block title_block %}
+Comparing Decimals
+{% endblock %}
 
-            var comparisonSymbol = document.getElementById('comparisonSymbol').value.trim();
-            var correctAnswer = '>';
-            var feedbackDiv = document.getElementById('feedback');
-            var inputField = document.getElementById('comparisonSymbol');
-            var submitButton = document.getElementById('submitBtn');
+{% block body_block %}
+<header>
+    <h1>Comparing Decimals</h1>
+</header>
 
-            var allowedSymbols = /^[><=]$/;
+<main>
+    <section>
+        <h2>Introduction:</h2>
+        <p>
+            Two decimals can be compared using > (greater than), = (equals), and < (less than) symbols. </p>
+    </section>
 
-            // validate input
-            if (!allowedSymbols.test(comparisonSymbol)) {
-                feedbackDiv.textContent = 'Invalid input. Please enter >, =, or <.';
-                return;
-            }
+    <section>
+        <h2>Greater Than:</h2>
+        <p>The greater than symbol (>) is used to show that the number to the left has a higher value than the
+            number on the right. If the whole number part (the number to the left of the decimal) of one number is
+            equal to the whole number part of the other number, then we must look at the fractional part (the
+            number(s) to the right of the decimal) of each and compare them. We start by looking at the tenths
+            place, which is the first number after the decimal. <br><br>
 
-            // check for correct answer and provide feedback
-            if (comparisonSymbol === correctAnswer) {
-                feedbackDiv.textContent = 'Correct! 3.7 > 3.3 (since 7 > 3), so ">" is the correct symbol. Well done!';
-                inputField.disabled = true; // disable input field
-                submitButton.disabled = true; // disable submit button
-            } else {
-                feedbackDiv.textContent = 'Incorrect. Please try again.';
-            }
+            <u>Example 1</u>: Let's compare 1.3 and 1.2. Since both decimals have a whole part of 1, we must compare
+            the fractional part of each. The first number has a 3 in the tenths position, while the second number
+            has a 2 in the tenths position. Since 3 > 2, we say that 1.3 > 1.2. <br><br>
+
+            Sometimes we must look at the hundredths place, which is the second number after the decimal. <br><br>
+
+            <u>Example 2</u>: Let's compare 1.36 and 1.31. Since both decimals have a whole part of 1, we must
+            compare the fractional part of each. We start by looking at the tenths position, which is also the same
+            for both numbers. Now we must look at the hundredths position and compare those numbers. The hundredths
+            position of the first decimal contains 6, while the hundredths position of the second decimal contains
+            1. Since 6 > 1, we say that 1.36 > 1.31.
+        </p>
+    </section>
+
+    <section>
+        <h2>Less Than:</h2>
+        <p> The less than symbol (<) is used to show that the number to the left has a lesser value than the number on
+                the right. We follow a similar process as we did above.<br><br>
+
+                <u>Example 1</u>: Let's compare 2.2 and 2.9. Since both decimals have a whole part of 2, we must
+                compare the fractional part of each. The first number has a 2 in the tenths position, while the
+                second number has a 9 in the tenths position. Since 2 < 9, we say that 2.2 < 2.9. <br><br>
+
+                    <u>Example 2</u>: Let's compare 3.14. and 3.15. Since both decimals have a whole part of 1, we
+                    must compare the fractional part of each. The numbers in the tenths position are also the same
+                    for both numbers. Now we must look at the hundredths position and compare those numbers. The
+                    hundredths position of the first decimal contains 4, while the hundredths position of the second
+                    decimal contains 5. Since 4 > 5, then we say that 3.14 < 3.15. </p>
+    </section>
+
+    <section>
+        <h2>Equals:</h2>
+        <p> The equals symbol (=) is used to show that two numbers are equal in value. When the whole part and
+            fractional part of two decimals are the same, then the decimals are equal. For example, 2.72 = 2.72.
+        </p>
+    </section>
+
+    <section>
+        <h2>You Try:</h2>
+        <p>
+            Look at the weights of Charizard ex and Pidgeot ex.
+        </p>
+        <figure>
+            <img src="{% static 'images/Fletchling.png' %}" alt="Fletchling Pokémon card">
+            <img src="{% static 'images/Rowlet.png' %}" alt="Rowlet Pokémon card">
+        </figure>
+        <p>
+            Compare the two values using <b>&gt;</b>, <b>=</b>, or <b>&lt;</b>.
+        </p>
+        <form onsubmit="checkAnswer(event)">
+            <label for="comparisonSymbol">Fletching's weight</label>
+            <input type="text" id="comparisonSymbol" name="comparisonSymbol" style="width: 40px;">
+            Rowlet's weight
+            <input type="submit" value="Submit" id="submitBtn">
+        </form>
+        <p id="feedback"></p>
+    </section>
+</main>
+<script>
+    function checkAnswer(event) {
+        event.preventDefault(); // prevent default form submission
+
+        var comparisonSymbol = document.getElementById('comparisonSymbol').value.trim();
+        var correctAnswer = '>';
+        var feedbackDiv = document.getElementById('feedback');
+        var inputField = document.getElementById('comparisonSymbol');
+        var submitButton = document.getElementById('submitBtn');
+
+        var allowedSymbols = /^[><=]$/;
+
+        // validate input
+        if (!allowedSymbols.test(comparisonSymbol)) {
+            feedbackDiv.textContent = 'Invalid input. Please enter >, =, or <.';
+            return;
         }
-    </script>
-</head>
 
-<body>
-    <header>
-        <h1>Comparing Decimals</h1>
-    </header>
-
-    <main>
-        <section>
-            <h2>Introduction:</h2>
-            <p>
-                Two decimals can be compared using > (greater than), = (equals), and < (less than) symbols. </p>
-        </section>
-
-        <section>
-            <h2>Greater Than:</h2>
-            <p>The greater than symbol (>) is used to show that the number to the left has a higher value than the
-                number on the right. If the whole number part (the number to the left of the decimal) of one number is
-                equal to the whole number part of the other number, then we must look at the fractional part (the
-                number(s) to the right of the decimal) of each and compare them. We start by looking at the tenths
-                place, which is the first number after the decimal. <br><br>
-
-                <u>Example 1</u>: Let's compare 1.3 and 1.2. Since both decimals have a whole part of 1, we must compare
-                the fractional part of each. The first number has a 3 in the tenths position, while the second number
-                has a 2 in the tenths position. Since 3 > 2, we say that 1.3 > 1.2. <br><br>
-
-                Sometimes we must look at the hundredths place, which is the second number after the decimal. <br><br>
-
-                <u>Example 2</u>: Let's compare 1.36 and 1.31. Since both decimals have a whole part of 1, we must
-                compare the fractional part of each. We start by looking at the tenths position, which is also the same
-                for both numbers. Now we must look at the hundredths position and compare those numbers. The hundredths
-                position of the first decimal contains 6, while the hundredths position of the second decimal contains
-                1. Since 6 > 1, we say that 1.36 > 1.31.
-            </p>
-        </section>
-
-        <section>
-            <h2>Less Than:</h2>
-            <p> The less than symbol (<) is used to show that the number to the left has a lesser value than the number
-                    on the right. We follow a similar process as we did above.<br><br>
-
-                    <u>Example 1</u>: Let's compare 2.2 and 2.9. Since both decimals have a whole part of 2, we must
-                    compare the fractional part of each. The first number has a 2 in the tenths position, while the
-                    second number has a 9 in the tenths position. Since 2 < 9, we say that 2.2 < 2.9. <br><br>
-
-                        <u>Example 2</u>: Let's compare 3.14. and 3.15. Since both decimals have a whole part of 1, we
-                        must compare the fractional part of each. The numbers in the tenths position are also the same
-                        for both numbers. Now we must look at the hundredths position and compare those numbers. The
-                        hundredths position of the first decimal contains 4, while the hundredths position of the second
-                        decimal contains 5. Since 4 > 5, then we say that 3.14 < 3.15. </p>
-        </section>
-
-        <section>
-            <h2>Equals:</h2>
-            <p> The equals symbol (=) is used to show that two numbers are equal in value. When the whole part and
-                fractional part of two decimals are the same, then the decimals are equal. For example, 2.72 = 2.72.
-            </p>
-        </section>
-
-        <section>
-            <h2>You Try:</h2>
-            <p>
-                Look at the weights of Charizard ex and Pidgeot ex.
-            </p>
-            <figure>
-                <img src="{% static 'images/Fletchling.png' %}" alt="Fletchling Pokémon card">
-                <img src="{% static 'images/Rowlet.png' %}" alt="Rowlet Pokémon card">
-            </figure>
-            <p>
-                Compare the two values using <b>&gt;</b>, <b>=</b>, or <b>&lt;</b>.
-            </p>
-            <form onsubmit="checkAnswer(event)">
-                <label for="comparisonSymbol">Fletching's weight</label>
-                <input type="text" id="comparisonSymbol" name="comparisonSymbol" style="width: 40px;">
-                Rowlet's weight
-                <input type="submit" value="Submit" id="submitBtn">
-            </form>
-            <p id="feedback"></p>
-        </section>
-    </main>
-
-    <footer>
-        <nav>
-            <a href="{% url 'learning:gr4' %}">Return to Grade 4 Homepage</a> <br>
-            <a href="{% url 'learning:student_dashboard' %}">Student Dashboard</a> <br>
-            <a href="{% url 'learning:students' %}">Student Home</a> <br>
-            <a href="{% url 'learning:index' %}">Learning Home</a> <br>
-            <a href="{% url 'index' %}">Home</a>
-        </nav>
-    </footer>
-
-</body>
-
-</html>
+        // check for correct answer and provide feedback
+        if (comparisonSymbol === correctAnswer) {
+            feedbackDiv.textContent = 'Correct! 3.7 > 3.3 (since 7 > 3), so ">" is the correct symbol. Well done!';
+            inputField.disabled = true; // disable input field
+            submitButton.disabled = true; // disable submit button
+        } else {
+            feedbackDiv.textContent = 'Incorrect. Please try again.';
+        }
+    }
+</script>
+{% endblock %}

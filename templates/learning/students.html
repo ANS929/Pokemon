@@ -1,21 +1,41 @@
 <!DOCTYPE html>
-<html lang="en">
+
+{% load static %}
+
+<html>
+
 <head>
-    <meta charset="UTF-8">
-    <title>Students homepage</title>
+    <title>
+        {% block title_block %}
+        Student Homepage
+        {% endblock %}
+    </title>
 </head>
+
 <body>
-    <p>Student home page</p>
-    <a href="{% url 'learning:student_dashboard' %}">Student Dashboard</a> &nbsp;&nbsp;
-    <a href="{% url 'learning:gr1' %}">Grade 1</a> &nbsp;&nbsp;
-    <a href="{% url 'learning:gr2' %}">Grade 2</a> &nbsp;&nbsp;
-    <a href="{% url 'learning:gr3' %}">Grade 3</a> &nbsp;&nbsp;
-    <a href="{% url 'learning:gr4' %}">Grade 4</a> &nbsp;&nbsp;
-    <a href="{% url 'learning:gr5' %}">Grade 5</a> &nbsp;&nbsp;
-    <a href="{% url 'learning:gr6' %}">Grade 6</a> &nbsp;&nbsp;
-    <a href="{% url 'learning:gr7' %}">Grade 7</a> &nbsp;&nbsp;
-    <a href="{% url 'learning:gr8' %}">Grade 8</a> <br>
-    <a href="{% url 'learning:index' %}">Learning Home</a> <br>
-    <a href="{% url 'index' %}">Home</a>
+    <div>
+        {% block body_block %}
+        <header>
+            <h1>Student Homepage</h1>
+        </header>
+        <a href="{% url 'learning:gr1' %}">Grade 1</a> &nbsp;&nbsp;
+        <a href="{% url 'learning:gr2' %}">Grade 2</a> &nbsp;&nbsp;
+        <a href="{% url 'learning:gr3' %}">Grade 3</a> &nbsp;&nbsp;
+        <a href="{% url 'learning:gr4' %}">Grade 4</a> &nbsp;&nbsp;
+        <a href="{% url 'learning:gr5' %}">Grade 5</a> &nbsp;&nbsp;
+        <a href="{% url 'learning:gr6' %}">Grade 6</a> &nbsp;&nbsp;
+        <a href="{% url 'learning:gr7' %}">Grade 7</a> &nbsp;&nbsp;
+        <a href="{% url 'learning:gr8' %}">Grade 8</a> <br><br>
+        {% endblock %}
+    </div>
+    <hr />
+    <div>
+        <ul>
+            <li><a href="{% url 'learning:student_dashboard' %}">Student Dashboard</a></li>
+            <li><a href="{% url 'learning:index' %}">Learning Home</a></li>
+            <li><a href="{% url 'index' %}">Home</a></li>
+        </ul>
+    </div>
 </body>
+
 </html>

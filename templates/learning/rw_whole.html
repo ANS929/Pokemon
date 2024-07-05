@@ -1,99 +1,83 @@
-<!DOCTYPE html>
-
+{% extends 'learning/students.html' %}
 {% load static %}
 
-<html lang="en">
+{% block title_block %}
+Real-World Problems with Whole Numbers
+{% endblock %}
 
-<head>
-    <meta charset="UTF-8">
-    <title>Algebraic Thinking: Real-World Problems with Whole Numbers</title>
+{% block body_block %}
+<header>
+    <h1>Real-World Problems with Whole Numbers</h1>
+</header>
 
-    <script>
-        function checkAnswer(event) {
-            event.preventDefault(); // prevent default form submission
+<main>
+    <section>
+        <h2>Introduction:</h2>
+        <p> Content here
+        </p>
+    </section>
 
-            var remainingHP = document.getElementById('remainingHP').value.trim();
-            var correctAnswer = '10';
-            var feedbackDiv = document.getElementById('feedback');
-            var inputField = document.getElementById('remainingHP');
-            var submitButton = document.getElementById('submitBtn');
+    <section>
+        <h2>Example 1:</h2>
+        <p>Content here
 
-            var allowedInput = /^\d+$/;
+        </p>
+    </section>
 
-            // validate input
-            if (!allowedInput.test(remainingHP)) {
-                feedbackDiv.textContent = 'Invalid input. Please enter a whole number';
-                return;
-            }
+    <section>
+        <h2>Example 2:</h2>
+        <p>Content here</p>
 
-            // check for correct answer and provide feedback
-            if (remainingHP === correctAnswer) {
-                feedbackDiv.textContent = 'Correct! 70 * 3 = 210 and 220 - 210 = 10. Well done!';
-                inputField.disabled = true; // disable input field
-                submitButton.disabled = true; // disable submit button
-            } else {
-                feedbackDiv.textContent = 'Incorrect. Please try again.';
-            }
+    </section>
+
+    <section>
+        <h2>You Try:</h2>
+        <p> Your opponent attacks your Iron Leaves ex with Raging Bolt ex's Bellowing Thunder, discarding 3 Basic
+            Energy. Your opponent claims this is enough damage to knock out your Iron Leaves, but you disagree. How
+            many
+            hit points does your Iron Leaves have left after the attack?
+        </p>
+        <figure>
+            <img src="{% static 'images/IronLeaves.png' %}" alt="Iron Leaves ex Pokémon card">
+            <img src="{% static 'images/RagingBolt.png' %}" alt="Raging Bolt ex Pokémon card">
+        </figure>
+
+
+        <!-- answer input and submission -->
+        <form onsubmit="checkAnswer(event)">
+            <label for="inputField">Iron Leaves' remaining HP</label>
+            <input type="text" id="remainingHP" name="remainingHP" style="width: 40px;">
+            <input type="submit" value="Submit" id="submitBtn">
+        </form>
+        <p id="feedback"></p>
+    </section>
+</main>
+<script>
+    function checkAnswer(event) {
+        event.preventDefault(); // prevent default form submission
+
+        var remainingHP = document.getElementById('remainingHP').value.trim();
+        var correctAnswer = '10';
+        var feedbackDiv = document.getElementById('feedback');
+        var inputField = document.getElementById('remainingHP');
+        var submitButton = document.getElementById('submitBtn');
+
+        var allowedInput = /^\d+$/;
+
+        // validate input
+        if (!allowedInput.test(remainingHP)) {
+            feedbackDiv.textContent = 'Invalid input. Please enter a whole number';
+            return;
         }
-    </script>
-</head>
 
-<body>
-    <header>
-        <h1>Real-World Problems with Whole Numbers</h1>
-    </header>
-
-    <main>
-        <section>
-            <h2>Introduction:</h2>
-            <p> Content here
-            </p>
-        </section>
-
-        <section>
-            <h2>Example 1:</h2>
-            <p>Content here
-
-            </p>
-        </section>
-
-        <section>
-            <h2>Example 2:</h2>
-            <p>Content here</p>
-
-        </section>
-
-        <section>
-            <h2>You Try:</h2>
-            <p> Your opponent attacks your Iron Leaves ex with Raging Bolt ex's Bellowing Thunder, discarding 3 Basic
-                Energy. Your opponent claims this is enough damage to knock out your Iron Leaves, but you disagree. How
-                many
-                hit points does your Iron Leaves have left after the attack?
-            </p>
-            <figure>
-                <img src="{% static 'images/IronLeaves.png' %}" alt="Iron Leaves ex Pokémon card">
-                <img src="{% static 'images/RagingBolt.png' %}" alt="Raging Bolt ex Pokémon card">
-            </figure>
-
-
-            <!-- answer input and submission -->
-            <form onsubmit="checkAnswer(event)">
-                <label for="inputField">Iron Leaves' remaining HP</label>
-                <input type="text" id="remainingHP" name="remainingHP" style="width: 40px;">
-                <input type="submit" value="Submit" id="submitBtn">
-            </form>
-            <p id="feedback"></p>
-        </section>
-    </main>
-</body>
-<footer>
-    <nav>
-        <a href="{% url 'learning:gr4' %}">Return to Grade 4 Homepage</a> <br>
-        <a href="{% url 'learning:student_dashboard' %}">Student Dashboard</a> <br>
-        <a href="{% url 'learning:students' %}">Student Home</a> <br>
-        <a href="{% url 'learning:index' %}">Learning Home</a> <br>
-        <a href="{% url 'index' %}">Home</a>
-    </nav>
-</footer>
-
-</html>
+        // check for correct answer and provide feedback
+        if (remainingHP === correctAnswer) {
+            feedbackDiv.textContent = 'Correct! 70 * 3 = 210 and 220 - 210 = 10. Well done!';
+            inputField.disabled = true; // disable input field
+            submitButton.disabled = true; // disable submit button
+        } else {
+            feedbackDiv.textContent = 'Incorrect. Please try again.';
+        }
+    }
+</script>
+{% endblock %}

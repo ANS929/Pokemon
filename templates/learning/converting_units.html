@@ -1,90 +1,76 @@
-<!DOCTYPE html>
-
+{% extends 'learning/students.html' %}
 {% load static %}
 
-<html lang="en">
+{% block title_block %}
+Converting Units
+{% endblock %}
 
-<head>
-    <meta charset="UTF-8">
-    <title>Measurement: Converting Units</title>
-</head>
+{% block body_block %}
+<header>
+    <h1>Converting Units</h1>
+</header>
 
-<body>
-    <header>
-        <h1>Converting Units</h1>
-    </header>
+<main>
+    <section>
+        <h2>Introduction:</h2>
+        <p>Content here</p>
+    </section>
 
-    <main>
-        <section>
-            <h2>Introduction:</h2>
-            <p>Content here</p>
-        </section>
+    <section>
+        <h2>Example 1: </h2>
+        <p>Content here</p>
+    </section>
 
-        <section>
-            <h2>Example 1: </h2>
-            <p>Content here</p>
-        </section>
+    <section>
+        <h2>Example 2:</h2>
+        <p>Content here</p>
+    </section>
 
-        <section>
-            <h2>Example 2:</h2>
-            <p>Content here</p>
-        </section>
+    <section>
+        <h2>You Try:</h2>
+        <p> Yveltal is 19 feet tall. How many inches is that?</p>
+        <figure>
+            <img src="{% static 'images/Yveltal.png' %}" alt="Yveltal Pokémon card">
+        </figure>
 
-        <section>
-            <h2>You Try:</h2>
-            <p> Yveltal is 19 feet tall. How many inches is that?</p>
-            <figure>
-                <img src="{% static 'images/Yveltal.png' %}" alt="Yveltal Pokémon card">
-            </figure>
+        <!-- answer submission -->
+        <form onsubmit="checkAnswer(event)">
+            <label for="comparisonSymbol">Yveltal's height in inches</label>
+            <input type="text" id="height" name="height" style="width: 40px;">
+            <input type="submit" value="Submit" id="submitBtn">
+        </form>
+        <p id="feedback"></p>
+    </section>
+</main>
 
-            <!-- answer submission -->
-            <form onsubmit="checkAnswer(event)">
-                <label for="comparisonSymbol">Yveltal's height in inches</label>
-                <input type="text" id="height" name="height" style="width: 40px;">
-                <input type="submit" value="Submit" id="submitBtn">
-            </form>
-            <p id="feedback"></p>
-        </section>
-    </main>
-    <footer>
-        <nav>
-            <a href="{% url 'learning:gr4' %}">Return to Grade 4 Homepage</a> <br>
-            <a href="{% url 'learning:student_dashboard' %}">Student Dashboard</a> <br>
-            <a href="{% url 'learning:students' %}">Student Home</a> <br>
-            <a href="{% url 'learning:index' %}">Learning Home</a> <br>
-            <a href="{% url 'index' %}">Home</a>
-        </nav>
-    </footer>
-    <script>
+<script>
 
-        //method to check You Try answer
-        function checkAnswer(event) {
-            event.preventDefault(); // prevent default form submission
+    //method to check You Try answer
+    function checkAnswer(event) {
+        event.preventDefault(); // prevent default form submission
 
-            var height = document.getElementById('height').value.trim();
-            var correctAnswer = '228';
-            var feedbackDiv = document.getElementById('feedback');
-            var inputField = document.getElementById('height');
-            var submitButton = document.getElementById('submitBtn');
+        var height = document.getElementById('height').value.trim();
+        var correctAnswer = '228';
+        var feedbackDiv = document.getElementById('feedback');
+        var inputField = document.getElementById('height');
+        var submitButton = document.getElementById('submitBtn');
 
-            var allowedInput = /^\d+$/;
+        var allowedInput = /^\d+$/;
 
-            // validate input
-            if (!allowedInput.test(height)) {
-                feedbackDiv.textContent = 'Invalid input. Please enter a whole number';
-                return;
-            }
-
-            // check for correct answer and provide feedback
-            if (height === correctAnswer) {
-                feedbackDiv.textContent = 'Correct! 19 * 12 = 228. Well done!';
-                inputField.disabled = true; // disable input field
-                submitButton.disabled = true; // disable submit button
-            } else {
-                feedbackDiv.textContent = 'Incorrect. Please try again.';
-            }
+        // validate input
+        if (!allowedInput.test(height)) {
+            feedbackDiv.textContent = 'Invalid input. Please enter a whole number';
+            return;
         }
-    </script>
-</body>
 
-</html>
+        // check for correct answer and provide feedback
+        if (height === correctAnswer) {
+            feedbackDiv.textContent = 'Correct! 19 * 12 = 228. Well done!';
+            inputField.disabled = true; // disable input field
+            submitButton.disabled = true; // disable submit button
+        } else {
+            feedbackDiv.textContent = 'Incorrect. Please try again.';
+        }
+    }
+</script>
+{% endblock %}

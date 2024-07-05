@@ -1,94 +1,81 @@
-<!DOCTYPE html>
-
+{% extends 'learning/students.html' %}
 {% load static %}
 
-<html lang="en">
+{% block title_block %}
+Lines of Symmetry
+{% endblock %}
 
-<head>
-    <meta charset="UTF-8">
-    <title>Geometry: Lines of Symmetry</title>
-</head>
+{% block body_block %}
+<header>
+    <h1>Lines of Symmetry</h1>
+</header>
 
-<body>
-    <header>
-        <h1>Lines of Symmetry</h1>
-    </header>
+<main>
+    <section>
+        <h2>Introduction:</h2>
+        <p> Content here</p>
+    </section>
 
-    <main>
-        <section>
-            <h2>Introduction:</h2>
-            <p> Content here</p>
-        </section>
+    <section>
+        <h2>Example 1: </h2>
+        <p>Content here</p>
+    </section>
 
-        <section>
-            <h2>Example 1: </h2>
-            <p>Content here</p>
-        </section>
+    <section>
+        <h2>Example 2:</h2>
+        <p>Content here</p>
 
-        <section>
-            <h2>Example 2:</h2>
-            <p>Content here</p>
+    </section>
 
-        </section>
+    <section>
+        <h2>You Try:</h2>
+        <p>Content here</p>
+        <figure>
+            <img src="{% static 'images/common.png' %}" alt="Pokémon TCG common rarity symbol">
+            <img src="{% static 'images/uncommon.png' %}" alt="Pokémon TCG uncommon rarity symbol">
+            <img src="{% static 'images/rare.png' %}" alt="Pokémon TCG rare rarity symbol"> <br>
+            <img src="{% static 'images/Kingambit.png' %}" alt="Kingambit Pokémon card">
+            <img src="{% static 'images/Palafin.png' %}" alt="Palafin Pokémon card">
+        </figure>
+        <p>True or False: The three rarity symbols pictured above are all symmetrical.</p>
+        <!-- answer input and submission button -->
+        <form onsubmit="checkAnswer(event)">
+            <label>
+                <input type="radio" name="TF" value="true"> True
+            </label><br>
+            <label>
+                <input type="radio" name="TF" value="false"> False
+            </label><br>
+            <input type="submit" value="Submit" id="submitBtn">
+        </form>
+        <p id="feedback"></p>
+    </section>
+</main>
 
-        <section>
-            <h2>You Try:</h2>
-            <p>Content here</p>
-            <figure>
-                <img src="{% static 'images/common.png' %}" alt="Pokémon TCG common rarity symbol">
-                <img src="{% static 'images/uncommon.png' %}" alt="Pokémon TCG uncommon rarity symbol">
-                <img src="{% static 'images/rare.png' %}" alt="Pokémon TCG rare rarity symbol"> <br>
-                <img src="{% static 'images/Kingambit.png' %}" alt="Kingambit Pokémon card">
-                <img src="{% static 'images/Palafin.png' %}" alt="Palafin Pokémon card">
-            </figure>
-            <p>True or False: The three rarity symbols pictured above are all symmetrical.</p>
-            <!-- answer input and submission button -->
-            <form onsubmit="checkAnswer(event)">
-                <label>
-                    <input type="radio" name="TF" value="true"> True
-                </label><br>
-                <label>
-                    <input type="radio" name="TF" value="false"> False
-                </label><br>
-                <input type="submit" value="Submit" id="submitBtn">
-            </form>
-            <p id="feedback"></p>
-        </section>
-    </main>
-    <footer>
-        <nav>
-            <a href="{% url 'learning:gr4' %}">Return to Grade 4 Homepage</a> <br>
-            <a href="{% url 'learning:student_dashboard' %}">Student Dashboard</a> <br>
-            <a href="{% url 'learning:students' %}">Student Home</a> <br>
-            <a href="{% url 'learning:index' %}">Learning Home</a> <br>
-            <a href="{% url 'index' %}">Home</a>
-        </nav>
-    </footer>
-    <script>
-        // function to check the You Try answer
-        function checkAnswer(event) {
-            event.preventDefault(); // prevent default form submission
+<script>
+    // function to check the You Try answer
+    function checkAnswer(event) {
+        event.preventDefault(); // prevent default form submission
 
-            var selectedOption = document.querySelector('input[name="TF"]:checked');
-            var feedbackDiv = document.getElementById('feedback');
-            var submitButton = document.getElementById('submitBtn');
+        var selectedOption = document.querySelector('input[name="TF"]:checked');
+        var feedbackDiv = document.getElementById('feedback');
+        var submitButton = document.getElementById('submitBtn');
 
-            if (!selectedOption) {
-                feedbackDiv.textContent = 'Please select an answer.';
-                return;
-            }
-
-            var selectedValue = selectedOption.value;
-            var correctAnswer = 'true';
-
-            if (selectedValue === correctAnswer) {
-                feedbackDiv.textContent = 'Correct! All 3 symbols have vertical symmmetry. Well done!';
-                submitButton.disabled = true; // disable submit button
-            } else {
-                feedbackDiv.textContent = 'Incorrect. Please try again.';
-            }
+        if (!selectedOption) {
+            feedbackDiv.textContent = 'Please select an answer.';
+            return;
         }
-    </script>
-</body>
 
-</html>
+        var selectedValue = selectedOption.value;
+        var correctAnswer = 'true';
+
+        if (selectedValue === correctAnswer) {
+            feedbackDiv.textContent = 'Correct! All 3 symbols have vertical symmmetry. Well done!';
+            submitButton.disabled = true; // disable submit button
+        } else {
+            feedbackDiv.textContent = 'Incorrect. Please try again.';
+        }
+    }
+</script>
+
+{% endblock %}

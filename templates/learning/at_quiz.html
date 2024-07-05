@@ -1,164 +1,150 @@
-<!DOCTYPE html>
+{% extends 'learning/students.html' %}
 {% load static %}
-<html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <title>Algebraic Thinking: Quiz</title>
-</head>
+{% block title_block %}
+Algebraic Thinking Quiz
+{% endblock %}
 
-<body>
-    <header>
-        <h1>Algebraic Thinking Quiz</h1>
-    </header>
+{% block body_block %}
+<header>
+    <h1>Algebraic Thinking Quiz</h1>
+</header>
 
-    <h2>Instructions:</h2>
-    <p>Use the cards to answer the five questions below.</p>
-    <img src="{% static 'images/Venusaur151.png' %}" alt="Venusaur ex Pokémon card">
-    <img src="{% static 'images/Charizard151.png' %}" alt="Charizard ex Pokémon card">
-    <img src="{% static 'images/Blastoise151.png' %}" alt="Blastoise ex Pokémon card">
+<h2>Instructions:</h2>
+<p>Use the cards to answer the five questions below.</p>
+<img src="{% static 'images/Venusaur151.png' %}" alt="Venusaur ex Pokémon card">
+<img src="{% static 'images/Charizard151.png' %}" alt="Charizard ex Pokémon card">
+<img src="{% static 'images/Blastoise151.png' %}" alt="Blastoise ex Pokémon card">
 
-    <!-- quiz submission and result display -->
-    <form id="quiz-form">
-        <div id="quiz-container"></div>
-        <button type="submit" id="submit-button">Submit Quiz</button>
-    </form>
-    <br>
-    <div id="result-container"></div>
+<!-- quiz submission and result display -->
+<form id="quiz-form">
+    <div id="quiz-container"></div>
+    <button type="submit" id="submit-button">Submit Quiz</button>
+</form>
+<br>
+<div id="result-container"></div>
 
-    <footer>
-        <nav>
-            <a href="{% url 'learning:gr4' %}">Return to Grade 4 Homepage</a> <br>
-            <a href="{% url 'learning:student_dashboard' %}">Student Dashboard</a> <br>
-            <a href="{% url 'learning:students' %}">Student Home</a> <br>
-            <a href="{% url 'learning:index' %}">Learning Home</a> <br>
-            <a href="{% url 'index' %}">Home</a>
-        </nav>
-    </footer>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // array of quiz questions
+        const questions = [
+            {
+                question: "1.) Your Venusaur ex was attacked for 250 damage. At the beginning of your turn, you use its Tranquil Flower ability. How many Hit Points does your Venusaur ex now have?",
+                type: 'short-answer',
+                answer: '150'
+            },
+            {
+                question: "2.) Your Charizard ex has 3 damage counters on it. How much damage will its Brave Wing attack do?",
+                type: 'short-answer',
+                answer: '160'
+            },
+            {
+                question: "3.) You have 9 Basic Energy cards in your deck. 2 are Darkness, and the rest are Psychic. What fraction of your Basic Energy cards are Psychic?",
+                type: 'short-answer',
+                answer: '7/9'
+            },
+            {
+                question: "4.) True or False: If Charizard ex attacks Blastoise ex with Explosive Vortex, Blastoise will be Knocked Out.",
+                type: 'multiple-choice',
+                options: ['True', 'False',],
+                answer: 'False'
+            },
+            {
+                question: "5.) 15 of the cards in your deck are Pokémon. What fraction of the cards are NOT Pokémon? Write your answer as a fraction in simplest form.",
+                type: 'multiple-choice',
+                options: ['1/4', '3/4', '2/3'],
+                answer: '3/4'
+            }
+        ];
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            // array of quiz questions
-            const questions = [
-                {
-                    question: "1.) Your Venusaur ex was attacked for 250 damage. At the beginning of your turn, you use its Tranquil Flower ability. How many Hit Points does your Venusaur ex now have?",
-                    type: 'short-answer',
-                    answer: '150'
-                },
-                {
-                    question: "2.) Your Charizard ex has 3 damage counters on it. How much damage will its Brave Wing attack do?",
-                    type: 'short-answer',
-                    answer: '160'
-                },
-                {
-                    question: "3.) You have 9 Basic Energy cards in your deck. 2 are Darkness, and the rest are Psychic. What fraction of your Basic Energy cards are Psychic?",
-                    type: 'short-answer',
-                    answer: '7/9'
-                },
-                {
-                    question: "4.) True or False: If Charizard ex attacks Blastoise ex with Explosive Vortex, Blastoise will be Knocked Out.",
-                    type: 'multiple-choice',
-                    options: ['True', 'False',],
-                    answer: 'False'
-                },
-                {
-                    question: "5.) 15 of the cards in your deck are Pokémon. What fraction of the cards are NOT Pokémon? Write your answer as a fraction in simplest form.",
-                    type: 'multiple-choice',
-                    options: ['1/4', '3/4', '2/3'],
-                    answer: '3/4'
+        const quizContainer = document.getElementById('quiz-container');
+        const resultContainer = document.getElementById('result-container');
+        const submitButton = document.getElementById('submit-button');
+
+        // function to generate the quiz based on the question array
+        function generateQuiz() {
+            const output = [];
+            questions.forEach((currentQuestion, questionIndex) => {
+                // short answer questions
+                if (currentQuestion.type === 'short-answer') {
+                    output.push(
+                        `<div class="question">${currentQuestion.question}</div>
+                        <div class="options">
+                            <input type="text" name="question${questionIndex}" id="question${questionIndex}" style="width: 40px;">
+                        </div><br>`
+                    );
+
+                    // multiple choice questions
+                } else if (currentQuestion.type === 'multiple-choice') {
+                    output.push(
+                        `<div class="question">${currentQuestion.question}</div>
+                        <div class="options">
+                            <select name="question${questionIndex}" id="question${questionIndex}">
+                                <option value="">Select an answer</option>`
+                    );
+                    currentQuestion.options.forEach(option => {
+                        output.push(`<option value="${option}">${option}</option>`);
+                    });
+                    output.push(`</select></div><br>`);
                 }
-            ];
+            });
+            quizContainer.innerHTML = output.join('');
+        }
 
-            const quizContainer = document.getElementById('quiz-container');
-            const resultContainer = document.getElementById('result-container');
-            const submitButton = document.getElementById('submit-button');
-
-            // function to generate the quiz based on the question array
-            function generateQuiz() {
-                const output = [];
-                questions.forEach((currentQuestion, questionIndex) => {
-                    // short answer questions
-                    if (currentQuestion.type === 'short-answer') {
-                        output.push(
-                            `<div class="question">${currentQuestion.question}</div>
-                            <div class="options">
-                                <input type="text" name="question${questionIndex}" id="question${questionIndex}" style="width: 40px;">
-                            </div><br>`
-                        );
-
-                        // multiple choice questions
-                    } else if (currentQuestion.type === 'multiple-choice') {
-                        output.push(
-                            `<div class="question">${currentQuestion.question}</div>
-                            <div class="options">
-                                <select name="question${questionIndex}" id="question${questionIndex}">
-                                    <option value="">Select an answer</option>`
-                        );
-                        currentQuestion.options.forEach(option => {
-                            output.push(`<option value="${option}">${option}</option>`);
-                        });
-                        output.push(`</select></div><br>`);
+        // function to display the quiz results
+        function showResults(event) {
+            event.preventDefault();
+            let score = 0;
+            questions.forEach((currentQuestion, questionIndex) => {
+                if (currentQuestion.type === 'short-answer') {
+                    const userAnswer = document.getElementById(`question${questionIndex}`).value.trim().toLowerCase();
+                    const correctAnswer = currentQuestion.answer.toLowerCase();
+                    if (userAnswer === correctAnswer) {
+                        score++;
                     }
-                });
-                quizContainer.innerHTML = output.join('');
-            }
-
-            // function to display the quiz results
-            function showResults(event) {
-                event.preventDefault();
-                let score = 0;
-                questions.forEach((currentQuestion, questionIndex) => {
-                    if (currentQuestion.type === 'short-answer') {
-                        const userAnswer = document.getElementById(`question${questionIndex}`).value.trim().toLowerCase();
-                        const correctAnswer = currentQuestion.answer.toLowerCase();
-                        if (userAnswer === correctAnswer) {
-                            score++;
-                        }
-                    } else if (currentQuestion.type === 'multiple-choice') {
-                        const userAnswer = document.getElementById(`question${questionIndex}`).value;
-                        const correctAnswer = currentQuestion.answer;
-                        if (userAnswer === correctAnswer) {
-                            score++;
-                        }
+                } else if (currentQuestion.type === 'multiple-choice') {
+                    const userAnswer = document.getElementById(`question${questionIndex}`).value;
+                    const correctAnswer = currentQuestion.answer;
+                    if (userAnswer === correctAnswer) {
+                        score++;
                     }
-                });
-                if (score <= 3) {
-                    message = "Good effort! Keep practicing and try the quiz again."
                 }
-
-                if (score === 4) {
-                    message = "Good job!"
-                }
-                if (score === 5) {
-                    message = "Way to go!"
-                }
-                resultContainer.innerHTML = `You scored ${score} out of ${questions.length}.`;
-                disableQuiz();
-                explanations(score);
+            });
+            if (score <= 3) {
+                message = "Good effort! Keep practicing and try the quiz again."
             }
 
-            // function to prevent the user from a second attempt
-            function disableQuiz() {
-                const inputs = document.querySelectorAll('#quiz-form input, #quiz-form select');
-                inputs.forEach(input => input.disabled = true);
-                submitButton.disabled = true;
+            if (score === 4) {
+                message = "Good job!"
             }
-
-            // function to print answer explanations
-            function explanations(score) {
-                let explanationText = "<p>Answer explanations:</p>";
-                explanationText += `<p>Question 1: 340 - 250 = 90. 90 + 60 = 150</p>`;
-                explanationText += `<p>Question 2: 60 + 100 = 160</p>`;
-                explanationText += `<p>Question 3: 9/9 - 2/9 = 7/9</p>`;
-                explanationText += `<p>Question 4: False. Blastoise takes 30 less damage from attacks due to its Solid Shell ability, so Explosive Vortex does 330 - 30 = 300 damage, which is not enough for Blastoise to be Knocked Out.</p>`;
-                explanationText += `<p>Question 5: 60/60 - 15/60 = 45/60 (or 3/4)</p>`;
-                resultContainer.innerHTML += explanationText;
+            if (score === 5) {
+                message = "Way to go!"
             }
+            resultContainer.innerHTML = `You scored ${score} out of ${questions.length}.`;
+            disableQuiz();
+            explanations(score);
+        }
 
-            generateQuiz();
-            submitButton.addEventListener('click', showResults);
-        });
-    </script>
-</body>
+        // function to prevent the user from a second attempt
+        function disableQuiz() {
+            const inputs = document.querySelectorAll('#quiz-form input, #quiz-form select');
+            inputs.forEach(input => input.disabled = true);
+            submitButton.disabled = true;
+        }
 
-</html>
+        // function to print answer explanations
+        function explanations(score) {
+            let explanationText = "<p>Answer explanations:</p>";
+            explanationText += `<p>Question 1: 340 - 250 = 90. 90 + 60 = 150</p>`;
+            explanationText += `<p>Question 2: 60 + 100 = 160</p>`;
+            explanationText += `<p>Question 3: 9/9 - 2/9 = 7/9</p>`;
+            explanationText += `<p>Question 4: False. Blastoise takes 30 less damage from attacks due to its Solid Shell ability, so Explosive Vortex does 330 - 30 = 300 damage, which is not enough for Blastoise to be Knocked Out.</p>`;
+            explanationText += `<p>Question 5: 60/60 - 15/60 = 45/60 (or 3/4)</p>`;
+            resultContainer.innerHTML += explanationText;
+        }
+
+        generateQuiz();
+        submitButton.addEventListener('click', showResults);
+    });
+</script>
+{% endblock %}

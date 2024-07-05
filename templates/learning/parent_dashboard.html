@@ -1,17 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends 'learning/base.html' %}
 
-<head>
-    <meta charset="UTF-8">
-    <title>Parent Dashboard</title>
-</head>
+{% block title_block %}
+Parent Dashboard
+{% endblock %}
 
-<body>
-    <p>Parent Dashboard</p>
-    <a href="{% url 'learning:your_children' %}">Your Children</a> <br>
-    <a href="{% url 'learning:parents' %}">Parent Home</a> <br>
-    <a href="{% url 'learning:index' %}">Learning Home</a> <br>
-    <a href="{% url 'index' %}">Home</a>
-</body>
-
-</html>
+{% block body_block %}
+<header>
+    <h1>Parent Dashboard</h1>
+</header>
+<p>Welcome to the Parent Dashboard</p>
+{% endblock %}

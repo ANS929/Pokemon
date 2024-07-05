@@ -1,16 +1,15 @@
-<!DOCTYPE html>
-
+{% extends 'learning/students.html' %}
 {% load static %}
 
-<html lang="en">
+{% block title_block %}
+Data Analysis Quiz
+{% endblock %}
 
-<head>
-    <meta charset="UTF-8">
-    <title>Data Analysis: Quiz</title>
-</head>
-
-<body>
-    <h1>Data Analysis Quiz</h1>
+{% block body_block %}
+<main>
+    <header>
+        <h1>Data Analysis Quiz</h1>
+    </header>
     <h2>Instructions: The following data was collected from EUIC 2024. These are the decks that made Day 2. Use the data
         to answer the questions below.</h2>
     <img src="{% static 'images/EUIC.jpeg' %}" alt="EUIC 2024 meta share">
@@ -21,145 +20,134 @@
         <button type="submit" id="submit-button">Submit Quiz</button>
     </form> <br>
     <div id="result-container"></div>
+</main>
 
-    <footer>
-        <nav>
-            <a href="{% url 'learning:gr4' %}">Return to Grade 4 Homepage</a> <br>
-            <a href="{% url 'learning:student_dashboard' %}">Student Dashboard</a> <br>
-            <a href="{% url 'learning:students' %}">Student Home</a> <br>
-            <a href="{% url 'learning:index' %}">Learning Home</a> <br>
-            <a href="{% url 'index' %}">Home</a>
-        </nav>
-    </footer>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
+        // array of quiz questions
+        const questions = [
 
-            // array of quiz questions
-            const questions = [
+            {
+                question: "1.) Which deck has the second greatest meta share?",
+                type: 'multiple-choice',
+                options: ['Chien-Pao ex', 'Other', 'Charizard ex'],
+                answer: ['Chien-Pao ex']
+            },
+            {
+                question: "2.) True or False: Charizard ex, Chien-Pao ex, and Arceus VSTAR make up half of the meta.",
+                type: 'multiple-choice',
+                options: ['True', 'False'],
+                answer: ['False']
+            },
+            {
+                question: "3.) Ancient Box and another deck are tied for the lowest meta share. What is the other deck?",
+                type: 'multiple-choice',
+                options: ['Snorlax Stall', 'Pidgeot Control', 'None of the above'],
+                answer: ['Snorlax Stall']
+            },
+            {
+                question: "4.) Charizard ex makes up approximately what percentage of the meta?",
+                type: 'multiple-choice',
+                options: ['25', '20', '10'],
+                answer: ['20']
+            },
+            {
+                question: "5.) What is another data representation that could be used to display this information?",
+                type: 'short-answer',
+                answer: ['bar graph']
+            }
+        ];
 
-                {
-                    question: "1.) Which deck has the second greatest meta share?",
-                    type: 'multiple-choice',
-                    options: ['Chien-Pao ex', 'Other', 'Charizard ex'],
-                    answer: ['Chien-Pao ex']
-                },
-                {
-                    question: "2.) True or False: Charizard ex, Chien-Pao ex, and Arceus VSTAR make up half of the meta.",
-                    type: 'multiple-choice',
-                    options: ['True', 'False'],
-                    answer: ['False']
-                },
-                {
-                    question: "3.) Ancient Box and another deck are tied for the lowest meta share. What is the other deck?",
-                    type: 'multiple-choice',
-                    options: ['Snorlax Stall', 'Pidgeot Control', 'None of the above'],
-                    answer: ['Snorlax Stall']
-                },
-                {
-                    question: "4.) Charizard ex makes up approximately what percentage of the meta?",
-                    type: 'multiple-choice',
-                    options: ['25', '20', '10'],
-                    answer: ['20']
-                },
-                {
-                    question: "5.) What is another data representation that could be used to display this information?",
-                    type: 'short-answer',
-                    answer: ['bar graph']
-                }
-            ];
+        const quizContainer = document.getElementById('quiz-container');
+        const resultContainer = document.getElementById('result-container');
+        const submitButton = document.getElementById('submit-button');
 
-            const quizContainer = document.getElementById('quiz-container');
-            const resultContainer = document.getElementById('result-container');
-            const submitButton = document.getElementById('submit-button');
-
-            // function to generate the quz based on the array
-            function generateQuiz() {
-                const output = [];
-                questions.forEach((currentQuestion, questionIndex) => {
-                    if (currentQuestion.type === 'short-answer') {
-                        output.push(
-                            `<div class="question">${currentQuestion.question}</div>
+        // function to generate the quz based on the array
+        function generateQuiz() {
+            const output = [];
+            questions.forEach((currentQuestion, questionIndex) => {
+                if (currentQuestion.type === 'short-answer') {
+                    output.push(
+                        `<div class="question">${currentQuestion.question}</div>
                             <div class="options">
                                 <input type="text" name="question${questionIndex}" id="question${questionIndex}" style="width: 100px;">
                             </div><br>`
-                        );
-                    } else if (currentQuestion.type === 'multiple-choice') {
-                        output.push(
-                            `<div class="question">${currentQuestion.question}</div>
+                    );
+                } else if (currentQuestion.type === 'multiple-choice') {
+                    output.push(
+                        `<div class="question">${currentQuestion.question}</div>
                             <div class="options">`
-                        );
-                        currentQuestion.options.forEach((option, index) => {
-                            output.push(
-                                `<input type="radio" name="question${questionIndex}" id="question${questionIndex}_${index}" value="${option}">
+                    );
+                    currentQuestion.options.forEach((option, index) => {
+                        output.push(
+                            `<input type="radio" name="question${questionIndex}" id="question${questionIndex}_${index}" value="${option}">
                                 <label for="question${questionIndex}_${index}">${option}</label><br>`
-                            );
-                        });
-                        output.push(`</div><br>`);
-                    }
-                });
-                quizContainer.innerHTML = output.join('');
-            }
+                        );
+                    });
+                    output.push(`</div><br>`);
+                }
+            });
+            quizContainer.innerHTML = output.join('');
+        }
 
-            // function to display the quiz score
-            function showResults(event) {
-                event.preventDefault();
-                let score = 0;
-                questions.forEach((currentQuestion, questionIndex) => {
-                    if (currentQuestion.type === 'short-answer') {
-                        const userAnswer = document.getElementById(`question${questionIndex}`).value.trim().toLowerCase();
-                        const correctAnswers = currentQuestion.answer.map(ans => ans.toLowerCase());
-                        if (correctAnswers.includes(userAnswer)) {
+        // function to display the quiz score
+        function showResults(event) {
+            event.preventDefault();
+            let score = 0;
+            questions.forEach((currentQuestion, questionIndex) => {
+                if (currentQuestion.type === 'short-answer') {
+                    const userAnswer = document.getElementById(`question${questionIndex}`).value.trim().toLowerCase();
+                    const correctAnswers = currentQuestion.answer.map(ans => ans.toLowerCase());
+                    if (correctAnswers.includes(userAnswer)) {
+                        score++;
+                    }
+
+
+                } else if (currentQuestion.type === 'multiple-choice') {
+                    const selectedOption = document.querySelector(`input[name="question${questionIndex}"]:checked`);
+                    if (selectedOption) {
+                        const userAnswer = selectedOption.value;
+                        const correctAnswer = currentQuestion.answer[0];
+                        if (userAnswer === correctAnswer) {
                             score++;
                         }
-
-
-                    } else if (currentQuestion.type === 'multiple-choice') {
-                        const selectedOption = document.querySelector(`input[name="question${questionIndex}"]:checked`);
-                        if (selectedOption) {
-                            const userAnswer = selectedOption.value;
-                            const correctAnswer = currentQuestion.answer[0];
-                            if (userAnswer === correctAnswer) {
-                                score++;
-                            }
-                        }
                     }
-                });
-                let message = "";
-                if (score <= 3) {
-                    message = "Good effort! Keep practicing and try the quiz again.";
-                } else if (score === 4) {
-                    message = "Good job!";
-                } else if (score === 5) {
-                    message = "Way to go!";
                 }
-                resultContainer.innerHTML = `You scored ${score} out of ${questions.length}. ${message}`;
-                disableQuiz();
-                explanations(score);
+            });
+            let message = "";
+            if (score <= 3) {
+                message = "Good effort! Keep practicing and try the quiz again.";
+            } else if (score === 4) {
+                message = "Good job!";
+            } else if (score === 5) {
+                message = "Way to go!";
             }
+            resultContainer.innerHTML = `You scored ${score} out of ${questions.length}. ${message}`;
+            disableQuiz();
+            explanations(score);
+        }
 
-            // function to prevent additional submissions
-            function disableQuiz() {
-                const inputs = document.querySelectorAll('#quiz-form input[type="text"], #quiz-form input[type="radio"]');
-                inputs.forEach(input => input.disabled = true);
-                submitButton.disabled = true;
-            }
+        // function to prevent additional submissions
+        function disableQuiz() {
+            const inputs = document.querySelectorAll('#quiz-form input[type="text"], #quiz-form input[type="radio"]');
+            inputs.forEach(input => input.disabled = true);
+            submitButton.disabled = true;
+        }
 
-            // function to display answer explanations
-            function explanations(score) {
-                let explanationText = "<p>Answer explanations:</p>";
-                explanationText += `<p>Question 1:       </p>`;
-                explanationText += `<p>Question 2:       </p>`;
-                explanationText += `<p>Question 3:       </p>`;
-                explanationText += `<p>Question 4:       </p>`;
-                explanationText += `<p>Question 5:       </p>`;
-                resultContainer.innerHTML += explanationText;
-            }
+        // function to display answer explanations
+        function explanations(score) {
+            let explanationText = "<p>Answer explanations:</p>";
+            explanationText += `<p>Question 1:       </p>`;
+            explanationText += `<p>Question 2:       </p>`;
+            explanationText += `<p>Question 3:       </p>`;
+            explanationText += `<p>Question 4:       </p>`;
+            explanationText += `<p>Question 5:       </p>`;
+            resultContainer.innerHTML += explanationText;
+        }
 
-            generateQuiz();
-            submitButton.addEventListener('click', showResults);
-        });
-    </script>
-</body>
-
-</html>
+        generateQuiz();
+        submitButton.addEventListener('click', showResults);
+    });
+</script>
+{% endblock %}
