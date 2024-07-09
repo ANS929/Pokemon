@@ -13,27 +13,23 @@ Addition and Subtraction of Whole Numbers
 <main>
     <section>
         <h2>Introduction:</h2>
-        <p> Addition is combining two numbers together to get a new total (called the sum). Subtraction is when you
-            take
-            one number away from another number to get a new number (called the difference).
-        </p>
+        <p> Addition is combining two numbers together to get a new total (called the sum). Subtraction is when you take
+            one number away from another number to get a new number (called the difference).</p>
     </section>
 
     <section>
         <h2>Addition:</h2>
-        <p>Begin by lining up the rightmost digit (tens position) of each number. Add from right to left, carrying
-            as
-            needed. <br>
-            Example:
+        <p>Begin by lining up the rightmost digit (tens position) of each number. Add from right to left, carrying as
+            needed.<br>
+            <b>Example</b>:
         </p>
     </section>
 
     <section>
         <h2>Subtraction:</h2>
-        <p>Begin by lining up the rightmost digit (tens position) of each number. Subtract from right to left,
-            borrowing
-            as needed. <br>
-            Example:
+        <p>Begin by lining up the rightmost digit (tens position) of each number. Subtract from right to left, borrowing
+            as needed.<br>
+            <b>Example</b>:
         </p>
 
     </section>
@@ -49,10 +45,11 @@ Addition and Subtraction of Whole Numbers
             If your Cetitan has a Special Energy attached, how much damage will its Special Horn attack do?
         </p>
 
-        <!-- Question 1 submission -->
+        <!-- Question 1 form and feedback -->
         <form onsubmit="checkAnswer1(event)">
             <label for="damageOutput">Special Horn's damage output</label>
-            <input type="text" id="damageOutput" name="damageOutput" style="width: 40px;">
+            <!-- limit input to whole numbers and make it required -->
+            <input type="number" min="0" id="damageOutput" name="damageOutput" style="width: 40px;" required>
             <input type="submit" value="Submit" id="submitBtn1">
         </form>
         <p id="feedback1"></p>
@@ -62,10 +59,11 @@ Addition and Subtraction of Whole Numbers
             Cetitan have left?
         </p>
 
-        <!-- Question 2 submission -->
+        <!-- Question 2 form and feedback -->
         <form onsubmit="checkAnswer2(event)">
             <label for="remainingHP">Cetitan's remaining HP</label>
-            <input type="text" id="remainingHP" name="remainingHP" style="width: 40px;">
+            <!-- limit input to whole numbers and make it required -->
+            <input type="number" min="0" id="remainingHP" name="remainingHP" style="width: 40px;" required>
             <input type="submit" value="Submit" id="submitBtn2">
         </form>
         <p id="feedback2"></p>
@@ -78,26 +76,24 @@ Addition and Subtraction of Whole Numbers
         event.preventDefault(); // prevent default form submission
 
         var damageOutput = document.getElementById('damageOutput').value.trim();
-        var correctAnswer = '220';
-        var feedbackDiv = document.getElementById('feedback1');
+        var correctAnswer = 220;
+        var feedback = document.getElementById('feedback1');
         var inputField = document.getElementById('damageOutput');
         var submitButton = document.getElementById('submitBtn1');
 
-        var allowedInput = /^\d+$/;
-
         // validate input
-        if (!allowedInput.test(damageOutput)) {
-            feedbackDiv.textContent = 'Invalid input. Please enter a whole number';
+        if (!damageOutput.checkValidity()) {
+            feedback.textContent = 'Invalid input. Please enter a whole number';
             return;
         }
 
         // check for correct answer and provide feedback
-        if (damageOutput === correctAnswer) {
-            feedbackDiv.textContent = 'Correct! 80 + 140 = 220. Well done!';
+        if (parseInt(damageOutput) === correctAnswer) {
+            feedback.textContent = 'Correct! 80 + 140 = 220. Well done!';
             inputField.disabled = true; // disable input field
             submitButton.disabled = true; // disable submit button
         } else {
-            feedbackDiv.textContent = 'Incorrect. Please try again.';
+            feedback.textContent = 'Incorrect. Please try again.';
         }
     }
 
@@ -106,26 +102,24 @@ Addition and Subtraction of Whole Numbers
         event.preventDefault(); // prevent default form submission
 
         var remainingHP = document.getElementById('remainingHP').value.trim();
-        var correctAnswer = '90';
-        var feedbackDiv2 = document.getElementById('feedback2');
+        var correctAnswer = 90;
+        var feedback2 = document.getElementById('feedback2');
         var inputField = document.getElementById('remainingHP');
         var submitButton = document.getElementById('submitBtn2');
 
-        var allowedInput = /^\d+$/;
-
         // validate input
-        if (!allowedInput.test(remainingHP)) {
-            feedbackDiv2.textContent = 'Invalid input. Please enter a whole number';
+        if (!remainingHP.checkValidity()) {
+            feedback2.textContent = 'Invalid input. Please enter a whole number';
             return;
         }
 
         // check for correct answer and provide feedback
-        if (remainingHP === correctAnswer) {
-            feedbackDiv2.textContent = 'Correct! 180 - 90 = 90. Well done!';
+        if (parseInt(remainingHP) === correctAnswer) {
+            feedback2.textContent = 'Correct! 180 - 90 = 90. Well done!';
             inputField.disabled = true; // disable input field
             submitButton.disabled = true; // disable submit button
         } else {
-            feedbackDiv2.textContent = 'Incorrect. Please try again.';
+            feedback2.textContent = 'Incorrect. Please try again.';
         }
     }
 </script>

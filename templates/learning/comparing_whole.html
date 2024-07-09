@@ -53,10 +53,11 @@ Comparing Whole Numbers
             Compare the two values using <b>&gt;</b>, <b>=</b>, or <b>&lt;</b>.
         </p>
 
-        <!-- text box and button for answer -->
+        <!-- quiz submission and feedback -->
         <form onsubmit="checkAnswer(event)">
             <label for="comparisonSymbol">Charizard ex's HP</label>
-            <input type="text" id="comparisonSymbol" name="comparisonSymbol" style="width: 40px;">
+            <!-- make the input required -->
+            <input type="text" id="comparisonSymbol" name="comparisonSymbol" style="width: 40px;" required>
             Pidgeot ex's HP
             <input type="submit" value="Submit" id="submitBtn">
         </form>
@@ -71,25 +72,25 @@ Comparing Whole Numbers
 
         var comparisonSymbol = document.getElementById('comparisonSymbol').value.trim();
         var correctAnswer = '>';
-        var feedbackDiv = document.getElementById('feedback');
+        var feedback = document.getElementById('feedback');
         var inputField = document.getElementById('comparisonSymbol');
         var submitButton = document.getElementById('submitBtn');
 
-        var allowedSymbols = /^[><=]$/;
+        var allowedSymbols = ['>', '<', '='];
 
         // validate input
-        if (!allowedSymbols.test(comparisonSymbol)) {
-            feedbackDiv.textContent = 'Invalid input. Please enter >, =, or <.';
+        if (allowedSymbols.indexOf(comparisonSymbol) === -1) {
+            feedback.textContent = 'Invalid input. Please enter >, =, or <.';
             return;
         }
 
         // check for correct answer and provide feedback
         if (comparisonSymbol === correctAnswer) {
-            feedbackDiv.textContent = 'Correct! 330 is greater than 280, so ">" is the correct symbol. Well done!';
+            feedback.textContent = 'Correct! 330 is greater than 280, so ">" is the correct symbol. Well done!';
             inputField.disabled = true; // disable input field
             submitButton.disabled = true; // disable submit button
         } else {
-            feedbackDiv.textContent = 'Incorrect. Please try again.';
+            feedback.textContent = 'Incorrect. Please try again.';
         }
     }
 </script>

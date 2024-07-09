@@ -30,8 +30,7 @@ Real-World Problems with Fractions
     <section>
         <h2>You Try:</h2>
         <p> 36 of the cards in your deck are Trainer cards. What fraction of your cards are NOT Trainer cards?
-            Please
-            write your answer as a fraction in simplest terms (for example: 3/14).
+            Please write your answer as a fraction in simplest terms (for example: 3/14).
         </p>
         <figure>
             <img src="{% static 'images/PrimeCatcher.png' %}" alt="Prime Catcher">
@@ -39,9 +38,16 @@ Real-World Problems with Fractions
         <p>
 
         </p>
+        <!-- answer entry and submission -->
         <form onsubmit="checkAnswer(event)">
             <label for="notTrainers">Fraction of cards that are not Trainers</label>
-            <input type="text" id="notTrainers" name="notTrainers" style="width: 40px;">
+            <!-- dropdown selection problem -->
+            <select id="notTrainers" name="notTrainers">
+                <option value="" selected disabled>Select the correct fraction</option>
+                <option value="1/4">1/4</option>
+                <option value="2/5">2/5</option>
+                <option value="3/5">3/5</option>
+            </select>
             <input type="submit" value="Submit" id="submitBtn">
         </form>
         <p id="feedback"></p>
@@ -52,19 +58,19 @@ Real-World Problems with Fractions
     function checkAnswer(event) {
         event.preventDefault(); // prevent default form submission
 
-        var notTrainers = document.getElementById('notTrainers').value.trim();
+        var notTrainers = document.getElementById('notTrainers').value;
         var correctAnswer = '2/5';
-        var feedbackDiv = document.getElementById('feedback');
-        var inputField = document.getElementById('notTrainers');
+        var feedback = document.getElementById('feedback');
+        var selectField = document.getElementById('notTrainers');
         var submitButton = document.getElementById('submitBtn');
 
         // check for correct answer and provide feedback
         if (notTrainers === correctAnswer) {
-            feedbackDiv.textContent = 'Correct! 36/60 cards are Trainers, so 24/60 (or 2/5) are not. Well done!';
-            inputField.disabled = true; // disable input field
+            feedback.textContent = 'Correct! 36/60 cards are Trainers, so 24/60 (or 2/5) are not. Well done!';
+            selectField.disabled = true; // disable input field
             submitButton.disabled = true; // disable submit button
         } else {
-            feedbackDiv.textContent = 'Incorrect. Please try again.';
+            feedback.textContent = 'Incorrect. Please try again.';
         }
     }
 </script>

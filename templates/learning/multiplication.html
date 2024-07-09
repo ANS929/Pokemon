@@ -32,20 +32,19 @@ Multiplication of Whole Numbers
 
     <section>
         <h2>You Try:</h2>
-        <p> Your Gardevoir ex attacks your opponent's Koraidon ex with Miracle Force. How much damage will the
-            attack
+        <p> Your Gardevoir ex attacks your opponent's Koraidon ex with Miracle Force. How much damage will the attack
             do? (Hint: notice that Koraidon has psychic weakness)
         </p>
         <figure>
             <img src="{% static 'images/Gardevoir.png' %}" alt="Gardevoir ex">
             <img src="{% static 'images/Koraidon.png' %}" alt="Koraidon ex">
         </figure>
-        <p>
 
-        </p>
+        <!-- question form and feedback -->
         <form onsubmit="checkAnswer(event)">
             <label for="inputField">Miracle Force's damage output</label>
-            <input type="text" id="damageOutput" name="damageOutput" style="width: 40px;">
+            <!-- limit input to whole numbers and make it required -->
+            <input type="number" min="0" id="damageOutput" name="damageOutput" style="width: 40px;" required>
             <input type="submit" value="Submit" id="submitBtn">
         </form>
         <p id="feedback"></p>
@@ -57,26 +56,24 @@ Multiplication of Whole Numbers
         event.preventDefault(); // prevent default form submission
 
         var damageOutput = document.getElementById('damageOutput').value.trim();
-        var correctAnswer = '380';
-        var feedbackDiv = document.getElementById('feedback');
+        var correctAnswer = 380;
+        var feedback = document.getElementById('feedback');
         var inputField = document.getElementById('damageOutput');
         var submitButton = document.getElementById('submitBtn');
 
-        var allowedInput = /^\d+$/;
-
         // validate input
-        if (!allowedInput.test(damageOutput)) {
-            feedbackDiv.textContent = 'Invalid input. Please enter a whole number';
+        if (!damageOutput.checkValidity()) {
+            feedback.textContent = 'Invalid input. Please enter a whole number';
             return;
         }
 
         // check for correct answer and provide feedback
-        if (damageOutput === correctAnswer) {
-            feedbackDiv.textContent = 'Correct! 190 * 2 = 380. Well done!';
+        if (parseInt(damageOutput) === correctAnswer) {
+            feedback.textContent = 'Correct! 190 * 2 = 380. Well done!';
             inputField.disabled = true; // disable input field
             submitButton.disabled = true; // disable submit button
         } else {
-            feedbackDiv.textContent = 'Incorrect. Please try again.';
+            feedback.textContent = 'Incorrect. Please try again.';
         }
     }
 </script>

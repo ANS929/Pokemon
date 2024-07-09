@@ -33,10 +33,11 @@ Converting Units
             <img src="{% static 'images/Yveltal.png' %}" alt="Yveltal Pokémon card">
         </figure>
 
-        <!-- answer submission -->
+        <!-- answer submission and feedback -->
         <form onsubmit="checkAnswer(event)">
             <label for="comparisonSymbol">Yveltal's height in inches</label>
-            <input type="text" id="height" name="height" style="width: 40px;">
+            <!-- limit input to whole numbers and make it required -->
+            <input type="number" min="0" id="height" name="height" style="width: 40px;" required>
             <input type="submit" value="Submit" id="submitBtn">
         </form>
         <p id="feedback"></p>
@@ -50,26 +51,24 @@ Converting Units
         event.preventDefault(); // prevent default form submission
 
         var height = document.getElementById('height').value.trim();
-        var correctAnswer = '228';
-        var feedbackDiv = document.getElementById('feedback');
+        var correctAnswer = 228;
+        var feedback = document.getElementById('feedback');
         var inputField = document.getElementById('height');
         var submitButton = document.getElementById('submitBtn');
 
-        var allowedInput = /^\d+$/;
-
         // validate input
-        if (!allowedInput.test(height)) {
-            feedbackDiv.textContent = 'Invalid input. Please enter a whole number';
+        if (!height.checkValidity()) {
+            feedback.textContent = 'Invalid input. Please enter a whole number';
             return;
         }
 
         // check for correct answer and provide feedback
-        if (height === correctAnswer) {
-            feedbackDiv.textContent = 'Correct! 19 * 12 = 228. Well done!';
+        if (parseInt(height) === correctAnswer) {
+            feedback.textContent = 'Correct! 19 * 12 = 228. Well done!';
             inputField.disabled = true; // disable input field
             submitButton.disabled = true; // disable submit button
         } else {
-            feedbackDiv.textContent = 'Incorrect. Please try again.';
+            feedback.textContent = 'Incorrect. Please try again.';
         }
     }
 </script>

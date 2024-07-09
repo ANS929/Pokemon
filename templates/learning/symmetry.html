@@ -17,7 +17,7 @@ Lines of Symmetry
     </section>
 
     <section>
-        <h2>Example 1: </h2>
+        <h2>Example 1:</h2>
         <p>Content here</p>
     </section>
 
@@ -58,11 +58,11 @@ Lines of Symmetry
         event.preventDefault(); // prevent default form submission
 
         var selectedOption = document.querySelector('input[name="TF"]:checked');
-        var feedbackDiv = document.getElementById('feedback');
+        var feedback = document.getElementById('feedback');
         var submitButton = document.getElementById('submitBtn');
 
         if (!selectedOption) {
-            feedbackDiv.textContent = 'Please select an answer.';
+            feedback.textContent = 'Please select an answer.';
             return;
         }
 
@@ -70,10 +70,10 @@ Lines of Symmetry
         var correctAnswer = 'true';
 
         if (selectedValue === correctAnswer) {
-            feedbackDiv.textContent = 'Correct! All 3 symbols have vertical symmmetry. Well done!';
+            feedback.textContent = 'Correct! All 3 symbols have vertical symmmetry. Well done!';
             submitButton.disabled = true; // disable submit button
         } else {
-            feedbackDiv.textContent = 'Incorrect. Please try again.';
+            feedback.textContent = 'Incorrect. Please try again.';
         }
     }
 </script>

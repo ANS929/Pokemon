@@ -41,6 +41,7 @@ Identifying Geometric Shapes
         <!-- answer entry and submission -->
         <form onsubmit="checkAnswer(event)">
             <label for="shape">Shape of a Pokémon card</label>
+            <!-- dropdown selection problem -->
             <select id="shape" name="shape">
                 <option value="" selected disabled>Select shape</option>
                 <option value="parallelogram">parallelogram</option>
@@ -60,17 +61,17 @@ Identifying Geometric Shapes
 
         var shape = document.getElementById('shape').value;
         var correctAnswer = 'parallelogram';
-        var feedbackDiv = document.getElementById('feedback');
+        var feedback = document.getElementById('feedback');
         var selectField = document.getElementById('shape');
         var submitButton = document.getElementById('submitBtn');
 
         // check for correct answer and provide feedback
         if (shape === correctAnswer) {
-            feedbackDiv.textContent = 'Correct! A Pokémon card is a rectangle, which is a parallelogram. Well done!';
+            feedback.textContent = 'Correct! A Pokémon card is a rectangle, which is a parallelogram. Well done!';
             selectField.disabled = true; // disable select field
             submitButton.disabled = true; // disable submit button
         } else {
-            feedbackDiv.textContent = 'Incorrect. Please try again.';
+            feedback.textContent = 'Incorrect. Please try again.';
         }
     }
 </script>

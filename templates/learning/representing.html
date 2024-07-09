@@ -33,15 +33,16 @@ Representing Data
 
     <section>
         <h2>You Try:</h2>
-        <p> The following data was collected from NAIC 2024. These are the decks that made Day 2. Which of the
-            following data representations would NOT be a good way to display this data?</p>
+        <p> The following data was collected from NAIC 2024. These are the decks that made Day 2. *EDIT THIS QUESTION*
+        </p>
         <figure>
             <img src="{% static 'images/NAIC.jpeg' %}" alt="NAIC meta share data">
         </figure>
 
         <!-- answer submission and feedback -->
         <form onsubmit="checkAnswer(event)">
-            <label for="representation">Incorrect data representation</label>
+            <label for="representation">Data representation</label>
+            <!-- dropdown selection problem -->
             <select id="representation" name="representation">
                 <option value="" selected disabled>Select data representation</option>
                 <option value="frequency table">frequency table</option>
@@ -61,17 +62,17 @@ Representing Data
 
         var representation = document.getElementById('representation').value;
         var correctAnswer = 'line plot';
-        var feedbackDiv = document.getElementById('feedback');
+        var feedback = document.getElementById('feedback');
         var selectField = document.getElementById('representation');
         var submitButton = document.getElementById('submitBtn');
 
         // check for correct answer and provide feedback
         if (representation === correctAnswer) {
-            feedbackDiv.textContent = 'Correct! REASONING. Well done!';
+            feedback.textContent = 'Correct! . Well done!';
             selectField.disabled = true; // disable select field
             submitButton.disabled = true; // disable submit button
         } else {
-            feedbackDiv.textContent = 'Incorrect. Please try again.';
+            feedback.textContent = 'Incorrect. Please try again.';
         }
     }
 </script>

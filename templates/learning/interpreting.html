@@ -32,6 +32,7 @@ Interpreting Data
         <!-- answer submission and feedback-->
         <form onsubmit="checkAnswer(event)">
             <label for="greatest">Deck with the greatest meta share</label>
+            <!-- dropdown selection problem -->
             <select id="greatest" name="greatest">
                 <option value="" selected disabled>Select deck</option>
                 <option value="Other">Other</option>
@@ -52,17 +53,17 @@ Interpreting Data
 
         var greatest = document.getElementById('greatest').value;
         var correctAnswer = 'Charizard ex';
-        var feedbackDiv = document.getElementById('feedback');
+        var feedback = document.getElementById('feedback');
         var selectField = document.getElementById('greatest');
         var submitButton = document.getElementById('submitBtn');
 
         // check for correct answer and provide feedback
         if (greatest === correctAnswer) {
-            feedbackDiv.textContent = 'Correct! REASONING. Well done!';
+            feedback.textContent = 'Correct! Charizard ex makes up the largest portion of the circle graph. Well done!';
             selectField.disabled = true; // disable select field
             submitButton.disabled = true; // disable submit button
         } else {
-            feedbackDiv.textContent = 'Incorrect. Please try again.';
+            feedback.textContent = 'Incorrect. Please try again.';
         }
     }
 </script>
