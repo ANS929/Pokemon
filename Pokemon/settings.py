@@ -28,7 +28,6 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -42,6 +41,7 @@ INSTALLED_APPS = [
     'community',
     'about',
     'account',
+    'registration',
 ]
 
 MIDDLEWARE = [
@@ -75,7 +75,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "Pokemon.wsgi.application"
 
-
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
@@ -85,7 +84,6 @@ DATABASES = {
         "NAME": BASE_DIR / "db.sqlite3",
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
@@ -121,7 +119,6 @@ USE_I18N = True
 
 USE_TZ = True
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
@@ -135,3 +132,15 @@ MEDIA_URL = '/media/'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+# If True, users can register.
+REGISTRATION_OPEN = True
+
+# If True, the user will be automatically logged in after registering.
+REGISTRATION_AUTO_LOGIN = True
+
+# The URL that Django redirects users to after logging in.
+LOGIN_REDIRECT_URL = 'learning:index'
+
+# The page users are directed to if they are not logged in.
+LOGIN_URL = 'auth_login'
