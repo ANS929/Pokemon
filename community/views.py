@@ -1,4 +1,6 @@
 from django.shortcuts import render
+from django.views.generic import ListView
+from .models import MathQuestion, TCGQuestion
 
 def index(request):
     return render(request, 'learning/base.html')
@@ -11,3 +13,13 @@ def math_forum(request):
 
 def tcg_forum(request):
     return render(request, 'community/tcg_forum.html')
+
+class MathQuestionListView(ListView):
+    model = MathQuestion
+    template_name = 'community/math_forum.html'
+    context_object_name ='questions'
+
+class TCGQuestionListView(ListView):
+    model = TCGQuestion
+    template_name = 'community/tcg_forum.html'
+    context_object_name ='questions'

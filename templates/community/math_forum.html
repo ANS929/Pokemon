@@ -1,13 +1,13 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Math Forum</title>
-</head>
-<body>
-  <p>Math Forum page</p>
-  <a href="{% url 'community:community' %}">Community Home</a> <br>
-  <a href="{% url 'index' %}">Home</a>
-</body>
-</html>
+{% extends "learning/base.html" %}
+
+{% block title_block %}
+<h2>Math Forum</h2>
+{% endblock %}
+
+{% block body_block %}
+{% for question in questions %}
+{{ question.title }} by {{ question.user.username }} on {{ question.date_created }}<br>
+{{question.content}}<br><br>
+{% endfor %}
+
+{% endblock %}
