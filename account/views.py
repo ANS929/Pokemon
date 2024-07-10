@@ -3,9 +3,11 @@ from django.http import HttpResponse
 from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
-from django.contrib import messages
 from .forms import UserRegistrationForm
 from .models import Profile
+from registration.backends.simple.views import RegistrationView
+from django.contrib.messages.views import SuccessMessageMixin
+from django.urls import reverse_lazy
 
 def index(request):
     return render(request, 'learning/base.html')
@@ -18,6 +20,51 @@ def login_page(request):
 
 def settings(request):
     return render(request, 'account/settings.html')
+
+def registration_complete(request):
+    return render(request, 'registration/registration_complete.html')
+
+@login_required    
+def student_dashboard(request):
+    try:
+        if request.user.profile.is_student:
+            return render(request, 'learning/student_dashboard.html')
+        else:
+            return HttpResponse("You do not have permission to view this page.")
+    except Profile.DoesNotExist:
+        return HttpResponse("You do not have permission to view this page.")
+
+@login_required
+def teacher_dashboard(request):
+    try:
+        if request.user.profile.is_teacher:
+            return render(request, 'learning/teacher_dashboard.html')
+        else:
+            return HttpResponse("You do not have permission to view this page.")
+    except Profile.DoesNotExist:
+        return HttpResponse("You do not have permission to view this page.")
+    
+class CustomRegistrationView(RegistrationView):
+    form_class = UserRegistrationForm
+
+    def register(self, form_class):
+        new_user = form_class.save(commit=False)
+        new_user.set_password(form_class.cleaned_data['password'])
+        new_user.save()
+
+        if not hasattr(new_user, 'profile'):
+            profile = Profile(user=new_user)
+            role = form_class.cleaned_data.get('role')
+            if role == 'student':
+                profile.is_student = True
+            elif role == 'teacher':
+                profile.is_teacher = True
+            profile.save()
+        
+        return new_user
+    
+    def get_success_url(self, user=None):
+        return reverse_lazy('account:registration_complete') 
 
 # def user_login(request):
 #     if request.method == 'POST':
@@ -45,27 +92,7 @@ def settings(request):
 # def user_logout(request):
 #     auth_logout(request)
 #     return redirect(reverse('learning:index'))
-
-@login_required    
-def student_dashboard(request):
-    try:
-        if request.user.profile.is_student:
-            return render(request, 'learning/student_dashboard.html')
-        else:
-            return HttpResponse("You do not have permission to view this page.")
-    except Profile.DoesNotExist:
-        return HttpResponse("You do not have permission to view this page.")
-
-@login_required
-def teacher_dashboard(request):
-    try:
-        if request.user.profile.is_teacher:
-            return render(request, 'learning/teacher_dashboard.html')
-        else:
-            return HttpResponse("You do not have permission to view this page.")
-    except Profile.DoesNotExist:
-        return HttpResponse("You do not have permission to view this page.")
-    
+   
 # def register(request):
 #     if request.method == 'POST':
 #         form = UserRegistrationForm(request.POST)
