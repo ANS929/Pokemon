@@ -1,13 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>About This Site</title>
-</head>
-<body>
-  <p>Information about this website</p>
-  <a href="{% url 'about:about' %}">About Home</a> <br>
-  <a href="{% url 'index' %}">Home</a>
-</body>
-</html>
+{% extends 'learning/base.html' %}
+
+{% block title_block %}
+About PokéMath
+{% endblock %}
+
+{% block body_block %}
+<h1>About Pokémath</h1>
+<p>*information about this website goes here*</p>
+{% endblock %}

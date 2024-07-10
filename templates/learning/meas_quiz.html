@@ -1,4 +1,4 @@
-{% extends 'learning/students.html' %}
+{% extends 'learning/base.html' %}
 {% load static %}
 
 {% block title_block %}
@@ -96,7 +96,15 @@ Measurement Quiz
                     score++;
                 }
             });
-            resultContainer.innerHTML = `You scored ${score} out of ${questions.length}.`;
+            let message = "";
+            if (score <= 3) {
+                message = "Good effort! Keep practicing and try the quiz again.";
+            } else if (score === 4) {
+                message = "Good job!";
+            } else if (score === 5) {
+                message = "Way to go!";
+            }
+            resultContainer.innerHTML = `You scored ${score} out of ${questions.length}. ${message}`;
             disableQuiz();
             explanations(score);
         }

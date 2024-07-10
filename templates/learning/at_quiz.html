@@ -1,4 +1,4 @@
-{% extends 'learning/students.html' %}
+{% extends 'learning/base.html' %}
 {% load static %}
 
 {% block title_block %}
@@ -120,7 +120,7 @@ Algebraic Thinking Quiz
             if (score === 5) {
                 message = "Way to go!"
             }
-            resultContainer.innerHTML = `You scored ${score} out of ${questions.length}.`;
+            resultContainer.innerHTML = `You scored ${score} out of ${questions.length}. ${message}`;
             disableQuiz();
             explanations(score);
         }
