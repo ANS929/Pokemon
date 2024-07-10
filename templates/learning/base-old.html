@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+
+{% load static %}
+
+<html>
+
+<head>
+  <title>
+    {% block title_block %}
+    Homepage
+    {% endblock %}
+  </title>
+</head>
+
+<body>
+  <div>
+    {% block body_block %}
+    <img src="{% static 'images/pokemon_logo.png' %}" alt="Pokémon logo"> <br>
+    <a href="{% url 'auth_logout' %}?next={% url 'index'%}">Logout</a> <br>
+    <a href="{% url 'auth_login' %}">Login</a> <br>
+    <a href="{% url 'registration_register' %}">Sign Up</a>
+    {% endblock %}
+  </div>
+  <hr />
+  <div>
+    <ul>
+      <li><a href="{% url 'learning:index' %}">Learning Hub</a></li>
+      <li><a href="{% url 'community:community' %}">Community</a></li>
+      <li><a href="{% url 'about:about' %}">About</a></li>
+      <li><a href="{% url 'account:account' %}">Account</a></li>
+    </ul>
+  </div>
+</body>
+
+</html>

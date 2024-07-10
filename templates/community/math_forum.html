@@ -1,13 +1,41 @@
 {% extends "learning/base.html" %}
 
 {% block title_block %}
-<h2>Math Forum</h2>
+Math Forum
 {% endblock %}
 
 {% block body_block %}
-{% for question in questions %}
-{{ question.title }} by {{ question.user.username }} on {{ question.date_created }}<br>
-{{question.content}}<br><br>
-{% endfor %}
+<style>
+    .question-container {
+        background-color: #f2f2f2;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        padding: 10px;
+        margin-bottom: 10px;
+    }
 
+    .question-title {
+        font-size: 18px;
+        margin-bottom: 5px;
+    }
+
+    .question-content {
+        font-size: 14px;
+        line-height: 1.6;
+    }
+</style>
+
+<h2>Math Forum</h2>
+
+{% for question in questions %}
+<div class="question-container">
+    <div class="question-title">
+        <strong>{{ question.title }}</strong> by {{ question.user.username }} on {{ question.date_created}}
+    </div>
+    <div class="question-content">
+        {% if question.content|wordcount <= 10 %} {{ question.content }} {% else %}
+            {{question.content|truncatewords:10}} <a href="">Read More</a> {% endif %} </div>
+</div>
+<br>
+{% endfor %}
 {% endblock %}

@@ -4,7 +4,7 @@ from learning import views
 app_name = 'learning'
 
 urlpatterns = [
-    path('', views.learning_home, name='index'),
+    path('', views.learning_home, name='learning_home'),
     path('students/', views.students, name='students'),
     path('teachers/', views.teachers, name='teachers'),
     path('parents/', views.parents, name='parents'),

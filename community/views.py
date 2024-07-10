@@ -18,8 +18,10 @@ class MathQuestionListView(ListView):
     model = MathQuestion
     template_name = 'community/math_forum.html'
     context_object_name ='questions'
+    ordering = ['-date_created']
 
 class TCGQuestionListView(ListView):
     model = TCGQuestion
     template_name = 'community/tcg_forum.html'
     context_object_name ='questions'
+    ordering = ['-date_created']
