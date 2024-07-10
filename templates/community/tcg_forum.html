@@ -1,7 +1,7 @@
 {% extends "learning/base.html" %}
 
 {% block title_block %}
-TCG Forum
+Math Forum
 {% endblock %}
 
 {% block body_block %}
@@ -30,11 +30,11 @@ TCG Forum
 {% for question in questions %}
 <div class="question-container">
     <div class="question-title">
-        <strong>{{ question.title }}</strong> by {{ question.user.username }} on {{ question.date_created}}
+        <strong><a href="{% url 'community:tcg_question_details' question.id%}">{{ question.title }}</a></strong> by {{ question.user.username }} on {{ question.date_created}}
     </div>
     <div class="question-content">
         {% if question.content|wordcount <= 10 %} {{ question.content }} {% else %}
-            {{question.content|truncatewords:10}} <a href="">Read More</a> {% endif %} </div>
+            {{question.content|truncatewords:10}} {% endif %} </div>
 </div>
 <br>
 {% endfor %}

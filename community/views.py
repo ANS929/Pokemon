@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.views.generic import ListView
+from django.views.generic import ListView, DetailView
 from .models import MathQuestion, TCGQuestion
 
 def index(request):
@@ -25,3 +25,9 @@ class TCGQuestionListView(ListView):
     template_name = 'community/tcg_forum.html'
     context_object_name ='questions'
     ordering = ['-date_created']
+
+class MathQuestionDetailView(DetailView):
+    model = MathQuestion
+
+class TCGQuestionDetailView(DetailView):
+    model = TCGQuestion
