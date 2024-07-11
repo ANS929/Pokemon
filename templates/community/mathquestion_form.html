@@ -1,0 +1,16 @@
+{% extends "learning/base.html" %}
+
+{% block title_block %}
+New Math Question
+{% endblock %}
+
+{% block body_block %}
+<h5>Ask Your Question</h5>
+<form action="" method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    {{ form.media }}
+    <button type="submit" class="btn btn-primary">Post Question</button>
+    <a href="{% url 'community:math_forum' %}" class="btn btn-secondary">Cancel</a>
+</form>
+{% endblock %}

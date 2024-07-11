@@ -1,0 +1,17 @@
+{% extends "learning/base.html" %}
+
+{% block title_block %}
+Answer a TCG Question
+{% endblock %}
+
+{% block body_block %}
+<h5>Answer the Question</h5>
+<form action="" method="POST">
+    {% csrf_token %}
+    {{ form.name }}
+    {{ form.content|safe }}
+    {{ form.media }}
+    <button type="submit" class="btn btn-primary">Post Answer</button>
+    <a href="" class="btn btn-secondary">Cancel</a>
+</form>
+{% endblock %}

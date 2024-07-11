@@ -23,19 +23,37 @@ Math Forum
         font-size: 14px;
         line-height: 1.6;
     }
+
+    .header-content {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+    }
 </style>
 
-<h2>Math Forum</h2>
+<div class="header-content">
+    <h2>Math Forum</h2>
+
+    {% if user.is_authenticated %}
+    <a href="{% url 'community:math_question_create' %}" class="btn btn-primary">Ask a Question</a>
+
+    {% else %}
+    <a href="{% url 'auth_login' %}" class="btn btn-primary">Ask a Question</a>
+
+    {% endif %}
+</div>
 
 {% for question in questions %}
 <div class="question-container">
     <div class="question-title">
-        <strong><a href="{% url 'community:math_question_details' question.id%}">{{ question.title }}</a></strong> by {{ question.user.username }} on {{ question.date_created}}
+        <strong><a href="{% url 'community:math_question_details' question.id %}">{{ question.title }}</a></strong> by
+        {{ question.user.username }} on {{ question.date_created }}
     </div>
     <div class="question-content">
-        {% if question.content|wordcount <= 10 %} {{ question.content }} {% else %}
-            {{question.content|truncatewords:10}} {% endif %} </div>
-</div>
-<br>
-{% endfor %}
-{% endblock %}
+        {% if question.content|wordcount <= 10 %} {{ question.content }} {% else %} {{
+            question.content|truncatewords_html:10 }} {% endif %} </div>
+    </div>
+    <br>
+    {% endfor %}
+    {% endblock %}

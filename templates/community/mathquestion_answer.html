@@ -1,0 +1,16 @@
+{% extends "learning/base.html" %}
+
+{% block title_block %}
+Answer a Math Question
+{% endblock %}
+
+{% block body_block %}
+<h5>Answer the Question</h5>
+<form action="" method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    {{ form.media }}
+    <button type="submit" class="btn btn-primary">Post Answer</button>
+    <a href="" class="btn btn-secondary">Cancel</a>
+</form>
+{% endblock %}
