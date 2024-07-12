@@ -43,7 +43,7 @@ def teacher_dashboard(request):
             return HttpResponse("You do not have permission to view this page.")
     except Profile.DoesNotExist:
         return HttpResponse("You do not have permission to view this page.")
-    
+
 class CustomRegistrationView(RegistrationView):
     form_class = UserRegistrationForm
 
@@ -52,19 +52,21 @@ class CustomRegistrationView(RegistrationView):
         new_user.set_password(form_class.cleaned_data['password'])
         new_user.save()
 
-        if not hasattr(new_user, 'profile'):
-            profile = Profile(user=new_user)
-            role = form_class.cleaned_data.get('role')
-            if role == 'student':
-                profile.is_student = True
-            elif role == 'teacher':
-                profile.is_teacher = True
-            profile.save()
+        profile, created = Profile.objects.get_or_create(user=new_user)
+        role = form_class.cleaned_data.get('role')
         
+        if role == 'student':
+            profile.is_student = True
+            profile.is_teacher = False
+        elif role == 'teacher':
+            profile.is_teacher = True
+            profile.is_student = False
+        profile.save()
+
         return new_user
-    
+
     def get_success_url(self, user=None):
-        return reverse_lazy('account:registration_complete') 
+        return reverse_lazy('account:registration_complete')
 
 # def user_login(request):
 #     if request.method == 'POST':
