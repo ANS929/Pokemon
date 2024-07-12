@@ -6,54 +6,68 @@ Math Forum
 
 {% block body_block %}
 <style>
-    .question-container {
-        background-color: #f2f2f2;
-        border: 1px solid #ddd;
-        border-radius: 5px;
-        padding: 10px;
-        margin-bottom: 10px;
+    body {
+        margin-top: 100px;
+        font-family: 'Poppins', sans-serif;
     }
 
-    .question-title {
-        font-size: 18px;
-        margin-bottom: 5px;
-    }
-
-    .question-content {
-        font-size: 14px;
-        line-height: 1.6;
-    }
-
-    .header-content {
+    #header-content {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        margin-bottom: 20px;
+    }
+
+    #fh3 {
+        text-align: left;
+        font-size: 19px;
+        padding-top: 15px;
+    }
+
+    #fh6 {
+        text-align: right;
+        font-size: 15px;
+        font-weight: normal;
     }
 </style>
 
-<div class="header-content">
-    <h2>Math Forum</h2>
-
-    {% if user.is_authenticated %}
-    <a href="{% url 'community:math_question_create' %}" class="btn btn-primary">Ask a Question</a>
-
-    {% else %}
-    <a href="{% url 'auth_login' %}" class="btn btn-primary">Ask a Question</a>
-
-    {% endif %}
-</div>
-
-{% for question in questions %}
-<div class="question-container">
-    <div class="question-title">
-        <strong><a href="{% url 'community:math_question_details' question.id %}">{{ question.title }}</a></strong> by
-        {{ question.user.username }} on {{ question.date_created }}
+<body>
+    <div id="header-content">
+        <h1>Math Forum</h1>
+        {% if user.is_authenticated %}
+        <a href="{% url 'community:math_question_create' %}" id="question-button" class="btn btn-primary">Ask a
+            Question</a>
+        {% else %}
+        <a href="{% url 'auth_login' %}" id="question-button" class="btn btn-primary">Ask a Question</a>
+        {% endif %}
     </div>
-    <div class="question-content">
-        {% if question.content|wordcount <= 10 %} {{ question.content }} {% else %} {{
-            question.content|truncatewords_html:10 }} {% endif %} </div>
+
+    <p><a href="{% url 'community:community' %}">Return to the Community page</a></p>
+
+
+    <div class="container">
+        <div class="list-question">
+            <div class="questions">
+                {% for question in questions %}
+                <div class="container"
+                    style="background: #f2f2f2; padding: 5px; box-shadow: rgba(0, 0, 0, 0.383) 0px 5px 5px 0px; border-radius: 15px;">
+                    <div id="title-sec" style="display: flex; align-items: center;">
+                        <h3 id="fh3"><a href="{% url 'community:math_question_details' question.id %}">
+                                {{ question.title }}</a></h3>
+                    </div>
+                    <hr>
+                    {% if question.content|wordcount <= 10 %} <h6 id="fh6" style="text-align: left;">
+                        {{ question.content|safe }}</h6>
+                        {% else %}
+                        <h6 id="fh6" style="text-align: left;">{{ question.content|truncatewords_html:10|safe}}</h6>
+                        {% endif %}
+                        <h6 id="fh6" style="font-size: 10px; font-style: italic; color: rgb(155, 155, 155);">Asked By:
+                            <a href="">{{ question.user.username }}</a>&nbsp;&nbsp;&nbsp; |&nbsp;&nbsp;&nbsp; On:
+                            {{question.date_created|date:"j F, Y"}}
+                        </h6>
+                </div> <br>
+                {% endfor %}
+            </div>
+        </div>
     </div>
-    <br>
-    {% endfor %}
-    {% endblock %}
+</body>
+{% endblock %}

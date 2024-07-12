@@ -5,8 +5,8 @@ Teacher Homepage
 {% endblock %}
 
 {% block body_block %}
-<p>Teacher homepage</p>
-<a href="{% url 'learning:teacher_dashboard' %}">Teacher Dashboard</a> <br>
-<a href="{% url 'learning:index' %}">Learning Home</a> <br>
-<a href="{% url 'index' %}">Home</a>
+<h1>Teacher homepage</h1>
+<p>Welcome to the teacher page!</p>
+<a href="{% url 'learning:teacher_dashboard' %}">Teacher Dashboard</a> <br><br>
+<a href="{% url 'learning:learning_home' %}">Return to the Learning page</a> <br><br>
 {% endblock %}

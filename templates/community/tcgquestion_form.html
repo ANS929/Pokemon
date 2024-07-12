@@ -5,11 +5,10 @@ New TCG Question
 {% endblock %}
 
 {% block body_block %}
-<h5>Ask Your Question</h5>
+<h4>Ask Your Question</h4>
 <form action="" method="POST">
     {% csrf_token %}
-    {{ form.title }}
-    {{ form.content|safe }}
+    {{ form.as_p }}
     {{ form.media }}
     <button type="submit" class="btn btn-primary">Post Question</button>
     <a href="{% url 'community:tcg_forum' %}" class="btn btn-secondary">Cancel</a>

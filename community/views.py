@@ -88,6 +88,9 @@ class MathQuestionUpdateView(UserPassesTestMixin, LoginRequiredMixin, UpdateView
             return True
         return False
     
+    def get_success_url(self):
+        return reverse_lazy('community:math_question_details', kwargs={'pk': self.object.pk})
+    
 class TCGQuestionUpdateView(UserPassesTestMixin, LoginRequiredMixin, UpdateView):
     model = TCGQuestion
     fields = ['title', 'content']
@@ -101,6 +104,9 @@ class TCGQuestionUpdateView(UserPassesTestMixin, LoginRequiredMixin, UpdateView)
         if self.request.user == question.user:
             return True
         return False
+    
+    def get_success_url(self):
+        return reverse_lazy('community:tcg_question_details', kwargs={'pk': self.object.pk})
     
 class MathQuestionDeleteView(UserPassesTestMixin, LoginRequiredMixin, DeleteView):
     model = MathQuestion

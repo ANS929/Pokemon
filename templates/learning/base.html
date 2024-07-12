@@ -46,7 +46,7 @@
                                 href="{% url 'auth_logout' %}?next={% url 'index'%}">Logout</a></li>
                         </li>
                         <li class="nav-item">
-                            <span class="navbar-text">Welcome, {{ user.username }}!</span>
+                            <span class="navbar-text">Welcome, {{ user.username }}!&nbsp;&nbsp;</span>
                         </li>
                         <li class="nav-item">
                             <form class="search-bar" action="" method="GET">
@@ -59,6 +59,13 @@
                         <li class="nav-item"><a class="nav-link" href="{% url 'registration_register' %}">Register</a>
                         </li>
                         <li class="nav-item "><a class="nav-link" href="{% url 'auth_login' %}">Login</a></li>
+                        <li class="nav-item">
+                            <form class="search-bar" action="" method="GET">
+                                <input class="search-form" type="text" placeholder="Search" aria-label="Search"
+                                    name="search-area">
+                                <button class="btn btn-outline-success" type="submit">Search</button>
+                            </form>
+                        </li>
                         {% endif %}
                     </ul>
                 </div>
@@ -71,7 +78,7 @@
             <nav class="col-md-2 d-none d-md-block bg-light sidebar">
                 <div class="sidebar-sticky">
                     {% block sidebar_block %}
-                    <!-- add sidebar content here -->
+                    I'll add content here later.
                     {% endblock %}
                 </div>
             </nav>

@@ -5,13 +5,33 @@ Student Homepage
 {% endblock %}
 
 {% block body_block %}
+
+<style>
+    .button-container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        max-width: 600px;
+        margin: 0 auto;
+    }
+
+    .button-container a {
+        width: calc(50% - 10px);
+        margin-bottom: 10px;
+    }
+</style>
+<h1>Student Homepage</h1>
 <p>Welcome to the student page!</p>
-<a href="{% url 'learning:gr1' %}">Grade 1</a> &nbsp;&nbsp;
-<a href="{% url 'learning:gr2' %}">Grade 2</a> &nbsp;&nbsp;
-<a href="{% url 'learning:gr3' %}">Grade 3</a> &nbsp;&nbsp;
-<a href="{% url 'learning:gr4' %}">Grade 4</a> &nbsp;&nbsp;
-<a href="{% url 'learning:gr5' %}">Grade 5</a> &nbsp;&nbsp;
-<a href="{% url 'learning:gr6' %}">Grade 6</a> &nbsp;&nbsp;
-<a href="{% url 'learning:gr7' %}">Grade 7</a> &nbsp;&nbsp;
-<a href="{% url 'learning:gr8' %}">Grade 8</a> <br><br>
+<div class="button-container">
+    <a href="{% url 'learning:gr1' %}" class="btn btn-primary">Grade 1</a>
+    <a href="{% url 'learning:gr2' %}" class="btn btn-primary">Grade 2</a>
+    <a href="{% url 'learning:gr3' %}" class="btn btn-primary">Grade 3</a>
+    <a href="{% url 'learning:gr4' %}" class="btn btn-primary">Grade 4</a>
+    <a href="{% url 'learning:gr5' %}" class="btn btn-primary">Grade 5</a>
+    <a href="{% url 'learning:gr6' %}" class="btn btn-primary">Grade 6</a>
+    <a href="{% url 'learning:gr7' %}" class="btn btn-primary">Grade 7</a>
+    <a href="{% url 'learning:gr8' %}" class="btn btn-primary">Grade 8</a>
+</div>
+
+<a href="{% url 'learning:learning_home' %}">Return to the Learning page</a> <br><br>
 {% endblock %}

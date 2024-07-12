@@ -5,37 +5,66 @@ Question Details
 {% endblock %}
 
 {% block body_block %}
-<div class="list-question">
-    <div class="questions">
-        <div class="container"
-            style="background-color: #f2f2f2; padding: 5px; box-shadow: rgba(0, 0, 0, 0.15) 0px 5px 5px 0px; border-radius: 20px;">
-            <h3 id="fh3">{{ object.title }}</h3>
-            <h6 id="fh6" style="font-size: 10px; font-style: italic; color: rgb(155, 155, 155); text-align: right;">
-                Asked By: {{ object.user.username }} | On: {{ object.date_created|date:"j F, Y" }}</h6>
-            <p>{{ object.content|safe}}</p>
-            <br>
-            <h2>Answers...</h2> <br><br><br>
+<style>
+    #header-content {
+        text-align: center;
+    }
 
-            {% if not object.math_comments.all %}
-            <h3>No Answers yet...</h3>
-            {% else %}
-            {% for comment in object.math_comments.all %}
-            <h3 style="font-weight: normal; font-size: 15px;">{{ comment.content|safe }}</h3>
-            <h3 style="font-size: 10px;">Answered by: {{ comment.name }} - On: {{ object.date_created|date:"j F, Y" }}
-            </h3>
-            <hr>
-            {% endfor %}
-            {% endif %}
+    body {
+        margin-top: 100px;
+        font-family: 'Poppins', sans-serif;
+    }
 
-            <a class="btn btn-outline-primary" id="fa" href="{% url 'community:math_question_comment' pk=object.pk %}"
-                style="text-decoration: none;">Answer Question</a>
-            <a style="text-decoration: none; " class="btn btn-outline-success"
-                href="{% url 'community:math_question_update' pk=object.id %}">&#x270E;</a>
-            <a style="text-decoration: none; " class="btn btn-outline-danger"
-                href="{% url 'community:math_question_delete' pk=object.id %}">&#x2716;</a>
-            <a style="text-decoration: none; " class="btn btn-outline-secondary"
-                href="{% url 'community:math_forum' %}">&#x21a9;</a>
-        </div>
+    #fh3 {
+        text-align: center;
+        font-size: 30px;
+        padding-top: 20px;
+        text-align: left;
+    }
+
+    #fh6 {
+        text-align: left;
+        font-size: 15px;
+        padding-bottom: 20px;
+        font-weight: normal;
+    }
+</style>
+
+<body>
+    <div id="header-content">
+        <h1>Question Details</h1>
     </div>
-</div>
+    <div class="list-question">
+        <div class="questions">
+            <div class="container"
+                style="background: #f2f2f2; padding: 5px; box-shadow: rgba(0, 0, 0, 0.383) 0px 5px 5px 0px; border-radius: 15px;">
+                <h3 id="fh3">{{object.title}}</h3>
+                <hr>
+                <h6 id="fh6">{{ object.content|safe }}</h6>
+                <hr>
+                <h6 id="fh6" style="font-size: 10px; font-style: italic; color: rgb(155, 155, 155); text-align: right;">
+                    Asked By: <a href="">{{ object.user.username|title }}</a>&nbsp;&nbsp;&nbsp;
+                    |&nbsp;&nbsp;&nbsp; On: {{ object.date_created|date:"j F, Y" }}</h6>
+                <h2>Answers...</h2> 
+                {% if not object.math_comments.all %}
+                <h3>No Answers yet...</h3>
+                {% else %}
+                {% for comment in question.comment.all %}
+                <h3 style="font-weight: normal; font-size: 15px;">{{comment.content|safe}}</h3>
+                <h3 style="font-size: 10px;">Answered by: <i><a href="">{{comment.name}}</a> - On:
+                        {{comment.date_created|date:"j F, Y"}}</i></h3>
+                {% endfor %}
+                {% endif %}
+                <a class="btn btn-outline-primary" href="{% url 'community:math_question_comment' pk=object.pk %}"
+                    style="text-decoration: none;">Answer Question</a>
+                <a style="text-decoration: none; " class="btn btn-outline-success"
+                    href="{% url 'community:math_question_update' pk=object.id %}">&#x270E;</a>
+                <a style="text-decoration: none; " class="btn btn-outline-danger"
+                    href="{% url 'community:math_question_delete' pk=object.id %}">&#x2716;</a>
+                <a style="text-decoration: none; " class="btn btn-outline-secondary"
+                    href="{% url 'community:math_forum' %}">&#x21a9;</a> <br><br>
+            </div> <br>
+        </div> <br>
+    </div> <br>
+</body>
 {% endblock %}
