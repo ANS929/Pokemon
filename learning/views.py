@@ -1,6 +1,7 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
+from .models import Practice, CompletedPractice, Quiz, CompletedQuiz
 
 def index(request):
     return render(request, 'learning/base.html')
@@ -86,37 +87,56 @@ def representing(request):
 def interpreting(request):
     return render(request, 'learning/interpreting.html')
 
-def ns_quiz(request):
-    return render(request, 'learning/ns_quiz.html')
-
-def at_quiz(request):
-    return render(request, 'learning/at_quiz.html')
-
-def comp_quiz(request):
-    return render(request, 'learning/comp_quiz.html')
-
-def da_quiz(request):
-    return render(request, 'learning/da_quiz.html')
-
-def geo_quiz(request):
-    return render(request, 'learning/geo_quiz.html')
-
-def meas_quiz(request):
-    return render(request, 'learning/meas_quiz.html')
+def quiz_detail(request, quiz_slug):
+    quiz = get_object_or_404(Quiz, slug=quiz_slug)
+    context = {
+        'quiz': quiz,
+    }
+    return render(request, f'learning/{quiz_slug}.html', context)
 
 def parent_dashboard(request):
     return render(request, 'learning/parent_dashboard.html')
 
 @login_required
 def student_dashboard(request):
-    if request.user.profile.is_student:
-        return render(request, 'dashboard/student.html')
-    else:
+    if not request.user.profile.is_student:
         return HttpResponse("You do not have permission to view this page.")
+
+    completed_practices = CompletedPractice.objects.filter(student=request.user)
+    completed_quizzes = CompletedQuiz.objects.filter(student=request.user)
+
+    context = {
+        'completed_practices': completed_practices,
+        'completed_quizzes': completed_quizzes,
+    }
+
+    return render(request, 'learning/student_dashboard.html', context)
 
 @login_required
 def teacher_dashboard(request):
     if request.user.profile.is_teacher:
-        return render(request, 'dashboard/teacher.html')
+        return render(request, 'learning/teacher_dashboard.html')
     else:
         return HttpResponse("You do not have permission to view this page.")
+    
+def submit_quiz(request, quiz_slug):
+    quiz = get_object_or_404(Quiz, slug=quiz_slug)
+    user = request.user
+    score = 0
+
+    if request.method == 'POST':
+        correct_answers = quiz.correct_answers
+
+        for question, correct_answer in correct_answers.items():
+            user_answer = request.POST.get(question).strip()
+            if user_answer.lower() == correct_answer.lower():
+                score += 1
+
+        CompletedQuiz.objects.create(student=user, quiz=quiz, score=score)
+
+        return redirect('learning:student_dashboard')
+
+    context = {
+        'quiz': quiz,
+    }
+    return render(request, f'learning/{quiz_slug}.html', context)

@@ -8,5 +8,27 @@ Student Dashboard
 <header>
     <h1>Student Dashboard</h1>
 </header>
-<p>Welcome to the Student Dashboard</p>
+<p>Welcome to the Student Dashboard!</p>
+
+<h2>Completed Practices:</h2>
+{% if completed_practices %}
+    <ul>
+    {% for practice in completed_practices %}
+        <li>{{ practice.practice.title }} - completed on {{ practice.date_completed }}</li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No completed practices yet...</p>
+{% endif %}
+
+<h2>Completed Quizzes:</h2>
+{% if completed_quizzes %}
+    <ul>
+    {% for quiz in completed_quizzes %}
+        <li>{{ quiz.quiz.title }} - completed on {{ quiz.date_completed }}</li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No completed quizzes yet...</p>
+{% endif %}
 {% endblock %}

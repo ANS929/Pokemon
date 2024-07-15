@@ -1,0 +1,156 @@
+{% extends 'learning/base.html' %}
+{% load static %}
+
+{% block title_block %}
+Algebraic Thinking Quiz
+{% endblock %}
+
+{% block body_block %}
+<style>
+    .container {
+        max-width: 100%;
+        padding: 10px;
+        margin-left: 0;
+    }
+
+    .container .image-container {
+        display: flex;
+        gap: 15px;
+        justify-content: flex-start;
+        align-items: flex-start;
+    }
+
+    .container .image-container .image {
+        height: 345px;
+        width: 247.5px;
+        border: 10px solid #fff;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, .1);
+        overflow: hidden;
+        cursor: pointer;
+    }
+
+    .container .image-container .image img {
+        height: 100%;
+        width: 100%;
+        object-fit: cover;
+        transition: .2s linear;
+    }
+
+    .container .image-container .image:hover {
+        transform: scale(1.1)
+    }
+
+    .container .popup-image {
+        position: fixed;
+        top: 0;
+        left: 0;
+        background: rgba(0, 0, 0, .9);
+        height: 100%;
+        width: 100%;
+        z-index: 100;
+        display: none;
+    }
+
+    .container .popup-image span {
+        position: absolute;
+        top: 0;
+        right: 10px;
+        font-size: 10px;
+        font-weight: bolder;
+        color: #fff;
+        cursor: pointer;
+        z-index: 100;
+    }
+
+    .container .popup-image img {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        border: 5px solid #fff;
+        border-radius: 5px;
+        width: 750px;
+        object-fit: cover;
+    }
+
+    @media (max-width:768px) {
+        .container .popup-image img {
+            width: 95%;
+        }
+    }
+</style>
+<header>
+    <h1>Algebraic Thinking Quiz</h1>
+</header>
+
+<h2>Instructions:</h2>
+<p>Use the cards to answer the five questions below.</p>
+
+<div class="container">
+    <div class="image-container">
+        <div class="image"><img src="{% static 'images/Venusaur151.png' %}" alt=""></div>
+        <div class="image"><img src="{% static 'images/Charizard151.png' %}" alt=""></div>
+        <div class="image"><img src="{% static 'images/Blastoise151.png' %}" alt=""></div>
+    </div>
+
+    <div class="popup-image">
+        <span>&times;</span>
+        <img src="" alt="" />
+    </div>
+</div>
+
+<form method="post" action="{% url 'learning:submit_quiz' quiz_slug=quiz.slug %}">
+    {% csrf_token %}
+    <div class="question">
+        <p>1.) Your Venusaur ex was attacked for 250 damage. At the beginning of your turn, you use its Tranquil Flower
+            ability. How many Hit Points does your Venusaur ex now have?</p>
+        <input type="text" name="question1" style="width: 40px;">
+    </div>
+    <div class="question">
+        <p>2.) Your Charizard ex has 3 damage counters on it. How much damage will its Brave Wing attack do?</p>
+        <input type="text" name="question2" style="width: 40px;">
+    </div>
+    <div class="question">
+        <p>3.) You have 9 Basic Energy cards in your deck. 2 are Darkness, and the rest are Psychic. What fraction of
+            your Basic Energy cards are Psychic?</p>
+        <input type="text" name="question3" style="width: 40px;">
+    </div>
+    <div class="question">
+        <p>4.) True or False: If Charizard ex attacks Blastoise ex with Explosive Vortex, Blastoise will be Knocked Out.
+        </p>
+        <select name="question4">
+            <option value="">Select an answer</option>
+            <option value="True">True</option>
+            <option value="False">False</option>
+        </select>
+    </div>
+    <div class="question">
+        <p>5.) 15 of the cards in your deck are Pokémon. What fraction of the cards are NOT Pokémon? Write your answer
+            as a fraction in simplest form.</p>
+        <select name="question5">
+            <option value="">Select an answer</option>
+            <option value="1/4">1/4</option>
+            <option value="3/4">3/4</option>
+            <option value="2/3">2/3</option>
+        </select>
+    </div>
+    <button type="submit">Submit Quiz</button>
+</form>
+
+<script>
+    // Function to handle popup display
+    document.querySelectorAll(".image img").forEach(image => {
+        image.onclick = () => {
+            document.querySelector(".popup-image").style.display = "block";
+            document.querySelector(".popup-image img").src = image.getAttribute("src");
+        };
+    });
+
+    // Close popup when clicking outside the image
+    document.querySelector(".popup-image").onclick = (event) => {
+        if (event.target.classList.contains('popup-image')) {
+            document.querySelector(".popup-image").style.display = "none";
+        }
+    };
+</script>
+{% endblock %}

@@ -34,10 +34,6 @@ urlpatterns = [
     path('students/gr4/area_perimeter', views.area_perimeter, name='area_perimeter'),
     path('students/gr4/representing_data', views.representing, name='representing'),
     path('students/gr4/interpreting_data', views.interpreting, name='interpreting'),
-    path('students/gr4/number_sense_quiz', views.ns_quiz, name='ns_quiz'),
-    path('students/gr4/computation_quiz', views.comp_quiz, name='comp_quiz'),
-    path('students/gr4/algebraic_thinking_quiz', views.at_quiz, name='at_quiz'),
-    path('students/gr4/geometry_quiz', views.geo_quiz, name='geo_quiz'),
-    path('students/gr4/measurement_quiz', views.meas_quiz, name='meas_quiz'),
-    path('students/gr4/data_analysis_quiz', views.da_quiz, name='da_quiz'),
+    path('students/gr4/<slug:quiz_slug>/', views.quiz_detail, name='quiz_detail'),
+    path('students/gr4/<slug:quiz_slug>/submit/', views.submit_quiz, name='submit_quiz'),
 ]
