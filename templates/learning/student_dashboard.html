@@ -31,4 +31,14 @@ Student Dashboard
 {% else %}
     <p>No completed quizzes yet...</p>
 {% endif %}
+<h2>Badges:</h2>
+{% if completed_badges %}
+    <ul>
+    {% for badge in completed_badges %}
+        <li>{{ badge.badge.title }} - completed on {{ badge.date_completed }}</li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No badges yet...</p>
+{% endif %}
 {% endblock %}

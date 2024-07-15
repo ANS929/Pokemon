@@ -44,3 +44,19 @@ class CompletedQuiz(models.Model):
 
     def __str__(self):
         return f"{self.student.username} - {self.quiz.title}"
+    
+# Badges
+class Badge(models.Model):
+    name = models.CharField(max_length = 20)
+    description = models.TextField()
+
+    def __str__(self):
+        return self.title
+
+class CompletedBadge(models.Model):
+    student = models.ForeignKey(User, on_delete=models.CASCADE)
+    badge = models.ForeignKey(Badge, on_delete=models.CASCADE)
+    date_completed = models.DateTimeField(default=timezone.now)
+
+    def __str__(self):
+        return f"{self.student.username} - {self.badge.title}"
