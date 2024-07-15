@@ -6,6 +6,79 @@ Representing Data
 {% endblock %}
 
 {% block body_block %}
+<style>
+    .container {
+        max-width: 100%;
+        padding: 10px;
+        margin-left: 0;
+    }
+
+    .container .image-container {
+        display: flex;
+        gap: 15px;
+        justify-content: flex-start;
+        align-items: flex-start;
+    }
+
+    .container .image-container .image {
+        height: 250px;
+        width: 160px;
+        border: 10px solid #fff;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, .1);
+        overflow: hidden;
+        cursor: pointer;
+    }
+
+    .container .image-container .image img {
+        height: 100%;
+        width: 100%;
+        object-fit: cover;
+        transition: .2s linear;
+    }
+
+    .container .image-container .image:hover {
+        transform: scale(1.1)
+    }
+
+    .container .popup-image {
+        position: fixed;
+        top: 0;
+        left: 0;
+        background: rgba(0, 0, 0, .9);
+        height: 100%;
+        width: 100%;
+        z-index: 100;
+        display: none;
+    }
+
+    .container .popup-image span {
+        position: absolute;
+        top: 0;
+        right: 10px;
+        font-size: 10px;
+        font-weight: bolder;
+        color: #fff;
+        cursor: pointer;
+        z-index: 100;
+    }
+
+    .container .popup-image img {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        border: 5px solid #fff;
+        border-radius: 5px;
+        width: 750px;
+        object-fit: cover;
+    }
+
+    @media (max-width:768px) {
+        .container .popup-image img {
+            width: 95%;
+        }
+    }
+</style>
 <header>
     <h1>Representing Data</h1>
 </header>
@@ -35,9 +108,17 @@ Representing Data
         <h2>You Try:</h2>
         <p> The following data was collected from NAIC 2024. These are the decks that made Day 2. *EDIT THIS QUESTION*
         </p>
-        <figure>
-            <img src="{% static 'images/NAIC.jpeg' %}" alt="NAIC meta share data">
-        </figure>
+
+        <div class="container">
+            <div class="image-container">
+                <div class="image"><img src="{% static 'images/NAIC.jpeg' %}" alt=""></div>
+            </div>
+
+            <div class="popup-image">
+                <span>&times;</span>
+                <img src="" alt="" />
+            </div>
+        </div>
 
         <!-- answer submission and feedback -->
         <form onsubmit="checkAnswer(event)">
@@ -75,5 +156,20 @@ Representing Data
             feedback.textContent = 'Incorrect. Please try again.';
         }
     }
+
+    // Function to handle popup display
+    document.querySelectorAll(".image img").forEach(image => {
+        image.onclick = () => {
+            document.querySelector(".popup-image").style.display = "block";
+            document.querySelector(".popup-image img").src = image.getAttribute("src");
+        };
+    });
+
+    // Close popup when clicking outside the image
+    document.querySelector(".popup-image").onclick = (event) => {
+        if (event.target.classList.contains('popup-image')) {
+            document.querySelector(".popup-image").style.display = "none";
+        }
+    };
 </script>
 {% endblock %}
