@@ -107,8 +107,10 @@ Multiplication of Whole Numbers
     <section>
         <h2>You Try:</h2>
         <p> Your Gardevoir ex attacks your opponent's Koraidon ex with Miracle Force. How much damage will the attack
-            do? (Hint: notice that Koraidon has psychic weakness)
-        </p>
+            do? (Hint: notice that Koraidon has psychic weakness).</p>
+
+        <p>Check your answer using the "Check Answer" button. Once you have the correct answer, submit the practice
+            using the "Submit Practice" button.</p>
 
         <div class="container">
             <div class="image-container">
@@ -122,14 +124,21 @@ Multiplication of Whole Numbers
             </div>
         </div>
 
-        <!-- question form and feedback -->
-        <form onsubmit="checkAnswer(event)">
-            <label for="inputField">Miracle Force's damage output</label>
-            <!-- limit input to whole numbers and make it required -->
-            <input type="number" min="0" id="damageOutput" name="damageOutput" style="width: 40px;" required>
-            <input type="submit" value="Submit" id="submitBtn">
+        <!-- practice submission and feedback -->
+        <form id="practice-form" onsubmit="checkAnswer(event)"
+            action="{% url 'learning:submit_practice' practice.slug %}" method="post">
+            {% csrf_token %}
+            <label for="damageOutput"><b>Miracle Force's damage output</b></label>
+            <input type="number" min="0" id="damageOutput" name="damageOutput" style="width: 60px;" required>
+            <input type="submit" value="Check Answer" id="submitBtn">
         </form>
         <p id="feedback"></p>
+        <form id="final-form" method="post" action="{% url 'learning:submit_practice' practice.slug %}"
+            style="display: none;">
+            {% csrf_token %}
+            <input type="hidden" name="correct" value="True">
+            <button type="submit">Submit Practice</button>
+        </form>
     </section>
 </main>
 
@@ -142,24 +151,20 @@ Multiplication of Whole Numbers
         var feedback = document.getElementById('feedback');
         var inputField = document.getElementById('damageOutput');
         var submitButton = document.getElementById('submitBtn');
-
-        // validate input
-        if (!damageOutput.checkValidity()) {
-            feedback.textContent = 'Invalid input. Please enter a whole number';
-            return;
-        }
+        var finalForm = document.getElementById('final-form'); // form to submit once the answer is correct
 
         // check for correct answer and provide feedback
         if (parseInt(damageOutput) === correctAnswer) {
             feedback.textContent = 'Correct! 190 * 2 = 380. Well done!';
             inputField.disabled = true; // disable input field
             submitButton.disabled = true; // disable submit button
+            finalForm.style.display = 'block'; // show the final submission form
         } else {
             feedback.textContent = 'Incorrect. Please try again.';
         }
     }
 
-    // Function to handle popup display
+    // Function to handle popup image display
     document.querySelectorAll(".image img").forEach(image => {
         image.onclick = () => {
             document.querySelector(".popup-image").style.display = "block";
@@ -167,7 +172,7 @@ Multiplication of Whole Numbers
         };
     });
 
-    // Close popup when clicking outside the image
+    // Close the popup when clicking outside the image
     document.querySelector(".popup-image").onclick = (event) => {
         if (event.target.classList.contains('popup-image')) {
             document.querySelector(".popup-image").style.display = "none";

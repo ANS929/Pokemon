@@ -102,6 +102,8 @@ Converting Units
     <section>
         <h2>You Try:</h2>
         <p> Yveltal is 19 feet tall. How many inches is that?</p>
+        <p>Check your answer using the "Check Answer" button. Once you have the correct answer, submit the practice
+            using the "Submit Practice" button.</p>
 
         <div class="container">
             <div class="image-container">
@@ -114,14 +116,21 @@ Converting Units
             </div>
         </div>
 
-        <!-- answer submission and feedback -->
-        <form onsubmit="checkAnswer(event)">
-            <label for="comparisonSymbol">Yveltal's height in inches</label>
-            <!-- limit input to whole numbers and make it required -->
-            <input type="number" min="0" id="height" name="height" style="width: 40px;" required>
-            <input type="submit" value="Submit" id="submitBtn">
+        <!-- practice submission and feedback -->
+        <form id="practice-form" onsubmit="checkAnswer(event)"
+            action="{% url 'learning:submit_practice' practice.slug %}" method="post">
+            {% csrf_token %}
+            <label for="height"><b>Yveltal's height in inches</b></label>
+            <input type="number" min="0" id="height" name="height" style="width: 60px;" required>
+            <input type="submit" value="Check Answer" id="submitBtn">
         </form>
         <p id="feedback"></p>
+        <form id="final-form" method="post" action="{% url 'learning:submit_practice' practice.slug %}"
+            style="display: none;">
+            {% csrf_token %}
+            <input type="hidden" name="correct" value="True">
+            <button type="submit">Submit Practice</button>
+        </form>
     </section>
 </main>
 
@@ -136,24 +145,20 @@ Converting Units
         var feedback = document.getElementById('feedback');
         var inputField = document.getElementById('height');
         var submitButton = document.getElementById('submitBtn');
-
-        // validate input
-        if (!height.checkValidity()) {
-            feedback.textContent = 'Invalid input. Please enter a whole number';
-            return;
-        }
+        var finalForm = document.getElementById('final-form'); // form to submit once the answer is correct
 
         // check for correct answer and provide feedback
         if (parseInt(height) === correctAnswer) {
             feedback.textContent = 'Correct! 19 * 12 = 228. Well done!';
             inputField.disabled = true; // disable input field
             submitButton.disabled = true; // disable submit button
+            finalForm.style.display = 'block'; // show the final submission form
         } else {
             feedback.textContent = 'Incorrect. Please try again.';
         }
     }
 
-    // Function to handle popup display
+    // Function to handle popup image display
     document.querySelectorAll(".image img").forEach(image => {
         image.onclick = () => {
             document.querySelector(".popup-image").style.display = "block";
@@ -161,7 +166,7 @@ Converting Units
         };
     });
 
-    // Close popup when clicking outside the image
+    // Close the popup when clicking outside the image
     document.querySelector(".popup-image").onclick = (event) => {
         if (event.target.classList.contains('popup-image')) {
             document.querySelector(".popup-image").style.display = "none";

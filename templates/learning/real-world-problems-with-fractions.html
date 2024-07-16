@@ -104,8 +104,10 @@ Real-World Problems with Fractions
     <section>
         <h2>You Try:</h2>
         <p> 36 of the cards in your deck are Trainer cards. What fraction of your cards are NOT Trainer cards?
-            Please write your answer as a fraction in simplest terms (for example: 3/14).
-        </p>
+            Please write your answer as a fraction in simplest terms (for example: 3/14).</p>
+
+        <p>Check your answer using the "Check Answer" button. Once you have the correct answer, submit the practice
+            using the "Submit Practice" button.</p>
 
         <div class="container">
             <div class="image-container">
@@ -117,22 +119,27 @@ Real-World Problems with Fractions
                 <img src="" alt="" />
             </div>
         </div>
-        <p>
 
-        </p>
-        <!-- answer entry and submission -->
-        <form onsubmit="checkAnswer(event)">
-            <label for="notTrainers">Fraction of cards that are not Trainers</label>
-            <!-- dropdown selection problem -->
-            <select id="notTrainers" name="notTrainers">
+        <!-- practice submission and feedback -->
+        <form id="practice-form" onsubmit="checkAnswer(event)"
+            action="{% url 'learning:submit_practice' practice.slug %}" method="post">
+            {% csrf_token %}
+            <label for="notTrainers"><b>Fraction of cards that are not Trainers</b></label>
+            <select id="notTrainers" name="notTrainers" required>
                 <option value="" selected disabled>Select the correct fraction</option>
                 <option value="1/4">1/4</option>
                 <option value="2/5">2/5</option>
                 <option value="3/5">3/5</option>
             </select>
-            <input type="submit" value="Submit" id="submitBtn">
+            <input type="submit" value="Check Answer" id="submitBtn">
         </form>
         <p id="feedback"></p>
+        <form id="final-form" method="post" action="{% url 'learning:submit_practice' practice.slug %}"
+            style="display: none;">
+            {% csrf_token %}
+            <input type="hidden" name="correct" value="True">
+            <button type="submit">Submit Practice</button>
+        </form>
     </section>
 </main>
 
@@ -145,18 +152,20 @@ Real-World Problems with Fractions
         var feedback = document.getElementById('feedback');
         var selectField = document.getElementById('notTrainers');
         var submitButton = document.getElementById('submitBtn');
+        var finalForm = document.getElementById('final-form'); // form to submit once the answer is correct
 
         // check for correct answer and provide feedback
         if (notTrainers === correctAnswer) {
             feedback.textContent = 'Correct! 36/60 cards are Trainers, so 24/60 (or 2/5) are not. Well done!';
             selectField.disabled = true; // disable input field
             submitButton.disabled = true; // disable submit button
+            finalForm.style.display = 'block'; // show the final submission form
         } else {
             feedback.textContent = 'Incorrect. Please try again.';
         }
     }
 
-    // Function to handle popup display
+    // Function to handle popup image display
     document.querySelectorAll(".image img").forEach(image => {
         image.onclick = () => {
             document.querySelector(".popup-image").style.display = "block";
@@ -164,7 +173,7 @@ Real-World Problems with Fractions
         };
     });
 
-    // Close popup when clicking outside the image
+    // Close the popup when clicking outside the image
     document.querySelector(".popup-image").onclick = (event) => {
         if (event.target.classList.contains('popup-image')) {
             document.querySelector(".popup-image").style.display = "none";

@@ -109,6 +109,10 @@ Area and Perimeter of Rectangles
         <p> A Pokémon playmat is approximately 61 centimeters wide and 36 centimeters long. Find the area and perimeter
             of a playmat.</p>
 
+        <p>Check your answers using the "Check
+            Answer" buttons. Once you have both of the correct answers, submit the practice using the "Submit Practice"
+            button.</p>
+
         <div class="container">
             <div class="image-container">
                 <div class="image"><img src="{% static 'images/playmat.jpg' %}" alt=""></div>
@@ -121,26 +125,37 @@ Area and Perimeter of Rectangles
         </div>
 
         <!-- Question 1 form and feedback -->
-        <form onsubmit="checkAnswer1(event)">
-            <label for="area">Area of a playmat (in square centimeters, ex: 1234)</label>
-            <!-- limit input to whole numbers and make it required -->
-            <input type="number" min="0" id="area" name="area" style="width: 50px;" required>
-            <input type="submit" value="Submit" id="submitBtn1">
+        <form id="form1" onsubmit="checkAnswer1(event)">
+            {% csrf_token %}
+            <label for="area"><b>Area of a playmat (in square centimeters, ex: 1234)</b></label>
+            <input type="number" min="0" id="area" name="area" style="width: 60px;" required>
+            <input type="submit" value="Check Answer" id="submitBtn1">
         </form>
         <p id="feedback1"></p>
 
         <!-- Question 2 form and feedback -->
-        <form onsubmit="checkAnswer2(event)">
-            <label for="perimeter">Perimeter of a playmat (in centimeters, ex: 567)</label>
-            <!-- limit input to whole numbers and make it required -->
-            <input type="number" min="0" id="perimeter" name="perimeter" style="width: 50px;" required>
-            <input type="submit" value="Submit" id="submitBtn2">
+        <form id="form2" onsubmit="checkAnswer2(event)">
+            {% csrf_token %}
+            <label for="perimeter"><b>Perimeter of a playmat (in centimeters, ex: 567)</b></label>
+            <input type="number" min="0" id="perimeter" name="perimeter" style="width: 60px;" required>
+            <input type="submit" value="Check Answer" id="submitBtn2">
         </form>
         <p id="feedback2"></p>
+
+        <!-- final submission form -->
+        <form id="final-form" method="post" action="{% url 'learning:submit_practice' practice.slug %}"
+            style="display: none;">
+            {% csrf_token %}
+            <input type="hidden" name="correct" value="True">
+            <button type="submit">Submit Practice</button>
+        </form>
     </section>
 </main>
 
 <script>
+    var question1Correct = false;
+    var question2Correct = false;
+
     // Question 1 logic (area)
     function checkAnswer1(event) {
         event.preventDefault(); // prevent default form submission
@@ -151,19 +166,18 @@ Area and Perimeter of Rectangles
         var inputField = document.getElementById('area');
         var submitButton = document.getElementById('submitBtn1');
 
-        // validate input
-        if (!area.checkValidity()) {
-            feedback.textContent = 'Invalid input. Please enter a whole number';
-            return;
-        }
-
         // check for correct answer and provide feedback
         if (parseInt(area) === correctAnswer) {
             feedback.textContent = 'Correct! 61 * 36 = 2196. Well done!';
             inputField.disabled = true; // disable input field
+            question1Correct = true; // mark question 1 as correct
             submitButton.disabled = true; // disable submit button
+
+            // check if both questions are answered correctly
+            checkFinalSubmission();
         } else {
             feedback.textContent = 'Incorrect. Please try again.';
+            question1Correct = false; // mark question 1 as incorrect
         }
     }
 
@@ -177,22 +191,34 @@ Area and Perimeter of Rectangles
         var inputField = document.getElementById('perimeter');
         var submitButton = document.getElementById('submitBtn2');
 
-        // validate input
-        if (!perimeter.checkValidity()) {
-            feedback2.textContent = 'Invalid input. Please enter a whole number';
-            return;
-        }
-
         // check for correct answer and provide feedback
         if (parseInt(perimeter) === correctAnswer) {
             feedback2.textContent = 'Correct! 2*61 + 2*36 = 194. Well done!';
             inputField.disabled = true; // disable input field
             submitButton.disabled = true; // disable submit button
+            question2Correct = true; // mark question 2 as correct
+
+            // check if both questions are answered correctly
+            checkFinalSubmission();
         } else {
             feedback2.textContent = 'Incorrect. Please try again.';
+            question2Correct = false; // mark question 2 as incorrect
         }
     }
-    // Function to handle popup display
+
+    // function to check if both questions are answered correctly for final submission
+    function checkFinalSubmission() {
+        var finalForm = document.getElementById('final-form');
+
+        // enable final submission button if both questions are correct
+        if (question1Correct && question2Correct) {
+            finalForm.style.display = 'block';
+        } else {
+            finalForm.style.display = 'none';
+        }
+    }
+
+    // Function to handle popup image display
     document.querySelectorAll(".image img").forEach(image => {
         image.onclick = () => {
             document.querySelector(".popup-image").style.display = "block";
@@ -200,7 +226,7 @@ Area and Perimeter of Rectangles
         };
     });
 
-    // Close popup when clicking outside the image
+    // Close the popup when clicking outside the image
     document.querySelector(".popup-image").onclick = (event) => {
         if (event.target.classList.contains('popup-image')) {
             document.querySelector(".popup-image").style.display = "none";

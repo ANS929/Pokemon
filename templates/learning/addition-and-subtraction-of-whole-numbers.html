@@ -7,16 +7,17 @@ Addition and Subtraction of Whole Numbers
 
 {% block body_block %}
 <style>
-    .container{
+    .container {
         max-width: 100%;
         padding: 10px;
-        margin-left:0;
+        margin-left: 0;
     }
+
     .container .image-container {
         display: flex;
         gap: 15px;
         justify-content: flex-start;
-       align-items: flex-start;
+        align-items: flex-start;
     }
 
     .container .image-container .image {
@@ -85,7 +86,7 @@ Addition and Subtraction of Whole Numbers
 <main>
     <section>
         <h2>Introduction:</h2>
-        <p> Addition is combining two numbers together to get a new total (called the sum). Subtraction is when you take
+        <p>Addition is combining two numbers together to get a new total (called the sum). Subtraction is when you take
             one number away from another number to get a new number (called the difference).</p>
     </section>
 
@@ -103,11 +104,14 @@ Addition and Subtraction of Whole Numbers
             as needed.<br>
             <b>Example</b>:
         </p>
-
     </section>
 
     <section>
         <h2>You Try:</h2>
+        <p>Use the two cards to answer the two questions below.</p>
+        <p>Check your answers using the "Check
+            Answer" buttons. Once you have both of the correct answers, submit the practice using the "Submit Practice"
+            button.</p>
 
         <div class="container">
             <div class="image-container">
@@ -121,35 +125,43 @@ Addition and Subtraction of Whole Numbers
             </div>
         </div>
 
-        <p><b>Question 1:</b><br>
-            If your Cetitan has a Special Energy attached, how much damage will its Special Horn attack do?
-        </p>
+        <h4>Question 1:</h4>
+        <p>If your Cetitan has a Special Energy attached, how much damage will its Special Horn attack do?</p>
 
         <!-- Question 1 form and feedback -->
-        <form onsubmit="checkAnswer1(event)">
-            <label for="damageOutput">Special Horn's damage output</label>
-            <!-- limit input to whole numbers and make it required -->
-            <input type="number" min="0" id="damageOutput" name="damageOutput" style="width: 40px;" required>
-            <input type="submit" value="Submit" id="submitBtn1">
+        <form id="form1" onsubmit="checkAnswer1(event)">
+            {% csrf_token %}
+            <label for="damageOutput"><b>Special Horn's damage output</b></label>
+            <input type="number" min="0" id="damageOutput" name="damageOutput" style="width: 60px;" required>
+            <input type="submit" value="Check Answer" id="submitBtn1">
         </form>
         <p id="feedback1"></p>
 
-        <p><b>Question 2:</b><br>
-            Your opponent's Tyranitar attacks your Cetitan with Rout, doing 90 damage. How many hit points does your
-            Cetitan have left?
-        </p>
+        <h4>Question 2:</h4>
+        <p>Your opponent's Tyranitar attacks your Cetitan with Rout, doing 90 damage. How many hit points does your
+            Cetitan have left?</p>
 
         <!-- Question 2 form and feedback -->
-        <form onsubmit="checkAnswer2(event)">
-            <label for="remainingHP">Cetitan's remaining HP</label>
-            <!-- limit input to whole numbers and make it required -->
-            <input type="number" min="0" id="remainingHP" name="remainingHP" style="width: 40px;" required>
-            <input type="submit" value="Submit" id="submitBtn2">
+        <form id="form2" onsubmit="checkAnswer2(event)">
+            {% csrf_token %}
+            <label for="remainingHP"><b>Cetitan's remaining HP</b></label>
+            <input type="number" min="0" id="remainingHP" name="remainingHP" style="width: 60px;" required>
+            <input type="submit" value="Check Answer" id="submitBtn2">
         </form>
         <p id="feedback2"></p>
+
+        <!-- final submission form -->
+        <form id="final-form" method="post" action="{% url 'learning:submit_practice' practice.slug %}"
+            style="display: none;">
+            {% csrf_token %}
+            <input type="hidden" name="correct" value="True">
+            <button type="submit">Submit Practice</button>
+        </form>
     </section>
 </main>
 <script>
+    var question1Correct = false;
+    var question2Correct = false;
 
     // Question 1 logic (addition)
     function checkAnswer1(event) {
@@ -161,23 +173,22 @@ Addition and Subtraction of Whole Numbers
         var inputField = document.getElementById('damageOutput');
         var submitButton = document.getElementById('submitBtn1');
 
-        // validate input
-        if (!damageOutput.checkValidity()) {
-            feedback.textContent = 'Invalid input. Please enter a whole number';
-            return;
-        }
-
         // check for correct answer and provide feedback
         if (parseInt(damageOutput) === correctAnswer) {
             feedback.textContent = 'Correct! 80 + 140 = 220. Well done!';
             inputField.disabled = true; // disable input field
             submitButton.disabled = true; // disable submit button
+            question1Correct = true; // mark question 1 as correct
+
+            // check if both questions are answered correctly
+            checkFinalSubmission();
         } else {
             feedback.textContent = 'Incorrect. Please try again.';
+            question1Correct = false; // mark question 1 as incorrect
         }
     }
 
-    //Question 2 logic (subtraction)
+    // Question 2 logic (subtraction)
     function checkAnswer2(event) {
         event.preventDefault(); // prevent default form submission
 
@@ -187,23 +198,34 @@ Addition and Subtraction of Whole Numbers
         var inputField = document.getElementById('remainingHP');
         var submitButton = document.getElementById('submitBtn2');
 
-        // validate input
-        if (!remainingHP.checkValidity()) {
-            feedback2.textContent = 'Invalid input. Please enter a whole number';
-            return;
-        }
-
         // check for correct answer and provide feedback
         if (parseInt(remainingHP) === correctAnswer) {
             feedback2.textContent = 'Correct! 180 - 90 = 90. Well done!';
             inputField.disabled = true; // disable input field
             submitButton.disabled = true; // disable submit button
+            question2Correct = true; // mark question 2 as correct
+
+            // check if both questions are answered correctly
+            checkFinalSubmission();
         } else {
             feedback2.textContent = 'Incorrect. Please try again.';
+            question2Correct = false; // mark question 2 as incorrect
         }
     }
 
-    // Function to handle popup display
+    // function to check if both questions are answered correctly for final submission
+    function checkFinalSubmission() {
+        var finalForm = document.getElementById('final-form');
+
+        // enable final submission button if both questions are correct
+        if (question1Correct && question2Correct) {
+            finalForm.style.display = 'block';
+        } else {
+            finalForm.style.display = 'none';
+        }
+    }
+
+    // Function to handle popup image display
     document.querySelectorAll(".image img").forEach(image => {
         image.onclick = () => {
             document.querySelector(".popup-image").style.display = "block";
@@ -211,7 +233,7 @@ Addition and Subtraction of Whole Numbers
         };
     });
 
-    // Close popup when clicking outside the image
+    // Close the popup when clicking outside the image
     document.querySelector(".popup-image").onclick = (event) => {
         if (event.target.classList.contains('popup-image')) {
             document.querySelector(".popup-image").style.display = "none";

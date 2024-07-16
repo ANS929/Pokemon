@@ -36,10 +36,40 @@
                 <div class="collapse navbar-collapse" id="navbarCollapse">
                     <ul class="navbar-nav ml-auto">
                         <li class="nav-item"><a class="nav-link" href="{% url 'index' %}">Home</a></li>
-                        <li class="nav-item "><a class="nav-link" href="{% url 'about:about' %}">About</a></li>
-                        <li class="nav-item "><a class="nav-link" href="{% url 'community:community' %}">Community</a>
+                        <!-- About Dropdown -->
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle categories-link" href="#" id="navbarDropdownCategories"
+                                role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                About
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdownCategories">
+                                <a class="dropdown-item" href="{% url 'about:site' %}">About this Site</a>
+                                <a class="dropdown-item" href="{% url 'about:tcg' %}">About the TCG</a>
+                            </div>
                         </li>
-                        <li class="nav-item "><a class="nav-link" href="{% url 'learning:learning_home' %}">Learning</a>
+                        <!-- Community Dropdown -->
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle categories-link" href="#" id="navbarDropdownCategories"
+                                role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Community
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdownCategories">
+                                <a class="dropdown-item" href="{% url 'community:math_forum' %}">Math Forum</a>
+                                <a class="dropdown-item" href="{% url 'community:tcg_forum' %}">TCG Forum</a>
+                            </div>
+                        </li>
+                        <!-- Learning Dropdown -->
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle categories-link" href="#" id="navbarDropdownCategories"
+                                role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Learning
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdownCategories">
+                                <a class="dropdown-item" href="{% url 'learning:students' %}">Students</a>
+                                <a class="dropdown-item" href="{% url 'learning:parents' %}">Teachers</a>
+                                <a class="dropdown-item" href="{% url 'learning:teachers' %}">Parents</a>
+                            </div>
+                        </li>
                         </li>
                         {% if user.is_authenticated %}
                         <li class="nav-item"><a class="nav-link"
@@ -78,7 +108,44 @@
             <nav class="col-md-2 d-none d-md-block bg-light sidebar">
                 <div class="sidebar-sticky">
                     {% block sidebar_block %}
-                    I'll add content here later.
+                    <h1>Quick Links:</h1>
+                    <ul>
+                        <li><a href="{% url 'about:about' %}">About Homepage</a></li>
+                        <li><a href="{% url 'community:community' %}">Community Homepage</a></li>
+                        <li><a href="{% url 'learning:learning_home' %}">Learning Homepage</a></li>
+                    </ul>
+                    {% if user.is_authenticated %}
+                    {% if user.profile.is_student %}
+                    <!-- Student content -->
+                    <ul>
+                        <li><a href="{% url 'learning:student_dashboard' %}">Student Dashboard</a></li>
+                    </ul>
+                    <h4>Math Content:</h4>
+                    <ul>
+                        <li><a href="{% url 'learning:gr1' %}">Grade 1</a></li>
+                        <li><a href="{% url 'learning:gr2' %}">Grade 2</a></li>
+                        <li><a href="{% url 'learning:gr3' %}">Grade 3</a></li>
+                        <li><a href="{% url 'learning:gr4' %}">Grade 4</a></li>
+                        <li><a href="{% url 'learning:gr5' %}">Grade 5</a></li>
+                        <li><a href="{% url 'learning:gr6' %}">Grade 6</a></li>
+                        <li><a href="{% url 'learning:gr7' %}">Grade 7</a></li>
+                        <li><a href="{% url 'learning:gr8' %}">Grade 8</a></li>
+                    </ul>
+                    {% elif user.profile.is_teacher %}
+                    <!-- Teacher content -->
+                    <ul>
+                        <li><a href="{% url 'learning:teacher_dashboard' %}">Teacher Dashboard</a></li>
+                    </ul>
+                    {% else %}
+                    <!-- authenticated non-student non-teacher content -->
+                    {% endif %}
+                    {% else %}
+                    <!-- Content for non-authenticated user -->
+                    <ul>
+                        <li><a href="{% url 'registration_register' %}">Create an Account</a></li>
+                        <li><a href="{% url 'auth_login' %}">Login to Your Account</a></li>
+                    </ul>
+                    {% endif %}
                     {% endblock %}
                 </div>
             </nav>

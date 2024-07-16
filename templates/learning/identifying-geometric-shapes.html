@@ -106,7 +106,9 @@ Identifying Geometric Shapes
 
     <section>
         <h2>You Try:</h2>
-        <p>Content here</p>
+        <p>What geometric shape best describes the shape of a Pokémon card?</p>
+        <p>Check your answer using the "Check Answer" button. Once you have the correct answer, submit the practice
+            using the "Submit Practice" button.</p>
 
         <div class="container">
             <div class="image-container">
@@ -119,19 +121,26 @@ Identifying Geometric Shapes
             </div>
         </div>
 
-        <!-- answer entry and submission -->
-        <form onsubmit="checkAnswer(event)">
-            <label for="shape">Shape of a Pokémon card</label>
-            <!-- dropdown selection problem -->
+        <!-- practice submission and feedback -->
+        <form id="practice-form" onsubmit="checkAnswer(event)"
+            action="{% url 'learning:submit_practice' practice.slug %}" method="post">
+            {% csrf_token %}
+            <label for="shape"><b>Shape of a Pokémon card</b></label>
             <select id="shape" name="shape">
                 <option value="" selected disabled>Select shape</option>
                 <option value="parallelogram">parallelogram</option>
                 <option value="rhombus">rhombus</option>
                 <option value="trapezoid">trapezoid</option>
             </select>
-            <input type="submit" value="Submit" id="submitBtn">
+            <input type="submit" value="Check Answer" id="submitBtn">
         </form>
         <p id="feedback"></p>
+        <form id="final-form" method="post" action="{% url 'learning:submit_practice' practice.slug %}"
+            style="display: none;">
+            {% csrf_token %}
+            <input type="hidden" name="correct" value="True">
+            <button type="submit">Submit Practice</button>
+        </form>
     </section>
 </main>
 
@@ -145,18 +154,20 @@ Identifying Geometric Shapes
         var feedback = document.getElementById('feedback');
         var selectField = document.getElementById('shape');
         var submitButton = document.getElementById('submitBtn');
+        var finalForm = document.getElementById('final-form'); // form to submit once the answer is correct
 
         // check for correct answer and provide feedback
         if (shape === correctAnswer) {
             feedback.textContent = 'Correct! A Pokémon card is a rectangle, which is a parallelogram. Well done!';
             selectField.disabled = true; // disable select field
             submitButton.disabled = true; // disable submit button
+            finalForm.style.display = 'block'; // show the final submission form
         } else {
             feedback.textContent = 'Incorrect. Please try again.';
         }
     }
 
-    // Function to handle popup display
+    // Function to handle popup image display
     document.querySelectorAll(".image img").forEach(image => {
         image.onclick = () => {
             document.querySelector(".popup-image").style.display = "block";
@@ -164,7 +175,7 @@ Identifying Geometric Shapes
         };
     });
 
-    // Close popup when clicking outside the image
+    // Close the popup when clicking outside the image
     document.querySelector(".popup-image").onclick = (event) => {
         if (event.target.classList.contains('popup-image')) {
             document.querySelector(".popup-image").style.display = "none";

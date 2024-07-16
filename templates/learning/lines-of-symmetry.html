@@ -8,6 +8,7 @@ Lines of Symmetry
 {% block body_block %}
 
 <style>
+    /* styles for cards */
     .container {
         max-width: 100%;
         padding: 10px;
@@ -79,6 +80,79 @@ Lines of Symmetry
             width: 95%;
         }
     }
+
+    /* styles for rarity symbols */
+    .container2 {
+        max-width: 100%;
+        padding: 10px;
+        margin-left: 0;
+    }
+
+    .container2 .image-container2 {
+        display: flex;
+        gap: 15px;
+        justify-content: flex-start;
+        align-items: flex-start;
+    }
+
+    .container2 .image-container2 .image2 {
+        height: 125px;
+        width: 125px;
+        border: 10px solid #fff;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, .1);
+        overflow: hidden;
+        cursor: pointer;
+    }
+
+    .container2 .image-container2 .image2 img {
+        height: 100%;
+        width: 100%;
+        object-fit: cover;
+        transition: .2s linear;
+    }
+
+    .container2 .image-container2 .image2:hover {
+        transform: scale(1.1)
+    }
+
+    .container2 .popup-image2 {
+        position: fixed;
+        top: 0;
+        left: 0;
+        background: rgba(0, 0, 0, .9);
+        height: 100%;
+        width: 100%;
+        z-index: 100;
+        display: none;
+    }
+
+    .container2 .popup-image2 span {
+        position: absolute;
+        top: 0;
+        right: 10px;
+        font-size: 10px;
+        font-weight: bolder;
+        color: #fff;
+        cursor: pointer;
+        z-index: 100;
+    }
+
+    .container2 .popup-image2 img {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        border: 5px solid #fff;
+        border-radius: 5px;
+        width: 750px;
+        object-fit: cover;
+    }
+
+    @media (max-width:768px) {
+        .container2 .popup-image2 img {
+            width: 95%;
+        }
+    }
 </style>
 <header>
     <h1>Lines of Symmetry</h1>
@@ -88,6 +162,17 @@ Lines of Symmetry
     <section>
         <h2>Introduction:</h2>
         <p> Content here</p>
+        <div class="container">
+            <div class="image-container">
+                <div class="image"><img src="{% static 'images/Kingambit.png' %}" alt=""></div>
+                <div class="image"><img src="{% static 'images/Palafin.png' %}" alt=""></div>
+            </div>
+
+            <div class="popup-image">
+                <span>&times;</span>
+                <img src="" alt="" />
+            </div>
+        </div>
     </section>
 
     <section>
@@ -103,37 +188,44 @@ Lines of Symmetry
 
     <section>
         <h2>You Try:</h2>
-        <p>Content here</p>
-        <figure>
-            <img src="{% static 'images/common.png' %}" alt="Pokémon TCG common rarity symbol">
-            <img src="{% static 'images/uncommon.png' %}" alt="Pokémon TCG uncommon rarity symbol">
-            <img src="{% static 'images/rare.png' %}" alt="Pokémon TCG rare rarity symbol"> <br>
-        </figure>
+        <p>True or False: The three rarity symbols pictured below are all symmetrical.</p>
 
-        <div class="container">
-            <div class="image-container">
-                <div class="image"><img src="{% static 'images/Kingambit.png' %}" alt=""></div>
-                <div class="image"><img src="{% static 'images/Palafin.png' %}" alt=""></div>
+        <p>Check your answer using the "Check Answer" button. Once you have the correct answer, submit the practice
+            using the "Submit Practice" button.</p>
+
+        <div class="container2">
+            <div class="image-container2">
+                <div class="image2"><img src="{% static 'images/common.png' %}" alt=""></div>
+                <div class="image2"><img src="{% static 'images/uncommon.png' %}" alt=""></div>
+                <div class="image2"><img src="{% static 'images/rare.png' %}" alt=""></div>
             </div>
 
-            <div class="popup-image">
+            <div class="popup-image2">
                 <span>&times;</span>
                 <img src="" alt="" />
             </div>
         </div>
-        <p>True or False: The three rarity symbols pictured above are all symmetrical.</p>
-        <!-- answer input and submission button -->
-        <form onsubmit="checkAnswer(event)">
+
+
+        <!-- practice submission and feedback -->
+        <form id="practice-form" onsubmit="checkAnswer(event)"
+            action="{% url 'learning:submit_practice' practice.slug %}" method="post">
+            {% csrf_token %}
             <label>
                 <input type="radio" name="TF" value="true"> True
             </label><br>
             <label>
                 <input type="radio" name="TF" value="false"> False
             </label><br>
-            <input type="submit" value="Submit" id="submitBtn">
+            <input type="submit" value="Check Answer" id="submitBtn">
         </form>
         <p id="feedback"></p>
-    </section>
+        <form id="final-form" method="post" action="{% url 'learning:submit_practice' practice.slug %}"
+            style="display: none;">
+            {% csrf_token %}
+            <input type="hidden" name="correct" value="True">
+            <button type="submit">Submit Practice</button>
+        </form>
 </main>
 
 <script>
@@ -144,6 +236,7 @@ Lines of Symmetry
         var selectedOption = document.querySelector('input[name="TF"]:checked');
         var feedback = document.getElementById('feedback');
         var submitButton = document.getElementById('submitBtn');
+        var finalForm = document.getElementById('final-form'); // form to submit once the answer is correct
 
         if (!selectedOption) {
             feedback.textContent = 'Please select an answer.';
@@ -156,12 +249,13 @@ Lines of Symmetry
         if (selectedValue === correctAnswer) {
             feedback.textContent = 'Correct! All 3 symbols have vertical symmmetry. Well done!';
             submitButton.disabled = true; // disable submit button
+            finalForm.style.display = 'block'; // show the final submission form
         } else {
             feedback.textContent = 'Incorrect. Please try again.';
         }
     }
 
-    // Function to handle popup display
+    // Function to handle popup image display (for cards)
     document.querySelectorAll(".image img").forEach(image => {
         image.onclick = () => {
             document.querySelector(".popup-image").style.display = "block";
@@ -169,10 +263,25 @@ Lines of Symmetry
         };
     });
 
-    // Close popup when clicking outside the image
+    // Close the popup when clicking outside the image (for cards)
     document.querySelector(".popup-image").onclick = (event) => {
         if (event.target.classList.contains('popup-image')) {
             document.querySelector(".popup-image").style.display = "none";
+        }
+    };
+
+    // Function to handle popup image display (for symbols)
+    document.querySelectorAll(".image2 img").forEach(image => {
+        image.onclick = () => {
+            document.querySelector(".popup-image2").style.display = "block";
+            document.querySelector(".popup-image2 img").src = image.getAttribute("src");
+        };
+    });
+
+    // Close the popup when clicking outside the image (for symbols)
+    document.querySelector(".popup-image2").onclick = (event) => {
+        if (event.target.classList.contains('popup-image2')) {
+            document.querySelector(".popup-image2").style.display = "none";
         }
     };
 </script>

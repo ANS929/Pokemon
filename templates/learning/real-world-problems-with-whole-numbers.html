@@ -109,6 +109,9 @@ Real-World Problems with Whole Numbers
             Energy. Your opponent claims this is enough damage to knock out your Iron Leaves, but you disagree. How
             many hit points does your Iron Leaves have left after the attack?</p>
 
+        <p>Check your answer using the "Check Answer" button. Once you have the correct answer, submit the practice
+            using the "Submit Practice" button.</p>
+
         <div class="container">
             <div class="image-container">
                 <div class="image"><img src="{% static 'images/IronLeaves.png' %}" alt=""></div>
@@ -121,14 +124,21 @@ Real-World Problems with Whole Numbers
             </div>
         </div>
 
-        <!-- answer input and submission -->
-        <form onsubmit="checkAnswer(event)">
-            <label for="inputField">Iron Leaves' remaining HP</label>
-            <!-- limit input to whole numbers and make it required -->
-            <input type="number" min="0" id="remainingHP" name="remainingHP" style="width: 40px;" required>
-            <input type="submit" value="Submit" id="submitBtn">
+        <!-- practice submission and feedback -->
+        <form id="practice-form" onsubmit="checkAnswer(event)"
+            action="{% url 'learning:submit_practice' practice.slug %}" method="post">
+            {% csrf_token %}
+            <label for="remainingHP"><b>Iron Leaves' remaining HP</b></label>
+            <input type="number" min="0" id="remainingHP" name="remainingHP" style="width: 60px;" required>
+            <input type="submit" value="Check Answer" id="submitBtn">
         </form>
         <p id="feedback"></p>
+        <form id="final-form" method="post" action="{% url 'learning:submit_practice' practice.slug %}"
+            style="display: none;">
+            {% csrf_token %}
+            <input type="hidden" name="correct" value="True">
+            <button type="submit">Submit Practice</button>
+        </form>
     </section>
 </main>
 <script>
@@ -140,24 +150,20 @@ Real-World Problems with Whole Numbers
         var feedback = document.getElementById('feedback');
         var inputField = document.getElementById('remainingHP');
         var submitButton = document.getElementById('submitBtn');
-
-        // validate input
-        if (!remainingHP.checkValidity()) {
-            feedback.textContent = 'Invalid input. Please enter a whole number';
-            return;
-        }
+        var finalForm = document.getElementById('final-form'); // form to submit once the answer is correct
 
         // check for correct answer and provide feedback
         if (parseInt(remainingHP) === correctAnswer) {
             feedback.textContent = 'Correct! 70 * 3 = 210 and 220 - 210 = 10. Well done!';
             inputField.disabled = true; // disable input field
             submitButton.disabled = true; // disable submit button
+            finalForm.style.display = 'block'; // show the final submission form
         } else {
             feedback.textContent = 'Incorrect. Please try again.';
         }
     }
 
-    // Function to handle popup display
+    // Function to handle popup image display
     document.querySelectorAll(".image img").forEach(image => {
         image.onclick = () => {
             document.querySelector(".popup-image").style.display = "block";
@@ -165,7 +171,7 @@ Real-World Problems with Whole Numbers
         };
     });
 
-    // Close popup when clicking outside the image
+    // Close the popup when clicking outside the image
     document.querySelector(".popup-image").onclick = (event) => {
         if (event.target.classList.contains('popup-image')) {
             document.querySelector(".popup-image").style.display = "none";

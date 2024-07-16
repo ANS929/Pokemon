@@ -106,8 +106,10 @@ Representing Data
 
     <section>
         <h2>You Try:</h2>
-        <p> The following data was collected from NAIC 2024. These are the decks that made Day 2. *EDIT THIS QUESTION*
-        </p>
+        <p> The following data was collected from NAIC 2024. These are the decks that made Day 2. True or False: A bar
+            graph could NOT be used to display this information.</p>
+        <p>Check your answer using the "Check Answer" button. Once you have the correct answer, submit the practice
+            using the "Submit Practice" button.</p>
 
         <div class="container">
             <div class="image-container">
@@ -120,19 +122,25 @@ Representing Data
             </div>
         </div>
 
-        <!-- answer submission and feedback -->
-        <form onsubmit="checkAnswer(event)">
-            <label for="representation">Data representation</label>
-            <!-- dropdown selection problem -->
-            <select id="representation" name="representation">
-                <option value="" selected disabled>Select data representation</option>
-                <option value="frequency table">frequency table</option>
-                <option value="line plot">line plot</option>
-                <option value="bar graph">bar graph</option>
+        <!-- practice submission and feedback -->
+        <form id="practice-form" onsubmit="checkAnswer(event)"
+            action="{% url 'learning:submit_practice' practice.slug %}" method="post">
+            {% csrf_token %}
+            <label for="selection"><b>True or False?</b></label>
+            <select id="selection" name="selection">
+                <option value="" selected disabled>Select answer</option>
+                <option value="True">True</option>
+                <option value="False">False</option>
             </select>
-            <input type="submit" value="Submit" id="submitBtn">
+            <input type="submit" value="Check Answer" id="submitBtn">
         </form>
         <p id="feedback"></p>
+        <form id="final-form" method="post" action="{% url 'learning:submit_practice' practice.slug %}"
+            style="display: none;">
+            {% csrf_token %}
+            <input type="hidden" name="correct" value="True">
+            <button type="submit">Submit Practice</button>
+        </form>
     </section>
 </main>
 
@@ -141,23 +149,25 @@ Representing Data
     function checkAnswer(event) {
         event.preventDefault(); // prevent default form submission
 
-        var representation = document.getElementById('representation').value;
-        var correctAnswer = 'line plot';
+        var selection = document.getElementById('selection').value;
+        var correctAnswer = 'False';
         var feedback = document.getElementById('feedback');
-        var selectField = document.getElementById('representation');
+        var selectField = document.getElementById('selection');
         var submitButton = document.getElementById('submitBtn');
+        var finalForm = document.getElementById('final-form'); // form to submit once the answer is correct
 
         // check for correct answer and provide feedback
-        if (representation === correctAnswer) {
-            feedback.textContent = 'Correct! . Well done!';
+        if (selection === correctAnswer) {
+            feedback.textContent = 'Correct! A bar graph is used to compare items, so we could use it to compare the amounts of each type of deck. Well done!';
             selectField.disabled = true; // disable select field
             submitButton.disabled = true; // disable submit button
+            finalForm.style.display = 'block'; // show the final submission form
         } else {
             feedback.textContent = 'Incorrect. Please try again.';
         }
     }
 
-    // Function to handle popup display
+    // Function to handle popup image display
     document.querySelectorAll(".image img").forEach(image => {
         image.onclick = () => {
             document.querySelector(".popup-image").style.display = "block";
@@ -165,7 +175,7 @@ Representing Data
         };
     });
 
-    // Close popup when clicking outside the image
+    // Close the popup when clicking outside the image
     document.querySelector(".popup-image").onclick = (event) => {
         if (event.target.classList.contains('popup-image')) {
             document.querySelector(".popup-image").style.display = "none";

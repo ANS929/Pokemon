@@ -109,8 +109,11 @@ Comparing Whole Numbers
 
     <section>
         <h2>You Try:</h2>
-        <p>Look at the HP of Charizard ex and Pidgeot ex.</p>
-
+        <p>Look at the HP of Charizard ex and Pidgeot ex. Compare the two values using <b>&gt;</b>, <b>=</b>, or
+            <b>&lt;</b>. </p>
+        <p>Check your answer using the "Check Answer" button. Once you have the correct answer, submit the practice
+            using the "Submit Practice" button.
+        </p>
         <div class="container">
             <div class="image-container">
                 <div class="image"><img src="{% static 'images/Charizard.png' %}" alt="Charizard ex"></div>
@@ -122,15 +125,14 @@ Comparing Whole Numbers
                 <img src="" alt="" />
             </div>
         </div>
-        <p>Compare the two values using <b>&gt;</b>, <b>=</b>, or <b>&lt;</b>.</p>
 
         <!-- practice submission and feedback -->
         <form id="practice-form" onsubmit="checkAnswer(event)"
             action="{% url 'learning:submit_practice' practice.slug %}" method="post">
             {% csrf_token %}
-            <label for="comparisonSymbol">Charizard ex's HP</label>
+            <label for="comparisonSymbol"><b>Charizard ex's HP</b></label>
             <input type="text" id="comparisonSymbol" name="comparisonSymbol" style="width: 40px;" required>
-            Pidgeot ex's HP
+            <b>Pidgeot ex's HP</b>
             <input type="submit" value="Check Answer" id="submitBtn">
         </form>
         <p id="feedback"></p>
@@ -144,6 +146,7 @@ Comparing Whole Numbers
 </main>
 
 <script>
+    // function to check the answer of the practice problem
     function checkAnswer(event) {
         event.preventDefault(); // prevent default form submission
 
@@ -152,7 +155,7 @@ Comparing Whole Numbers
         var feedback = document.getElementById('feedback');
         var inputField = document.getElementById('comparisonSymbol');
         var submitButton = document.getElementById('submitBtn');
-        var finalForm = document.getElementById('final-form');
+        var finalForm = document.getElementById('final-form'); // form to submit once the answer is correct
 
         var allowedSymbols = ['>', '<', '='];
 
@@ -173,7 +176,7 @@ Comparing Whole Numbers
         }
     }
 
-    // Function to handle popup display
+    // Function to handle popup image display
     document.querySelectorAll(".image img").forEach(image => {
         image.onclick = () => {
             document.querySelector(".popup-image").style.display = "block";
@@ -181,7 +184,7 @@ Comparing Whole Numbers
         };
     });
 
-    // Close popup when clicking outside the image
+    // Close the popup when clicking outside the image
     document.querySelector(".popup-image").onclick = (event) => {
         if (event.target.classList.contains('popup-image')) {
             document.querySelector(".popup-image").style.display = "none";

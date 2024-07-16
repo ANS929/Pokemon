@@ -138,7 +138,11 @@ Comparing Decimals
     <section>
         <h2>You Try:</h2>
         <p>
-            Look at the weights of Charizard ex and Pidgeot ex.
+            Look at the weights of Fletchling and Rowlet. Compare the two values using <b>&gt;</b>, <b>=</b>, or
+            <b>&lt;</b>.
+        </p>
+        <p>Check your answer using the "Check Answer" button. Once you have the correct answer, submit the practice
+            using the "Submit Practice" button.
         </p>
         <div class="container">
             <div class="image-container">
@@ -152,21 +156,26 @@ Comparing Decimals
             </div>
         </div>
 
-        <p>
-            Compare the two values using <b>&gt;</b>, <b>=</b>, or <b>&lt;</b>.
-        </p>
-        <!-- quiz submission and feedback -->
-        <form onsubmit="checkAnswer(event)">
-            <label for="comparisonSymbol">Fletching's weight</label>
-            <!-- make the input required -->
+        <!-- practice submission and feedback -->
+        <form id="practice-form" onsubmit="checkAnswer(event)"
+            action="{% url 'learning:submit_practice' practice.slug %}" method="post">
+            {% csrf_token %}
+            <label for="comparisonSymbol"><b>Fletching's weight</b></label>
             <input type="text" id="comparisonSymbol" name="comparisonSymbol" style="width: 40px;" required>
-            Rowlet's weight
-            <input type="submit" value="Submit" id="submitBtn">
+            <b>Rowlet's weight</b>
+            <input type="submit" value="Check Answer" id="submitBtn">
         </form>
         <p id="feedback"></p>
+        <form id="final-form" method="post" action="{% url 'learning:submit_practice' practice.slug %}"
+            style="display: none;">
+            {% csrf_token %}
+            <input type="hidden" name="correct" value="True">
+            <button type="submit">Submit Practice</button>
+        </form>
     </section>
 </main>
 <script>
+    // function to check the answer of the practice problem
     function checkAnswer(event) {
         event.preventDefault(); // prevent default form submission
 
@@ -175,6 +184,7 @@ Comparing Decimals
         var feedback = document.getElementById('feedback');
         var inputField = document.getElementById('comparisonSymbol');
         var submitButton = document.getElementById('submitBtn');
+        var finalForm = document.getElementById('final-form'); // form to submit once the answer is correct
 
         var allowedSymbols = ['>', '=', '<'];
 
@@ -189,12 +199,13 @@ Comparing Decimals
             feedback.textContent = 'Correct! 3.7 > 3.3 (since 7 > 3), so ">" is the correct symbol. Well done!';
             inputField.disabled = true; // disable input field
             submitButton.disabled = true; // disable submit button
+            finalForm.style.display = 'block'; // show the final submission form
         } else {
             feedback.textContent = 'Incorrect. Please try again.';
         }
     }
 
-    // Function to handle popup display
+    // Function to handle popup image display
     document.querySelectorAll(".image img").forEach(image => {
         image.onclick = () => {
             document.querySelector(".popup-image").style.display = "block";
@@ -202,7 +213,7 @@ Comparing Decimals
         };
     });
 
-    // Close popup when clicking outside the image
+    // Close the popup when clicking outside the image
     document.querySelector(".popup-image").onclick = (event) => {
         if (event.target.classList.contains('popup-image')) {
             document.querySelector(".popup-image").style.display = "none";
