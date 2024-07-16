@@ -1,4 +1,15 @@
 from django.contrib import admin
-from .models import Quiz
+from .models import Quiz, CompletedQuiz, Practice, CompletedPractice
 
 admin.site.register(Quiz)
+
+admin.site.register(Practice)
+
+@admin.register(CompletedQuiz)
+class CompletedQuizAdmin(admin.ModelAdmin):
+    list_display = ('student', 'quiz', 'score', 'date_completed')
+    search_fields = ('student__username', 'quiz__title')
+
+@admin.register(CompletedPractice)
+class CompletedQuizAdmin(admin.ModelAdmin):
+    list_display = ('student', 'practice','date_completed')

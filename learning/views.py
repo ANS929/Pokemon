@@ -51,48 +51,19 @@ def gr7(request):
 def gr8(request):
     return render(request, 'learning/gr8.html')
 
-def comparing_whole(request):
-    return render(request, 'learning/comparing_whole.html')
-
-def comparing_decimal(request):
-    return render(request, 'learning/comparing_decimal.html')
-
-def add_subtract(request):
-    return render(request, 'learning/add_subtract.html')
-
-def multiplication(request):
-    return render(request, 'learning/multiplication.html')
-
-def rw_whole(request):
-    return render(request, 'learning/rw_whole.html')
-
-def rw_fraction(request):
-    return render(request, 'learning/rw_fraction.html')
-
-def symmetry(request):
-    return render(request, 'learning/symmetry.html')
-
-def identifying_shapes(request):
-    return render(request, 'learning/identifying_shapes.html')
-
-def converting_units(request):
-    return render(request, 'learning/converting_units.html')
-
-def area_perimeter(request):
-    return render(request, 'learning/area_perimeter.html')
-
-def representing(request):
-    return render(request, 'learning/representing.html')
-
-def interpreting(request):
-    return render(request, 'learning/interpreting.html')
-
 def quiz_detail(request, quiz_slug):
     quiz = get_object_or_404(Quiz, slug=quiz_slug)
     context = {
         'quiz': quiz,
     }
     return render(request, f'learning/{quiz_slug}.html', context)
+
+def practice_detail(request, practice_slug):
+    practice = get_object_or_404(Practice, slug=practice_slug)
+    context = {
+        'practice': practice,
+    }
+    return render(request, f'learning/{practice_slug}.html', context)
 
 def parent_dashboard(request):
     return render(request, 'learning/parent_dashboard.html')
@@ -140,3 +111,14 @@ def submit_quiz(request, quiz_slug):
         'quiz': quiz,
     }
     return render(request, f'learning/{quiz_slug}.html', context)
+
+@login_required
+def submit_practice(request, practice_slug):
+    practice = get_object_or_404(Practice, slug=practice_slug)
+    user = request.user
+
+    if request.method == 'POST':
+        CompletedPractice.objects.create(student=user, practice=practice)
+        return redirect('learning:student_dashboard')
+
+    return render(request, 'learning/comparing_whole.html', {'practice': practice})

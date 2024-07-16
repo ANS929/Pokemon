@@ -25,7 +25,7 @@ Student Dashboard
 {% if completed_quizzes %}
     <ul>
     {% for quiz in completed_quizzes %}
-        <li>{{ quiz.quiz.title }} - completed on {{ quiz.date_completed }}</li>
+        <li>{{ quiz.quiz.title }} - score: {{quiz.score}}/5 (completed on {{ quiz.date_completed }})</li>
     {% endfor %}
     </ul>
 {% else %}

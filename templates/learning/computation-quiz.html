@@ -99,115 +99,32 @@ Computation Quiz
     </div>
 </div>
 
-<!-- quiz submission and results -->
-<form id="quiz-form">
-    <div id="quiz-container"></div>
-    <button type="submit" id="submit-button">Submit Quiz</button>
+<form method="post" action="{% url 'learning:submit_quiz' quiz_slug=quiz.slug %}">
+    {% csrf_token %}
+    <div class="question">
+        <p>1.) One of your Fighting Pokémon was Knocked Out by damage from an attack during your opponent's last turn. How much damage will your Lucario's Avenging Knuckle attack do this turn?</p>
+        <input type="text" name="question1" style="width: 40px;">
+    </div> <br>
+    <div class="question">
+        <p>2.) You have 4 Maushold in play. How much damage will your active Maushold's Family Attack do?</p>
+        <input type="text" name="question2" style="width: 40px;">
+    </div> <br>
+    <div class="question">
+        <p>3.) Your opponent's Dodrio has 5 damage counters on it. How much damage does its Ballistic Beak attack do?</p>
+        <input type="text" name="question3" style="width: 40px;">
+    </div> <br>
+    <div class="question">
+        <p>4.) Your Lucario currently has 90 HP left. How much damage has been done to it so far?</p>
+        <input type="text" name="question4" style="width: 40px;">
+    </div> <br>
+    <div class="question">
+        <p>5.) What is the difference between Maushold's Pokédex number and Lucario's Pokédex number?</p>
+        <input type="text" name="question5" style="width: 40px;">
+    </div> <br>
+    <button type="submit">Submit Quiz</button>
 </form> <br>
-<div id="result-container"></div>
+
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
-
-        // array of quiz questions and answers
-        const questions = [
-            {
-                question: "1.) One of your Fighting Pokémon was Knocked Out by damage from an attack during your opponent's last turn. How much damage will your Lucario's Avenging Knuckle attack do this turn?",
-                choices: ['30', '120', '150'],
-                answer: '150'
-            },
-            {
-                question: "2.) You have 4 Maushold in play. How much damage will your active Maushold's Family Attack do?",
-                choices: ['280', '350', '210'],
-                answer: '280'
-            },
-            {
-                question: "3.) Your opponent's Dodrio has 5 damage counters on it. How much damage does its Ballistic Beak attack do?",
-                choices: ['40', '160', '150'],
-                answer: '160'
-            },
-            {
-                question: "4.) Your Lucario currently has 90 HP left. How much damage has been done to it so far?",
-                choices: ['40', '30', '50'],
-                answer: '40'
-            },
-            {
-                question: "5.) What is the difference between Maushold's Pokédex number and Lucario's Pokédex number?",
-                choices: ['487', '477', '523'],
-                answer: '477'
-            }
-        ];
-
-        const quizContainer = document.getElementById('quiz-container');
-        const resultContainer = document.getElementById('result-container');
-        const submitButton = document.getElementById('submit-button');
-
-        // function to generate the quiz based on the 'questions' array
-        function generateQuiz() {
-            const output = [];
-            questions.forEach((currentQuestion, questionIndex) => {
-                const choices = currentQuestion.choices.map(choice =>
-                    `<label>
-                            <input type="radio" name="question${questionIndex}" value="${choice}">
-                            ${choice}
-                        </label>`
-                ).join('');
-
-                output.push(
-                    `<div class="question">${currentQuestion.question}</div>
-                        <div class="options">${choices}</div><br>`
-                );
-            });
-            quizContainer.innerHTML = output.join('');
-        }
-
-        // function to calculate and display the quiz results
-        function showResults(event) {
-            event.preventDefault();
-            let score = 0;
-            questions.forEach((currentQuestion, questionIndex) => {
-                const userAnswer = document.querySelector(`input[name="question${questionIndex}"]:checked`);
-                if (userAnswer && userAnswer.value.trim().toLowerCase() === currentQuestion.answer.toLowerCase()) {
-                    score++;
-                }
-            });
-
-            if (score <= 3) {
-                message = "Good effort! Keep practicing and try the quiz again."
-            }
-
-            if (score === 4) {
-                message = "Good job!"
-            }
-            if (score === 5) {
-                message = "Way to go!"
-            }
-            resultContainer.innerHTML = `You scored ${score} out of ${questions.length}. ${message}`;
-            disableQuiz();
-            explanations(score);
-        }
-
-        // function to disable the quiz inputs after submission 
-        function disableQuiz() {
-            const inputs = document.querySelectorAll('#quiz-form input');
-            inputs.forEach(input => input.disabled = true);
-            submitButton.disabled = true;
-        }
-
-        // function to display the answer explanations
-        function explanations(score) {
-            let explanationText = "<p>Answer explanations:</p>";
-            explanationText += `<p>Question 1: 30 + 120 = 150</p>`;
-            explanationText += `<p>Question 2: 70 * 4 = 280</p>`;
-            explanationText += `<p>Question 3: 30 * 5 = 150. 10 + 150 = 160</p>`;
-            explanationText += `<p>Question 4: 130 - 90 = 40</p>`;
-            explanationText += `<p>Question 5: 925 - 448 = 477</p>`;
-            resultContainer.innerHTML += explanationText;
-        }
-
-        generateQuiz();
-        submitButton.addEventListener('click', showResults);
-    });
-
     // Function to handle popup display
     document.querySelectorAll(".image img").forEach(image => {
         image.onclick = () => {

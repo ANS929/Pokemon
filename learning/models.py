@@ -7,9 +7,14 @@ from django.utils.text import slugify
 class Practice (models.Model):
     title = models.CharField(max_length = 100)
     description = models.TextField()
+    slug = models.SlugField(default='', unique=True)
 
     def __str__(self):
         return self.title
+    
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.title) 
+        super().save(*args, **kwargs)
 
 class CompletedPractice(models.Model):
     student = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -44,6 +49,9 @@ class CompletedQuiz(models.Model):
 
     def __str__(self):
         return f"{self.student.username} - {self.quiz.title}"
+    
+    class Meta:
+        verbose_name_plural = "Completed quizzes"
     
 # Badges
 class Badge(models.Model):

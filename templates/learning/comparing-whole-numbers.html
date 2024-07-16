@@ -86,43 +86,35 @@ Comparing Whole Numbers
 <main>
     <section>
         <h2>Introduction:</h2>
-        <p>
-            Two whole numbers can be compared using > (greater than), = (equals), and < (less than) symbols. </p>
+        <p>Two whole numbers can be compared using &gt; (greater than), = (equals), and &lt; (less than) symbols.</p>
     </section>
 
     <section>
         <h2>Greater Than:</h2>
-        <p>
-            The greater than symbol (>) is used to show that the number to the left has a higher value than the
-            number on the right. For example, 100 > 92. This would be read as “100 is greater than 92.”
-        </p>
+        <p>The greater than symbol (&gt;) is used to show that the number to the left has a higher value than the number
+            on the right. For example, 100 &gt; 92. This would be read as “100 is greater than 92.”</p>
     </section>
 
     <section>
         <h2>Less Than:</h2>
-        <p>
-            The less than symbol (<) is used to show that the number to the left has a lesser value than the number on
-                the right. For example, 31 < 34. This would be read as “31 is less than 34.” </p>
+        <p>The less than symbol (&lt;) is used to show that the number to the left has a lesser value than the number on
+            the right. For example, 31 &lt; 34. This would be read as “31 is less than 34.”</p>
     </section>
 
     <section>
         <h2>Equals:</h2>
-        <p>
-            The equals symbol (=) is used to show that two numbers are equal in value. For example, 29 = 29. This
-            would be read as “29 equals 29.”
-        </p>
+        <p>The equals symbol (=) is used to show that two numbers are equal in value. For example, 29 = 29. This would
+            be read as “29 equals 29.”</p>
     </section>
 
     <section>
         <h2>You Try:</h2>
-        <p>
-            Look at the HP of Charizard ex and Pidgeot ex.
-        </p>
+        <p>Look at the HP of Charizard ex and Pidgeot ex.</p>
 
         <div class="container">
             <div class="image-container">
-                <div class="image"><img src="{% static 'images/Charizard.png' %}" alt=""></div>
-                <div class="image"><img src="{% static 'images/Pidgeot.png' %}" alt=""></div>
+                <div class="image"><img src="{% static 'images/Charizard.png' %}" alt="Charizard ex"></div>
+                <div class="image"><img src="{% static 'images/Pidgeot.png' %}" alt="Pidgeot ex"></div>
             </div>
 
             <div class="popup-image">
@@ -130,24 +122,28 @@ Comparing Whole Numbers
                 <img src="" alt="" />
             </div>
         </div>
-        <p>
-            Compare the two values using <b>&gt;</b>, <b>=</b>, or <b>&lt;</b>.
-        </p>
+        <p>Compare the two values using <b>&gt;</b>, <b>=</b>, or <b>&lt;</b>.</p>
 
-        <!-- quiz submission and feedback -->
-        <form onsubmit="checkAnswer(event)">
+        <!-- practice submission and feedback -->
+        <form id="practice-form" onsubmit="checkAnswer(event)"
+            action="{% url 'learning:submit_practice' practice.slug %}" method="post">
+            {% csrf_token %}
             <label for="comparisonSymbol">Charizard ex's HP</label>
-            <!-- make the input required -->
             <input type="text" id="comparisonSymbol" name="comparisonSymbol" style="width: 40px;" required>
             Pidgeot ex's HP
-            <input type="submit" value="Submit" id="submitBtn">
+            <input type="submit" value="Check Answer" id="submitBtn">
         </form>
         <p id="feedback"></p>
+        <form id="final-form" method="post" action="{% url 'learning:submit_practice' practice.slug %}"
+            style="display: none;">
+            {% csrf_token %}
+            <input type="hidden" name="correct" value="True">
+            <button type="submit">Submit Practice</button>
+        </form>
     </section>
 </main>
 
 <script>
-    // function to check the answer to the You Try problem
     function checkAnswer(event) {
         event.preventDefault(); // prevent default form submission
 
@@ -156,6 +152,7 @@ Comparing Whole Numbers
         var feedback = document.getElementById('feedback');
         var inputField = document.getElementById('comparisonSymbol');
         var submitButton = document.getElementById('submitBtn');
+        var finalForm = document.getElementById('final-form');
 
         var allowedSymbols = ['>', '<', '='];
 
@@ -170,6 +167,7 @@ Comparing Whole Numbers
             feedback.textContent = 'Correct! 330 is greater than 280, so ">" is the correct symbol. Well done!';
             inputField.disabled = true; // disable input field
             submitButton.disabled = true; // disable submit button
+            finalForm.style.display = 'block'; // show the final submission form
         } else {
             feedback.textContent = 'Incorrect. Please try again.';
         }

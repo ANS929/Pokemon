@@ -102,120 +102,54 @@ Number Sense Quiz
 
     </section>
 
-    <!-- quiz submission and results -->
-    <section>
-        <form id="quiz-form">
-            <div id="quiz-container"></div>
-            <button type="submit" id="submit-button">Submit Quiz</button>
-        </form>
-        <div id="result-container"></div>
-    </section>
+    <form method="post" action="{% url 'learning:submit_quiz' quiz_slug=quiz.slug %}">
+        {% csrf_token %}
+        <div class="question">
+            <p>1.) Fill in the blank with the correct symbol (<,>, or =). Inkay's weight ____ Wattrel's weight.</p>
+            <input type="text" name="question1" style="width: 40px;">
+        </div> <br>
+        <div class="question">
+            <p>2.) Fill in the blank with the correct symbol (<,>, or =). Inkay's set number ____ Wattrel's set number.
+            </p>
+            <input type="text" name="question2" style="width: 40px;">
+        </div> <br>
+        <div class="question">
+            <p>3.) Fill in the blank with the correct symbol (<,>, or =). Inkay's HP ____ Wattrel's HP.</p>
+            <input type="text" name="question3" style="width: 40px;">
+        </div> <br>
+        <div class="question">
+            <p>4.) True or False: Hug's damage output < Peck's damage output</p>
+                    <select name="question4">
+                        <option value="">Select an answer</option>
+                        <option value="True">True</option>
+                        <option value="False">False</option>
+                    </select>
+        </div> <br>
+        <div class="question">
+            <p>5.) True or False: Inkay's retreat cost = Wattrel's retreat cost.</p>
+            <select name="question5">
+                <option value="">Select an answer</option>
+                <option value="True">True</option>
+                <option value="False">False</option>
+            </select>
+        </div> <br>
+        <button type="submit">Submit Quiz</button>
+    </form> <br>
+    <script>
 
-</main>
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
+        // Function to handle popup display
+        document.querySelectorAll(".image img").forEach(image => {
+            image.onclick = () => {
+                document.querySelector(".popup-image").style.display = "block";
+                document.querySelector(".popup-image img").src = image.getAttribute("src");
+            };
+        });
 
-        // array of quiz questions and answers
-        const questions = [
-            {
-                question: "1.) Fill in the blank with the correct symbol (<, >, or =). Inkay's weight ____ Wattrel's weight.",
-                answer: '<'
-            },
-            {
-                question: "2.) Fill in the blank with the correct symbol (<, >, or =). Inkay's set number ____ Wattrel's set number.",
-                answer: '>'
-            },
-            {
-                question: "3.) Fill in the blank with the correct symbol (<, >, or =). Inkay's HP ____ Wattrel's HP.",
-                answer: '='
-            },
-            {
-                question: "4.) True or false: Hug's damage output < Peck's damage output",
-                answer: 'false'
-            },
-            {
-                question: "5.) True or false: Inkay's retreat cost = Wattrel's retreat cost.",
-                answer: 'true'
+        // Close popup when clicking outside the image
+        document.querySelector(".popup-image").onclick = (event) => {
+            if (event.target.classList.contains('popup-image')) {
+                document.querySelector(".popup-image").style.display = "none";
             }
-        ];
-
-        const quizContainer = document.getElementById('quiz-container');
-        const resultContainer = document.getElementById('result-container');
-        const submitButton = document.getElementById('submit-button');
-
-        // function to generate the quiz based on the 'questions' array
-        function generateQuiz() {
-            const output = [];
-            questions.forEach((currentQuestion, questionIndex) => {
-                output.push(
-                    `<div class="question">${currentQuestion.question}</div>
-                    <div class="options">
-                        <input type="text" name="question${questionIndex}" id="question${questionIndex}" style="width: 40px;">
-                    </div><br>`
-                );
-            });
-            quizContainer.innerHTML = output.join('');
-        }
-
-        // function to calculate and display the quiz results
-        function showResults(event) {
-            event.preventDefault();
-            let score = 0;
-            questions.forEach((currentQuestion, questionIndex) => {
-                const userAnswer = document.getElementById(`question${questionIndex}`).value.trim().toLowerCase();
-                const correctAnswer = currentQuestion.answer.toLowerCase();
-                if (userAnswer === correctAnswer) {
-                    score++;
-                }
-            });
-            let message = "";
-            if (score <= 3) {
-                message = "Good effort! Keep practicing and try the quiz again.";
-            } else if (score === 4) {
-                message = "Good job!";
-            } else if (score === 5) {
-                message = "Way to go!";
-            }
-            resultContainer.innerHTML = `You scored ${score} out of ${questions.length}. ${message}`;
-            disableQuiz();
-            explanations(score);
-        }
-
-        // function to disable the quiz inputs after submission 
-        function disableQuiz() {
-            const inputs = document.querySelectorAll('#quiz-form input');
-            inputs.forEach(input => input.disabled = true);
-            submitButton.disabled = true;
-        }
-
-        // function to display the answer explanations
-        function explanations(score) {
-            let explanationText = "<p>Answer explanations:</p>";
-            explanationText += `<p>Question 1: 7.7 < 7.9</p>`;
-            explanationText += `<p>Question 2: 137 > 80</p>`;
-            explanationText += `<p>Question 3: 60 = 60</p>`;
-            explanationText += `<p>Question 4: This is false because 30 > 10</p>`;
-            explanationText += `<p>Question 5: This is true because 1 = 1</p>`;
-            resultContainer.innerHTML += explanationText;
-        }
-
-        generateQuiz();
-        submitButton.addEventListener('click', showResults);
-    });
-
-    // Function to handle popup display
-    document.querySelectorAll(".image img").forEach(image => {
-        image.onclick = () => {
-            document.querySelector(".popup-image").style.display = "block";
-            document.querySelector(".popup-image img").src = image.getAttribute("src");
         };
-    });
-
-    // Close popup when clicking outside the image
-    document.querySelector(".popup-image").onclick = (event) => {
-        if (event.target.classList.contains('popup-image')) {
-            document.querySelector(".popup-image").style.display = "none";
-        }
-    };
-</script>
-{% endblock %}
+    </script>
+    {% endblock %}
