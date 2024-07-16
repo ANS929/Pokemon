@@ -5,40 +5,105 @@ Student Dashboard
 {% endblock %}
 
 {% block body_block %}
+<style>
+    table {
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width: 90%;
+    }
+
+    td,
+    th {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+    }
+
+    tr:nth-child(even) {
+        background-color: #dddddd;
+    }
+
+    .assignment-container {
+        flex: 2;
+    }
+
+    .badge-container {
+        flex: 1;
+        border: 5px solid black;
+        padding: 25px;
+        margin: 20px;
+        height: 500px;
+    }
+
+    .student-dashboard-container {
+        display: flex;
+    }
+
+    @media (max-width: 400px) {
+        .student-dashboard-container {
+            flex-direction: column;
+        }
+    }
+</style>
+
 <header>
     <h1>Student Dashboard</h1>
 </header>
 <p>Welcome to the Student Dashboard!</p>
 
-<h2>Completed Practices:</h2>
-{% if completed_practices %}
-    <ul>
-    {% for practice in completed_practices %}
-        <li>{{ practice.practice.title }} - completed on {{ practice.date_completed }}</li>
-    {% endfor %}
-    </ul>
-{% else %}
-    <p>No completed practices yet...</p>
-{% endif %}
+<div class="student-dashboard-container">
 
-<h2>Completed Quizzes:</h2>
-{% if completed_quizzes %}
-    <ul>
-    {% for quiz in completed_quizzes %}
-        <li>{{ quiz.quiz.title }} - score: {{quiz.score}}/5 (completed on {{ quiz.date_completed }})</li>
-    {% endfor %}
-    </ul>
-{% else %}
-    <p>No completed quizzes yet...</p>
-{% endif %}
-<h2>Badges:</h2>
-{% if completed_badges %}
-    <ul>
-    {% for badge in completed_badges %}
-        <li>{{ badge.badge.title }} - completed on {{ badge.date_completed }}</li>
-    {% endfor %}
-    </ul>
-{% else %}
-    <p>No badges yet...</p>
-{% endif %}
+    <div class="assignment-container">
+        <h2>Completed Practices:</h2>
+        <table>
+            <tr>
+                <th>Practice Name</th>
+                <th>Date of Completion</th>
+            </tr>
+            {% if completed_practices %}
+            {% for practice in completed_practices %}
+            <tr>
+                <td>{{ practice.practice.title }}</td>
+                <td>{{ practice.date_completed }}</td>
+            </tr>
+            {% endfor %}
+            {% else %}
+            <p>No completed practices yet...</p>
+            {% endif %}
+        </table> <br>
+
+        <h2>Completed Quizzes:</h2>
+        <table>
+            <tr>
+                <th>Quiz Name</th>
+                <th>Date of Completion</th>
+                <th>Quiz Score</th>
+            </tr>
+            {% if completed_quizzes %}
+            {% for quiz in completed_quizzes %}
+            <tr>
+                <td>{{ quiz.quiz.title }}</td>
+                <td>{{ quiz.date_completed }}</td>
+                <td>{{ quiz.score }} / 5</td>
+            </tr>
+            {% endfor %}
+            {% else %}
+            <p>No completed quizzes yet...</p>
+            {% endif %}
+        </table> <br>
+    </div>
+
+    <div class="badge-container">
+        <h2>Badges:</h2>
+        {% if completed_badges %}
+        <ul>
+            {% for badge in completed_badges %}
+            <li>{{ badge.badge.title }} - completed on {{ badge.date_completed }}</li>
+            {% endfor %}
+        </ul>
+        {% else %}
+        <p>No badges yet...</p>
+        {% endif %}
+    </div>
+</div>
 {% endblock %}

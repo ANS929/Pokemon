@@ -7,6 +7,7 @@ Measurement Quiz
 
 {% block body_block %}
 <style>
+    /* styles for cards */
     .container {
         max-width: 100%;
         padding: 10px;
@@ -78,11 +79,85 @@ Measurement Quiz
             width: 95%;
         }
     }
+
+    /* styles for playmat */
+    .container2 {
+        max-width: 100%;
+        padding: 10px;
+        margin-left: 0;
+    }
+
+    .container2 .image-container2 {
+        display: flex;
+        gap: 15px;
+        justify-content: flex-start;
+        align-items: flex-start;
+    }
+
+    .container2 .image-container2 .image2 {
+        height: 173px;
+        width: 187px;
+        border: 10px solid #fff;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, .1);
+        overflow: hidden;
+        cursor: pointer;
+    }
+
+    .container2 .image-container2 .image2 img {
+        height: 100%;
+        width: 100%;
+        object-fit: cover;
+        transition: .2s linear;
+    }
+
+    .container2 .image-container2 .image2:hover {
+        transform: scale(1.1)
+    }
+
+    .container2 .popup-image2 {
+        position: fixed;
+        top: 0;
+        left: 0;
+        background: rgba(0, 0, 0, .9);
+        height: 100%;
+        width: 100%;
+        z-index: 100;
+        display: none;
+    }
+
+    .container2 .popup-image2 span {
+        position: absolute;
+        top: 0;
+        right: 10px;
+        font-size: 10px;
+        font-weight: bolder;
+        color: #fff;
+        cursor: pointer;
+        z-index: 100;
+    }
+
+    .container2 .popup-image2 img {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        border: 5px solid #fff;
+        border-radius: 5px;
+        width: 750px;
+        object-fit: cover;
+    }
+
+    @media (max-width:768px) {
+        .container2 .popup-image2 img {
+            width: 95%;
+        }
+    }
 </style>
 <main>
     <h1>Measurement Quiz</h1>
     <h2>Instructions: Use the images to answer the five questions below.</h2>
 
+    <!-- container for cards -->
     <div class="container">
         <div class="image-container">
             <div class="image"><img src="{% static 'images/Dragonair.png' %}" alt=""></div>
@@ -95,7 +170,17 @@ Measurement Quiz
         </div>
     </div>
 
-    <img src="{% static 'images/doublemat.jpg' %}" alt="Double playmat">
+    <!-- container for playmat -->
+    <div class="container2">
+        <div class="image-container2">
+            <div class="image2"><img src="{% static 'images/doublemat.jpg' %}" alt=""></div>
+        </div>
+
+        <div class="popup-image2">
+            <span>&times;</span>
+            <img src="" alt="" />
+        </div>
+    </div>
 
     <form method="post" action="{% url 'learning:submit_quiz' quiz_slug=quiz.slug %}">
         {% csrf_token %}
@@ -130,7 +215,7 @@ Measurement Quiz
     </form> <br>
 </main>
 <script>
-    // Function to handle popup display
+    // Function to handle popup image display (for cards)
     document.querySelectorAll(".image img").forEach(image => {
         image.onclick = () => {
             document.querySelector(".popup-image").style.display = "block";
@@ -138,10 +223,25 @@ Measurement Quiz
         };
     });
 
-    // Close popup when clicking outside the image
+    // Close the popup when clicking outside the image (for cards)
     document.querySelector(".popup-image").onclick = (event) => {
         if (event.target.classList.contains('popup-image')) {
             document.querySelector(".popup-image").style.display = "none";
+        }
+    };
+
+    // Function to handle popup image display (for playmat)
+    document.querySelectorAll(".image2 img").forEach(image => {
+        image.onclick = () => {
+            document.querySelector(".popup-image2").style.display = "block";
+            document.querySelector(".popup-image2 img").src = image.getAttribute("src");
+        };
+    });
+
+    // Close the popup when clicking outside the image (for playmat)
+    document.querySelector(".popup-image2").onclick = (event) => {
+        if (event.target.classList.contains('popup-image2')) {
+            document.querySelector(".popup-image2").style.display = "none";
         }
     };
 </script>
