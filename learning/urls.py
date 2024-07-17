@@ -5,11 +5,10 @@ app_name = 'learning'
 
 urlpatterns = [
     path('', views.learning_home, name='learning_home'),
+    
+    # student paths
     path('students/', views.students, name='students'),
-    path('teachers/', views.teachers, name='teachers'),
-    path('parents/', views.parents, name='parents'),
-    path('parents/dashbaord', views.parent_dashboard, name='parent_dashboard'),
-    path('teachers/dashboard', views.teacher_dashboard, name='teacher_dashboard'),
+    path('students/dashboard', views.student_dashboard, name='student_dashboard'),
     path('students/gr1', views.gr1, name='gr1'),
     path('students/gr2', views.gr2, name='gr2'),
     path('students/gr3', views.gr3, name='gr3'),
@@ -18,13 +17,23 @@ urlpatterns = [
     path('students/gr6', views.gr6, name='gr6'),
     path('students/gr7', views.gr7, name='gr7'),
     path('students/gr8', views.gr8, name='gr8'),
-    path('students/dashboard', views.student_dashboard, name='student_dashboard'),
     path('students/gr4/quiz/<slug:quiz_slug>/', views.quiz_detail, name='quiz_detail'),
     path('students/gr4/practice/<slug:practice_slug>/', views.practice_detail, name='practice_detail'),
     path('students/gr4/quiz/<slug:quiz_slug>/submit/', views.submit_quiz, name='submit_quiz'),
     path('students/gr4/practice/<slug:practice_slug>/submit/', views.submit_practice, name='submit_practice'),
+    
+    # teacher paths
+    path('teachers/', views.teachers, name='teachers'),
+    path('teachers/dashboard', views.teacher_dashboard, name='teacher_dashboard'),
     path('teachers/dashboard/add_student', views.AddStudent, name='add_student'),
-    path('teachers/dashboard/assign_student/<int:course_id>/', views.AssignStudent, name='assign_student'),
-    path('teachers/dashboard/new_class', views.NewCourse, name='new_class'),
-    path('teachers/dashboard/edit_class/<int:course_id>/', views.EditCourse, name='edit_class'),
+    path('teachers/dashboard/remove_student', views.RemoveStudent, name='remove_student'),
+    
+    # parent paths
+    path('parents/', views.parents, name='parents'),
+    path('parents/dashbaord', views.parent_dashboard, name='parent_dashboard'),
+
+
+    # path('teachers/dashboard/assign_student/<int:course_id>/', views.AssignStudent, name='assign_student'),
+    # path('teachers/dashboard/new_class', views.NewCourse, name='new_class'),
+    # path('teachers/dashboard/edit_class/<int:course_id>/', views.EditCourse, name='edit_class'),
 ]

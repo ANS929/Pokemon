@@ -1,0 +1,15 @@
+{% extends 'learning/base.html' %}
+
+{% block title_block %}
+Remove Student
+{% endblock %}
+
+{% block body_block %}
+<h1>Remove a Student</h1>
+<p>Remove a student from your roster</p>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-primary">Remove Student</button>
+</form>
+{% endblock %}

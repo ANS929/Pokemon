@@ -1,9 +1,9 @@
 from django.contrib import admin
-from .models import Quiz, CompletedQuiz, Practice, CompletedPractice, Student, EnrolledStudent, Course
+from .models import Quiz, CompletedQuiz, Practice, CompletedPractice, Student
 
 admin.site.register(Quiz)
 admin.site.register(Practice)
-admin.site.register(Course)
+# admin.site.register(Course)
 
 @admin.register(CompletedQuiz)
 class CompletedQuizAdmin(admin.ModelAdmin):

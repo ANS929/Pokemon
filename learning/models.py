@@ -77,18 +77,18 @@ class Student(models.Model):
     def __str__(self):
         return self.name
 
-class EnrolledStudent(models.Model):
-    student = models.ForeignKey(User, on_delete=models.CASCADE, related_name='enrollments')
-    course = models.ForeignKey('Course', on_delete=models.CASCADE, related_name='enrollments')
+# class EnrolledStudent(models.Model):
+#     student = models.ForeignKey(User, on_delete=models.CASCADE, related_name='enrollments')
+#     course = models.ForeignKey('Course', on_delete=models.CASCADE, related_name='enrollments')
 
-    def __str__(self):
-        return f"{self.student.username} in {self.course.title}"
+#     def __str__(self):
+#         return f"{self.student.username} in {self.course.title}"
 
-# Courses to add students to
-class Course(models.Model):
-    title = models.CharField(max_length = 100)
-    description = models.CharField(max_length=200)
-    teacher = models.ForeignKey(User, on_delete=models.CASCADE, related_name='courses')
+# # Courses to add students to
+# class Course(models.Model):
+#     title = models.CharField(max_length = 100)
+#     description = models.CharField(max_length=200)
+#     teacher = models.ForeignKey(User, on_delete=models.CASCADE, related_name='courses')
 
-    def __str__(self):
-        return self.title
+#     def __str__(self):
+#         return self.title

@@ -9,7 +9,7 @@ Teacher Dashboard
     table {
         font-family: arial, sans-serif;
         border-collapse: collapse;
-        width: 90%;
+        width: 100%;
     }
 
     td,
@@ -49,6 +49,7 @@ Teacher Dashboard
 
     .btn {
         float: right;
+        margin: 5px;
     }
 </style>
 
@@ -59,6 +60,7 @@ Teacher Dashboard
 
 <div class="teacher-dashboard-container">
     <div class="student-container">
+        <a href="" name="remove-student-button" class="btn btn-primary">Remove a Student</a>
         <a href="{% url 'learning:add_student' %}" name="add-student-button" class="btn btn-primary">Add a Student</a>
         <h2>Your Students:</h2>
         {% if all_students %}
@@ -82,7 +84,7 @@ Teacher Dashboard
     </div>
 
     <div class="class-container">
-        <a href="{% url 'learning:new_class' %}" name="add-class-button" class="btn btn-primary">Add a Class</a>
+        <a href="" name="add-class-button" class="btn btn-primary">Add a Class</a>
         <h2>Your Classes:</h2>
         {% if courses %}
         <table>
@@ -95,7 +97,7 @@ Teacher Dashboard
             <tr>
                 <td>{{ course.title }}</td>
                 <td>{{ course.enrollments.count }}</td>
-                <td><a href="{% url 'learning:assign_student' course.id %}" class="btn btn-secondary">Assign Student</a>
+                <td><a href="" class="btn btn-secondary">Assign Student</a>
                 </td>
             </tr>
             {% endfor %}

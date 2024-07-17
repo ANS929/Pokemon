@@ -1,8 +1,9 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
-from .models import Practice, CompletedPractice, Quiz, CompletedQuiz, Student, EnrolledStudent, Course
-from .forms import NewCourseForm, AddStudentForm, AssignStudentForm
+from .models import Practice, CompletedPractice, Quiz, CompletedQuiz, Student
+from .forms import AddStudentForm, RemoveStudentForm
+from django.contrib import messages
 
 def index(request):
     return render(request, 'learning/base.html')
@@ -85,13 +86,13 @@ def teacher_dashboard(request):
     if not request.user.profile.is_teacher:
         return HttpResponse("You do not have permission to view this page.")
 
-    courses = Course.objects.filter(teacher=request.user)
-    enrolled_students = EnrolledStudent.objects.filter(course__teacher=request.user)
+    # courses = Course.objects.filter(teacher=request.user)
+    # enrolled_students = EnrolledStudent.objects.filter(course__teacher=request.user)
     all_students = Student.objects.all()
 
     context = {
-        'courses': courses,
-        'enrolled_students': enrolled_students,
+        # 'courses': courses,
+        # 'enrolled_students': enrolled_students,
         'all_students': all_students,
     }
     return render(request, 'learning/teacher_dashboard.html', context)
@@ -132,45 +133,47 @@ def submit_practice(request, practice_slug):
 
     return render(request, 'learning/comparing_whole.html', {'practice': practice})
 
-# create a new class
-@login_required
-def NewCourse(request):
-    if request.method == 'POST':
-        form = NewCourseForm(request.POST)
-        if form.is_valid():
-            course = form.save(commit=False)
-            course.teacher = request.user
-            course.save()
-            return redirect('learning:teacher_dashboard')
-    else:
-        form = NewCourseForm()
+# # create a new class
+# @login_required
+# def NewCourse(request):
+#     if request.method == 'POST':
+#         form = NewCourseForm(request.POST)
+#         if form.is_valid():
+#             course = form.save(commit=False)
+#             course.teacher = request.user
+#             course.save()
+#             return redirect('learning:teacher_dashboard')
+#     else:
+#         form = NewCourseForm()
 
-    context = {
-        'form':form
-    }
+#     context = {
+#         'form':form
+#     }
 
-    return render(request, 'learning/new_course.html', context)
+#     return render(request, 'learning/new_course.html', context)
 
-# edit a class
-@login_required
-def EditCourse(request):
-    course = get_object_or_404(Course, id=course_id)
-    if request.method == 'POST':
-        form = NewCourseForm(request.POST, instance=course)
-        if form.is_valid():
-            form.save()
-            return redirect('learning:teacher_dashboard')
-    else:
-        form = NewCourseForm(instance=course)
+# # edit a class
+# @login_required
+# def EditCourse(request):
+#     course = get_object_or_404(Course, id=course_id)
+#     if request.method == 'POST':
+#         form = NewCourseForm(request.POST, instance=course)
+#         if form.is_valid():
+#             form.save()
+#             return redirect('learning:teacher_dashboard')
+#     else:
+#         form = NewCourseForm(instance=course)
 
-    context = {
-        'form': form,
-        'course': course
-    }
+#     context = {
+#         'form': form,
+#         'course': course
+#     }
 
-    return render(request, 'learning/edit_course.html', context)
+#     return render(request, 'learning/edit_course.html', context)
 
-# assign a student to a teacher
+# # delete a class
+
+# add a student to a teacher's roster
 @login_required
 def AddStudent(request):
     if not request.user.profile.is_teacher:
@@ -179,9 +182,7 @@ def AddStudent(request):
     if request.method == 'POST':
         form = AddStudentForm(request.POST)
         if form.is_valid():
-            student = form.save(commit=False)
-            student.name = form.cleaned_data['name']
-            student.save()
+            student = form.save()
             return redirect('learning:teacher_dashboard')
     else:
         form = AddStudentForm()
@@ -191,24 +192,47 @@ def AddStudent(request):
     }
     return render(request, 'learning/add_student.html', context)
 
-# assign a student to a course
+# remove a student from a teacher's roster
 @login_required
-def AssignStudent(request, course_id):
+def RemoveStudent(request):
     if not request.user.profile.is_teacher:
         return HttpResponse("You do not have permission to view this page.")
 
-    course = get_object_or_404(Course, id=course_id)
     if request.method == 'POST':
-        form = AssignStudentForm(request.POST)
+        form = RemoveStudentForm(request.POST, user=request.user)
         if form.is_valid():
             student = form.cleaned_data['student']
-            EnrolledStudent.objects.create(student=student, course=course)
+            student.delete()
+            messages.success(request, 'Student removed successfully.')
             return redirect('learning:teacher_dashboard')
     else:
-        form = AssignStudentForm()
+        form = RemoveStudentForm(user=request.user)
 
     context = {
-        'form': form,
-        'course': course
+        'form': form
     }
-    return render(request, 'learning/assign_student.html', context)
+    return render(request, 'learning/remove_student.html', context)
+
+# # assign a student to a course
+# @login_required
+# def AssignStudent(request, course_id):
+#     if not request.user.profile.is_teacher:
+#         return HttpResponse("You do not have permission to view this page.")
+
+#     course = get_object_or_404(Course, id=course_id)
+#     if request.method == 'POST':
+#         form = AssignStudentForm(request.POST)
+#         if form.is_valid():
+#             student = form.cleaned_data['student']
+#             EnrolledStudent.objects.create(student=student, course=course)
+#             return redirect('learning:teacher_dashboard')
+#     else:
+#         form = AssignStudentForm()
+
+#     context = {
+#         'form': form,
+#         'course': course
+#     }
+#     return render(request, 'learning/assign_student.html', context)
+
+# # unassign a student from a course
