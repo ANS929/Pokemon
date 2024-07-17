@@ -1,0 +1,15 @@
+{% extends 'learning/base.html' %}
+
+{% block title_block %}
+Add Student
+{% endblock %}
+
+{% block body_block %}
+<h1>Add a Student</h1>
+<p>Add a student to your roster</p>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-primary">Add Student</button>
+</form>
+{% endblock %}

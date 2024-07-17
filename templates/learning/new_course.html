@@ -1,0 +1,15 @@
+{% extends 'learning/base.html' %}
+
+{% block title_block %}
+Add Class
+{% endblock %}
+
+{% block body_block %}
+<h1>Add a Class</h1>
+<p>Create a new class</p>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-primary">Create Class</button>
+</form>
+{% endblock %}

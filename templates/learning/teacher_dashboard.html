@@ -5,8 +5,100 @@ Teacher Dashboard
 {% endblock %}
 
 {% block body_block %}
+<style>
+    table {
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width: 90%;
+    }
+
+    td, th {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+    }
+
+    tr:nth-child(even) {
+        background-color: #dddddd;
+    }
+
+    .student-container {
+        flex: 1;
+        border: 5px solid black;
+        padding: 25px;
+        margin: 20px;
+    }
+
+    .class-container {
+        flex: 1;
+        border: 5px solid black;
+        padding: 25px;
+        margin: 20px;
+    }
+
+    .teacher-dashboard-container {
+        display: flex;
+    }
+
+    @media (max-width: 400px) {
+        .teacher-dashboard-container {
+            flex-direction: column;
+        }
+    }
+
+    .btn {
+        float: right;
+    }
+</style>
+
 <header>
     <h1>Teacher Dashboard</h1>
 </header>
-<p>Welcome to the Teacher Dashboard</p>
+<p>Welcome to the Teacher Dashboard!</p>
+
+<div class="teacher-dashboard-container">
+    <div class="student-container">
+        <a href="{% url 'learning:add_student' %}" name="add-student-button" class="btn btn-primary">Add a Student</a>
+        <h2>Your Students:</h2>
+        {% if all_students %}
+        <table>
+            <tr>
+                <th>Student Name</th>
+            </tr>
+            {% for student in all_students %}
+            <tr>
+                <td>{{ student.name }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+        {% else %}
+        <p>No students added yet...</p>
+        {% endif %}
+    </div>
+
+    <div class="class-container">
+        <a href="{% url 'learning:new_class' %}" name="add-class-button" class="btn btn-primary">Add a Class</a>
+        <h2>Your Classes:</h2>
+        {% if courses %}
+        <table>
+            <tr>
+                <th>Class Name</th>
+                <th>Description</th>
+                <th>Number of Enrolled Students</th>
+                <th>Action</th>
+            </tr>
+            {% for course in courses %}
+            <tr>
+                <td>{{ course.title }}</td>
+                <td>{{ course.description }}</td>
+                <td>{{ course.enrollments.count }}</td>
+                <td><a href="{% url 'learning:assign_student' course.id %}" class="btn btn-secondary">Assign Student</a></td>
+            </tr>
+            {% endfor %}
+        </table>
+        {% else %}
+        <p>No classes created yet...</p>
+        {% endif %}
+    </div>
+</div>
 {% endblock %}
