@@ -2,6 +2,7 @@ from django import forms
 from django.contrib.auth.models import User
 from .models import Profile
 
+# registration form
 class UserRegistrationForm(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput)
     ROLE_CHOICES = [
@@ -12,7 +13,7 @@ class UserRegistrationForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ['username', 'email', 'password', 'role']
+        fields = ['first_name', 'last_name', 'username', 'email', 'password', 'role']
 
     def save(self, commit=True):
         user = super().save(commit=False)
@@ -29,3 +30,16 @@ class UserRegistrationForm(forms.ModelForm):
                 profile.is_student = False
             profile.save()
         return user
+
+# update user information    
+class UserUpdateForm(forms.ModelForm):
+    email = forms.EmailField()
+    
+    class Meta:
+        model = User
+        fields = ['username', 'email']
+
+class ProfileUpdateForm(forms.ModelForm):
+    class Meta:
+        model = Profile
+        fields = ['image']

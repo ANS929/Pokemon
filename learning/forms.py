@@ -20,6 +20,11 @@ class AddStudentForm(forms.ModelForm):
         model = Student
         fields = ['user', 'name']
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        if self.instance.user.profile.first_name and self.instance.user.profile.last_name:
+            self.fields['name'].initial = f"{self.instance.user.profile.first_name} {self.instance.user.profile.last_name}"
+
 # assign a student to a class
 class AssignStudentForm(forms.ModelForm):
     student = forms.ModelChoiceField(queryset=User.objects.filter(profile__is_student=True), label="Select Student")

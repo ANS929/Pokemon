@@ -180,7 +180,7 @@ def AddStudent(request):
         form = AddStudentForm(request.POST)
         if form.is_valid():
             student = form.save(commit=False)
-            student.name = form.cleaned_data['user'].username
+            student.name = form.cleaned_data['name']
             student.save()
             return redirect('learning:teacher_dashboard')
     else:

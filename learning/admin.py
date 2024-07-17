@@ -13,3 +13,7 @@ class CompletedQuizAdmin(admin.ModelAdmin):
 @admin.register(CompletedPractice)
 class CompletedQuizAdmin(admin.ModelAdmin):
     list_display = ('student', 'practice','date_completed')
+
+@admin.register(Student)
+class CompletedQuizAdmin(admin.ModelAdmin):
+    list_display = ('user', 'name')
