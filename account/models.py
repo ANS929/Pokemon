@@ -7,7 +7,14 @@ class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     is_student = models.BooleanField(default=False)
     is_teacher = models.BooleanField(default=False)
-    image = models.ImageField(default='default.jpg')
+    image = models.CharField(max_length=100, choices=[
+        ('pidgeotpfp.jpg', 'Pidgeot'),
+        ('pikachupfp.jpg', 'Pikachu'),
+        ('charizardpfp.jpg', 'Charizard'),
+        ('blastoisepfp.jpg', 'Blastoise'),
+        ('venusaurpfp.jpg', 'Venusaur'),
+        ('eeveepfp.jpg', 'Eevee'),
+    ], default='pidgeotpfp.jpg')
 
     def __str__(self):
         return self.user.username

@@ -43,3 +43,13 @@ class ProfileUpdateForm(forms.ModelForm):
     class Meta:
         model = Profile
         fields = ['image']
+        widgets = {
+            'image': forms.RadioSelect(choices=[
+            ('pidgeotpfp.jpg', 'Pidgeot'),
+            ('pikachupfp.jpg', 'Pikachu'),
+            ('charizardpfp.jpg', 'Charizard'),
+            ('blastoisepfp.jpg', 'Blastoise'),
+            ('venusaurpfp.jpg', 'Venusaur'),
+            ('eeveepfp.jpg', 'Eevee'),
+            ])
+        }

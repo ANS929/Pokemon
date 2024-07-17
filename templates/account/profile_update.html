@@ -1,5 +1,5 @@
 {% extends 'learning/base.html' %}
-
+{% load static %}
 {% block title_block %}
 Profile Update
 {% endblock %}
@@ -144,7 +144,7 @@ Profile Update
                         <div class="col-sm-4 bg-c-lite-green user-profile">
                             <div class="card-block text-center text-white">
                                 <div class="m-b-25">
-                                    <img src="{{ user.profile.image.url }}" class="img-radius" alt="User-Profile-Image">
+                                    <img src="{% static 'images/' %}{{ user.profile.image }}" class="img-radius" alt="User-Profile-Image">
                                 </div>
                                 <h6 class="f-w-600" style="font-size: 24px; color: black;"></h6>
                                 <p style="font-size: 14px; color: black;"></p>

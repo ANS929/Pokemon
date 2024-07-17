@@ -76,7 +76,8 @@
                                 href="{% url 'auth_logout' %}?next={% url 'index'%}">Logout</a></li>
                         </li>
                         <li class="nav-item">
-                            <span class="navbar-text">Welcome, {{ user.username }}!&nbsp;&nbsp;</span>
+                            <span class="navbar-text">Welcome, <a href="{% url 'account:profile' %}">
+                                {{ user.username }}</a>!&nbsp;&nbsp;</span>
                         </li>
                         <li class="nav-item">
                             <form class="search-bar" action="" method="GET">
