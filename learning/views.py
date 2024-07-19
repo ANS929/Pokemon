@@ -1,13 +1,20 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
-from .models import Practice, CompletedPractice, Quiz, CompletedQuiz, Student, EnrolledStudent, Course, RegisteredStudent
+from .models import Practice, CompletedPractice, Quiz, CompletedQuiz, Student, EnrolledStudent, Course, RegisteredStudent, User
 from .forms import AddStudentForm, RemoveStudentForm, EnrollStudentForm, NewCourseForm
 from django.contrib import messages
 
 # website homepage
 def index(request):
-    return render(request, 'learning/base.html')
+    context = {}
+    if request.user.is_authenticated and request.user.profile.is_student:
+        try:
+            student = Student.objects.get(user=request.user)
+            context['student'] = student
+        except Student.DoesNotExist:
+            context['student'] = None
+    return render(request, 'learning/base.html', context)
 
 # learning homepage
 def learning_home(request):
@@ -72,15 +79,17 @@ def parent_dashboard(request):
 
 # student dashboard
 @login_required
-def student_dashboard(request):
-    if not request.user.profile.is_student:
+def student_dashboard(request, user_id):
+    user = get_object_or_404(User, id=user_id)
+    
+    if not request.user.profile.is_teacher and request.user != user:
         return HttpResponse("You do not have permission to view this page.")
-
-    completed_practices = CompletedPractice.objects.filter(
-        student=request.user)
-    completed_quizzes = CompletedQuiz.objects.filter(student=request.user)
+    
+    completed_practices = CompletedPractice.objects.filter(student=user)
+    completed_quizzes = CompletedQuiz.objects.filter(student=user)
 
     context = {
+        'student': user,
         'completed_practices': completed_practices,
         'completed_quizzes': completed_quizzes,
     }

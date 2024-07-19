@@ -54,12 +54,12 @@ Teacher Dashboard
     }
 </style>
 {% if messages %}
-        {% for message in messages %}
-                <div class="alert alert-{{ message.tags }}">{{ message }}</div>
-        {% endfor %}
-    {% endif %}
+{% for message in messages %}
+<div class="alert alert-{{ message.tags }}">{{ message }}</div>
+{% endfor %}
+{% endif %}
 <header>
-    <h1>Teacher Dashboard</h1>
+    <h1>Teacher Dashboard - {{ user.first_name }} {{ user.last_name }}</h1>
 </header>
 <p>Welcome to the Teacher Dashboard!</p>
 
@@ -79,12 +79,16 @@ Teacher Dashboard
                 <th>First Name</th>
                 <th>Last Name</th>
                 <th>Username</th>
+                <th>Action</th>
             </tr>
             {% for student in registered_students %}
             <tr>
                 <td>{{ student.student.first_name }}</td>
                 <td>{{ student.student.last_name }}</td>
                 <td>{{ student.student.username }}</td>
+                <th>
+                <td><a href="{% url 'learning:student_dashboard' student.student.id %}" class="btn btn-secondary">View
+                        Student</a></th>
             </tr>
             {% endfor %}
         </table>

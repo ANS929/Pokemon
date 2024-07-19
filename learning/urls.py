@@ -8,7 +8,7 @@ urlpatterns = [
     
     # student paths
     path('students/', views.students, name='students'),
-    path('students/dashboard/', views.student_dashboard, name='student_dashboard'),
+    path('students/dashboard/<int:user_id>/', views.student_dashboard, name='student_dashboard'),
     path('students/gr1/', views.gr1, name='gr1'),
     path('students/gr2/', views.gr2, name='gr2'),
     path('students/gr3/', views.gr3, name='gr3'),
