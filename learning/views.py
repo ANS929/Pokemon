@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
-from .models import Practice, CompletedPractice, Quiz, CompletedQuiz, Student, EnrolledStudent, Course
+from .models import Practice, CompletedPractice, Quiz, CompletedQuiz, Student, EnrolledStudent, Course, RegisteredStudent
 from .forms import AddStudentForm, RemoveStudentForm, EnrollStudentForm, NewCourseForm
 from django.contrib import messages
 
@@ -90,18 +90,20 @@ def student_dashboard(request):
 # teacher dashboard
 @login_required
 def teacher_dashboard(request):
+    user = request.user
     if not request.user.profile.is_teacher:
         return HttpResponse("You do not have permission to view this page.")
 
-    courses = Course.objects.filter(teacher=request.user)
-    enrolled_students = EnrolledStudent.objects.filter(
-        course__teacher=request.user)
+    courses = Course.objects.filter(teacher=user)
+    enrolled_students = EnrolledStudent.objects.filter(course__teacher=user)
     all_students = Student.objects.all()
+    registered_students = RegisteredStudent.objects.filter(teacher=user)
 
     context = {
         'courses': courses,
         'enrolled_students': enrolled_students,
         'all_students': all_students,
+        'registered_students': registered_students,
     }
     return render(request, 'learning/teacher_dashboard.html', context)
 
@@ -218,12 +220,12 @@ def AddStudent(request):
         return HttpResponse("You do not have permission to view this page.")
 
     if request.method == 'POST':
-        form = AddStudentForm(request.POST)
+        form = AddStudentForm(request.POST, teacher=request.user)
         if form.is_valid():
-            student = form.save()
+            form.save()
             return redirect('learning:teacher_dashboard')
     else:
-        form = AddStudentForm()
+        form = AddStudentForm(teacher=request.user)
 
     context = {
         'form': form
@@ -239,10 +241,11 @@ def RemoveStudent(request):
     if request.method == 'POST':
         form = RemoveStudentForm(request.POST, user=request.user)
         if form.is_valid():
-            student = form.cleaned_data['student']
-            student.delete()
-            messages.success(request, 'Student removed successfully.')
-            return redirect('learning:teacher_dashboard')
+            registered_student = form.cleaned_data['student']
+            if registered_student:
+                registered_student.delete()
+                messages.success(request, 'Student removed successfully.')
+                return redirect('learning:teacher_dashboard')
     else:
         form = RemoveStudentForm(user=request.user)
 

@@ -69,18 +69,18 @@ Teacher Dashboard
             <a href="{% url 'learning:add_student' %}" style="text-decoration: none; color:inherit;">Add a Student</a>
         </button>
         <h2>Your Students:</h2>
-        {% if all_students %}
+        {% if registered_students %}
         <table>
             <tr>
                 <th>First Name</th>
                 <th>Last Name</th>
                 <th>Username</th>
             </tr>
-            {% for student in all_students %}
+            {% for student in registered_students %}
             <tr>
-                <td>{{ student.user.first_name }}</td>
-                <td>{{ student.user.last_name }}</td>
-                <td>{{ student.user.username }}</td>
+                <td>{{ student.student.first_name }}</td>
+                <td>{{ student.student.last_name }}</td>
+                <td>{{ student.student.username }}</td>
             </tr>
             {% endfor %}
         </table>

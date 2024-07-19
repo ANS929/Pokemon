@@ -16,7 +16,7 @@ Unenroll Student
 <form method="post">
     {% csrf_token %}
     {{ form.as_p }}
-    <button type="submit" class="btn btn-primary">Unenroll Student</button><button class="btn btn-secondary"
+    <button type="submit" class="btn btn-primary">Confirm Unenroll</button><button class="btn btn-secondary"
         type="button">
         <a href="{% url 'learning:view_class' course.id %}" style="color: white; text-decoration: none;">Go Back</a>
     </button>

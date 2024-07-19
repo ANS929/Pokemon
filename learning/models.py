@@ -69,13 +69,21 @@ class CompletedBadge(models.Model):
     def __str__(self):
         return f"{self.student.username} - {self.badge.title}"
 
-# Students to assign to a teacher
+# Student
 class Student(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     name = models.CharField(max_length=100)
 
     def __str__(self):
         return self.name
+    
+# Student assigned to a teacher
+class RegisteredStudent(models.Model):
+    teacher = models.ForeignKey(User, on_delete=models.CASCADE, related_name='roster')
+    student = models.ForeignKey(User, on_delete=models.CASCADE, related_name='registration')
+
+    def __str__(self):
+        return self.student.get_full_name()
 
 # Students enrolled in a class
 class EnrolledStudent(models.Model):

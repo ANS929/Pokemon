@@ -2,7 +2,7 @@ from django import forms
 from .models import Student
 from account.models import Profile
 from django.contrib.auth.models import User
-from learning.models import Course, EnrolledStudent
+from learning.models import Course, EnrolledStudent, RegisteredStudent
 
 # create a new class
 class NewCourseForm(forms.ModelForm):
@@ -15,7 +15,7 @@ class NewCourseForm(forms.ModelForm):
 
 # assign a student to a teacher's roster
 class AddStudentForm(forms.ModelForm):
-    user = forms.ModelChoiceField(
+    student = forms.ModelChoiceField(
         queryset=User.objects.filter(profile__is_student=True),
         label="Select Student",
         widget=forms.Select(attrs={'class': 'form-control'}),
@@ -23,41 +23,41 @@ class AddStudentForm(forms.ModelForm):
     )
 
     def __init__(self, *args, **kwargs):
+        self.teacher = kwargs.pop('teacher', None)
         super().__init__(*args, **kwargs)
-        self.fields['user'].label_from_instance = self.label_from_user_instance
+        self.fields['student'].label_from_instance = self.label_from_user_instance
 
     def label_from_user_instance(self, obj):
         return f"{obj.first_name} {obj.last_name}"
 
     class Meta:
-        model = Student
-        fields = ['user']
+        model = RegisteredStudent
+        fields = ['student']
 
     def save(self, commit=True):
         instance = super().save(commit=False)
-        instance.name = f"{instance.user.first_name} {instance.user.last_name}"
+        instance.teacher = self.teacher
         if commit:
             instance.save()
         return instance
 
 # remove a student from a teacher's roster
-class RemoveStudentForm(forms.ModelForm):
+class RemoveStudentForm(forms.Form):
     student = forms.ModelChoiceField(
-        queryset=Student.objects.none(),
+        queryset=RegisteredStudent.objects.none(),
         label="Select Student to Remove",
         widget=forms.Select(attrs={'class': 'form-control'}),
     )
 
     def __init__(self, *args, **kwargs):
         user = kwargs.pop('user', None)
-        super(RemoveStudentForm, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
         if user:
-            self.fields['student'].queryset = Student.objects.filter(
-                user__profile__is_student=True)
+            self.fields['student'].queryset = RegisteredStudent.objects.filter(teacher=user)
+            self.fields['student'].label_from_instance = self.get_student_label
 
-    class Meta:
-        model = Student
-        fields = ['student']
+    def get_student_label(self, obj):
+        return f"{obj.student.get_full_name()}"
 
 # enroll a student in a class
 class EnrollStudentForm(forms.ModelForm):
@@ -71,12 +71,16 @@ class EnrollStudentForm(forms.ModelForm):
     def __init__(self, *args, teacher=None, course=None, **kwargs):
         super().__init__(*args, **kwargs)
         if teacher and course:
-            self.fields['student'].queryset = User.objects.filter(
-                profile__is_student=True
+            registered_students = RegisteredStudent.objects.filter(
+                teacher=teacher
             ).exclude(
-                enrollments__course=course
+                student__enrollments__course=course
+            ).values_list('student', flat=True)
+
+            self.fields['student'].queryset = User.objects.filter(
+                id__in=registered_students
             ).distinct()
-        self.fields['student'].label_from_instance = self.label_from_instance
+            self.fields['student'].label_from_instance = self.label_from_instance
 
     def label_from_instance(self, obj):
         return f"{obj.first_name} {obj.last_name}"
