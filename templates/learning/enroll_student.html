@@ -1,17 +1,23 @@
 {% extends 'learning/base.html' %}
 
 {% block title_block %}
-Edit Class
+Enroll Student
 {% endblock %}
 
 {% block body_block %}
-<h1>Edit a Class</h1>
-<p>Edit a class</p>
+<style>
+    .btn-primary,
+    .btn-secondary {
+        margin: 5px;
+    }
+</style>
+<h1>Enroll a Student</h1>
+<p>Enroll a student in a class</p>
 <form method="post">
     {% csrf_token %}
     {{ form.as_p }}
-    <button type="submit" class="btn btn-primary">Save Changes</button>
-    <button class="btn btn-secondary" type="button">
+    <button type="submit" class="btn btn-primary">Enroll Student</button><button class="btn btn-secondary"
+        type="button">
         <a href="{% url 'learning:view_class' course.id %}" style="color: white; text-decoration: none;">Go Back</a>
     </button>
 </form> <br>

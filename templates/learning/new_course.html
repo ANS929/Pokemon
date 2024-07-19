@@ -11,5 +11,8 @@ Add Class
     {% csrf_token %}
     {{ form.as_p }}
     <button type="submit" class="btn btn-primary">Create Class</button>
-</form>
+    <button class="btn btn-secondary" type="button">
+        <a href="{% url 'learning:teacher_dashboard' %}" style="color: white; text-decoration: none;">Go Back</a>
+    </button>
+</form> <br>
 {% endblock %}

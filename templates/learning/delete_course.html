@@ -1,0 +1,22 @@
+{% extends 'learning/base.html' %}
+
+{% block title_block %}
+Confirm Deletion
+{% endblock %}
+
+{% block body_block %}
+<style>
+    .btn-primary,
+    .btn-secondary {
+        margin: 5px;
+    }
+</style>
+<h1>Confirm Deletion</h1>
+<p>Are you sure you want to delete the course "{{ course.title }}"?</p>
+
+<form method="post" action="{% url 'learning:delete_class' course.id %}">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-primary">Confirm Deletion</button>
+    <a href="{% url 'learning:view_class' course.id %}" class="btn btn-secondary">Cancel</a>
+</form> <br>
+{% endblock %}

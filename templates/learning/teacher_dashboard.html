@@ -47,9 +47,10 @@ Teacher Dashboard
         }
     }
 
-    .btn {
+    .student-container .btn,
+    .class-container .btn {
         float: right;
-        margin: 5px;
+        margin: 10px;
     }
 </style>
 
@@ -60,8 +61,13 @@ Teacher Dashboard
 
 <div class="teacher-dashboard-container">
     <div class="student-container">
-        <a href="" name="remove-student-button" class="btn btn-primary">Remove a Student</a>
-        <a href="{% url 'learning:add_student' %}" name="add-student-button" class="btn btn-primary">Add a Student</a>
+        <button class="btn btn-outline-danger" type="button">
+            <a href="{% url 'learning:remove_student' %}" style="text-decoration: none; color:inherit;">Remove a
+                Student</a>
+        </button>
+        <button class="btn btn-outline-success" type="button">
+            <a href="{% url 'learning:add_student' %}" style="text-decoration: none; color:inherit;">Add a Student</a>
+        </button>
         <h2>Your Students:</h2>
         {% if all_students %}
         <table>
@@ -84,7 +90,7 @@ Teacher Dashboard
     </div>
 
     <div class="class-container">
-        <a href="" name="add-class-button" class="btn btn-primary">Add a Class</a>
+        <a href="{% url 'learning:new_class' %}" name="add-class-button" class="btn btn-primary">Add a Class</a>
         <h2>Your Classes:</h2>
         {% if courses %}
         <table>
@@ -97,7 +103,7 @@ Teacher Dashboard
             <tr>
                 <td>{{ course.title }}</td>
                 <td>{{ course.enrollments.count }}</td>
-                <td><a href="" class="btn btn-secondary">Assign Student</a>
+                <td><a href="{% url 'learning:view_class' course.id %}" class="btn btn-secondary">View Class</a>
                 </td>
             </tr>
             {% endfor %}

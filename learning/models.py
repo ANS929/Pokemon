@@ -5,15 +5,15 @@ from django.utils.text import slugify
 
 # You Try practice problems
 class Practice (models.Model):
-    title = models.CharField(max_length = 100)
+    title = models.CharField(max_length=100)
     description = models.TextField()
     slug = models.SlugField(default='', unique=True)
 
     def __str__(self):
         return self.title
-    
+
     def save(self, *args, **kwargs):
-        self.slug = slugify(self.title) 
+        self.slug = slugify(self.title)
         super().save(*args, **kwargs)
 
 class CompletedPractice(models.Model):
@@ -26,16 +26,16 @@ class CompletedPractice(models.Model):
 
 # Lesson quizzes
 class Quiz(models.Model):
-    title = models.CharField(max_length = 100)
+    title = models.CharField(max_length=100)
     description = models.TextField()
     correct_answers = models.JSONField(default=dict)
     slug = models.SlugField(default='', unique=True)
 
     def __str__(self):
         return self.title
-    
+
     def save(self, *args, **kwargs):
-        self.slug = slugify(self.title) 
+        self.slug = slugify(self.title)
         super().save(*args, **kwargs)
 
     class Meta:
@@ -49,13 +49,13 @@ class CompletedQuiz(models.Model):
 
     def __str__(self):
         return f"{self.student.username} - {self.quiz.title}"
-    
+
     class Meta:
         verbose_name_plural = "Completed quizzes"
-    
+
 # Badges
 class Badge(models.Model):
-    name = models.CharField(max_length = 20)
+    name = models.CharField(max_length=20)
     description = models.TextField()
 
     def __str__(self):
@@ -69,26 +69,30 @@ class CompletedBadge(models.Model):
     def __str__(self):
         return f"{self.student.username} - {self.badge.title}"
 
-# Students to assign to a teacher    
+# Students to assign to a teacher
 class Student(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    name = models.CharField(max_length = 100)
+    name = models.CharField(max_length=100)
 
     def __str__(self):
         return self.name
 
-# class EnrolledStudent(models.Model):
-#     student = models.ForeignKey(User, on_delete=models.CASCADE, related_name='enrollments')
-#     course = models.ForeignKey('Course', on_delete=models.CASCADE, related_name='enrollments')
+# Students enrolled in a class
+class EnrolledStudent(models.Model):
+    student = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name='enrollments')
+    course = models.ForeignKey(
+        'Course', on_delete=models.CASCADE, related_name='enrollments')
 
-#     def __str__(self):
-#         return f"{self.student.username} in {self.course.title}"
+    def __str__(self):
+        return f"{self.student.username} in {self.course.title}"
 
-# # Courses to add students to
-# class Course(models.Model):
-#     title = models.CharField(max_length = 100)
-#     description = models.CharField(max_length=200)
-#     teacher = models.ForeignKey(User, on_delete=models.CASCADE, related_name='courses')
+# Classes to add students to
+class Course(models.Model):
+    title = models.CharField(max_length=100)
+    description = models.CharField(max_length=200)
+    teacher = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name='courses')
 
-#     def __str__(self):
-#         return self.title
+    def __str__(self):
+        return self.title

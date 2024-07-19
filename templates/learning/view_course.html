@@ -1,0 +1,117 @@
+{% extends 'learning/base.html' %}
+
+{% block title_block %}
+View Class
+{% endblock %}
+
+{% block body_block %}
+<style>
+    table {
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+    }
+
+    td,
+    th {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+    }
+
+    tr:nth-child(even) {
+        background-color: #dddddd;
+    }
+
+    .class-details .btn-secondary,
+    .class-details .btn-outline-success,
+    .class-details .btn-outline-danger {
+        margin: 5px;
+    }
+
+    .details table {
+        width: 50%;
+    }
+
+    .details {
+        flex: 1;
+        border: 5px solid black;
+        padding: 25px;
+        margin: 20px;
+    }
+
+    .students {
+        flex: 1;
+        border: 5px solid black;
+        padding: 25px;
+        margin: 20px;
+    }
+
+    .class-detail-container {
+        display: flex;
+    }
+
+    @media (max-width: 400px) {
+        .class-detail-container {
+            flex-direction: column;
+        }
+    }
+
+    .details .btn,
+    .students .btn {
+        float: right;
+        margin: 10px;
+    }
+
+    .details {
+        font-size: 18px;
+    }
+</style>
+<div class="class-detail-container">
+    <div class="details">
+        <button class="btn btn-secondary " type="button">
+            <a href="{% url 'learning:teacher_dashboard' %}" style="text-decoration: none; color:inherit;">Go Back</a>
+        </button>
+        <button class="btn btn-outline-danger" type="button">
+            <a href="{% url 'learning:delete_class' course.id %}" style="text-decoration: none; color:inherit;">Delete
+                Class</a>
+        </button>
+        <button class="btn btn-outline-success" type="button">
+            <a href="{% url 'learning:edit_class' course.id %}" style="text-decoration: none; color:inherit;">Edit
+                Class</a>
+        </button>
+        <h2>Class Details</h2>
+        <u>Name</u>: {{ course.title }} <br><br>
+        <u>Description</u>: {{ course.description }}
+    </div>
+    <div class="students">
+        <button class="btn btn-primary" type="button">
+            <a href="{% url 'learning:enroll_student' course.id %}" style="text-decoration: none; color:inherit;">Enroll
+                a Student</a>
+        </button>
+        <h2>Enrolled Students:</h2>
+        {% if enrolled_students %}
+        <table>
+            <tr>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Username</th>
+                <th>Action</th>
+            </tr>
+            {% for student in enrolled_students %}
+            <tr>
+                <td>{{ student.student.first_name }}</td>
+                <td>{{ student.student.last_name }}</td>
+                <td>{{ student.student.username }}</td>
+                <td><a href="{% url 'learning:unenroll_student' course.id student.student.id %}"
+                        class="btn btn-secondary">Unenroll
+                        Student</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+        {% else %}
+        <p>No enrolled students yet...</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

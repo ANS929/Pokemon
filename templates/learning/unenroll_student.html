@@ -1,0 +1,24 @@
+{% extends 'learning/base.html' %}
+
+{% block title_block %}
+Unenroll Student
+{% endblock %}
+
+{% block body_block %}
+<style>
+    .btn-primary,
+    .btn-secondary {
+        margin: 5px;
+    }
+</style>
+<h1>Unenroll a Student</h1>
+<p>Are you sure you want to unenroll {{ enrolled_student.student.get_full_name }} from {{ course.title }}?</p>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-primary">Unenroll Student</button><button class="btn btn-secondary"
+        type="button">
+        <a href="{% url 'learning:view_class' course.id %}" style="color: white; text-decoration: none;">Go Back</a>
+    </button>
+</form> <br>
+{% endblock %}

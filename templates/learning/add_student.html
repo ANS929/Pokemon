@@ -5,11 +5,19 @@ Add Student
 {% endblock %}
 
 {% block body_block %}
+<style>
+    .btn-primary,
+    .btn-secondary {
+        margin: 5px;
+    }
+</style>
 <h1>Add a Student</h1>
 <p>Add a student to your roster</p>
 <form method="post">
     {% csrf_token %}
     {{ form.as_p }}
-    <button type="submit" class="btn btn-primary">Add Student</button>
-</form>
+    <button type="submit" class="btn btn-primary">Add Student</button> <button class="btn btn-secondary" type="button">
+        <a href="{% url 'learning:teacher_dashboard' %}" style="color: white; text-decoration: none;">Go Back</a>
+    </button>
+</form> <br>
 {% endblock %}
