@@ -145,7 +145,7 @@ def submit_practice(request, practice_slug):
 
 # create a new class
 @login_required
-def NewCourse(request):
+def new_course(request):
     if request.method == 'POST':
         form = NewCourseForm(request.POST)
         if form.is_valid():
@@ -164,7 +164,7 @@ def NewCourse(request):
 
 # view a class
 @login_required
-def ViewCourse(request, course_id):
+def view_course(request, course_id):
     user = request.user
     course = get_object_or_404(Course, id=course_id)
     enrolled_students = EnrolledStudent.objects.filter(course=course)
@@ -180,12 +180,13 @@ def ViewCourse(request, course_id):
 
 # edit a class
 @login_required
-def EditCourse(request, course_id):
+def edit_course(request, course_id):
     course = get_object_or_404(Course, id=course_id)
     if request.method == 'POST':
         form = NewCourseForm(request.POST, instance=course)
         if form.is_valid():
             form.save()
+            messages.success(request, f'Course updated successfully!')
             return redirect('learning:view_class', course_id=course.id)
     else:
         form = NewCourseForm(instance=course)
@@ -199,7 +200,7 @@ def EditCourse(request, course_id):
 
 # delete a class
 @login_required
-def DeleteCourse(request, course_id):
+def delete_course(request, course_id):
     user = request.user
     course = get_object_or_404(Course, id=course_id)
 
@@ -208,14 +209,14 @@ def DeleteCourse(request, course_id):
 
     if request.method == 'POST':
         course.delete()
-        messages.success(request, f"{course.title} has been deleted.")
+        messages.success(request, f"The class '{course.title}' has been deleted.")
         return redirect('learning:teacher_dashboard')
 
     return render(request, 'learning/delete_course.html', {'course': course})
 
 # add a student to a teacher's roster
 @login_required
-def AddStudent(request):
+def add_student(request):
     if not request.user.profile.is_teacher:
         return HttpResponse("You do not have permission to view this page.")
 
@@ -223,6 +224,7 @@ def AddStudent(request):
         form = AddStudentForm(request.POST, teacher=request.user)
         if form.is_valid():
             form.save()
+            messages.success(request, 'Student added successfully.')
             return redirect('learning:teacher_dashboard')
     else:
         form = AddStudentForm(teacher=request.user)
@@ -234,7 +236,7 @@ def AddStudent(request):
 
 # remove a student from a teacher's roster
 @login_required
-def RemoveStudent(request):
+def remove_student(request):
     if not request.user.profile.is_teacher:
         return HttpResponse("You do not have permission to view this page.")
 
@@ -256,7 +258,7 @@ def RemoveStudent(request):
 
 # enroll a student in a class
 @login_required
-def EnrollStudent(request, course_id):
+def enroll_student(request, course_id):
     if not request.user.profile.is_teacher:
         return HttpResponse("You do not have permission to view this page.")
 
@@ -280,7 +282,7 @@ def EnrollStudent(request, course_id):
 
 # unenroll a student from a class
 @login_required
-def UnenrollStudent(request, course_id, student_id):
+def unenroll_student(request, course_id, student_id):
     if not request.user.profile.is_teacher:
         return HttpResponse("You do not have permission to view this page.")
 

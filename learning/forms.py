@@ -16,7 +16,7 @@ class NewCourseForm(forms.ModelForm):
 # assign a student to a teacher's roster
 class AddStudentForm(forms.ModelForm):
     student = forms.ModelChoiceField(
-        queryset=User.objects.filter(profile__is_student=True),
+        queryset=User.objects.none(),
         label="Select Student",
         widget=forms.Select(attrs={'class': 'form-control'}),
         to_field_name='id',
@@ -25,6 +25,13 @@ class AddStudentForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         self.teacher = kwargs.pop('teacher', None)
         super().__init__(*args, **kwargs)
+        if self.teacher:
+            registered_students_ids = RegisteredStudent.objects.filter(teacher=self.teacher).values_list('student_id', flat=True)
+            self.fields['student'].queryset = User.objects.filter(
+                profile__is_student=True
+            ).exclude(
+                id__in=registered_students_ids
+            ).distinct()
         self.fields['student'].label_from_instance = self.label_from_user_instance
 
     def label_from_user_instance(self, obj):

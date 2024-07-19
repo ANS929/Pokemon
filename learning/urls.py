@@ -25,14 +25,14 @@ urlpatterns = [
     # teacher paths
     path('teachers/', views.teachers, name='teachers'),
     path('teachers/dashboard/', views.teacher_dashboard, name='teacher_dashboard'),
-    path('teachers/dashboard/add_student/', views.AddStudent, name='add_student'),
-    path('teachers/dashboard/remove_student/', views.RemoveStudent, name='remove_student'),
-    path('teachers/dashboard/class/new/', views.NewCourse, name='new_class'),
-    path('teachers/dashboard/class/<int:course_id>/', views.ViewCourse, name='view_class'),
-    path('teachers/dashboard/class/<int:course_id>/edit/', views.EditCourse, name='edit_class'),
-    path('teachers/dashboard/class/<int:course_id>/delete/', views.DeleteCourse, name='delete_class'),
-    path('teachers/dashboard/class/<int:course_id>/enroll/', views.EnrollStudent, name='enroll_student'),
-    path('teachers/dashboard/class/<int:course_id>/unenroll/<int:student_id>/', views.UnenrollStudent, name='unenroll_student'),
+    path('teachers/dashboard/add_student/', views.add_student, name='add_student'),
+    path('teachers/dashboard/remove_student/', views.remove_student, name='remove_student'),
+    path('teachers/dashboard/class/new/', views.new_course, name='new_class'),
+    path('teachers/dashboard/class/<int:course_id>/', views.view_course, name='view_class'),
+    path('teachers/dashboard/class/<int:course_id>/edit/', views.edit_course, name='edit_class'),
+    path('teachers/dashboard/class/<int:course_id>/delete/', views.delete_course, name='delete_class'),
+    path('teachers/dashboard/class/<int:course_id>/enroll/', views.enroll_student, name='enroll_student'),
+    path('teachers/dashboard/class/<int:course_id>/unenroll/<int:student_id>/', views.unenroll_student, name='unenroll_student'),
 
     # parent paths
     path('parents/', views.parents, name='parents'),

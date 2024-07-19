@@ -22,7 +22,7 @@ def registration_complete(request):
     return render(request, 'registration/registration_complete.html')
 
 # custom registration (inclusion of teacher/stuent role)
-class CustomRegistrationView(RegistrationView):
+class custom_registration_view(RegistrationView):
     form_class = UserRegistrationForm
 
     def register(self, form_class):
@@ -60,7 +60,7 @@ def profile_update(request):
         if u_form.is_valid() and p_form.is_valid():
             u_form.save()
             p_form.save()
-            messages.success(request, f'Acount Updated Successfully!')
+            messages.success(request, f'Profile Updated Successfully!')
             return redirect('account:profile')
     else:
         u_form = UserUpdateForm(request.POST, instance=request.user)

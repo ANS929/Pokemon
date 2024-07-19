@@ -66,6 +66,11 @@ View Class
         font-size: 18px;
     }
 </style>
+{% if messages %}
+        {% for message in messages %}
+                <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+        {% endfor %}
+    {% endif %}
 <div class="class-detail-container">
     <div class="details">
         <button class="btn btn-secondary " type="button">
