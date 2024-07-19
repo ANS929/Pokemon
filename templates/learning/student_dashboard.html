@@ -58,12 +58,14 @@ Student Dashboard
         <table>
             <tr>
                 <th>Practice Name</th>
+                <th>Grade Level</th>
                 <th>Date of Completion</th>
             </tr>
             {% if completed_practices %}
             {% for practice in completed_practices %}
             <tr>
                 <td>{{ practice.practice.title }}</td>
+                <td>{{ practice.practice.grade_level }}</td>
                 <td>{{ practice.date_completed }}</td>
             </tr>
             {% endfor %}
@@ -76,6 +78,7 @@ Student Dashboard
         <table>
             <tr>
                 <th>Quiz Name</th>
+                <th>Grade Level</th>
                 <th>Date of Completion</th>
                 <th>Quiz Score</th>
             </tr>
@@ -83,6 +86,7 @@ Student Dashboard
             {% for quiz in completed_quizzes %}
             <tr>
                 <td>{{ quiz.quiz.title }}</td>
+                <td>{{ quiz.quiz.grade_level }}</td>
                 <td>{{ quiz.date_completed }}</td>
                 <td>{{ quiz.score }} / 5</td>
             </tr>

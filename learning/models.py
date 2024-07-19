@@ -7,6 +7,7 @@ from django.utils.text import slugify
 class Practice (models.Model):
     title = models.CharField(max_length=100)
     description = models.TextField()
+    grade_level = models.CharField(max_length=3, default=0)
     slug = models.SlugField(default='', unique=True)
 
     def __str__(self):
@@ -27,6 +28,7 @@ class CompletedPractice(models.Model):
 # Lesson quizzes
 class Quiz(models.Model):
     title = models.CharField(max_length=100)
+    grade_level = models.CharField(max_length=3, default=0)
     description = models.TextField()
     correct_answers = models.JSONField(default=dict)
     slug = models.SlugField(default='', unique=True)
