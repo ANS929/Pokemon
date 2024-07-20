@@ -134,6 +134,20 @@ Profile Update
     .m-t-40 {
         margin-top: 20px;
     }
+
+    .image-container {
+        overflow: hidden;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .image-container img {
+        max-width: 100%;
+        max-height: 150px;
+        height: auto;
+    }
 </style>
 <div class="page-content page-container" id="page-content">
     <div class="padding">
@@ -144,7 +158,9 @@ Profile Update
                         <div class="col-sm-4 bg-c-lite-green user-profile">
                             <div class="card-block text-center text-white">
                                 <div class="m-b-25">
-                                    <img src="{% static 'images/' %}{{ user.profile.image }}" class="img-radius" alt="User-Profile-Image">
+                                    <div class="image-container"><img
+                                            src="{% static 'images/' %}{{ user.profile.image }}" class="img-radius"
+                                            alt="User-Profile-Image"></div>
                                 </div>
                                 <h6 class="f-w-600" style="font-size: 24px; color: black;"></h6>
                                 <p style="font-size: 14px; color: black;"></p>
@@ -161,7 +177,8 @@ Profile Update
                                 </form>
                                 <div style="margin-top: 10px;">
                                     <button class="btn btn-secondary" id="logout-btn" type="button">
-                                        <a id="fa" href="{% url 'account:profile' %}" style="color: white; text-decoration: none;">Go Back</a>
+                                        <a id="fa" href="{% url 'account:profile' %}"
+                                            style="color: white; text-decoration: none;">Go Back</a>
                                     </button>
                                 </div>
                             </div>
