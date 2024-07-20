@@ -21,7 +21,7 @@ def settings(request):
 def registration_complete(request):
     return render(request, 'registration/registration_complete.html')
 
-# custom registration (inclusion of teacher/stuent role)
+# custom registration (inclusion of teacher/stuent/parent role)
 class custom_registration_view(RegistrationView):
     form_class = UserRegistrationForm
 
@@ -32,20 +32,27 @@ class custom_registration_view(RegistrationView):
 
         profile, created = Profile.objects.get_or_create(user=new_user)
         role = form_class.cleaned_data.get('role')
-        
+
         if role == 'student':
             profile.is_student = True
             profile.is_teacher = False
+            profile.is_parent = False
         elif role == 'teacher':
             profile.is_teacher = True
             profile.is_student = False
+            profile.is_parent = False
+        elif role == 'parent':
+            profile.is_teacher = False
+            profile.is_student = False
+            profile.is_parent = True
+
         profile.save()
 
         return new_user
 
     def get_success_url(self, user=None):
         return reverse_lazy('account:registration_complete')
-    
+
 # user profile
 @login_required
 def profile(request):
@@ -56,7 +63,8 @@ def profile(request):
 def profile_update(request):
     if request.method == "POST":
         u_form = UserUpdateForm(request.POST, instance=request.user)
-        p_form = ProfileUpdateForm(request.POST, request.FILES, instance=request.user.profile)
+        p_form = ProfileUpdateForm(
+            request.POST, request.FILES, instance=request.user.profile)
         if u_form.is_valid() and p_form.is_valid():
             u_form.save()
             p_form.save()
@@ -64,7 +72,8 @@ def profile_update(request):
             return redirect('account:profile')
     else:
         u_form = UserUpdateForm(request.POST, instance=request.user)
-        p_form = ProfileUpdateForm(request.POST, request.FILES, instance=request.user.profile)
+        p_form = ProfileUpdateForm(
+            request.POST, request.FILES, instance=request.user.profile)
     context = {
         'u_form': u_form,
         'p_form': p_form

@@ -1,8 +1,10 @@
 from django.contrib import admin
-from .models import Quiz, CompletedQuiz, Practice, CompletedPractice, Student, Course, RegisteredStudent
+from .models import Quiz, CompletedQuiz, Practice, CompletedPractice, Student, Course, RegisteredStudent, Child, RegisteredChild
 
 admin.site.register(Course)
 admin.site.register(RegisteredStudent)
+admin.site.register(Child)
+admin.site.register(RegisteredChild)
 
 @admin.register(Practice)
 class PracticeAdmin(admin.ModelAdmin):

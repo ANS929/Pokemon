@@ -1,8 +1,8 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
-from .models import Practice, CompletedPractice, Quiz, CompletedQuiz, Student, EnrolledStudent, Course, RegisteredStudent, User
-from .forms import AddStudentForm, RemoveStudentForm, EnrollStudentForm, NewCourseForm
+from .models import Practice, CompletedPractice, Quiz, CompletedQuiz, Student, EnrolledStudent, Course, RegisteredStudent, User, Child, RegisteredChild
+from .forms import AddStudentForm, RemoveStudentForm, EnrollStudentForm, NewCourseForm, AddChildForm, RemoveChildForm
 from django.contrib import messages
 
 # website homepage
@@ -73,48 +73,39 @@ def practice_detail(request, practice_slug):
     }
     return render(request, f'learning/{practice_slug}.html', context)
 
-# parent dashboard
-def parent_dashboard(request):
-    return render(request, 'learning/parent_dashboard.html')
-
 # student dashboard
 @login_required
 def student_dashboard(request, user_id):
     user = get_object_or_404(User, id=user_id)
     
-    if not request.user.profile.is_teacher and request.user != user:
+    if (request.user == user or
+        (request.user.profile.is_parent and RegisteredChild.objects.filter(parent=request.user, student=user).exists()) or
+        (request.user.profile.is_teacher and RegisteredStudent.objects.filter(teacher=request.user, student=user).exists())):
+        
+        completed_practices = CompletedPractice.objects.filter(student=user)
+        completed_quizzes = CompletedQuiz.objects.filter(student=user)
+
+        context = {
+            'student': user,
+            'completed_practices': completed_practices,
+            'completed_quizzes': completed_quizzes,
+        }
+
+        return render(request, 'learning/student_dashboard.html', context)
+    else:
         return HttpResponse("You do not have permission to view this page.")
-    
-    completed_practices = CompletedPractice.objects.filter(student=user)
-    completed_quizzes = CompletedQuiz.objects.filter(student=user)
 
-    context = {
-        'student': user,
-        'completed_practices': completed_practices,
-        'completed_quizzes': completed_quizzes,
-    }
-
-    return render(request, 'learning/student_dashboard.html', context)
-
-# teacher dashboard
+# practice submission
 @login_required
-def teacher_dashboard(request):
+def submit_practice(request, practice_slug):
+    practice = get_object_or_404(Practice, slug=practice_slug)
     user = request.user
-    if not request.user.profile.is_teacher:
-        return HttpResponse("You do not have permission to view this page.")
 
-    courses = Course.objects.filter(teacher=user)
-    enrolled_students = EnrolledStudent.objects.filter(course__teacher=user)
-    all_students = Student.objects.all()
-    registered_students = RegisteredStudent.objects.filter(teacher=user)
+    if request.method == 'POST':
+        CompletedPractice.objects.create(student=user, practice=practice)
+        return redirect('learning:student_dashboard')
 
-    context = {
-        'courses': courses,
-        'enrolled_students': enrolled_students,
-        'all_students': all_students,
-        'registered_students': registered_students,
-    }
-    return render(request, 'learning/teacher_dashboard.html', context)
+    return render(request, '', {'practice': practice})
 
 # quiz submission
 @login_required
@@ -140,17 +131,83 @@ def submit_quiz(request, quiz_slug):
     }
     return render(request, f'learning/{quiz_slug}.html', context)
 
-# practice submission
+# parent dashboard
 @login_required
-def submit_practice(request, practice_slug):
-    practice = get_object_or_404(Practice, slug=practice_slug)
+def parent_dashboard(request):
     user = request.user
+    if not user.profile.is_parent:
+        return HttpResponse("You do not have permission to view this page.")
+
+    all_children = User.objects.filter(profile__is_student=True)
+    registered_children = RegisteredChild.objects.filter(parent=user)
+
+    context = {
+        'all_children': all_children,
+        'registered_children': registered_children,
+    }
+    return render(request, 'learning/parent_dashboard.html', context)
+
+# add a child to a parent's roster
+@login_required
+def add_child(request):
+    if not request.user.profile.is_parent:
+        return HttpResponse("You do not have permission to view this page.")
+    
+    if request.method == 'POST':
+        form = AddChildForm(request.POST, parent=request.user)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Child added successfully.')
+            return redirect('learning:parent_dashboard')
+    else:
+        form = AddChildForm(parent=request.user)
+
+    context = {
+        'form': form
+    }
+    return render(request, 'learning/add_child.html', context)
+
+# remove a child from a parent's roster
+@login_required
+def remove_child(request):
+    if not request.user.profile.is_parent:
+        return HttpResponse("You do not have permission to view this page.")
 
     if request.method == 'POST':
-        CompletedPractice.objects.create(student=user, practice=practice)
-        return redirect('learning:student_dashboard')
+        form = RemoveChildForm(request.POST, parent=request.user)
+        if form.is_valid():
+            registered_child = form.cleaned_data['student']
+            if registered_child:
+                registered_child.delete()
+                messages.success(request, 'Child removed successfully.')
+                return redirect('learning:parent_dashboard')
+    else:
+        form = RemoveChildForm(parent=request.user)
 
-    return render(request, '', {'practice': practice})
+    context = {
+        'form': form
+    }
+    return render(request, 'learning/remove_child.html', context)
+
+# teacher dashboard
+@login_required
+def teacher_dashboard(request):
+    user = request.user
+    if not request.user.profile.is_teacher:
+        return HttpResponse("You do not have permission to view this page.")
+
+    courses = Course.objects.filter(teacher=user)
+    enrolled_students = EnrolledStudent.objects.filter(course__teacher=user)
+    all_students = Student.objects.all()
+    registered_students = RegisteredStudent.objects.filter(teacher=user)
+
+    context = {
+        'courses': courses,
+        'enrolled_students': enrolled_students,
+        'all_students': all_students,
+        'registered_students': registered_students,
+    }
+    return render(request, 'learning/teacher_dashboard.html', context)
 
 # create a new class
 @login_required

@@ -8,7 +8,8 @@ class UserRegistrationForm(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput)
     ROLE_CHOICES = [
         ('student', 'Student'),
-        ('teacher', 'Teacher')
+        ('teacher', 'Teacher'),
+        ('parent', 'Parent')
     ]
     role = forms.ChoiceField(choices=ROLE_CHOICES, widget=forms.RadioSelect)
 
@@ -26,9 +27,15 @@ class UserRegistrationForm(forms.ModelForm):
             if role == 'student':
                 profile.is_student = True
                 profile.is_teacher = False
+                profile.is_parent = False
             elif role == 'teacher':
                 profile.is_teacher = True
                 profile.is_student = False
+                profile.is_parent = False
+            elif role == 'parent':
+                profile.is_teacher = False
+                profile.is_student = False
+                profile.is_parent = True
             profile.save()
         return user
 

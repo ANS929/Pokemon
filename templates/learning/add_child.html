@@ -1,0 +1,23 @@
+{% extends 'learning/base.html' %}
+
+{% block title_block %}
+Add Child
+{% endblock %}
+
+{% block body_block %}
+<style>
+    .btn-primary,
+    .btn-secondary {
+        margin: 5px;
+    }
+</style>
+<h1>Add a Child</h1>
+<p>Add a child to your roster</p>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-primary">Add Child</button> <button class="btn btn-secondary" type="button">
+        <a href="{% url 'learning:parent_dashboard' %}" style="color: white; text-decoration: none;">Go Back</a>
+    </button>
+</form> <br>
+{% endblock %}

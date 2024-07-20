@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 from django.utils import timezone
 from django.utils.text import slugify
 
-# You Try practice problems
+# Practice problem
 class Practice (models.Model):
     title = models.CharField(max_length=100)
     description = models.TextField()
@@ -17,6 +17,7 @@ class Practice (models.Model):
         self.slug = slugify(self.title)
         super().save(*args, **kwargs)
 
+# Submitted practice
 class CompletedPractice(models.Model):
     student = models.ForeignKey(User, on_delete=models.CASCADE)
     practice = models.ForeignKey(Practice, on_delete=models.CASCADE)
@@ -25,7 +26,7 @@ class CompletedPractice(models.Model):
     def __str__(self):
         return f"{self.student.username} - {self.practice.title}"
 
-# Lesson quizzes
+# Lesson quiz
 class Quiz(models.Model):
     title = models.CharField(max_length=100)
     grade_level = models.CharField(max_length=3, default=0)
@@ -43,6 +44,7 @@ class Quiz(models.Model):
     class Meta:
         verbose_name_plural = "Quizzes"
 
+# Submitted quiz
 class CompletedQuiz(models.Model):
     student = models.ForeignKey(User, on_delete=models.CASCADE)
     quiz = models.ForeignKey(Quiz, on_delete=models.CASCADE)
@@ -55,7 +57,7 @@ class CompletedQuiz(models.Model):
     class Meta:
         verbose_name_plural = "Completed quizzes"
 
-# Badges
+# Badge
 class Badge(models.Model):
     name = models.CharField(max_length=20)
     description = models.TextField()
@@ -63,6 +65,7 @@ class Badge(models.Model):
     def __str__(self):
         return self.title
 
+# Completed badge
 class CompletedBadge(models.Model):
     student = models.ForeignKey(User, on_delete=models.CASCADE)
     badge = models.ForeignKey(Badge, on_delete=models.CASCADE)
@@ -87,7 +90,7 @@ class RegisteredStudent(models.Model):
     def __str__(self):
         return self.student.get_full_name()
 
-# Students enrolled in a class
+# Student enrolled in a class
 class EnrolledStudent(models.Model):
     student = models.ForeignKey(
         User, on_delete=models.CASCADE, related_name='enrollments')
@@ -97,7 +100,7 @@ class EnrolledStudent(models.Model):
     def __str__(self):
         return f"{self.student.username} in {self.course.title}"
 
-# Classes to add students to
+# Class to add students to
 class Course(models.Model):
     title = models.CharField(max_length=100)
     description = models.CharField(max_length=200)
@@ -106,3 +109,19 @@ class Course(models.Model):
 
     def __str__(self):
         return self.title
+    
+# Child
+class Child(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='child')
+    parent = models.ForeignKey(User, on_delete=models.CASCADE, related_name='children')
+
+    def __str__(self):
+        return self.name
+    
+# Registered child
+class RegisteredChild(models.Model):
+    parent = models.ForeignKey(User, on_delete=models.CASCADE, related_name='registered_children')
+    student = models.ForeignKey(User, on_delete=models.CASCADE, related_name='registered_by_parents')
+
+    def __str__(self):
+        return f"{self.parent.username} - {self.student.username}"

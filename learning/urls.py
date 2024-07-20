@@ -36,5 +36,7 @@ urlpatterns = [
 
     # parent paths
     path('parents/', views.parents, name='parents'),
-    path('parents/dashbaord/', views.parent_dashboard, name='parent_dashboard'),
+    path('parents/dashboard/', views.parent_dashboard, name='parent_dashboard'),
+    path('parents/dashboard/add_child/', views.add_child, name='add_child'),
+    path('parents/dashboard/remove_child/', views.remove_child, name='remove_child'),
 ]

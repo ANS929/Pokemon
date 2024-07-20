@@ -5,8 +5,77 @@ Parent Dashboard
 {% endblock %}
 
 {% block body_block %}
+<style>
+    table {
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    td,
+    th {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+    }
+
+    tr:nth-child(even) {
+        background-color: #dddddd;
+    }
+
+    .child-container {
+        border: 5px solid black;
+        padding: 25px;
+        margin: 20px;
+        width:50%;
+    }
+
+    .child-container .btn {
+        float: right;
+        margin: 10px;
+    }
+</style>
+{% if messages %}
+{% for message in messages %}
+<div class="alert alert-{{ message.tags }}">{{ message }}</div>
+{% endfor %}
+{% endif %}
 <header>
-    <h1>Parent Dashboard</h1>
+    <h1>Parent Dashboard - {{ user.first_name }} {{ user.last_name }}</h1>
 </header>
-<p>Welcome to the Parent Dashboard</p>
+<p>Welcome to the Parent Dashboard!</p>
+
+<div class="parent-dashboard-container">
+    <div class="child-container">
+        <button class="btn btn-outline-danger" type="button">
+            <a href="{% url 'learning:remove_child' %}" style="text-decoration: none; color:inherit;">Remove a
+                Child</a>
+        </button>
+        <button class="btn btn-outline-success" type="button">
+            <a href="{% url 'learning:add_child' %}" style="text-decoration: none; color:inherit;">Add a Child</a>
+        </button>
+        <h2>Your Children:</h2>
+        {% if registered_children %}
+        <table>
+            <tr>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Username</th>
+                <th>Action</th>
+            </tr>
+            {% for student in registered_children %}
+            <tr>
+                <td>{{ student.student.first_name }}</td>
+                <td>{{ student.student.last_name }}</td>
+                <td>{{ student.student.username }}</td>
+                <td><a href="{% url 'learning:student_dashboard' student.student.id %}" class="btn btn-secondary">View
+                        Child</a></td>
+            </tr>
+            {% endfor %}
+        </table>
+        {% else %}
+        <p>No children yet...</p>
+        {% endif %}
+    </div>
+</div>
 {% endblock %}

@@ -2,7 +2,7 @@ from django import forms
 from .models import Student
 from account.models import Profile
 from django.contrib.auth.models import User
-from learning.models import Course, EnrolledStudent, RegisteredStudent
+from learning.models import Course, EnrolledStudent, RegisteredStudent, Child, RegisteredChild
 
 # create a new class
 class NewCourseForm(forms.ModelForm):
@@ -117,3 +117,56 @@ class UnenrollStudentForm(forms.ModelForm):
     class Meta:
         model = EnrolledStudent
         fields = ['student']
+
+# assign a child to a parent's roster
+class AddChildForm(forms.ModelForm):
+    student = forms.ModelChoiceField(
+        queryset=User.objects.none(),
+        label="Select Child",
+        widget=forms.Select(attrs={'class': 'form-control'}),
+        to_field_name='id',
+    )
+
+    def __init__(self, *args, **kwargs):
+        self.parent = kwargs.pop('parent', None)
+        super().__init__(*args, **kwargs)
+        if self.parent:
+            registered_children_ids = RegisteredChild.objects.filter(parent=self.parent).values_list('student_id', flat=True)
+            self.fields['student'].queryset = User.objects.filter(
+                profile__is_student=True
+            ).exclude(
+                id__in=registered_children_ids
+            ).distinct()
+        self.fields['student'].label_from_instance = self.label_from_user_instance
+
+    def label_from_user_instance(self, obj):
+        return f"{obj.first_name} {obj.last_name}"
+
+    class Meta:
+        model = RegisteredChild
+        fields = ['student']
+
+    def save(self, commit=True):
+        instance = super().save(commit=False)
+        instance.parent = self.parent
+        if commit:
+            instance.save()
+        return instance
+
+# remove a child from a parent's roster
+class RemoveChildForm(forms.Form):
+    student = forms.ModelChoiceField(
+        queryset=RegisteredChild.objects.none(),
+        label="Select Child to Remove",
+        widget=forms.Select(attrs={'class': 'form-control'}),
+    )
+
+    def __init__(self, *args, **kwargs):
+        parent = kwargs.pop('parent', None)
+        super().__init__(*args, **kwargs)
+        if parent:
+            self.fields['student'].queryset = RegisteredChild.objects.filter(parent=parent)
+            self.fields['student'].label_from_instance = self.get_student_label
+
+    def get_student_label(self, obj):
+        return f"{obj.student.get_full_name()}"
