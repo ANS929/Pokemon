@@ -1,0 +1,20 @@
+{% extends 'learning/base.html' %}
+
+{% block title_block %}
+Number Sense
+{% endblock %}
+
+{% block body_block %}
+<style>
+    .unit-content {
+        font-size: 28px;
+    }
+</style>
+<h1>Number Sense - 4th Grade</h1>
+<ul class="unit-content">
+    <li><a href="{% url 'learning:practice_detail' practice_slug='comparing-whole-numbers' %}">Comparing Whole
+            Numbers</a></li>
+    <li><a href="{% url 'learning:practice_detail' practice_slug='comparing-decimals' %}">Comparing Decimals</a></li>
+    <li><a href="{% url 'learning:quiz_detail' quiz_slug='number-sense-quiz' %}">Number Sense Quiz</a></li>
+</ul>
+{% endblock %}

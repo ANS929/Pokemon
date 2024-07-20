@@ -1,0 +1,21 @@
+{% extends 'learning/base.html' %}
+
+{% block title_block %}
+Computation
+{% endblock %}
+
+{% block body_block %}
+<style>
+    .unit-content {
+        font-size: 28px;
+    }
+</style>
+<h1>Computation - 4th Grade</h1>
+<ul class="unit-content">
+    <li><a href="{% url 'learning:practice_detail' practice_slug='addition-and-subtraction-of-whole-numbers' %}">Addition
+            and Subtraction of Whole Numbers</a></li>
+    <li><a href="{% url 'learning:practice_detail' practice_slug='multiplication-of-whole-numbers' %}">Multiplication
+            of Whole Numbers</a></li>
+    <li><a href="{% url 'learning:quiz_detail' quiz_slug='computation-quiz' %}">Computation Quiz</a></li>
+</ul>
+{% endblock %}

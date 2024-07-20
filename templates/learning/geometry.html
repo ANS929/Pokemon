@@ -1,0 +1,20 @@
+{% extends 'learning/base.html' %}
+
+{% block title_block %}
+Geometry
+{% endblock %}
+
+{% block body_block %}
+<style>
+    .unit-content {
+        font-size: 28px;
+    }
+</style>
+<h1>Geometry - 4th Grade</h1>
+<ul class="unit-content">
+    <li><a href="{% url 'learning:practice_detail' practice_slug='lines-of-symmetry' %}">Lines of Symmetry</a></li>
+    <li><a href="{% url 'learning:practice_detail' practice_slug='identifying-geometric-shapes' %}">Identifying
+            Geometric Shapes</a></li>
+    <li><a href="{% url 'learning:quiz_detail' quiz_slug='geometry-quiz' %}">Geometry Quiz</a></li>
+</ul>
+{% endblock %}

@@ -1,0 +1,21 @@
+{% extends 'learning/base.html' %}
+
+{% block title_block %}
+Algebraic Thinking
+{% endblock %}
+
+{% block body_block %}
+<style>
+    .unit-content {
+        font-size: 28px;
+    }
+</style>
+<h1>Algebraic Thinking - 4th Grade</h1>
+<ul class="unit-content">
+    <li><a href="{% url 'learning:practice_detail' practice_slug='real-world-problems-with-whole-numbers' %}">Real-World
+            Problems with Whole Numbers</a></li>
+    <li><a href="{% url 'learning:practice_detail' practice_slug='real-world-problems-with-fractions' %}">Real-World
+            Problems with Fractions</a></li>
+    <li><a href="{% url 'learning:quiz_detail' quiz_slug='algebraic-thinking-quiz' %}">Algebraic Thinking Quiz</a></li>
+</ul>
+{% endblock %}

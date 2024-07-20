@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
-from .models import Practice, CompletedPractice, Quiz, CompletedQuiz, Student, EnrolledStudent, Course, RegisteredStudent, User, Child, RegisteredChild, Student, Badge, CompletedBadge
+from .models import Practice, CompletedPractice, Quiz, CompletedQuiz, Student, EnrolledStudent, Course, RegisteredStudent, User, Child, RegisteredChild, Student, Badge, CompletedBadge, Unit
 from .forms import AddStudentForm, RemoveStudentForm, EnrollStudentForm, NewCourseForm, AddChildForm, RemoveChildForm
 from django.contrib import messages
 
@@ -65,6 +65,14 @@ def practice_detail(request, practice_slug):
         'practice': practice,
     }
     return render(request, f'learning/{practice_slug}.html', context)
+
+# unit slug
+def unit_detail(request, unit_slug):
+    unit = get_object_or_404(Unit, slug=unit_slug)
+    context = {
+        'unit': unit,
+    }
+    return render(request, f'learning/{unit_slug}.html', context)
 
 # student dashboard
 @login_required
@@ -139,6 +147,12 @@ def submit_quiz(request, quiz_slug):
                 score += 1
 
         CompletedQuiz.objects.create(student=user, quiz=quiz, score=score)
+
+        if not CompletedBadge.objects.filter(student=user, badge__name='Beta Badge').exists():
+            if CompletedPractice.objects.filter(student=user).count() == 1:
+                badge = Badge.objects.get(name='Beta Badge')
+                CompletedBadge.objects.create(student=user, badge=badge)
+                messages.success(request, "Congratulations! You've earned the Beta Badge!")
 
         return redirect('learning:student_dashboard', user_id=user.id)
 

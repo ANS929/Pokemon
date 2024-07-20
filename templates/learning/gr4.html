@@ -5,93 +5,20 @@
 Grade 4
 {% endblock %}
 {% block body_block %}
+<style>
+    .unit-list {
+        font-size: 28px;
+    }
+</style>
 <header>
-    <h1>Grade 4</h1>
+    <h1>Grade 4 Units</h1>
 </header>
-<ul>
-    <li>
-        <h3>Number Sense</h3>
-        <ul>
-            <a href="{% url 'learning:practice_detail' practice_slug='comparing-whole-numbers' %}">
-                <li>Comparing Whole Numbers</li>
-            </a>
-            <a href="{% url 'learning:practice_detail' practice_slug='comparing-decimals' %}">
-                <li>Comparing Decimals</li>
-            </a>
-            <a href="{% url 'learning:quiz_detail' quiz_slug='number-sense-quiz' %}">
-                <li>Number Sense Quiz</li>
-            </a>
-        </ul>
-    </li>
-    <li>
-        <h3>Computation</h3>
-        <ul>
-            <a href="{% url 'learning:practice_detail' practice_slug='addition-and-subtraction-of-whole-numbers' %}">
-                <li>Addition and Subtraction of Whole Numbers</li>
-            </a>
-            <a href="{% url 'learning:practice_detail' practice_slug='multiplication-of-whole-numbers' %}">
-                <li>Multiplication of Whole Numbers</li>
-            </a>
-            <a href="{% url 'learning:quiz_detail' quiz_slug='computation-quiz' %}">
-                <li>Computation Quiz</li>
-            </a>
-        </ul>
-    </li>
-    <li>
-        <h3>Algebraic Thinking</h3>
-        <ul>
-            <a href="{% url 'learning:practice_detail' practice_slug='real-world-problems-with-whole-numbers' %}">
-                <li>Real-World Problems with Whole Numbers</li>
-            </a>
-            <a href="{% url 'learning:practice_detail' practice_slug='real-world-problems-with-fractions' %}">
-                <li>Real-World Problems with Fractions</li>
-            </a>
-            <a href="{% url 'learning:quiz_detail' quiz_slug='algebraic-thinking-quiz' %}">
-                <li>Algebraic Thinking Quiz</li>
-            </a>
-        </ul>
-    </li>
-    <li>
-        <h3>Geometry</h3>
-        <ul>
-            <a href="{% url 'learning:practice_detail' practice_slug='lines-of-symmetry' %}">
-                <li>Lines of Symmetry</li>
-            </a>
-            <a href="{% url 'learning:practice_detail' practice_slug='identifying-geometric-shapes' %}">
-                <li>Identifying Geometric Shapes</li>
-            </a>
-            <a href="{% url 'learning:quiz_detail' quiz_slug='geometry-quiz' %}">
-                <li>Geometry Quiz</li>
-            </a>
-        </ul>
-    </li>
-    <li>
-        <h3>Measurement</h3>
-        <ul>
-            <a href="{% url 'learning:practice_detail' practice_slug='converting-units' %}">
-                <li>Converting Units</li>
-            </a>
-            <a href="{% url 'learning:practice_detail' practice_slug='area-and-perimeter-of-rectangles' %}">
-                <li>Area and Perimeter of Rectangles</li>
-            </a>
-            <a href="{% url 'learning:quiz_detail' quiz_slug='measurement-quiz' %}">
-                <li>Measurement Quiz</li>
-            </a>
-        </ul>
-    </li>
-    <li>
-        <h3>Data Analysis</h3>
-        <ul>
-            <a href="{% url 'learning:practice_detail' practice_slug='representing-data' %}">
-                <li>Representing Data</li>
-            </a>
-            <a href="{% url 'learning:practice_detail' practice_slug='interpreting-data' %}">
-                <li>Interpreting Data</li>
-            </a>
-            <a href="{% url 'learning:quiz_detail' quiz_slug='data-analysis-quiz' %}">
-                <li>Data Analysis Quiz</li>
-            </a>
-        </ul>
-    </li>
-</ul>
+<ol class="unit-list">
+    <li><a href="{% url 'learning:unit_detail' unit_slug='number-sense' %}">Number Sense</a></li>
+    <li><a href="{% url 'learning:unit_detail' unit_slug='computation' %}">Computation</a></li>
+    <li><a href="{% url 'learning:unit_detail' unit_slug='algebraic-thinking' %}">Algebraic Thinking</a></li>
+    <li><a href="{% url 'learning:unit_detail' unit_slug='geometry' %}">Geometry</a></li>
+    <li><a href="{% url 'learning:unit_detail' unit_slug='measurement' %}">Measurement</a></li>
+    <li><a href="{% url 'learning:unit_detail' unit_slug='data-analysis' %}">Data Analysis</a></li>
+</ol>
 {% endblock %}

@@ -17,6 +17,7 @@ urlpatterns = [
     path('students/gr6/', views.gr6, name='gr6'),
     path('students/gr7/', views.gr7, name='gr7'),
     path('students/gr8/', views.gr8, name='gr8'),
+    path('students/gr4/unit/<slug:unit_slug>/', views.unit_detail, name='unit_detail'),
     path('students/gr4/quiz/<slug:quiz_slug>/', views.quiz_detail, name='quiz_detail'),
     path('students/gr4/practice/<slug:practice_slug>/', views.practice_detail, name='practice_detail'),
     path('students/gr4/quiz/<slug:quiz_slug>/submit/', views.submit_quiz, name='submit_quiz'),

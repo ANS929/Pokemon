@@ -1,0 +1,19 @@
+{% extends 'learning/base.html' %}
+
+{% block title_block %}
+Data Analysis
+{% endblock %}
+
+{% block body_block %}
+<style>
+    .unit-content {
+        font-size: 28px;
+    }
+</style>
+<h1>Data Analysis - 4th Grade</h1>
+<ul class="unit-content">
+    <li><a href="{% url 'learning:practice_detail' practice_slug='representing-data' %}">Representing Data</a></li>
+    <li><a href="{% url 'learning:practice_detail' practice_slug='interpreting-data' %}">Interpreting Data</a></li>
+    <li><a href="{% url 'learning:quiz_detail' quiz_slug='data-analysis-quiz' %}">Data Analysis Quiz</a></li>
+</ul>
+{% endblock %}

@@ -135,3 +135,16 @@ class RegisteredChild(models.Model):
     
     class Meta:
         verbose_name_plural = "Registered children"
+
+# Unit (two practices and one quiz)
+class Unit(models.Model):
+    name = models.CharField(max_length=100)
+    grade_level = models.CharField(max_length=3, default='')
+    slug = models.SlugField(default='', unique=True)
+
+    def __str__(self):
+        return f"{self.name} - {self.grade_level} Grade"
+
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.name)
+        super().save(*args, **kwargs)
