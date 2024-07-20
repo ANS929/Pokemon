@@ -64,6 +64,7 @@ class CompletedQuiz(models.Model):
 class Badge(models.Model):
     name = models.CharField(max_length=20)
     description = models.TextField()
+    icon = models.CharField(max_length=100, blank=True)
 
     def __str__(self):
         return self.name
@@ -121,6 +122,9 @@ class Child(models.Model):
     def __str__(self):
         return self.name
     
+    class Meta:
+        verbose_name_plural = "Children"
+    
 # Registered child
 class RegisteredChild(models.Model):
     parent = models.ForeignKey(User, on_delete=models.CASCADE, related_name='registered_children')
@@ -128,3 +132,6 @@ class RegisteredChild(models.Model):
 
     def __str__(self):
         return f"{self.parent.username} - {self.student.username}"
+    
+    class Meta:
+        verbose_name_plural = "Registered children"

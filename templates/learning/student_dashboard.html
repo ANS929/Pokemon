@@ -1,5 +1,5 @@
 {% extends 'learning/base.html' %}
-
+{% load static %}
 {% block title_block %}
 Student Dashboard
 {% endblock %}
@@ -44,14 +44,31 @@ Student Dashboard
             flex-direction: column;
         }
     }
+
+    .badge-icon {
+        width: 50px;
+        height: 50px;
+        margin-right: 10px;
+        opacity: 0.3;
+    }
+
+    .badge-icon.unlocked {
+        opacity: 1;
+    }
+
+    .badge-icon.locked {
+        opacity: 0.3;
+    }
 </style>
+
 {% if messages %}
 {% for message in messages %}
 <div class="alert alert-{{ message.tags }}">{{ message }}</div>
 {% endfor %}
 {% endif %}
+
 <header>
-    <h1>Student Dashboard - {{ student.first_name }} {{student.last_name }}</h1>
+    <h1>Student Dashboard - {{ student.first_name }} {{ student.last_name }}</h1>
 </header>
 <p>Welcome to the Student Dashboard!</p>
 
@@ -103,15 +120,20 @@ Student Dashboard
 
     <div class="badge-container">
         <h2>Badges:</h2>
-        {% if completed_badges %}
         <ul>
-            {% for badge in completed_badges %}
-            <li>{{ badge.badge.title }} - completed on {{ badge.date_completed }}</li>
+            {% for item in badges_with_status %}
+            <li>
+                <img src="{% static 'images/'|add:item.badge.icon %}" alt="{{ item.badge.name }}"
+                    class="badge-icon {% if item.completed %}unlocked{% else %}locked{% endif %}">
+                {{ item.badge.name }}
+                {% if item.completed %}
+                    - completed on {{ item.date_completed }}
+                {% else %}
+                    - Locked
+                {% endif %}
+            </li>
             {% endfor %}
         </ul>
-        {% else %}
-        <p>No badges yet...</p>
-        {% endif %}
     </div>
 </div>
 {% endblock %}

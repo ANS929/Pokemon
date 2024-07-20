@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
-from .models import Practice, CompletedPractice, Quiz, CompletedQuiz, Student, EnrolledStudent, Course, RegisteredStudent, User, Child, RegisteredChild, Student
+from .models import Practice, CompletedPractice, Quiz, CompletedQuiz, Student, EnrolledStudent, Course, RegisteredStudent, User, Child, RegisteredChild, Student, Badge, CompletedBadge
 from .forms import AddStudentForm, RemoveStudentForm, EnrollStudentForm, NewCourseForm, AddChildForm, RemoveChildForm
 from django.contrib import messages
 
@@ -77,11 +77,23 @@ def student_dashboard(request, user_id):
         
         completed_practices = CompletedPractice.objects.filter(student=user)
         completed_quizzes = CompletedQuiz.objects.filter(student=user)
+        badges = Badge.objects.all()
+        completed_badges = CompletedBadge.objects.filter(student=user).select_related('badge')
+
+        badges_with_status = []
+        for badge in badges:
+            completed_badge = completed_badges.filter(badge=badge).first()
+            badges_with_status.append({
+                'badge': badge,
+                'completed': completed_badge is not None,
+                'date_completed': completed_badge.date_completed if completed_badge else None
+            })
 
         context = {
             'student': user,
             'completed_practices': completed_practices,
             'completed_quizzes': completed_quizzes,
+            'badges_with_status': badges_with_status,
         }
 
         return render(request, 'learning/student_dashboard.html', context)
@@ -95,11 +107,18 @@ def submit_practice(request, practice_slug):
     user = request.user
 
     if CompletedPractice.objects.filter(student=user, practice=practice).exists():
-        messages.error(request, f"You have already submitted the practice '{practice.title}.'")
+        messages.error(request, f"You have already submitted the practice '{practice.title}'.")
         return redirect('learning:student_dashboard', user_id=user.id)
 
     if request.method == 'POST':
         CompletedPractice.objects.create(student=user, practice=practice)
+        
+        if not CompletedBadge.objects.filter(student=user, badge__name='Alpha Badge').exists():
+            if CompletedPractice.objects.filter(student=user).count() == 1:
+                badge = Badge.objects.get(name='Alpha Badge')
+                CompletedBadge.objects.create(student=user, badge=badge)
+                messages.success(request, "Congratulations! You've earned the Alpha Badge!")
+
         return redirect('learning:student_dashboard', user_id=user.id)
 
     return render(request, '', {'practice': practice})

@@ -1,10 +1,11 @@
 from django.contrib import admin
-from .models import Quiz, CompletedQuiz, Practice, CompletedPractice, Student, Course, RegisteredStudent, Child, RegisteredChild
+from .models import Quiz, CompletedQuiz, Practice, CompletedPractice, Student, Course, RegisteredStudent, Child, RegisteredChild, Badge, CompletedBadge
 
 admin.site.register(Course)
 admin.site.register(RegisteredStudent)
 admin.site.register(Child)
 admin.site.register(RegisteredChild)
+admin.site.register(CompletedBadge)
 
 @admin.register(Practice)
 class PracticeAdmin(admin.ModelAdmin):
@@ -26,3 +27,7 @@ class CompletedQuizAdmin(admin.ModelAdmin):
 @admin.register(Student)
 class CompletedQuizAdmin(admin.ModelAdmin):
     list_display = ('user', 'name')
+
+@admin.register(Badge)
+class BadgeAdmin(admin.ModelAdmin):
+    list_display = ('name',)
