@@ -119,7 +119,7 @@
                     {% if user.profile.is_student %}
                     <!-- Student content -->
                     <ul>
-                        <li><a href="{% url 'learning:student_dashboard' student.id %}">Student Dashboard</a></li>
+                        <li><a href="{% url 'learning:student_dashboard' user.id %}">Student Dashboard</a></li>
                     </ul>
                     <h4>Math Content:</h4>
                     <ul>

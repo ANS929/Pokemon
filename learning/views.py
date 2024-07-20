@@ -1,20 +1,13 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
-from .models import Practice, CompletedPractice, Quiz, CompletedQuiz, Student, EnrolledStudent, Course, RegisteredStudent, User, Child, RegisteredChild
+from .models import Practice, CompletedPractice, Quiz, CompletedQuiz, Student, EnrolledStudent, Course, RegisteredStudent, User, Child, RegisteredChild, Student
 from .forms import AddStudentForm, RemoveStudentForm, EnrollStudentForm, NewCourseForm, AddChildForm, RemoveChildForm
 from django.contrib import messages
 
 # website homepage
 def index(request):
-    context = {}
-    if request.user.is_authenticated and request.user.profile.is_student:
-        try:
-            student = Student.objects.get(user=request.user)
-            context['student'] = student
-        except Student.DoesNotExist:
-            context['student'] = None
-    return render(request, 'learning/base.html', context)
+    return render(request, 'learning/base.html')
 
 # learning homepage
 def learning_home(request):
@@ -101,9 +94,13 @@ def submit_practice(request, practice_slug):
     practice = get_object_or_404(Practice, slug=practice_slug)
     user = request.user
 
+    if CompletedPractice.objects.filter(student=user, practice=practice).exists():
+        messages.error(request, f"You have already submitted the practice '{practice.title}.'")
+        return redirect('learning:student_dashboard', user_id=user.id)
+
     if request.method == 'POST':
         CompletedPractice.objects.create(student=user, practice=practice)
-        return redirect('learning:student_dashboard')
+        return redirect('learning:student_dashboard', user_id=user.id)
 
     return render(request, '', {'practice': practice})
 
@@ -124,7 +121,7 @@ def submit_quiz(request, quiz_slug):
 
         CompletedQuiz.objects.create(student=user, quiz=quiz, score=score)
 
-        return redirect('learning:student_dashboard')
+        return redirect('learning:student_dashboard', user_id=user.id)
 
     context = {
         'quiz': quiz,

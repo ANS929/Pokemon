@@ -7,7 +7,7 @@ from django.utils.text import slugify
 class Practice (models.Model):
     title = models.CharField(max_length=100)
     description = models.TextField()
-    grade_level = models.CharField(max_length=3, default=0)
+    grade_level = models.CharField(max_length=3, default='')
     slug = models.SlugField(default='', unique=True)
 
     def __str__(self):
@@ -22,6 +22,9 @@ class CompletedPractice(models.Model):
     student = models.ForeignKey(User, on_delete=models.CASCADE)
     practice = models.ForeignKey(Practice, on_delete=models.CASCADE)
     date_completed = models.DateTimeField(default=timezone.now)
+
+    class Meta:
+        unique_together = ('student', 'practice')
 
     def __str__(self):
         return f"{self.student.username} - {self.practice.title}"
@@ -63,7 +66,7 @@ class Badge(models.Model):
     description = models.TextField()
 
     def __str__(self):
-        return self.title
+        return self.name
 
 # Completed badge
 class CompletedBadge(models.Model):
@@ -72,7 +75,7 @@ class CompletedBadge(models.Model):
     date_completed = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
-        return f"{self.student.username} - {self.badge.title}"
+        return f"{self.student.username} - {self.badge.name}"
 
 # Student
 class Student(models.Model):
