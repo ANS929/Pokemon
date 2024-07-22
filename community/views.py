@@ -2,8 +2,10 @@ from django.shortcuts import render
 from django.contrib.auth.mixins import UserPassesTestMixin, LoginRequiredMixin
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from .models import MathQuestion, TCGQuestion, MathComment, TCGComment
+from learning.models import Badge, CompletedBadge
 from django.urls import reverse_lazy
 from .forms import MathCommentForm, TCGCommentForm
+from django.contrib import messages
 
 # website homepage
 def index(request):
@@ -66,8 +68,17 @@ class MathQuestionCreateView(LoginRequiredMixin, CreateView):
 
     def form_valid(self, form):
         form.instance.user = self.request.user
-        return super().form_valid(form)
-    
+        response = super().form_valid(form)
+        
+        user = self.request.user
+        if not CompletedBadge.objects.filter(student=user, badge__name='Factorial Badge').exists():
+            if MathQuestion.objects.filter(user=user).count() == 1:
+                badge = Badge.objects.get(name='Factorial Badge')
+                CompletedBadge.objects.create(student=user, badge=badge)
+                messages.success(self.request, "Congratulations! You've earned the Factorial Badge!")
+        
+        return response
+
     def get_success_url(self):
         return reverse_lazy('community:math_question_details', kwargs={'pk': self.object.pk})
 
@@ -177,8 +188,18 @@ class AddMathCommentView(CreateView):
     template_name = 'community/mathquestion_answer.html'
 
     def form_valid(self, form):
+        form.instance.user = self.request.user
         form.instance.question_id = self.kwargs['pk']
-        return super().form_valid(form)
+        response = super().form_valid(form)
+        
+        user = self.request.user
+        if not CompletedBadge.objects.filter(student=user, badge__name='Sigma Badge').exists():
+            if MathComment.objects.filter(user=user).count() == 1:
+                badge = Badge.objects.get(name='Sigma Badge')
+                CompletedBadge.objects.create(student=user, badge=badge)
+                messages.success(self.request, "Congratulations! You've earned the Sigma Badge!")
+        
+        return response
 
     def get_success_url(self):
         return reverse_lazy('community:math_question_details', kwargs={'pk': self.kwargs['pk']})
@@ -190,6 +211,7 @@ class AddTCGCommentView(CreateView):
     template_name = 'community/tcgquestion_answer.html'
 
     def form_valid(self, form):
+        form.instance.user = self.request.user
         form.instance.question_id = self.kwargs['pk']
         return super().form_valid(form)
 

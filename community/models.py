@@ -33,7 +33,7 @@ class TCGQuestion(models.Model):
 # math forum comment    
 class MathComment(models.Model):
     question = models.ForeignKey(MathQuestion, related_name="math_comments", on_delete=models.CASCADE)
-    name = models.CharField(max_length=1000)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, default=None)      
     content = RichTextField()
     date_created = models.DateTimeField(default=timezone.now)
 
@@ -49,7 +49,7 @@ class MathComment(models.Model):
 # tcg forum comment
 class TCGComment(models.Model):
     question = models.ForeignKey(TCGQuestion, related_name="tcg_comments", on_delete=models.CASCADE)
-    name = models.CharField(max_length=1000)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, default=None)    
     content = RichTextField()
     date_created = models.DateTimeField(default=timezone.now)
 

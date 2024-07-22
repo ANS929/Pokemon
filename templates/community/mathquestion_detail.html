@@ -30,6 +30,12 @@ Question Details
     }
 </style>
 
+{% if messages %}
+{% for message in messages %}
+<div class="alert alert-{{ message.tags }}">{{ message }}</div>
+{% endfor %}
+{% endif %}
+
 <body>
     <div id="header-content">
         <h1>Question Details</h1>
@@ -49,9 +55,9 @@ Question Details
                 {% if not object.math_comments.all %}
                 <h3>No Answers yet...</h3>
                 {% else %}
-                {% for comment in question.comment.all %}
+                {% for comment in object.math_comments.all %}
                 <h3 style="font-weight: normal; font-size: 15px;">{{comment.content|safe}}</h3>
-                <h3 style="font-size: 10px;">Answered by: <i><a href="">{{comment.name}}</a> - On:
+                <h3 style="font-size: 10px;">Answered by: <i><a href="">{{comment.user}}</a> - On:
                         {{comment.date_created|date:"j F, Y"}}</i></h3>
                 {% endfor %}
                 {% endif %}
