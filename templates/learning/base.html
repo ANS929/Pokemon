@@ -158,9 +158,41 @@
 
             <main role="main" class="col-md-9  ml-sm-auto col-lg-10 px-4">
                 {% block body_block %}
+                <style>
+                    .first-container {
+                        flex: 1;
+                        border: 5px solid black;
+                        padding: 25px;
+                        margin: 20px;
+                    }
+
+                    .second-container {
+                        flex: 1;
+                        border: 5px solid black;
+                        padding: 25px;
+                        margin: 20px;
+                    }
+
+                    .homepage-container {
+                        display: flex;
+                    }
+
+                    @media (max-width: 400px) {
+                        .homepage-container {
+                            flex-direction: column;
+                        }
+                    }
+                </style>
                 <h1>Welcome to PokéMath!</h1>
                 <p>I'll add more details here later...</p>
-                <img src="{% static 'images/pidgeot.jpg' %}" alt="Ash's Pidgeot">
+                <div class="homepage-container">
+                    <div class="first-container">
+                        <p>Adding test content here</p>
+                    </div>
+                    <div class="second-container">
+                        <p>Adding test content here</p>
+                    </div>
+                </div>
                 {% endblock %}
                 <footer>
                     <p class="float-right"><a href="#">Back to top</a></p>

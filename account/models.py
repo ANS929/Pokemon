@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from django.utils import timezone
 
 # profile
 class Profile(models.Model):
@@ -26,3 +27,14 @@ def create_or_update_user_profile(sender, instance, created, **kwargs):
     if created:
         Profile.objects.create(user=instance)
     instance.profile.save()
+
+# user login 
+class UserLogin(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    login_date = models.DateField(default=timezone.now)
+
+    class Meta:
+        unique_together = ('user', 'login_date')
+
+    def __str__(self):
+        return f"{self.user.username} - {self.login_date}"

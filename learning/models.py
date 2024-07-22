@@ -28,7 +28,7 @@ class CompletedPractice(models.Model):
 
     def __str__(self):
         return f"{self.student.username} - {self.practice.title}"
-
+    
 # Lesson quiz
 class Quiz(models.Model):
     title = models.CharField(max_length=100)
@@ -59,6 +59,15 @@ class CompletedQuiz(models.Model):
 
     class Meta:
         verbose_name_plural = "Completed quizzes"
+
+    # check if there was improvement from any previous attempts on the same quiz
+    def get_improvement(self):
+        previous_quizzes = CompletedQuiz.objects.filter(student=self.student, quiz=self.quiz).exclude(id=self.id)
+        if previous_quizzes.exists():
+            previous_max_score = max(previous_quizzes.values_list('score', flat=True))
+            improvement = self.score - previous_max_score
+            return improvement
+        return 0
 
 # Badge
 class Badge(models.Model):
@@ -141,7 +150,8 @@ class Unit(models.Model):
     name = models.CharField(max_length=100)
     grade_level = models.CharField(max_length=3, default='')
     slug = models.SlugField(default='', unique=True)
-
+    practices = models.ManyToManyField('Practice')
+    quiz = models.OneToOneField('Quiz', on_delete=models.CASCADE)
     def __str__(self):
         return f"{self.name} - {self.grade_level} Grade"
 

@@ -121,11 +121,14 @@ def submit_practice(request, practice_slug):
     if request.method == 'POST':
         CompletedPractice.objects.create(student=user, practice=practice)
         
+        # check for Alpha Badge (completion of first practice)
         if not CompletedBadge.objects.filter(student=user, badge__name='Alpha Badge').exists():
             if CompletedPractice.objects.filter(student=user).count() == 1:
                 badge = Badge.objects.get(name='Alpha Badge')
                 CompletedBadge.objects.create(student=user, badge=badge)
                 messages.success(request, "Congratulations! You've earned the Alpha Badge!")
+
+        check_unit_completion(request, user)
 
         return redirect('learning:student_dashboard', user_id=user.id)
 
@@ -146,13 +149,24 @@ def submit_quiz(request, quiz_slug):
             if user_answer.lower() == correct_answer.lower():
                 score += 1
 
-        CompletedQuiz.objects.create(student=user, quiz=quiz, score=score)
+        completed_quiz = CompletedQuiz.objects.create(student=user, quiz=quiz, score=score)
 
+        # check for Beta Badge (completion of first quiz)
         if not CompletedBadge.objects.filter(student=user, badge__name='Beta Badge').exists():
-            if CompletedPractice.objects.filter(student=user).count() == 1:
+            if CompletedQuiz.objects.filter(student=user).count() == 1:
                 badge = Badge.objects.get(name='Beta Badge')
                 CompletedBadge.objects.create(student=user, badge=badge)
                 messages.success(request, "Congratulations! You've earned the Beta Badge!")
+
+        # check for Delta Badge (improvement of a previous quiz score)
+        if not CompletedBadge.objects.filter(student=user, badge__name='Delta Badge').exists():
+            improvement = completed_quiz.get_improvement()
+            if improvement > 0:
+                badge = Badge.objects.get(name='Delta Badge')
+                CompletedBadge.objects.create(student=user, badge=badge)
+                messages.success(request, "Congratulations! You've earned the Delta Badge!")
+
+        check_unit_completion(request, user)
 
         return redirect('learning:student_dashboard', user_id=user.id)
 
@@ -397,3 +411,48 @@ def unenroll_student(request, course_id, student_id):
         'course': course,
     }
     return render(request, 'learning/unenroll_student.html', context)
+
+# check whether a unit has been completed
+def check_unit_completion(request, user):
+    units = Unit.objects.all()
+    for unit in units:
+        completed_practices = all(
+            CompletedPractice.objects.filter(student=user, practice=practice).exists()
+            for practice in unit.practices.all()
+        )
+
+        completed_quiz = CompletedQuiz.objects.filter(student=user, quiz=unit.quiz).exists()
+
+        # award the Pi Badge for completion of a unit
+        if completed_practices and completed_quiz:
+            if not CompletedBadge.objects.filter(student=user, badge__name='Pi Badge').exists():
+                badge = Badge.objects.get(name='Pi Badge')
+                CompletedBadge.objects.create(student=user, badge=badge)
+                messages.success(request, "Congratulations! You've earned the Pi Badge!")
+
+# check whether a grade level has been completed
+def check_grade_level_completion(request, user):
+
+    grade_levels = Unit.objects.values_list('grade_level', flat=True).distinct()
+
+    for grade_level in grade_levels:
+        units = Unit.objects.filter(grade_level=grade_level)
+
+        all_units_completed = True
+        for unit in units:
+            completed_practices = all(
+                CompletedPractice.objects.filter(student=user, practice=practice).exists()
+                for practice in unit.practices.all()
+            )
+            completed_quiz = CompletedQuiz.objects.filter(student=user, quiz=unit.quiz).exists()
+
+            if not (completed_practices and completed_quiz):
+                all_units_completed = False
+                break
+
+        if all_units_completed:
+            # award the Infinity Badge for completion of a grade level
+            if not CompletedBadge.objects.filter(student=user, badge__name='Infinity Badge').exists():
+                badge = Badge.objects.get(name='Infinity Badge')
+                CompletedBadge.objects.create(student=user, badge=badge)
+                messages.success(request, "Congratulations! You've earned the Infinity Badge!")
