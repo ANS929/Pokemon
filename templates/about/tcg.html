@@ -1,11 +1,45 @@
 {% extends 'learning/base.html' %}
+{% load static %}
 
 {% block title_block %}
 About the Pokémon TCG
 {% endblock %}
 
 {% block body_block %}
-<h1>About the Pokémon TCG</h1>
-<p>*information about the TCG goes here*</p><br><br>
-<a href="{% url 'about:about' %}">Return to the About page</a> <br><br>
+<style>
+    .details-container {
+        flex: 1;
+        border: 5px solid black;
+        padding: 25px;
+        margin: 20px;
+    }
+
+    .rules-strategies-container {
+        flex: 1;
+        border: 5px solid black;
+        padding: 25px;
+        margin: 20px;
+    }
+
+    .tcg-info-container {
+        display: flex;
+    }
+</style>
+<div class="tcg-info-container">
+    <div class="details-container">
+        <h1>About the Pokémon TCG</h1>
+        <p>Pokémon was invented by Satoshi Tajiri and Ken Sugimori. The first two Pokémon games, Red and Green, were
+            released in Japan on 27 February 1996. The games were released in the US in 1998 as Red and Blue. The
+            Pokémon Trading Card Game (TCG) was created after the success of the video games. The first set was released
+            on 20 October 1996 in Japan, and the cards were introduced to North America in 1999. Pokémon tournaments
+            began, and the first World Championships (Worlds) was held in 2000. Worlds has been held annually since
+            2004, except in 2020 and 2021 due to the COVID-19 pandemic.</p>
+        <img src="{% static 'images/pokemon_cards.jpeg' %}" alt="Pokémon cards">
+    </div>
+    <div class="rules-strategies-container">
+        <h1>Rules and Strategies</h1>
+        <img src="{% static 'images/tcg_logo.jpg' %}" alt="Pokémon Trading Card Game logo">
+    </div>
+</div>
+<a href="{% url 'about:about' %}">Return to the About page</a><br><br>
 {% endblock %}

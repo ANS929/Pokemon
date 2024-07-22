@@ -5,18 +5,23 @@ from .models import MathQuestion, TCGQuestion, MathComment, TCGComment
 from django.urls import reverse_lazy
 from .forms import MathCommentForm, TCGCommentForm
 
+# website homepage
 def index(request):
     return render(request, 'learning/base.html')
 
+# community page
 def community_home(request):
     return render(request, 'community/community.html')
 
+# math forum
 def math_forum(request):
     return render(request, 'community/math_forum.html')
 
+# tcg forum
 def tcg_forum(request):
     return render(request, 'community/tcg_forum.html')
 
+# list post math posts
 class MathQuestionListView(ListView):
     model = MathQuestion
     template_name = 'community/math_forum.html'
@@ -31,6 +36,7 @@ class MathQuestionListView(ListView):
             context['search_input'] = search_input
         return context
 
+# list of tcg posts
 class TCGQuestionListView(ListView):
     model = TCGQuestion
     template_name = 'community/tcg_forum.html'
@@ -45,12 +51,15 @@ class TCGQuestionListView(ListView):
             context['search_input'] = search_input
         return context
 
+# math post details
 class MathQuestionDetailView(DetailView):
     model = MathQuestion
 
+# tcg post details
 class TCGQuestionDetailView(DetailView):
     model = TCGQuestion
 
+# create math question
 class MathQuestionCreateView(LoginRequiredMixin, CreateView):
     model = MathQuestion
     fields = ['title', 'content']
@@ -62,6 +71,7 @@ class MathQuestionCreateView(LoginRequiredMixin, CreateView):
     def get_success_url(self):
         return reverse_lazy('community:math_question_details', kwargs={'pk': self.object.pk})
 
+# create tcg question
 class TCGQuestionCreateView(LoginRequiredMixin, CreateView):
     model = TCGQuestion
     fields = ['title', 'content']
@@ -73,7 +83,8 @@ class TCGQuestionCreateView(LoginRequiredMixin, CreateView):
     
     def get_success_url(self):
         return reverse_lazy('community:tcg_question_details', kwargs={'pk': self.object.pk})
-    
+
+# update a math question    
 class MathQuestionUpdateView(UserPassesTestMixin, LoginRequiredMixin, UpdateView):
     model = MathQuestion
     fields = ['title', 'content']
@@ -90,7 +101,8 @@ class MathQuestionUpdateView(UserPassesTestMixin, LoginRequiredMixin, UpdateView
     
     def get_success_url(self):
         return reverse_lazy('community:math_question_details', kwargs={'pk': self.object.pk})
-    
+
+# update a tcg question    
 class TCGQuestionUpdateView(UserPassesTestMixin, LoginRequiredMixin, UpdateView):
     model = TCGQuestion
     fields = ['title', 'content']
@@ -107,7 +119,8 @@ class TCGQuestionUpdateView(UserPassesTestMixin, LoginRequiredMixin, UpdateView)
     
     def get_success_url(self):
         return reverse_lazy('community:tcg_question_details', kwargs={'pk': self.object.pk})
-    
+
+# delete a math question    
 class MathQuestionDeleteView(UserPassesTestMixin, LoginRequiredMixin, DeleteView):
     model = MathQuestion
     context_object_name =  'question'
@@ -119,6 +132,7 @@ class MathQuestionDeleteView(UserPassesTestMixin, LoginRequiredMixin, DeleteView
             return True
         return False
 
+# delete a tcg question    
 class TCGQuestionDeleteView(UserPassesTestMixin, LoginRequiredMixin, DeleteView):
     model = TCGQuestion
     context_object_name =  'question'
@@ -129,7 +143,8 @@ class TCGQuestionDeleteView(UserPassesTestMixin, LoginRequiredMixin, DeleteView)
         if self.request.user == question.user:
             return True
         return False 
-    
+
+# math comment details    
 class MathCommentDetailView(CreateView):
     model = MathComment
     form_class = MathCommentForm
@@ -142,6 +157,7 @@ class MathCommentDetailView(CreateView):
     def get_success_url(self):
         return reverse_lazy('community:math_question_details', kwargs={'pk': self.kwargs['pk']})
 
+# tcg comment details    
 class TCGCommentDetailView(CreateView):
     model = TCGComment
     form_class = TCGCommentForm
@@ -154,6 +170,7 @@ class TCGCommentDetailView(CreateView):
     def get_success_url(self):
         return reverse_lazy('community:tcg_question_details', kwargs={'pk': self.kwargs['pk']})
 
+# comment on a math post
 class AddMathCommentView(CreateView):
     model = MathComment
     form_class = MathCommentForm
@@ -166,6 +183,7 @@ class AddMathCommentView(CreateView):
     def get_success_url(self):
         return reverse_lazy('community:math_question_details', kwargs={'pk': self.kwargs['pk']})
 
+# comment on a tcg post
 class AddTCGCommentView(CreateView):
     model = TCGComment
     form_class = TCGCommentForm

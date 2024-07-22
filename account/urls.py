@@ -6,9 +6,12 @@ app_name = 'account'
 
 urlpatterns = [
     path('', views.account, name='account'),
+
+    # registration
     path('register/', custom_registration_view.as_view(), name='registration_register'),
     path('register/complete/', views.registration_complete, name='registration_complete'),
-    path('settings/', views.settings, name='settings'),
+
+    # profile
     path('profile/', views.profile, name='profile'),
     path('profile/update/', views.profile_update, name='profile_update'),
 ]

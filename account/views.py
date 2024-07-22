@@ -6,18 +6,19 @@ from registration.backends.simple.views import RegistrationView
 from django.urls import reverse_lazy
 from django.contrib import messages
 
+# website homepage
 def index(request):
     return render(request, 'learning/base.html')
 
+# account page
 def account(request):
     return render(request, 'account/account.html')
 
+# login
 def login_page(request):
     return render(request, 'registration/login.html')
 
-def settings(request):
-    return render(request, 'account/settings.html')
-
+# registration complete
 def registration_complete(request):
     return render(request, 'registration/registration_complete.html')
 

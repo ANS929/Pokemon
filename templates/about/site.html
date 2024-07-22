@@ -1,11 +1,37 @@
 {% extends 'learning/base.html' %}
 
 {% block title_block %}
-About PokéMath
+About the PokéMath
 {% endblock %}
 
 {% block body_block %}
-<h1>About Pokémath</h1>
-<p>*information about this website goes here*</p><br><br>
-<a href="{% url 'about:about' %}">Return to the About page</a> <br><br>
+<style>
+    .details-container {
+        flex: 1;
+        border: 5px solid black;
+        padding: 25px;
+        margin: 20px;
+    }
+
+    .other-container {
+        flex: 1;
+        border: 5px solid black;
+        padding: 25px;
+        margin: 20px;
+    }
+
+    .site-info-container {
+        display: flex;
+    }
+</style>
+<div class="site-info-container">
+    <div class="details-container">
+        <h1>About PokéMath</h1>
+        <p>Details here</p>
+    </div>
+    <div class="other-container">
+
+    </div>
+</div>
+<a href="{% url 'about:about' %}">Return to the About page</a><br><br>
 {% endblock %}
