@@ -1,13 +1,35 @@
 {% extends 'learning/base.html' %}
 
 {% block title_block %}
-Learning Homepage
+Learning
 {% endblock %}
 
 {% block body_block %}
-<h1>Welcome to the learning page!</h1>
-<p>I'll add more details here later...</p>
-<a href="{% url 'learning:students' %}">Students</a> &nbsp;&nbsp;
-<a href="{% url 'learning:teachers' %}">Teachers</a> &nbsp;&nbsp;
-<a href="{% url 'learning:parents' %}">Parents</a> <br><br>
+<style>
+    .button-container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        max-width: 600px;
+        margin: 0 auto;
+    }
+
+    .button-container a {
+        width: calc(33% - 10px);
+        margin-bottom: 10px;
+    }
+
+    .content {
+        font-size: 16px;
+    }
+</style>
+<div class="content">
+    <h1>Welcome to the learning page!</h1>
+    <p>Select your role to learn more.</p>
+</div>
+<div class="button-container">
+    <a href="{% url 'learning:students' %}" class="btn btn-primary">Student</a>
+    <a href="{% url 'learning:teachers' %}" class="btn btn-primary">Teacher</a>
+    <a href="{% url 'learning:parents' %}" class="btn btn-primary">Parent</a>
+</div>
 {% endblock %}

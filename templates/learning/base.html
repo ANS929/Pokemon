@@ -21,11 +21,20 @@
 
     <!-- Custom styles for this template -->
     <link href="https://getbootstrap.com/docs/4.2/examples/dashboard/dashboard.css" rel="stylesheet">
+    <style>
+        .custom-navbar-color {
+            background-color: #316cbc;
+        }
+
+        .search-form {
+            border: 2px solid #ffcb13;
+        }
+    </style>
 </head>
 
 <body>
     <header>
-        <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark p-0">
+        <nav class="navbar navbar-expand-md navbar-dark fixed-top custom-navbar-color p-0">
             <a class="navbar-brand p-2" href="{% url 'index' %}"><img src="{% static 'images/logosmall.png' %}"
                     alt="PokéMath logo"></a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
@@ -35,11 +44,12 @@
             <div class="container">
                 <div class="collapse navbar-collapse" id="navbarCollapse">
                     <ul class="navbar-nav ml-auto">
-                        <li class="nav-item"><a class="nav-link" href="{% url 'index' %}">Home</a></li>
+                        <li class="nav-item"><a class="nav-link text-light" href="{% url 'index' %}">Home</a></li>
                         <!-- About Dropdown -->
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle categories-link" href="#" id="navbarDropdownCategories"
-                                role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <a class="nav-link dropdown-toggle categories-link text-light" href="#"
+                                id="navbarDropdownCategories" role="button" data-toggle="dropdown" aria-haspopup="true"
+                                aria-expanded="false">
                                 About
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdownCategories">
@@ -49,8 +59,9 @@
                         </li>
                         <!-- Community Dropdown -->
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle categories-link" href="#" id="navbarDropdownCategories"
-                                role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <a class="nav-link dropdown-toggle categories-link text-light" href="#"
+                                id="navbarDropdownCategories" role="button" data-toggle="dropdown" aria-haspopup="true"
+                                aria-expanded="false">
                                 Community
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdownCategories">
@@ -60,8 +71,9 @@
                         </li>
                         <!-- Learning Dropdown -->
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle categories-link" href="#" id="navbarDropdownCategories"
-                                role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <a class="nav-link dropdown-toggle categories-link text-light" href="#"
+                                id="navbarDropdownCategories" role="button" data-toggle="dropdown" aria-haspopup="true"
+                                aria-expanded="false">
                                 Learning
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdownCategories">
@@ -72,29 +84,31 @@
                         </li>
                         </li>
                         {% if user.is_authenticated %}
-                        <li class="nav-item"><a class="nav-link"
+                        <li class="nav-item"><a class="nav-link text-light"
                                 href="{% url 'auth_logout' %}?next={% url 'index'%}">Logout</a></li>
                         </li>
                         <li class="nav-item">
-                            <span class="navbar-text">Welcome, <a href="{% url 'account:profile' %}">
+                            <span class="navbar-text text-light">Welcome, <a href="{% url 'account:profile' %}">
                                     {{ user.username }}</a>!&nbsp;&nbsp;</span>
                         </li>
                         <li class="nav-item">
                             <form class="search-bar" action="" method="GET">
                                 <input class="search-form" type="text" placeholder="Search" aria-label="Search"
                                     name="search-area">
-                                <button class="btn btn-outline-success" type="submit">Search</button>
+                                <button class="btn btn-success" type="submit">Search</button>
                             </form>
                         </li>
                         {% else %}
-                        <li class="nav-item"><a class="nav-link" href="{% url 'registration_register' %}">Register</a>
+                        <li class="nav-item"><a class="nav-link text-light"
+                                href="{% url 'registration_register' %}">Register</a>
                         </li>
-                        <li class="nav-item "><a class="nav-link" href="{% url 'auth_login' %}">Login</a></li>
+                        <li class="nav-item "><a class="nav-link text-light" href="{% url 'auth_login' %}">Login</a>
+                        </li>
                         <li class="nav-item">
                             <form class="search-bar" action="" method="GET">
                                 <input class="search-form" type="text" placeholder="Search" aria-label="Search"
                                     name="search-area">
-                                <button class="btn btn-outline-success" type="submit">Search</button>
+                                <button class="btn btn-success" type="submit">Search</button>
                             </form>
                         </li>
                         {% endif %}
@@ -159,38 +173,114 @@
             <main role="main" class="col-md-9  ml-sm-auto col-lg-10 px-4">
                 {% block body_block %}
                 <style>
-                    .first-container {
-                        flex: 1;
-                        border: 5px solid black;
+                    .homepage-container {
+                        display: flex;
+                        flex-wrap: nowrap;
+                        width: 100%;
+                    }
+
+                    .first-container,
+                    .second-container {
+                        flex: 1 0 45%;
+                        border: 5px solid #316cbc;
                         padding: 25px;
                         margin: 20px;
+                        box-sizing: border-box;
+                        min-width: 0;
+                        font-size: 16px;
+                        display: flex;
+                        flex-direction: column;
+                    }
+
+                    @media (max-width: 767px) {
+
+                        .first-container,
+                        .second-container {
+                            flex: 1 0 100%;
+                            margin: 10px 0;
+                        }
+                    }
+
+                    .title {
+                        display: flex;
+                        flex-direction: column;
+                        justify-content: center;
+                        align-items: center;
+                        text-align: center;
+                    }
+
+                    .image-1,
+                    .image-2 {
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                    }
+
+                    .image-1 img,
+                    .image-2 img {
+                        max-width: 100%;
+                        height: auto;
+                    }
+
+                    .image-1 img {
+                        max-height: 320px;
                     }
 
                     .second-container {
-                        flex: 1;
-                        border: 5px solid black;
-                        padding: 25px;
-                        margin: 20px;
-                    }
-
-                    .homepage-container {
                         display: flex;
+                        flex-direction: column;
+                        justify-content: space-between;
                     }
 
-                    @media (max-width: 400px) {
-                        .homepage-container {
-                            flex-direction: column;
-                        }
+                    .image-2 {
+                        margin-top: auto;
                     }
                 </style>
-                <h1>Welcome to PokéMath!</h1>
-                <p>I'll add more details here later...</p>
+                <div class="title">
+                    <p style="font-size: 50px;">Welcome to <img src="{% static 'images/logo.png' %}"
+                            alt="PokéMath logo">!</p>
+                    <p style="font-size: 22px;">PokéMath is an educational platform combining mathematics education with
+                        the Pokémon Trading Card Game (TCG). Learn more about the site <a
+                            href="{% url 'about:site' %}">here</a>.</p>
+                </div>
                 <div class="homepage-container">
                     <div class="first-container">
-                        <p>Adding test content here</p>
+                        <h1>Latest Content</h1>
+                        <p>We've completely revamped our Grade 4 content. Units include:
+                        <ol>
+                            <li>Number Sense</li>
+                            <li>Computation</li>
+                            <li>Algebraic Thinking</li>
+                            <li>Geometry</li>
+                            <li>Measurement</li>
+                            <li>Data Analysis </li>
+                        </ol>
+                        <p style="font-size: 22px;"><a href="{% url 'learning:gr4' %}">Check it out</a>!</p>
+                        <div class="image-1"><img src="{% static 'images/math.jpg' %}" alt="math"></div>
                     </div>
                     <div class="second-container">
-                        <p>Adding test content here</p>
+                        <h1>Recent Forum Posts</h1>
+                        <h4>Math Forum</h4>
+                        <ul>
+                            {% for question in recent_math_questions %}
+                            <li><a href="{{ question.get_absolute_url }}">{{ question.title }}</a> -
+                                {{ question.date_created }}</li>
+                            {% empty %}
+                            <li>No recent math questions.</li>
+                            {% endfor %}
+                        </ul>
+
+                        <h4>TCG Forum</h4>
+                        <ul>
+                            {% for question in recent_tcg_questions %}
+                            <li><a href="{{ question.get_absolute_url }}">{{ question.title }}</a> -
+                                {{ question.date_created }}</li>
+                            {% empty %}
+                            <li>No recent TCG questions.</li>
+                            {% endfor %}
+                        </ul>
+                        <div class="image-2"><img src="{% static 'images/pokemon_tournament.jpg' %}"
+                                alt="kids playing in a Pokémon tournament"></div>
                     </div>
                 </div>
                 {% endblock %}

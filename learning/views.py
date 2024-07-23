@@ -3,11 +3,19 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from .models import Practice, CompletedPractice, Quiz, CompletedQuiz, Student, EnrolledStudent, Course, RegisteredStudent, User, Child, RegisteredChild, Student, Badge, CompletedBadge, Unit
 from .forms import AddStudentForm, RemoveStudentForm, EnrollStudentForm, NewCourseForm, AddChildForm, RemoveChildForm
+from community.models import MathQuestion, TCGQuestion
 from django.contrib import messages
 
 # website homepage
 def index(request):
-    return render(request, 'learning/base.html')
+    recent_math_questions = MathQuestion.objects.order_by('-date_created')[:2]
+    recent_tcg_questions = TCGQuestion.objects.order_by('-date_created')[:2]
+    
+    context = {
+        'recent_math_questions': recent_math_questions,
+        'recent_tcg_questions': recent_tcg_questions,
+    }
+    return render(request, 'learning/base.html', context)
 
 # learning homepage
 def learning_home(request):
@@ -67,6 +75,7 @@ def practice_detail(request, practice_slug):
     return render(request, f'learning/{practice_slug}.html', context)
 
 # unit slug
+@login_required
 def unit_detail(request, unit_slug):
     unit = get_object_or_404(Unit, slug=unit_slug)
     context = {

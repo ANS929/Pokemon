@@ -1,37 +1,128 @@
 {% extends 'learning/base.html' %}
+{% load static %}
 
 {% block title_block %}
-About the PokéMath
+About PokéMath
 {% endblock %}
 
 {% block body_block %}
 <style>
     .details-container {
         flex: 1;
-        border: 5px solid black;
+        border: 5px solid #316cbc;
         padding: 25px;
         margin: 20px;
+        font-size: 16px;
+        display: flex;
+        flex-direction: column;
     }
 
-    .other-container {
+    .creator-container {
         flex: 1;
-        border: 5px solid black;
+        border: 5px solid #316cbc;
         padding: 25px;
         margin: 20px;
+        font-size: 16px;
     }
 
     .site-info-container {
         display: flex;
     }
+
+    .NAIC-image img {
+        height: 463.2px;
+        width: 347.4px;
+        margin: auto;
+        display: block;
+    }
+
+    .registration-section {
+        text-align: center;
+        margin-top: auto;
+    }
 </style>
 <div class="site-info-container">
     <div class="details-container">
         <h1>About PokéMath</h1>
-        <p>Details here</p>
+        <p>Launched in 2024, PokéMath is an innovative educational platform designed by an experienced former educator.
+            It integrates mathematics curriculum with the Pokémon Trading Card Game (TCG), providing an engaging
+            experience for students in grades first through eighth.</p>
+        <h3>Features:</h3>
+        <ul>
+            <li><b>Comprehensive Curriculum</b>
+                <ul>
+                    <li>Standards-based content aligned with grade-level expectations</li>
+                    <li>Structured into units, each containing lessons and quizzes designed to reinforce mathematical
+                        concepts</li>
+                </ul>
+            </li>
+            <li><b>Interactive Learning</b>
+                <ul>
+                    <li>Lessons include knowledge checks to ensure students grasp the material effectively</li>
+                    <li>Engaging activities featuring Pokémon TCG elements to maintain student interest and motivation
+                    </li>
+                </ul>
+            </li>
+            <li><b>Community Collaboration</b>
+                <ul>
+                    <li>Forum feature allows all members to interact, discuss topics, and collaborate on learning
+                        strategies</li>
+                    <li>Encourages peer-to-peer learning and support</li>
+                </ul>
+            </li>
+        </ul>
+        <h3>How it Works:</h3>
+        <ul>
+            <li>
+                <b>For Students</b>
+                <ul>
+                    <li>Explore grade-appropriate lessons that combine mathematics with Pokémon-themed activities</li>
+                    <li>Complete quizzes and knowledge checks to reinforce understanding</li>
+                </ul>
+            </li>
+            <li>
+                <b>For Teachers</b>
+                <ul>
+                    <li>Create and manage class rosters</li>
+                    <li>Monitor student progress and performance</li>
+                </ul>
+            </li>
+            <li>
+                <b>For Parents</b>
+                <ul>
+                    <li>Track their child's learning journey</li>
+                    <li>Gain insight into areas where their child may need support or encouragement</li>
+                </ul>
+            </li>
+        </ul>
+        <div class="registration-section">
+            <a href="{% url 'registration_register' %}" class="reg-link">
+                <h3>Join PokéMath for free today</h3>
+            </a>
+            <p>Sign up now for a unique educational experience. Engage, learn, and excel with us!</p>
+        </div>
     </div>
-    <div class="other-container">
-
+    <div class="creator-container">
+        <h1>About the Creator</h1>
+        <p>Alex Smith, the creator of PokéMath, is a lifelong learner with a passion for math and Pokémon. She graduated
+            from Trine University in 2011 with a Bachelor's in Mathematics and Mathematics Education. After spending
+            eight years as a math teacher, Alex transitioned to a career in technology. She completed her Master’s in
+            Information Technology at the University of Glasgow in September 2024.</p>
+        <p>A Pokémon fan since childhood, Alex began her journey with Pokémon Yellow, a cherished Christmas gift from
+            1999. Although she collected cards as a child, she did not learn how to play until she was an adult. In
+            2017, she attended a local game store (LGS) in Indianapolis where she learned the rules. Alex enjoys both
+            casual and competitive play, having recently competed at the European International Championships (EUIC) in
+            London in April 2024.</p>
+        <p>Driven by a desire to create an engaging math learning experience, Alex combined her background in education
+            with her newly developed programming skills to bring PokéMath to life. Through this project, she sought to
+            combine her love for math and Pokémon, inspiring others to pursue their passions and reach for their goals.
+            PokéMath embodies Alex's dedication and vision, reflecting her belief that hard work and ambition can lead
+            to incredible achievements.</p>
+        <p>Pictured below is Alex posing with Pikachu at the North American Internation Championships (NAIC) in 2023.
+        </p>
+        <div class="NAIC-image">
+            <img src="{% static 'images/NAIC2023.jpeg' %}" alt="Alex posing with Pikachu at NAIC 2023">
+        </div>
     </div>
 </div>
-<a href="{% url 'about:about' %}">Return to the About page</a><br><br>
 {% endblock %}

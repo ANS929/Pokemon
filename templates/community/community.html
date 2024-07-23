@@ -5,8 +5,30 @@ Community
 {% endblock %}
 
 {% block body_block %}
-<h1>Welcome to the community page!</h1>
-<p>I'll add more details here later...</p>
-<a href="{% url 'community:math_forum' %}">Math Forum</a> &nbsp;&nbsp;
-<a href="{% url 'community:tcg_forum' %}">TCG Forum</a> <br><br>
+<style>
+    .button-container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        max-width: 600px;
+        margin: 0 auto;
+    }
+
+    .button-container a {
+        width: calc(50% - 10px);
+        margin-bottom: 10px;
+    }
+
+    .content {
+        font-size: 16px;
+    }
+</style>
+<div class="content">
+    <h1>Welcome to the community page!</h1>
+    <p>Check out our math and trading card game (TCG) forums.</p>
+</div>
+<div class="button-container">
+    <a href="{% url 'community:math_forum' %}" class="btn btn-primary">Math Forum</a>
+    <a href="{% url 'community:tcg_forum' %}" class="btn btn-primary">TCG Forum</a>
+</div>
 {% endblock %}

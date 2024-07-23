@@ -13,6 +13,14 @@ Grade 4
 <header>
     <h1>Grade 4 Units</h1>
 </header>
+
+{% if user.is_authenticated %}
+<p>Grade 4 covers Number Sense, Computaiton, Algebraic Thinking, Geometry, Measurement, and Data Analysis. Select a unit
+    to view its contents.</p>
+{% else %}
+<p>Please <a href="{% url 'auth_login' %}">login</a> to view the contents of each unit.</p>
+{% endif %}
+
 <ol class="unit-list">
     <li><a href="{% url 'learning:unit_detail' unit_slug='number-sense' %}">Number Sense</a></li>
     <li><a href="{% url 'learning:unit_detail' unit_slug='computation' %}">Computation</a></li>

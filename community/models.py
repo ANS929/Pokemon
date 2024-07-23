@@ -15,7 +15,7 @@ class MathQuestion(models.Model):
         return f'{self.user.username} - Math Question'
 
     def get_absolute_url(self):
-        return reverse('account:math_question_details', kwargs={'pk': self.pk})
+        return reverse('community:math_question_details', kwargs={'pk': self.pk})
 
 # tcg forum post    
 class TCGQuestion(models.Model):
@@ -28,7 +28,7 @@ class TCGQuestion(models.Model):
         return f'{self.user.username} - TCG Question'
 
     def get_absolute_url(self):
-        return reverse('account:tcg_question_details', kwargs={'pk': self.pk})
+        return reverse('community:tcg_question_details', kwargs={'pk': self.pk})
 
 # math forum comment    
 class MathComment(models.Model):
@@ -41,7 +41,7 @@ class MathComment(models.Model):
         return '%s - %s' % (self.question.title, self.name)
 
     def get_absolute_url(self):
-        return reverse('account:math_question_details', kwargs={'pk': self.question.pk})
+        return reverse('community:math_question_details', kwargs={'pk': self.question.pk})
     
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
@@ -57,7 +57,7 @@ class TCGComment(models.Model):
         return '%s - %s' % (self.question.title, self.name)
 
     def get_absolute_url(self):
-        return reverse('account:tcg_question_details', kwargs={'pk': self.question.pk})
+        return reverse('community:tcg_question_details', kwargs={'pk': self.question.pk})
     
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)

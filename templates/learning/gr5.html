@@ -4,10 +4,28 @@
 {% block title_block %}
 Grade 5
 {% endblock %}
-
 {% block body_block %}
+<style>
+    .unit-list {
+        font-size: 28px;
+    }
+</style>
 <header>
-    <h1>Grade 5</h1>
+    <h1>Grade 5 Units</h1>
 </header>
-<p>Grade 5 content</p>
+
+{% if user.is_authenticated %}
+<p>Grade 5 covers a, b, c, d, e, and f. Select a unit to view its contents.</p>
+{% else %}
+<p>Please <a href="{% url 'auth_login' %}">login</a> to view the contents of each unit.</p>
+{% endif %}
+
+<ol class="unit-list">
+    <li><a href="">Unit 1</a></li>
+    <li><a href="">Unit 2</a></li>
+    <li><a href="">Unit 3</a></li>
+    <li><a href="">Unit 4</a></li>
+    <li><a href="">Unit 5</a></li>
+    <li><a href="">Unit 6</a></li>
+</ol>
 {% endblock %}

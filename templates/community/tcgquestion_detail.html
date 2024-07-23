@@ -45,7 +45,7 @@ Question Details
                 <h6 id="fh6" style="font-size: 10px; font-style: italic; color: rgb(155, 155, 155); text-align: right;">
                     Asked By: <a href="">{{ object.user.username|title }}</a>&nbsp;&nbsp;&nbsp;
                     |&nbsp;&nbsp;&nbsp; On: {{ object.date_created|date:"j F, Y" }}</h6>
-                <h2>Answers...</h2>
+                <h2>Answers...</h2> <br><br><br>
                 {% if not object.tcg_comments.all %}
                 <h3>No Answers yet...</h3>
                 {% else %}
@@ -53,6 +53,7 @@ Question Details
                 <h3 style="font-weight: normal; font-size: 15px;">{{comment.content|safe}}</h3>
                 <h3 style="font-size: 10px;">Answered by: <i><a href="">{{comment.user}}</a> - On:
                         {{comment.date_created|date:"j F, Y"}}</i></h3>
+                <hr>
                 {% endfor %}
                 {% endif %}
                 <a class="btn btn-outline-primary" href="{% url 'community:tcg_question_comment' pk=object.pk %}"
