@@ -32,11 +32,13 @@ Student Dashboard
         border: 5px solid black;
         padding: 25px;
         margin: 20px;
-        height: 500px;
+        height: auto;
     }
 
     .student-dashboard-container {
         display: flex;
+        font-size: 16px;
+        align-items: flex-start;
     }
 
     @media (max-width: 400px) {
@@ -70,7 +72,8 @@ Student Dashboard
 <header>
     <h1>Student Dashboard - {{ student.first_name }} {{ student.last_name }}</h1>
 </header>
-<p>Welcome to the Student Dashboard!</p>
+<p style="font-size: 20px;">Welcome to the Student Dashboard! Here you can view your completed practices and quizzes as
+    well as the badges you have earned.</p>
 
 <div class="student-dashboard-container">
 
@@ -80,6 +83,7 @@ Student Dashboard
             <tr>
                 <th>Practice Name</th>
                 <th>Grade Level</th>
+                <th>Unit</th>
                 <th>Date of Completion</th>
             </tr>
             {% if completed_practices %}
@@ -87,6 +91,7 @@ Student Dashboard
             <tr>
                 <td>{{ practice.practice.title }}</td>
                 <td>{{ practice.practice.grade_level }}</td>
+                <td>{{ practice.practice.unit }}</td>
                 <td>{{ practice.date_completed }}</td>
             </tr>
             {% endfor %}
@@ -100,6 +105,7 @@ Student Dashboard
             <tr>
                 <th>Quiz Name</th>
                 <th>Grade Level</th>
+                <th>Unit</th>
                 <th>Date of Completion</th>
                 <th>Quiz Score</th>
             </tr>
@@ -108,6 +114,7 @@ Student Dashboard
             <tr>
                 <td>{{ quiz.quiz.title }}</td>
                 <td>{{ quiz.quiz.grade_level }}</td>
+                <td>{{ quiz.quiz.unit }}</td>
                 <td>{{ quiz.date_completed }}</td>
                 <td>{{ quiz.score }} / 5</td>
             </tr>
@@ -127,9 +134,9 @@ Student Dashboard
                     class="badge-icon {% if item.completed %}unlocked{% else %}locked{% endif %}">
                 {{ item.badge.name }}
                 {% if item.completed %}
-                    - completed on {{ item.date_completed }}
+                - completed on {{ item.date_completed }}
                 {% else %}
-                    - Locked
+                - Locked
                 {% endif %}
             </li>
             {% endfor %}

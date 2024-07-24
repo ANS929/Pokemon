@@ -30,6 +30,12 @@ Question Details
     }
 </style>
 
+{% if messages %}
+{% for message in messages %}
+<div class="alert alert-{{ message.tags }}">{{ message }}</div>
+{% endfor %}
+{% endif %}
+
 <body>
     <div id="header-content">
         <h1>Question Details</h1>

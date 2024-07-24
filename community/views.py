@@ -23,7 +23,7 @@ def math_forum(request):
 def tcg_forum(request):
     return render(request, 'community/tcg_forum.html')
 
-# list post math posts
+# list of math posts
 class MathQuestionListView(ListView):
     model = MathQuestion
     template_name = 'community/math_forum.html'

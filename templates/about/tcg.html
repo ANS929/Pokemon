@@ -13,7 +13,7 @@ About the Pokémon TCG
         border: 5px solid #316cbc;
         padding: 25px;
         margin: 20px;
-        font-size: 16px;
+        font-size: 20px;
         display: flex;
         flex-direction: column;
     }
@@ -22,23 +22,24 @@ About the Pokémon TCG
         display: flex;
     }
 
-    .image {
+    .tcg-info-container h1 {
+        text-align: center;
+    }
+
+    .tcg-logo img,
+    .pokemon-cards img {
         margin: auto;
         display: block;
     }
 
-    .rules-strategies-container {
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
+    .tcg-logo img {
+        height: 245.25px;
+        width: 480px;
     }
 
-    .image-container {
-        margin-top: auto;
-    }
-
-    .text {
-        justify-content: flex-start;
+    .pokemon-cards img {
+        height: 338.25px;
+        width: 450px;
     }
 </style>
 <div class="tcg-info-container">
@@ -50,26 +51,26 @@ About the Pokémon TCG
             on 20 October 1996 in Japan, and the cards were introduced to North America in 1999. Pokémon tournaments
             began, and the first World Championships (Worlds) was held in 2000. Worlds has been held annually since
             2004, except in 2020 and 2021 due to the COVID-19 pandemic.</p>
-        <img class="image" src="{% static 'images/pokemon_cards.jpeg' %}" alt="Pokémon cards">
-    </div>
-    <div class="rules-strategies-container">
-        <div class="text">
-            <h1>Rules and Strategies</h1>
-            <ul>
-                <li>The offical Pokémon website is a great resource for <a
-                        href="https://www.pokemon.com/uk/pokemon-tcg/rules">rules</a> and <a
-                        href="https://www.pokemon.com/uk/strategy?articleType=strategy&articleTopic=trading-card-game">strategies</a>
-                </li>
-                <li>If you have any TCG-related questions, check out our <a
-                        href="{% url 'community:tcg_forum' %}">forum</a>.</li>
-                <li>YouTube has many helpful videos related to the TCG. Some notable accounts include <a
-                        href="https://www.youtube.com/@tablemon">Tablemon</a>, <a
-                        href="https://www.youtube.com/@TheShuffleSquadTCG">The Shuffle Squad</a>, and <a
-                        href="https://www.youtube.com/@TrickyGym">Tricky Gym</a>.</li>
-            </ul>
+        <div class="pokemon-cards">
+            <img src="{% static 'images/pokemon_cards.jpeg' %}" alt="Pokémon cards">
         </div>
-        <div class="image-container">
-            <img class="image" src="{% static 'images/tcg_logo.jpg' %}" alt="Pokémon Trading Card Game logo">
+    </div>
+    <div class=" rules-strategies-container">
+        <h1>Rules and Strategies</h1>
+        <ul>
+            <li>The offical Pokémon website is a great resource for <a
+                    href="https://www.pokemon.com/uk/pokemon-tcg/rules">rules</a> and <a
+                    href="https://www.pokemon.com/uk/strategy?articleType=strategy&articleTopic=trading-card-game">strategies</a>
+            </li>
+            <li>If you have any TCG-related questions, check out our <a
+                    href="{% url 'community:tcg_forum' %}">forum</a>.</li>
+            <li>YouTube has many helpful videos related to the TCG. Some notable accounts include <a
+                    href="https://www.youtube.com/@tablemon">Tablemon</a>, <a
+                    href="https://www.youtube.com/@TheShuffleSquadTCG">The Shuffle Squad</a>, and <a
+                    href="https://www.youtube.com/@TrickyGym">Tricky Gym</a>.</li>
+        </ul>
+        <div class="tcg-logo">
+            <img src="{% static 'images/tcg_logo.jpg' %}" alt="Pokémon TCG logo">
         </div>
     </div>
 </div>

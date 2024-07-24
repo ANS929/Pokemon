@@ -1,5 +1,7 @@
 {% extends 'learning/base.html' %}
 
+{% load static %}
+
 {% block title_block %}
 Teacher Homepage
 {% endblock %}
@@ -7,19 +9,65 @@ Teacher Homepage
 {% block body_block %}
 
 <style>
+    * {
+        box-sizing: border-box;
+    }
+
     .content {
-        font-size: 16px;
+        font-size: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 25px;
+        margin: 0 10px;
+        flex: 1;
+    }
+
+    .teacher-page {
+        display: flex;
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    @media (max-width: 400px) {
+        .teacher-page {
+            flex-direction: column;
+        }
+    }
+
+    .teacher-page h1,
+    .teacher-page p {
+        text-align: center;
+    }
+
+    .teacher-image-container {
+        display: flex;
+        justify-content: center;
+        padding: 20px;
+        margin: 0 10px;
+        flex: 1;
+    }
+
+    .teacher-image-container img {
+        max-width: 100%;
+        height: auto;
     }
 </style>
-<div class="content">
-    <h1>Teacher Homepage</h1>
-    <p>Welcome to the teacher page! Here you can acces the Teacher Dashboard to manage your students.</p>
-    {% if user.is_authenticated %}
-    <a href="{% url 'learning:teacher_dashboard' %}" class="btn btn-primary">Teacher Dashboard</a>
-    {% else %}
-    <p>Please <a href="{% url 'auth_login' %}">login</a> to access the Teacher Dashboard.</p>
-    {% endif %}
+
+<h1>Teacher Homepage</h1>
+<div class="teacher-page">
+    <div class="content">
+        <p>Welcome to the teacher page! Here you can access the Teacher Dashboard to manage your students.</p>
+        {% if user.is_authenticated %}
+        <a href="{% url 'learning:teacher_dashboard' %}" class="btn btn-primary">Teacher Dashboard</a>
+        {% else %}
+        <p>Please <a href="{% url 'auth_login' %}">login</a> to access the Teacher Dashboard.</p>
+        {% endif %}
+    </div>
+
+    <div class="teacher-image-container">
+        <img src="{% static 'images/teacher_books.jpg' %}" alt="math textbooks on a desk">
+    </div>
 </div>
+
 {% endblock %}
-
-

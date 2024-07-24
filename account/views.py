@@ -5,6 +5,7 @@ from .models import Profile
 from registration.backends.simple.views import RegistrationView
 from django.urls import reverse_lazy
 from django.contrib import messages
+from community.models import MathComment, MathQuestion
 
 # website homepage
 def index(request):
@@ -57,7 +58,20 @@ class custom_registration_view(RegistrationView):
 # user profile
 @login_required
 def profile(request):
-    return render(request, 'account/profile.html')
+    user = request.user
+    recent_questions = MathQuestion.objects.filter(user=user).order_by('-date_created')[:2]
+    recent_comments = MathComment.objects.filter(user=user).order_by('-date_created')[:2]
+    
+    commented_questions = set(comment.question for comment in recent_comments)
+
+    context = {
+        'user': user,
+        'recent_questions': recent_questions,
+        'commented_questions': commented_questions,
+    }
+
+    return render(request, 'account/profile.html', context)
+
 
 # update user profile
 @login_required

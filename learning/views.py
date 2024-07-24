@@ -92,8 +92,8 @@ def student_dashboard(request, user_id):
         (request.user.profile.is_parent and RegisteredChild.objects.filter(parent=request.user, student=user).exists()) or
         (request.user.profile.is_teacher and RegisteredStudent.objects.filter(teacher=request.user, student=user).exists())):
         
-        completed_practices = CompletedPractice.objects.filter(student=user)
-        completed_quizzes = CompletedQuiz.objects.filter(student=user)
+        completed_practices = CompletedPractice.objects.filter(student=user).order_by('-date_completed')
+        completed_quizzes = CompletedQuiz.objects.filter(student=user).order_by('-date_completed')
         badges = Badge.objects.all()
         completed_badges = CompletedBadge.objects.filter(student=user).select_related('badge')
 

@@ -9,6 +9,7 @@ class Practice (models.Model):
     description = models.TextField()
     grade_level = models.CharField(max_length=3, default='')
     slug = models.SlugField(default='', unique=True)
+    unit = models.ForeignKey('Unit', on_delete=models.CASCADE, related_name='practices_in_unit')
 
     def __str__(self):
         return self.title
@@ -36,6 +37,7 @@ class Quiz(models.Model):
     description = models.TextField()
     correct_answers = models.JSONField(default=dict)
     slug = models.SlugField(default='', unique=True)
+    unit = models.ForeignKey('Unit', on_delete=models.CASCADE, related_name='quizzes')
 
     def __str__(self):
         return self.title
@@ -150,10 +152,11 @@ class Unit(models.Model):
     name = models.CharField(max_length=100)
     grade_level = models.CharField(max_length=3, default='')
     slug = models.SlugField(default='', unique=True)
-    practices = models.ManyToManyField('Practice')
-    quiz = models.OneToOneField('Quiz', on_delete=models.CASCADE)
+    practices = models.ManyToManyField('Practice', related_name='units')
+    quiz = models.OneToOneField('Quiz', on_delete=models.CASCADE, related_name='unit_quiz')
+    
     def __str__(self):
-        return f"{self.name} - {self.grade_level} Grade"
+        return self.name
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.name)

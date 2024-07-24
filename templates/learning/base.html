@@ -29,6 +29,15 @@
         .search-form {
             border: 2px solid #ffcb13;
         }
+
+        .username-link {
+            color: #ffcb13 !important;
+            font-weight: bold;
+        }
+
+        .sidebar-sticky {
+            font-size: 16px;
+        }
     </style>
 </head>
 
@@ -81,16 +90,15 @@
                                 <a class="dropdown-item" href="{% url 'learning:teachers' %}">Teachers</a>
                                 <a class="dropdown-item" href="{% url 'learning:parents' %}">Parents</a>
                             </div>
-                        </li>
-                        </li>
+                        </li> &nbsp;&nbsp;
                         {% if user.is_authenticated %}
-                        <li class="nav-item"><a class="nav-link text-light"
-                                href="{% url 'auth_logout' %}?next={% url 'index'%}">Logout</a></li>
-                        </li>
                         <li class="nav-item">
-                            <span class="navbar-text text-light">Welcome, <a href="{% url 'account:profile' %}">
+                            <span class="navbar-text text-light">Welcome, <a class="username-link"
+                                    href="{% url 'account:profile' %}">
                                     {{ user.username }}</a>!&nbsp;&nbsp;</span>
                         </li>
+                        <li class="nav-item"><a class="nav-link text-light"
+                                href="{% url 'auth_logout' %}?next={% url 'index'%}">Logout</a></li>&nbsp;&nbsp;
                         <li class="nav-item">
                             <form class="search-bar" action="" method="GET">
                                 <input class="search-form" type="text" placeholder="Search" aria-label="Search"
@@ -103,7 +111,7 @@
                                 href="{% url 'registration_register' %}">Register</a>
                         </li>
                         <li class="nav-item "><a class="nav-link text-light" href="{% url 'auth_login' %}">Login</a>
-                        </li>
+                        </li> &nbsp;&nbsp;
                         <li class="nav-item">
                             <form class="search-bar" action="" method="GET">
                                 <input class="search-form" type="text" placeholder="Search" aria-label="Search"
@@ -175,30 +183,34 @@
                 <style>
                     .homepage-container {
                         display: flex;
-                        flex-wrap: nowrap;
+                        flex-wrap: wrap;
                         width: 100%;
+                        box-sizing: border-box;
                     }
 
                     .first-container,
-                    .second-container {
-                        flex: 1 0 45%;
+                    .second-container,
+                    .third-container,
+                    .fourth-container {
+                        flex: 1 1 45%;
                         border: 5px solid #316cbc;
                         padding: 25px;
                         margin: 20px;
                         box-sizing: border-box;
                         min-width: 0;
-                        font-size: 16px;
+                        font-size: 20px;
                         display: flex;
                         flex-direction: column;
                     }
 
-                    @media (max-width: 767px) {
+                    .first-container,
+                    .second-container {
+                        order: 1;
+                    }
 
-                        .first-container,
-                        .second-container {
-                            flex: 1 0 100%;
-                            margin: 10px 0;
-                        }
+                    .third-container,
+                    .fourth-container {
+                        order: 2;
                     }
 
                     .title {
@@ -210,41 +222,172 @@
                     }
 
                     .image-1,
-                    .image-2 {
+                    .image-2,
+                    .image-3 {
                         display: flex;
                         justify-content: center;
                         align-items: center;
                     }
 
                     .image-1 img,
-                    .image-2 img {
+                    .image-2 img,
+                    .image-3 img {
                         max-width: 100%;
                         height: auto;
+                        margin: auto;
+                        display: block;
                     }
 
-                    .image-1 img {
+                    .image-2 img {
                         max-height: 320px;
                     }
 
-                    .second-container {
+                    .imgcontainer {
+                        max-width: 100%;
+                        padding: 10px;
+                        margin-left: 0;
                         display: flex;
-                        flex-direction: column;
-                        justify-content: space-between;
+                        justify-content: center;
                     }
 
-                    .image-2 {
-                        margin-top: auto;
+                    .imgcontainer .image-container {
+                        display: flex;
+                        flex-wrap: wrap;
+                        gap: 15px;
+                        justify-content: center;
+                    }
+
+                    .imgcontainer .image-row {
+                        display: flex;
+                        gap: 15px;
+                        justify-content: center;
+                    }
+
+                    .imgcontainer .image {
+                        flex: 1 1 150px;
+                        max-width: 150px;
+                        height: auto;
+                        border: 10px solid #fff;
+                        box-shadow: 0 5px 15px rgba(0, 0, 0, .1);
+                        overflow: hidden;
+                        cursor: pointer;
+                    }
+
+                    .imgcontainer .image img {
+                        height: 100%;
+                        width: 100%;
+                        object-fit: cover;
+                        transition: .2s linear;
+                    }
+
+                    .imgcontainer .image:hover {
+                        transform: scale(1.1);
+                    }
+
+                    .imgcontainer .popup-image {
+                        position: fixed;
+                        top: 0;
+                        left: 0;
+                        background: rgba(0, 0, 0, .9);
+                        height: 100%;
+                        width: 100%;
+                        z-index: 100;
+                        display: none;
+                    }
+
+                    .imgcontainer .popup-image span {
+                        position: absolute;
+                        top: 0;
+                        right: 10px;
+                        font-size: 10px;
+                        font-weight: bolder;
+                        color: #fff;
+                        cursor: pointer;
+                        z-index: 100;
+                    }
+
+                    .imgcontainer .popup-image img {
+                        position: absolute;
+                        top: 50%;
+                        left: 50%;
+                        transform: translate(-50%, -50%);
+                        border: 5px solid #fff;
+                        border-radius: 5px;
+                        width: 750px;
+                        object-fit: cover;
+                    }
+
+                    @media (max-width: 768px) {
+                        .imgcontainer .image {
+                            max-width: calc(50% - 15px);
+                        }
+                    }
+
+                    .learn-more {
+                        font-size: 30px !important;
+                        text-align: center;
+                    }
+
+                    .homepage-container h1{
+                        text-align: center;
                     }
                 </style>
                 <div class="title">
                     <p style="font-size: 50px;">Welcome to <img src="{% static 'images/logo.png' %}"
                             alt="PokéMath logo">!</p>
-                    <p style="font-size: 22px;">PokéMath is an educational platform combining mathematics education with
-                        the Pokémon Trading Card Game (TCG). Learn more about the site <a
-                            href="{% url 'about:site' %}">here</a>.</p>
+                    <p style="font-size: 30px;">Strengthen your math skills while becoming a <b>Pokémon Master</b>!</p>
                 </div>
                 <div class="homepage-container">
                     <div class="first-container">
+                        <h1>About PokéMath</h1>
+                        <p>PokéMath is an educational platform that combines mathematics education with the Pokémon
+                            Trading Card Game (TCG). Learn by completing interactive problems and striving to earn
+                            badges, just like a true Pokémon trainer!</p>
+                        <p class="learn-more">Learn more <a href="{% url 'about:site' %}">here</a>, or <a
+                                href="{% url 'registration_register' %}">sign up</a> today!</p>
+                        <div class="image-1"><img src="{% static 'images/ash_ketchum.jpg' %}"
+                                alt="Ash Ketchum with his Pokémon team andchampionship trophy"></div>
+                    </div>
+                    <div class="second-container">
+                        <h1>Challenge Yourself</h1>
+                        <p>Do you want to be the very best, like no one ever was? During your journey, you will complete
+                            challenges to earn
+                            badges. These include:
+                        <ul>
+                            <li><b>Alpha (α) Badge</b> - earned for completing practice problems</li>
+                            <li><b>Beta (β) Badge</b> - earned for completing quizzes</li>
+                            <li><b>Pi (π) Badge</b> - earned for completing units</li>
+                            <li><b>Delta (Δ) Badge</b> - earned for improving quiz scores</li>
+                            <li><b>Factorial (!) Badg</b>e - earned for posting on the math forum</li>
+                            <li><b>Sigma (Σ) Badge</b> - earned for commenting on the math forum</li>
+                            <li><b>Theta (θ) Badge</b> - eared for consistent participation</li>
+                            <li><b>Infinity (∞) Badge</b> - earned for completion of a grade level</li>
+                        </ul>
+                        </p>
+                        <div class="imgcontainer">
+                            <div class="image-container">
+                                <div class="image-row">
+                                    <div class="image"><img src="{% static 'images/alpha_badge.png' %}" alt=""></div>
+                                    <div class="image"><img src="{% static 'images/beta_badge.png' %}" alt=""></div>
+                                    <div class="image"><img src="{% static 'images/pi_badge.png' %}" alt=""></div>
+                                    <div class="image"><img src="{% static 'images/delta_badge.png' %}" alt=""></div>
+                                </div>
+                                <div class="image-row">
+                                    <div class="image"><img src="{% static 'images/factorial_badge.png' %}" alt="">
+                                    </div>
+                                    <div class="image"><img src="{% static 'images/sigma_badge.png' %}" alt=""></div>
+                                    <div class="image"><img src="{% static 'images/theta_badge.png' %}" alt=""></div>
+                                    <div class="image"><img src="{% static 'images/infinity_badge.png' %}" alt=""></div>
+                                </div>
+                            </div>
+
+                            <div class="popup-image">
+                                <span>&times;</span>
+                                <img src="" alt="" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="third-container">
                         <h1>Latest Content</h1>
                         <p>We've completely revamped our Grade 4 content. Units include:
                         <ol>
@@ -256,9 +399,9 @@
                             <li>Data Analysis </li>
                         </ol>
                         <p style="font-size: 22px;"><a href="{% url 'learning:gr4' %}">Check it out</a>!</p>
-                        <div class="image-1"><img src="{% static 'images/math.jpg' %}" alt="math"></div>
+                        <div class="image-2"><img src="{% static 'images/math.jpg' %}" alt="math"></div>
                     </div>
-                    <div class="second-container">
+                    <div class="fourth-container">
                         <h1>Recent Forum Posts</h1>
                         <h4>Math Forum</h4>
                         <ul>
@@ -279,7 +422,7 @@
                             <li>No recent TCG questions.</li>
                             {% endfor %}
                         </ul>
-                        <div class="image-2"><img src="{% static 'images/pokemon_tournament.jpg' %}"
+                        <div class="image-3"><img src="{% static 'images/pokemon_tournament.jpg' %}"
                                 alt="kids playing in a Pokémon tournament"></div>
                     </div>
                 </div>
@@ -292,7 +435,22 @@
             </main>
         </div>
     </div>
+    <script>
+        // Function to handle popup display
+        document.querySelectorAll(".image img").forEach(image => {
+            image.onclick = () => {
+                document.querySelector(".popup-image").style.display = "block";
+                document.querySelector(".popup-image img").src = image.getAttribute("src");
+            };
+        });
 
+        // Close popup when clicking outside the image
+        document.querySelector(".popup-image").onclick = (event) => {
+            if (event.target.classList.contains('popup-image')) {
+                document.querySelector(".popup-image").style.display = "none";
+            }
+        };
+    </script>
     <!-- Bootstrap core JavaScript -->
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
