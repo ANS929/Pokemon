@@ -4,9 +4,36 @@
 {% block title_block %}
 Number Sense Quiz
 {% endblock %}
-
 {% block body_block %}
 <style>
+    .details {
+        font-size: 28px;
+        flex: 1;
+        border: 5px solid #316cbc;
+        padding: 25px;
+        margin: 20px;
+        height: auto;
+    }
+
+    .content {
+        flex: 2;
+        display: flex;
+        flex-direction: column;
+        border: 5px solid #ffcb13;
+        padding: 25px;
+        margin: 20px;
+    }
+
+    .quiz-container {
+        display: flex;
+        font-size: 20px;
+        align-items: flex-start;
+    }
+
+    .details h1 {
+        text-align: center;
+    }
+
     .imgcontainer {
         max-width: 100%;
         padding: 10px;
@@ -80,63 +107,81 @@ Number Sense Quiz
     }
 </style>
 <header>
-    <h1>Number Sense - Quiz</h1>
+    <h1>Number Sense Quiz</h1>
 </header>
 
-<main>
-    <section>
-        <h2>Instructions:</h2>
-        <p>Use the cards to answer the five questions below.</p>
+<div class="quiz-container">
+    <div class="content">
+        <main>
+            <section>
+                <h2>Instructions:</h2>
+                <p>Use the cards to answer the five questions below.</p>
+                <p><u>When you are finished with the quiz, press the "Submit Quiz" button.</u></p>
 
-        <div class="imgcontainer">
-            <div class="image-container">
-                <div class="image"><img src="{% static 'images/Inkay.png' %}" alt=""></div>
-                <div class="image"><img src="{% static 'images/Wattrel.png' %}" alt=""></div>
-            </div>
+                <div class="imgcontainer">
+                    <div class="image-container">
+                        <div class="image"><img src="{% static 'images/Inkay.png' %}" alt=""></div>
+                        <div class="image"><img src="{% static 'images/Wattrel.png' %}" alt=""></div>
+                    </div>
 
-            <div class="popup-image">
-                <span>&times;</span>
-                <img src="" alt="" />
-            </div>
-        </div>
+                    <div class="popup-image">
+                        <span>&times;</span>
+                        <img src="" alt="" />
+                    </div>
+                </div>
+            </section><br>
 
-    </section>
-
-    <form method="post" action="{% url 'learning:submit_quiz' quiz_slug=quiz.slug %}">
-        {% csrf_token %}
-        <div class="question">
-            <p>1.) Fill in the blank with the correct symbol (<,>, or =). Inkay's weight ____ Wattrel's weight.</p>
-            <input type="text" name="question1" style="width: 40px;">
-        </div> <br>
-        <div class="question">
-            <p>2.) Fill in the blank with the correct symbol (<,>, or =). Inkay's set number ____ Wattrel's set number.
-            </p>
-            <input type="text" name="question2" style="width: 40px;">
-        </div> <br>
-        <div class="question">
-            <p>3.) Fill in the blank with the correct symbol (<,>, or =). Inkay's HP ____ Wattrel's HP.</p>
-            <input type="text" name="question3" style="width: 40px;">
-        </div> <br>
-        <div class="question">
-            <p>4.) True or False: Hug's damage output < Peck's damage output</p>
-                    <select name="question4">
+            <form method="post" action="{% url 'learning:submit_quiz' quiz_slug=quiz.slug %}">
+                {% csrf_token %}
+                <div class="question">
+                    <p>1.) Fill in the blank with the correct symbol (<,>, or =). Inkay's weight ____ Wattrel's weight.
+                    </p>
+                    <input type="text" name="question1" style="width: 100px;" required>
+                </div> <br>
+                <div class="question">
+                    <p>2.) Fill in the blank with the correct symbol (<,>, or =). Inkay's set number ____ Wattrel's set
+                            number.
+                    </p>
+                    <input type="text" name="question2" style="width: 100px;" required>
+                </div> <br>
+                <div class="question">
+                    <p>3.) Fill in the blank with the correct symbol (<,>, or =). Inkay's HP ____ Wattrel's HP.</p>
+                    <input type="text" name="question3" style="width: 100px;" required>
+                </div> <br>
+                <div class="question">
+                    <p>4.) <b>True</b> or <b>False</b>: Hug's damage output < Peck's damage output</p>
+                            <select name="question4" required>
+                                <option value="">Select an answer</option>
+                                <option value="True">True</option>
+                                <option value="False">False</option>
+                            </select>
+                </div> <br>
+                <div class="question">
+                    <p>5.) <b>True</b> or <b>False</b>: Inkay's retreat cost = Wattrel's retreat cost.</p>
+                    <select name="question5" required>
                         <option value="">Select an answer</option>
                         <option value="True">True</option>
                         <option value="False">False</option>
                     </select>
-        </div> <br>
-        <div class="question">
-            <p>5.) True or False: Inkay's retreat cost = Wattrel's retreat cost.</p>
-            <select name="question5">
-                <option value="">Select an answer</option>
-                <option value="True">True</option>
-                <option value="False">False</option>
-            </select>
-        </div> <br>
-        <button type="submit">Submit Quiz</button>
-    </form> <br>
-    <script>
+                </div> <br>
+                <button type="submit">Submit Quiz</button>
+            </form>
+        </main>
+    </div>
+    <div class="details">
+        <h1>Number Sense Content</h1>
+        <ul>
+            <li><a href="{% url 'learning:practice_detail' practice_slug='comparing-whole-numbers' %}">Comparing
+                    Whole
+                    Numbers</a></li>
+            <li><a href="{% url 'learning:practice_detail' practice_slug='comparing-decimals' %}">Comparing
+                    Decimals</a>
+            </li>
+            <li><a href="{% url 'learning:quiz_detail' quiz_slug='number-sense-quiz' %}">Number Sense Quiz</a></li>
+        </ul>
+    </div>
 
+    <script>
         // Function to handle popup display
         document.querySelectorAll(".image img").forEach(image => {
             image.onclick = () => {
@@ -152,4 +197,5 @@ Number Sense Quiz
             }
         };
     </script>
-    {% endblock %}
+</div><br>
+{% endblock %}

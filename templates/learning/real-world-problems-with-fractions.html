@@ -4,10 +4,36 @@
 {% block title_block %}
 Real-World Problems with Fractions
 {% endblock %}
-
 {% block body_block %}
-
 <style>
+    .details {
+        font-size: 28px;
+        flex: 1;
+        border: 5px solid #316cbc;
+        padding: 25px;
+        margin: 20px;
+        height: auto;
+    }
+
+    .content {
+        flex: 2;
+        display: flex;
+        flex-direction: column;
+        border: 5px solid #ffcb13;
+        padding: 25px;
+        margin: 20px;
+    }
+
+    .lesson-container {
+        display: flex;
+        font-size: 20px;
+        align-items: flex-start;
+    }
+
+    .details h1 {
+        text-align: center;
+    }
+
     .imgcontainer {
         max-width: 100%;
         padding: 10px;
@@ -81,9 +107,10 @@ Real-World Problems with Fractions
     }
 </style>
 <header>
-    <h1>Algebraic Thinking - Real-World Problems with Fractions</h1>
+    <h1>Real-World Problems with Fractions</h1>
 </header>
-
+<div class="lesson-container">
+    <div class="content">
 <main>
     <section>
         <h2>Introduction:</h2>
@@ -91,14 +118,13 @@ Real-World Problems with Fractions
     </section>
 
     <section>
-        <h2>Example 1: </h2>
+        <h2>Header 1:</h2>
         <p>Content here</p>
     </section>
 
     <section>
-        <h2>Example 2:</h2>
+        <h2>Header 2:</h2>
         <p>Content here</p>
-
     </section>
 
     <section>
@@ -106,8 +132,8 @@ Real-World Problems with Fractions
         <p> 36 of the cards in your deck are Trainer cards. What fraction of your cards are NOT Trainer cards?
             Please write your answer as a fraction in simplest terms (for example: 3/14).</p>
 
-        <p>Check your answer using the "Check Answer" button. Once you have the correct answer, submit the practice
-            using the "Submit Practice" button.</p>
+        <p><u>Check your answer using the "Check Answer" button. Once you have the correct answer, submit the practice
+                using the "Submit Practice" button.</u></p>
 
         <div class="imgcontainer">
             <div class="image-container">
@@ -142,6 +168,18 @@ Real-World Problems with Fractions
         </form>
     </section>
 </main>
+</div>
+<div class="details">
+    <h1>Algebraic Thinking Content</h1>
+    <ul>
+        <li><a href="{% url 'learning:practice_detail' practice_slug='real-world-problems-with-whole-numbers' %}">Real-World
+                Problems with Whole Numbers</a></li>
+        <li><a href="{% url 'learning:practice_detail' practice_slug='real-world-problems-with-fractions' %}">Real-World
+                Problems with Fractions</a></li>
+        <li><a href="{% url 'learning:quiz_detail' quiz_slug='algebraic-thinking-quiz' %}">Algebraic Thinking
+                Quiz</a></li>
+    </ul>
+</div>
 
 <script>
     function checkAnswer(event) {
@@ -180,4 +218,5 @@ Real-World Problems with Fractions
         }
     };
 </script>
+</div><br>
 {% endblock %}

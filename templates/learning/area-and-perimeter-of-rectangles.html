@@ -4,9 +4,36 @@
 {% block title_block %}
 Area and Perimeter of Rectangles
 {% endblock %}
-
 {% block body_block %}
 <style>
+    .details {
+        font-size: 28px;
+        flex: 1;
+        border: 5px solid #316cbc;
+        padding: 25px;
+        margin: 20px;
+        height: auto;
+    }
+
+    .content {
+        flex: 2;
+        display: flex;
+        flex-direction: column;
+        border: 5px solid #ffcb13;
+        padding: 25px;
+        margin: 20px;
+    }
+
+    .lesson-container {
+        display: flex;
+        font-size: 20px;
+        align-items: flex-start;
+    }
+
+    .details h1 {
+        text-align: center;
+    }
+
     .imgcontainer {
         max-width: 100%;
         padding: 10px;
@@ -80,157 +107,174 @@ Area and Perimeter of Rectangles
     }
 </style>
 <header>
-    <h1>Measurement - Area and Perimeter of Rectangles</h1>
+    <h1>Area and Perimeter of Rectangles</h1>
 </header>
 
-<main>
-    <section>
-        <h2>Introduction:</h2>
-        <p>A rectangle is a two-dimensional figure with four straight sides and four right angles. Opposite sides are
-            parallel and equal. The longer side of the rectangle is referred to as the length, while the shorter side is
-            called the width. In the special case where a rectangle's width and length are equal, it is a square.</p>
-    </section>
+<div class="lesson-container">
+    <div class="content">
+        <main>
+            <section>
+                <h2>Introduction:</h2>
+                <p>A rectangle is a two-dimensional figure with four straight sides and four right angles. Opposite
+                    sides are parallel and equal. The longer side of the rectangle is referred to as the length, while
+                    the shorter side is called the width. In the special case where a rectangle's width and length are
+                    equal, it is a square.</p>
+            </section>
 
-    <section>
-        <h2>Area: </h2>
-        <p>Area is the amount of space inside a shape. For a rectangle, this is calculated by multiplying the length
-            times the width. <b>Example</b>:</p>
-    </section>
+            <section>
+                <h2>Area: </h2>
+                <p>Area is the amount of space inside a shape. For a rectangle, this is calculated by multiplying the
+                    length times the width. <u>Example</u>:</p>
+            </section>
 
-    <section>
-        <h2>Perimeter:</h2>
-        <p>Perimeter is the distance around the outisde of a shape. For a rectangle, this is calculated by multiplying
-            two times the length, multiplying two times the width, and then adding those values together.<b>Example</b>:
-        </p>
-    </section>
+            <section>
+                <h2>Perimeter:</h2>
+                <p>Perimeter is the distance around the outisde of a shape. For a rectangle, this is calculated by
+                    multiplying two times the length, multiplying two times the width, and then adding those values
+                    together.
+                    <u>Example</u>:
+                </p>
+            </section>
 
-    <section>
-        <h2>You Try:</h2>
-        <p> A Pokémon playmat is approximately 61 centimeters wide and 36 centimeters long. Find the area and perimeter
-            of a playmat.</p>
+            <section>
+                <h2>You Try:</h2>
+                <p>A Pokémon playmat is approximately 61 centimeters wide and 36 centimeters long. Find the area and
+                    perimeter of a playmat.</p>
 
-        <p>Check your answers using the "Check
-            Answer" buttons. Once you have both of the correct answers, submit the practice using the "Submit Practice"
-            button.</p>
+                <p><u>Check your answers using the "Check
+                        Answer" buttons. Once you have both of the correct answers, submit the practice using the
+                        "Submit Practice" button.</u></p>
 
-        <div class="imgcontainer">
-            <div class="image-container">
-                <div class="image"><img src="{% static 'images/playmat.jpg' %}" alt=""></div>
-            </div>
+                <div class="imgcontainer">
+                    <div class="image-container">
+                        <div class="image"><img src="{% static 'images/playmat.jpg' %}" alt=""></div>
+                    </div>
 
-            <div class="popup-image">
-                <span>&times;</span>
-                <img src="" alt="" />
-            </div>
-        </div>
-        <br>
-        <!-- Question 1 form and feedback -->
-        <form id="form1" onsubmit="checkAnswer1(event)">
-            {% csrf_token %}
-            <label for="area"><b>Area of a playmat (in square centimeters, ex: 1234)</b></label>
-            <input type="number" min="0" id="area" name="area" style="width: 60px;" required>
-            <input type="submit" value="Check Answer" id="submitBtn1">
-        </form>
-        <p id="feedback1"></p>
+                    <div class="popup-image">
+                        <span>&times;</span>
+                        <img src="" alt="" />
+                    </div>
+                </div>
+                <br>
+                <!-- Question 1 form and feedback -->
+                <form id="form1" onsubmit="checkAnswer1(event)">
+                    {% csrf_token %}
+                    <label for="area"><b>Area of a playmat (in square centimeters, ex: 1234)</b></label>
+                    <input type="number" min="0" id="area" name="area" style="width: 100px;" required>
+                    <input type="submit" value="Check Answer" id="submitBtn1">
+                </form>
+                <p id="feedback1"></p>
 
-        <!-- Question 2 form and feedback -->
-        <form id="form2" onsubmit="checkAnswer2(event)">
-            {% csrf_token %}
-            <label for="perimeter"><b>Perimeter of a playmat (in centimeters, ex: 567)</b></label>
-            <input type="number" min="0" id="perimeter" name="perimeter" style="width: 60px;" required>
-            <input type="submit" value="Check Answer" id="submitBtn2">
-        </form>
-        <p id="feedback2"></p>
+                <!-- Question 2 form and feedback -->
+                <form id="form2" onsubmit="checkAnswer2(event)">
+                    {% csrf_token %}
+                    <label for="perimeter"><b>Perimeter of a playmat (in centimeters, ex: 567)</b></label>
+                    <input type="number" min="0" id="perimeter" name="perimeter" style="width: 100px;" required>
+                    <input type="submit" value="Check Answer" id="submitBtn2">
+                </form>
+                <p id="feedback2"></p>
 
-        <!-- final submission form -->
-        <form id="final-form" method="post" action="{% url 'learning:submit_practice' practice.slug %}"
-            style="display: none;">
-            {% csrf_token %}
-            <input type="hidden" name="correct" value="True">
-            <button type="submit">Submit Practice</button>
-        </form>
-    </section>
-</main>
+                <!-- final submission form -->
+                <form id="final-form" method="post" action="{% url 'learning:submit_practice' practice.slug %}"
+                    style="display: none;">
+                    {% csrf_token %}
+                    <input type="hidden" name="correct" value="True">
+                    <button type="submit">Submit Practice</button>
+                </form>
+            </section>
+        </main>
+    </div>
+    <div class="details">
+        <h1>Measurement Content</h1>
+        <ul>
+            <li><a href="{% url 'learning:practice_detail' practice_slug='converting-units' %}">Converting Units</a>
+            </li>
+            <li><a href="{% url 'learning:practice_detail' practice_slug='area-and-perimeter-of-rectangles' %}">Area and
+                    Perimeter of Rectangles</a></li>
+            <li><a href="{% url 'learning:quiz_detail' quiz_slug='measurement-quiz' %}">Measurement Quiz</a></li>
+        </ul>
+    </div>
 
-<script>
-    var question1Correct = false;
-    var question2Correct = false;
+    <script>
+        var question1Correct = false;
+        var question2Correct = false;
 
-    // Question 1 logic (area)
-    function checkAnswer1(event) {
-        event.preventDefault(); // prevent default form submission
+        // Question 1 logic (area)
+        function checkAnswer1(event) {
+            event.preventDefault(); // prevent default form submission
 
-        var area = document.getElementById('area').value.trim();
-        var correctAnswer = 2196;
-        var feedback = document.getElementById('feedback1');
-        var inputField = document.getElementById('area');
-        var submitButton = document.getElementById('submitBtn1');
+            var area = document.getElementById('area').value.trim();
+            var correctAnswer = 2196;
+            var feedback = document.getElementById('feedback1');
+            var inputField = document.getElementById('area');
+            var submitButton = document.getElementById('submitBtn1');
 
-        // check for correct answer and provide feedback
-        if (parseInt(area) === correctAnswer) {
-            feedback.textContent = 'Correct! 61 * 36 = 2196. Well done!';
-            inputField.disabled = true; // disable input field
-            question1Correct = true; // mark question 1 as correct
-            submitButton.disabled = true; // disable submit button
+            // check for correct answer and provide feedback
+            if (parseInt(area) === correctAnswer) {
+                feedback.textContent = 'Correct! 61 * 36 = 2196. Well done!';
+                inputField.disabled = true; // disable input field
+                question1Correct = true; // mark question 1 as correct
+                submitButton.disabled = true; // disable submit button
 
-            // check if both questions are answered correctly
-            checkFinalSubmission();
-        } else {
-            feedback.textContent = 'Incorrect. Please try again.';
-            question1Correct = false; // mark question 1 as incorrect
+                // check if both questions are answered correctly
+                checkFinalSubmission();
+            } else {
+                feedback.textContent = 'Incorrect. Please try again.';
+                question1Correct = false; // mark question 1 as incorrect
+            }
         }
-    }
 
-    //Question 2 logic (perimeter)
-    function checkAnswer2(event) {
-        event.preventDefault(); // prevent default form submission
+        //Question 2 logic (perimeter)
+        function checkAnswer2(event) {
+            event.preventDefault(); // prevent default form submission
 
-        var perimeter = document.getElementById('perimeter').value.trim();
-        var correctAnswer = 194;
-        var feedback2 = document.getElementById('feedback2');
-        var inputField = document.getElementById('perimeter');
-        var submitButton = document.getElementById('submitBtn2');
+            var perimeter = document.getElementById('perimeter').value.trim();
+            var correctAnswer = 194;
+            var feedback2 = document.getElementById('feedback2');
+            var inputField = document.getElementById('perimeter');
+            var submitButton = document.getElementById('submitBtn2');
 
-        // check for correct answer and provide feedback
-        if (parseInt(perimeter) === correctAnswer) {
-            feedback2.textContent = 'Correct! 2*61 + 2*36 = 194. Well done!';
-            inputField.disabled = true; // disable input field
-            submitButton.disabled = true; // disable submit button
-            question2Correct = true; // mark question 2 as correct
+            // check for correct answer and provide feedback
+            if (parseInt(perimeter) === correctAnswer) {
+                feedback2.textContent = 'Correct! 2*61 + 2*36 = 194. Well done!';
+                inputField.disabled = true; // disable input field
+                submitButton.disabled = true; // disable submit button
+                question2Correct = true; // mark question 2 as correct
 
-            // check if both questions are answered correctly
-            checkFinalSubmission();
-        } else {
-            feedback2.textContent = 'Incorrect. Please try again.';
-            question2Correct = false; // mark question 2 as incorrect
+                // check if both questions are answered correctly
+                checkFinalSubmission();
+            } else {
+                feedback2.textContent = 'Incorrect. Please try again.';
+                question2Correct = false; // mark question 2 as incorrect
+            }
         }
-    }
 
-    // function to check if both questions are answered correctly for final submission
-    function checkFinalSubmission() {
-        var finalForm = document.getElementById('final-form');
+        // function to check if both questions are answered correctly for final submission
+        function checkFinalSubmission() {
+            var finalForm = document.getElementById('final-form');
 
-        // enable final submission button if both questions are correct
-        if (question1Correct && question2Correct) {
-            finalForm.style.display = 'block';
-        } else {
-            finalForm.style.display = 'none';
+            // enable final submission button if both questions are correct
+            if (question1Correct && question2Correct) {
+                finalForm.style.display = 'block';
+            } else {
+                finalForm.style.display = 'none';
+            }
         }
-    }
 
-    // Function to handle popup image display
-    document.querySelectorAll(".image img").forEach(image => {
-        image.onclick = () => {
-            document.querySelector(".popup-image").style.display = "block";
-            document.querySelector(".popup-image img").src = image.getAttribute("src");
+        // Function to handle popup image display
+        document.querySelectorAll(".image img").forEach(image => {
+            image.onclick = () => {
+                document.querySelector(".popup-image").style.display = "block";
+                document.querySelector(".popup-image img").src = image.getAttribute("src");
+            };
+        });
+
+        // Close the popup when clicking outside the image
+        document.querySelector(".popup-image").onclick = (event) => {
+            if (event.target.classList.contains('popup-image')) {
+                document.querySelector(".popup-image").style.display = "none";
+            }
         };
-    });
-
-    // Close the popup when clicking outside the image
-    document.querySelector(".popup-image").onclick = (event) => {
-        if (event.target.classList.contains('popup-image')) {
-            document.querySelector(".popup-image").style.display = "none";
-        }
-    };
-</script>
+    </script>
+</div><br>
 {% endblock %}

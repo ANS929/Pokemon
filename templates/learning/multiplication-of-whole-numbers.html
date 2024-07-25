@@ -4,10 +4,36 @@
 {% block title_block %}
 Multiplication of Whole Numbers
 {% endblock %}
-
 {% block body_block %}
-
 <style>
+    .details {
+        font-size: 28px;
+        flex: 1;
+        border: 5px solid #316cbc;
+        padding: 25px;
+        margin: 20px;
+        height: auto;
+    }
+
+    .content {
+        flex: 2;
+        display: flex;
+        flex-direction: column;
+        border: 5px solid #ffcb13;
+        padding: 25px;
+        margin: 20px;
+    }
+
+    .lesson-container {
+        display: flex;
+        font-size: 20px;
+        align-items: flex-start;
+    }
+
+    .details h1 {
+        text-align: center;
+    }
+
     .imgcontainer {
         max-width: 100%;
         padding: 10px;
@@ -81,102 +107,111 @@ Multiplication of Whole Numbers
     }
 </style>
 <header>
-    <h1>Computation - Multiplication of Whole Numbers</h1>
+    <h1>Multiplication of Whole Numbers</h1>
 </header>
 
-<main>
-    <section>
-        <h2>Introduction:</h2>
-        <p> Multiplication is
-        </p>
-    </section>
+<div class="lesson-container">
+    <div class="content">
+        <main>
+            <section>
+                <h2>Introduction:</h2>
+                <p> Multiplication is...</p>
+            </section>
 
-    <section>
-        <h2>Example 1: (whole of up to 4 digits by one digit) </h2>
-        <p> Content here
+            <section>
+                <h2>Multiplication:</h2>
+                <p>Example: (whole of up to 4 digits by one digit)</p>
+                <p>Example: (two 2 digit)</p>
+            </section>
 
-        </p>
-    </section>
+            <section>
+                <h2>You Try:</h2>
+                <p> Your Gardevoir ex attacks your opponent's Koraidon ex with Miracle Force. How much damage will the
+                    attack
+                    do? (Hint: notice that Koraidon has psychic weakness).</p>
 
-    <section>
-        <h2>Example 2: (two 2 digit)</h2>
-        <p>Content here</p>
+                <p>Check your answer using the "Check Answer" button. Once you have the correct answer, submit the
+                    practice
+                    using the "Submit Practice" button.</p>
 
-    </section>
+                <div class="imgcontainer">
+                    <div class="image-container">
+                        <div class="image"><img src="{% static 'images/Gardevoir.png' %}" alt=""></div>
+                        <div class="image"><img src="{% static 'images/Koraidon.png' %}" alt=""></div>
+                    </div>
 
-    <section>
-        <h2>You Try:</h2>
-        <p> Your Gardevoir ex attacks your opponent's Koraidon ex with Miracle Force. How much damage will the attack
-            do? (Hint: notice that Koraidon has psychic weakness).</p>
+                    <div class="popup-image">
+                        <span>&times;</span>
+                        <img src="" alt="" />
+                    </div>
+                </div>
+                <br>
+                <!-- practice submission and feedback -->
+                <form id="practice-form" onsubmit="checkAnswer(event)"
+                    action="{% url 'learning:submit_practice' practice.slug %}" method="post">
+                    {% csrf_token %}
+                    <label for="damageOutput"><b>Miracle Force's damage output</b></label>
+                    <input type="number" min="0" id="damageOutput" name="damageOutput" style="width: 100px;" required>
+                    <input type="submit" value="Check Answer" id="submitBtn">
+                </form>
+                <p id="feedback"></p>
+                <form id="final-form" method="post" action="{% url 'learning:submit_practice' practice.slug %}"
+                    style="display: none;">
+                    {% csrf_token %}
+                    <input type="hidden" name="correct" value="True">
+                    <button type="submit">Submit Practice</button>
+                </form>
+            </section>
+        </main>
+    </div>
+    <div class="details">
+        <h1>Computation Content</h1>
+        <ul>
+            <li><a
+                    href="{% url 'learning:practice_detail' practice_slug='addition-and-subtraction-of-whole-numbers' %}">Addition
+                    and Subtraction of Whole Numbers</a></li>
+            <li><a href="{% url 'learning:practice_detail' practice_slug='multiplication-of-whole-numbers' %}">Multiplication
+                    of Whole Numbers</a></li>
+            <li><a href="{% url 'learning:quiz_detail' quiz_slug='computation-quiz' %}">Computation Quiz</a></li>
+        </ul>
+    </div>
 
-        <p>Check your answer using the "Check Answer" button. Once you have the correct answer, submit the practice
-            using the "Submit Practice" button.</p>
+    <script>
+        function checkAnswer(event) {
+            event.preventDefault(); // prevent default form submission
 
-        <div class="imgcontainer">
-            <div class="image-container">
-                <div class="image"><img src="{% static 'images/Gardevoir.png' %}" alt=""></div>
-                <div class="image"><img src="{% static 'images/Koraidon.png' %}" alt=""></div>
-            </div>
+            var damageOutput = document.getElementById('damageOutput').value.trim();
+            var correctAnswer = 380;
+            var feedback = document.getElementById('feedback');
+            var inputField = document.getElementById('damageOutput');
+            var submitButton = document.getElementById('submitBtn');
+            var finalForm = document.getElementById('final-form'); // form to submit once the answer is correct
 
-            <div class="popup-image">
-                <span>&times;</span>
-                <img src="" alt="" />
-            </div>
-        </div>
-        <br>
-        <!-- practice submission and feedback -->
-        <form id="practice-form" onsubmit="checkAnswer(event)"
-            action="{% url 'learning:submit_practice' practice.slug %}" method="post">
-            {% csrf_token %}
-            <label for="damageOutput"><b>Miracle Force's damage output</b></label>
-            <input type="number" min="0" id="damageOutput" name="damageOutput" style="width: 60px;" required>
-            <input type="submit" value="Check Answer" id="submitBtn">
-        </form>
-        <p id="feedback"></p>
-        <form id="final-form" method="post" action="{% url 'learning:submit_practice' practice.slug %}"
-            style="display: none;">
-            {% csrf_token %}
-            <input type="hidden" name="correct" value="True">
-            <button type="submit">Submit Practice</button>
-        </form>
-    </section>
-</main>
-
-<script>
-    function checkAnswer(event) {
-        event.preventDefault(); // prevent default form submission
-
-        var damageOutput = document.getElementById('damageOutput').value.trim();
-        var correctAnswer = 380;
-        var feedback = document.getElementById('feedback');
-        var inputField = document.getElementById('damageOutput');
-        var submitButton = document.getElementById('submitBtn');
-        var finalForm = document.getElementById('final-form'); // form to submit once the answer is correct
-
-        // check for correct answer and provide feedback
-        if (parseInt(damageOutput) === correctAnswer) {
-            feedback.textContent = 'Correct! 190 * 2 = 380. Well done!';
-            inputField.disabled = true; // disable input field
-            submitButton.disabled = true; // disable submit button
-            finalForm.style.display = 'block'; // show the final submission form
-        } else {
-            feedback.textContent = 'Incorrect. Please try again.';
+            // check for correct answer and provide feedback
+            if (parseInt(damageOutput) === correctAnswer) {
+                feedback.textContent = 'Correct! 190 * 2 = 380. Well done!';
+                inputField.disabled = true; // disable input field
+                submitButton.disabled = true; // disable submit button
+                finalForm.style.display = 'block'; // show the final submission form
+            } else {
+                feedback.textContent = 'Incorrect. Please try again.';
+            }
         }
-    }
 
-    // Function to handle popup image display
-    document.querySelectorAll(".image img").forEach(image => {
-        image.onclick = () => {
-            document.querySelector(".popup-image").style.display = "block";
-            document.querySelector(".popup-image img").src = image.getAttribute("src");
+        // Function to handle popup image display
+        document.querySelectorAll(".image img").forEach(image => {
+            image.onclick = () => {
+                document.querySelector(".popup-image").style.display = "block";
+                document.querySelector(".popup-image img").src = image.getAttribute("src");
+            };
+        });
+
+        // Close the popup when clicking outside the image
+        document.querySelector(".popup-image").onclick = (event) => {
+            if (event.target.classList.contains('popup-image')) {
+                document.querySelector(".popup-image").style.display = "none";
+            }
         };
-    });
-
-    // Close the popup when clicking outside the image
-    document.querySelector(".popup-image").onclick = (event) => {
-        if (event.target.classList.contains('popup-image')) {
-            document.querySelector(".popup-image").style.display = "none";
-        }
-    };
-</script>
+    </script>
+</div><br>
 {% endblock %}

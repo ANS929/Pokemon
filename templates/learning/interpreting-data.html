@@ -4,9 +4,36 @@
 {% block title_block %}
 Interpreting Data
 {% endblock %}
-
 {% block body_block %}
 <style>
+    .details {
+        font-size: 28px;
+        flex: 1;
+        border: 5px solid #316cbc;
+        padding: 25px;
+        margin: 20px;
+        height: auto;
+    }
+
+    .content {
+        flex: 2;
+        display: flex;
+        flex-direction: column;
+        border: 5px solid #ffcb13;
+        padding: 25px;
+        margin: 20px;
+    }
+
+    .lesson-container {
+        display: flex;
+        font-size: 20px;
+        align-items: flex-start;
+    }
+
+    .details h1 {
+        text-align: center;
+    }
+
     .imgcontainer {
         max-width: 100%;
         padding: 10px;
@@ -80,98 +107,114 @@ Interpreting Data
     }
 </style>
 <header>
-    <h1>Data Analysis - Interpreting Data</h1>
+    <h1>Interpreting Data</h1>
 </header>
 
-<main>
-    <section>
-        <h2>Introduction:</h2>
-        <p>Content here</p>
-    </section>
+<div class="lesson-container">
+    <div class="content">
+        <main>
+            <section>
+                <h2>Introduction:</h2>
+                <p>Content here</p>
+            </section>
 
-    <section>
-        <h2>Circle Graphs: </h2>
-        <p>Content here</p>
-    </section>
+            <section>
+                <h2>Circle Graphs:</h2>
+                <p>Content here</p>
+            </section>
 
-    <section>
-        <h2>You Try:</h2>
-        <p> The following data was collected from the 2024 Indianapolis Regional. These are the decks that made Day
-            2. Which deck had the greatest share of the meta?</p>
+            <section>
+                <h2>You Try:</h2>
+                <p> The following data was collected from the 2024 Indianapolis Regional. These are the decks that made
+                    Day
+                    2. Which deck had the greatest share of the meta?</p>
 
-        <p>Check your answer using the "Check Answer" button. Once you have the correct answer, submit the practice
-            using the "Submit Practice" button.</p>
+                <p><u>Check your answer using the "Check Answer" button. Once you have the correct answer, submit the
+                        practice
+                        using the "Submit Practice" button.</u></p>
 
-        <div class="imgcontainer">
-            <div class="image-container">
-                <div class="image"><img src="{% static 'images/Indianapolis.jpeg' %}" alt=""></div>
-            </div>
+                <div class="imgcontainer">
+                    <div class="image-container">
+                        <div class="image"><img src="{% static 'images/Indianapolis.jpeg' %}" alt=""></div>
+                    </div>
 
-            <div class="popup-image">
-                <span>&times;</span>
-                <img src="" alt="" />
-            </div>
-        </div>
-        <br>
-        <!-- practice submission and feedback -->
-        <form id="practice-form" onsubmit="checkAnswer(event)"
-            action="{% url 'learning:submit_practice' practice.slug %}" method="post">
-            {% csrf_token %}
-            <label for="greatest"><b>Deck with the greatest meta share</b></label>
-            <select id="greatest" name="greatest">
-                <option value="" selected disabled>Select deck</option>
-                <option value="Other">Other</option>
-                <option value="Charizard ex">Charizard ex</option>
-                <option value="Chien-Pao ex">Chien-Pao ex</option>
-                <option value="Arceus VSTAR">Arceus VSTAR</option>
-            </select>
-            <input type="submit" value="Check Answer" id="submitBtn">
-        </form>
-        <p id="feedback"></p>
-        <form id="final-form" method="post" action="{% url 'learning:submit_practice' practice.slug %}"
-            style="display: none;">
-            {% csrf_token %}
-            <input type="hidden" name="correct" value="True">
-            <button type="submit">Submit Practice</button>
-        </form>
-    </section>
-</main>
+                    <div class="popup-image">
+                        <span>&times;</span>
+                        <img src="" alt="" />
+                    </div>
+                </div>
+                <br>
+                <!-- practice submission and feedback -->
+                <form id="practice-form" onsubmit="checkAnswer(event)"
+                    action="{% url 'learning:submit_practice' practice.slug %}" method="post">
+                    {% csrf_token %}
+                    <label for="greatest"><b>Deck with the greatest meta share</b></label>
+                    <select id="greatest" name="greatest">
+                        <option value="" selected disabled>Select deck</option>
+                        <option value="Other">Other</option>
+                        <option value="Charizard ex">Charizard ex</option>
+                        <option value="Chien-Pao ex">Chien-Pao ex</option>
+                        <option value="Arceus VSTAR">Arceus VSTAR</option>
+                    </select>
+                    <input type="submit" value="Check Answer" id="submitBtn">
+                </form>
+                <p id="feedback"></p>
+                <form id="final-form" method="post" action="{% url 'learning:submit_practice' practice.slug %}"
+                    style="display: none;">
+                    {% csrf_token %}
+                    <input type="hidden" name="correct" value="True">
+                    <button type="submit">Submit Practice</button>
+                </form>
+            </section>
+        </main>
+    </div>
+    <div class="details">
+        <h1>Data Analysis Content</h1>
+        <ul>
+            <li><a href="{% url 'learning:practice_detail' practice_slug='representing-data' %}">Representing Data</a>
+            </li>
+            <li><a href="{% url 'learning:practice_detail' practice_slug='interpreting-data' %}">Interpreting Data</a>
+            </li>
+            <li><a href="{% url 'learning:quiz_detail' quiz_slug='data-analysis-quiz' %}">Data Analysis Quiz</a></li>
+        </ul>
+    </div>
 
-<script>
-    // function to check the answer for the You Try problem
-    function checkAnswer(event) {
-        event.preventDefault(); // prevent default form submission
+    <script>
+        // function to check the answer for the You Try problem
+        function checkAnswer(event) {
+            event.preventDefault(); // prevent default form submission
 
-        var greatest = document.getElementById('greatest').value;
-        var correctAnswer = 'Charizard ex';
-        var feedback = document.getElementById('feedback');
-        var selectField = document.getElementById('greatest');
-        var submitButton = document.getElementById('submitBtn');
-        var finalForm = document.getElementById('final-form'); // form to submit once the answer is correct
+            var greatest = document.getElementById('greatest').value;
+            var correctAnswer = 'Charizard ex';
+            var feedback = document.getElementById('feedback');
+            var selectField = document.getElementById('greatest');
+            var submitButton = document.getElementById('submitBtn');
+            var finalForm = document.getElementById('final-form'); // form to submit once the answer is correct
 
-        // check for correct answer and provide feedback
-        if (greatest === correctAnswer) {
-            feedback.textContent = 'Correct! Charizard ex makes up the largest portion of the circle graph. Well done!';
-            selectField.disabled = true; // disable select field
-            submitButton.disabled = true; // disable submit button
-            finalForm.style.display = 'block'; // show the final submission form
-        } else {
-            feedback.textContent = 'Incorrect. Please try again.';
+            // check for correct answer and provide feedback
+            if (greatest === correctAnswer) {
+                feedback.textContent = 'Correct! Charizard ex makes up the largest portion of the circle graph. Well done!';
+                selectField.disabled = true; // disable select field
+                submitButton.disabled = true; // disable submit button
+                finalForm.style.display = 'block'; // show the final submission form
+            } else {
+                feedback.textContent = 'Incorrect. Please try again.';
+            }
         }
-    }
-    // Function to handle popup image display
-    document.querySelectorAll(".image img").forEach(image => {
-        image.onclick = () => {
-            document.querySelector(".popup-image").style.display = "block";
-            document.querySelector(".popup-image img").src = image.getAttribute("src");
+        // Function to handle popup image display
+        document.querySelectorAll(".image img").forEach(image => {
+            image.onclick = () => {
+                document.querySelector(".popup-image").style.display = "block";
+                document.querySelector(".popup-image img").src = image.getAttribute("src");
+            };
+        });
+
+        // Close the popup when clicking outside the image
+        document.querySelector(".popup-image").onclick = (event) => {
+            if (event.target.classList.contains('popup-image')) {
+                document.querySelector(".popup-image").style.display = "none";
+            }
         };
-    });
-
-    // Close the popup when clicking outside the image
-    document.querySelector(".popup-image").onclick = (event) => {
-        if (event.target.classList.contains('popup-image')) {
-            document.querySelector(".popup-image").style.display = "none";
-        }
-    };
-</script>
+    </script>
+</div><br>
 {% endblock %}

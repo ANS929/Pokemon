@@ -4,9 +4,36 @@
 {% block title_block %}
 Computation Quiz
 {% endblock %}
-
 {% block body_block %}
 <style>
+    .details {
+        font-size: 28px;
+        flex: 1;
+        border: 5px solid #316cbc;
+        padding: 25px;
+        margin: 20px;
+        height: auto;
+    }
+
+    .content {
+        flex: 2;
+        display: flex;
+        flex-direction: column;
+        border: 5px solid #ffcb13;
+        padding: 25px;
+        margin: 20px;
+    }
+
+    .quiz-container {
+        display: flex;
+        font-size: 20px;
+        align-items: flex-start;
+    }
+
+    .details h1 {
+        text-align: center;
+    }
+
     .imgcontainer {
         max-width: 100%;
         padding: 10px;
@@ -80,66 +107,90 @@ Computation Quiz
     }
 </style>
 <header>
-    <h1>Computation - Quiz</h1>
+    <h1>Computation Quiz</h1>
 </header>
 
-<h2>Instructions:</h2>
-<p>Use the cards to answer the five questions below.</p>
+<div class="quiz-container">
+    <div class="content">
+        <main>
+            <section>
+                <h2>Instructions:</h2>
+                <p>Use the cards to answer the five questions below.</p>
+                <p><u>When you are finished with the quiz, press the "Submit Quiz" button.</u></p>
 
-<div class="imgcontainer">
-    <div class="image-container">
-        <div class="image"><img src="{% static 'images/Lucario.png' %}" alt=""></div>
-        <div class="image"><img src="{% static 'images/Maushold.png' %}" alt=""></div>
-        <div class="image"><img src="{% static 'images/Dodrio.png' %}" alt=""></div>
+                <div class="imgcontainer">
+                    <div class="image-container">
+                        <div class="image"><img src="{% static 'images/Lucario.png' %}" alt=""></div>
+                        <div class="image"><img src="{% static 'images/Maushold.png' %}" alt=""></div>
+                        <div class="image"><img src="{% static 'images/Dodrio.png' %}" alt=""></div>
+                    </div>
+
+                    <div class="popup-image">
+                        <span>&times;</span>
+                        <img src="" alt="" />
+                    </div>
+                </div>
+            </section><br>
+
+            <form method="post" action="{% url 'learning:submit_quiz' quiz_slug=quiz.slug %}">
+                {% csrf_token %}
+                <div class="question">
+                    <p>1.) One of your Fighting Pokémon was Knocked Out by damage from an attack during your opponent's
+                        last
+                        turn.
+                        How much damage will your Lucario's Avenging Knuckle attack do this turn?</p>
+                    <input type="number" min="0" name="question1" style="width: 100px;" required>
+                </div> <br>
+                <div class="question">
+                    <p>2.) You have 4 Maushold in play. How much damage will your active Maushold's Family Attack do?
+                    </p>
+                    <input type="number" min="0" name="question2" style="width: 100px;" required>
+                </div> <br>
+                <div class="question">
+                    <p>3.) Your opponent's Dodrio has 5 damage counters on it. How much damage does its Ballistic Beak
+                        attack do?
+                    </p>
+                    <input type="number" min="0" name="question3" style="width: 100px;" required>
+                </div> <br>
+                <div class="question">
+                    <p>4.) Your Lucario currently has 90 HP left. How much damage has been done to it so far?</p>
+                    <input type="number" min="0" name="question4" style="width: 100px;" required>
+                </div> <br>
+                <div class="question">
+                    <p>5.) What is the difference between Maushold's Pokédex number and Lucario's Pokédex number?</p>
+                    <input type="number" min="0" name="question5" style="width: 100px;" required>
+                </div> <br>
+                <button type="submit">Submit Quiz</button>
+            </form>
+        </main>
+    </div>
+    <div class="details">
+        <h1>Computation Content</h1>
+        <ul>
+            <li><a
+                    href="{% url 'learning:practice_detail' practice_slug='addition-and-subtraction-of-whole-numbers' %}">Addition
+                    and Subtraction of Whole Numbers</a></li>
+            <li><a href="{% url 'learning:practice_detail' practice_slug='multiplication-of-whole-numbers' %}">Multiplication
+                    of Whole Numbers</a></li>
+            <li><a href="{% url 'learning:quiz_detail' quiz_slug='computation-quiz' %}">Computation Quiz</a></li>
+        </ul>
     </div>
 
-    <div class="popup-image">
-        <span>&times;</span>
-        <img src="" alt="" />
-    </div>
-</div>
+    <script>
+        // Function to handle popup display
+        document.querySelectorAll(".image img").forEach(image => {
+            image.onclick = () => {
+                document.querySelector(".popup-image").style.display = "block";
+                document.querySelector(".popup-image img").src = image.getAttribute("src");
+            };
+        });
 
-<form method="post" action="{% url 'learning:submit_quiz' quiz_slug=quiz.slug %}">
-    {% csrf_token %}
-    <div class="question">
-        <p>1.) One of your Fighting Pokémon was Knocked Out by damage from an attack during your opponent's last turn. How much damage will your Lucario's Avenging Knuckle attack do this turn?</p>
-        <input type="text" name="question1" style="width: 40px;">
-    </div> <br>
-    <div class="question">
-        <p>2.) You have 4 Maushold in play. How much damage will your active Maushold's Family Attack do?</p>
-        <input type="text" name="question2" style="width: 40px;">
-    </div> <br>
-    <div class="question">
-        <p>3.) Your opponent's Dodrio has 5 damage counters on it. How much damage does its Ballistic Beak attack do?</p>
-        <input type="text" name="question3" style="width: 40px;">
-    </div> <br>
-    <div class="question">
-        <p>4.) Your Lucario currently has 90 HP left. How much damage has been done to it so far?</p>
-        <input type="text" name="question4" style="width: 40px;">
-    </div> <br>
-    <div class="question">
-        <p>5.) What is the difference between Maushold's Pokédex number and Lucario's Pokédex number?</p>
-        <input type="text" name="question5" style="width: 40px;">
-    </div> <br>
-    <button type="submit">Submit Quiz</button>
-</form> <br>
-
-<script>
-    // Function to handle popup display
-    document.querySelectorAll(".image img").forEach(image => {
-        image.onclick = () => {
-            document.querySelector(".popup-image").style.display = "block";
-            document.querySelector(".popup-image img").src = image.getAttribute("src");
+        // Close popup when clicking outside the image
+        document.querySelector(".popup-image").onclick = (event) => {
+            if (event.target.classList.contains('popup-image')) {
+                document.querySelector(".popup-image").style.display = "none";
+            }
         };
-    });
-
-    // Close popup when clicking outside the image
-    document.querySelector(".popup-image").onclick = (event) => {
-        if (event.target.classList.contains('popup-image')) {
-            document.querySelector(".popup-image").style.display = "none";
-        }
-    };
-</script>
-
-
+    </script>
+</div><br>
 {% endblock %}

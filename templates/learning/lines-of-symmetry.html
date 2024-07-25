@@ -4,10 +4,36 @@
 {% block title_block %}
 Lines of Symmetry
 {% endblock %}
-
 {% block body_block %}
-
 <style>
+    .details {
+        font-size: 28px;
+        flex: 1;
+        border: 5px solid #316cbc;
+        padding: 25px;
+        margin: 20px;
+        height: auto;
+    }
+
+    .content {
+        flex: 2;
+        display: flex;
+        flex-direction: column;
+        border: 5px solid #ffcb13;
+        padding: 25px;
+        margin: 20px;
+    }
+
+    .lesson-container {
+        display: flex;
+        font-size: 20px;
+        align-items: flex-start;
+    }
+
+    .details h1 {
+        text-align: center;
+    }
+
     /* styles for cards */
     .imgcontainer {
         max-width: 100%;
@@ -155,136 +181,150 @@ Lines of Symmetry
     }
 </style>
 <header>
-    <h1>Geometry - Lines of Symmetry</h1>
+    <h1>Lines of Symmetry</h1>
 </header>
+<div class="lesson-container">
+    <div class="content">
+        <main>
+            <section>
+                <h2>Introduction:</h2>
+                <p> Content here</p>
 
-<main>
-    <section>
-        <h2>Introduction:</h2>
-        <p> Content here</p>
-        <!-- container for cards -->
-        <div class="imgcontainer">
-            <div class="image-container">
-                <div class="image"><img src="{% static 'images/Kingambit.png' %}" alt=""></div>
-                <div class="image"><img src="{% static 'images/Palafin.png' %}" alt=""></div>
-            </div>
+                <!-- container for cards -->
+                <div class="imgcontainer">
+                    <div class="image-container">
+                        <div class="image"><img src="{% static 'images/Kingambit.png' %}" alt=""></div>
+                        <div class="image"><img src="{% static 'images/Palafin.png' %}" alt=""></div>
+                    </div>
 
-            <div class="popup-image">
-                <span>&times;</span>
-                <img src="" alt="" />
-            </div>
-        </div>
-    </section>
+                    <div class="popup-image">
+                        <span>&times;</span>
+                        <img src="" alt="" />
+                    </div>
+                </div>
+                <br>
+            </section>
 
-    <section>
-        <h2>Example 1:</h2>
-        <p>Content here</p>
-    </section>
+            <section>
+                <h2>Header 1:</h2>
+                <p>Content here</p>
+            </section>
 
-    <section>
-        <h2>Example 2:</h2>
-        <p>Content here</p>
+            <section>
+                <h2>Header 2:</h2>
+                <p>Content here</p>
 
-    </section>
+            </section>
 
-    <section>
-        <h2>You Try:</h2>
-        <p>True or False: The three rarity symbols pictured below are all symmetrical.</p>
+            <section>
+                <h2>You Try:</h2>
+                <p><b>True</b> or <b>False</b>: The three rarity symbols pictured below are all symmetrical.</p>
 
-        <p>Check your answer using the "Check Answer" button. Once you have the correct answer, submit the practice
-            using the "Submit Practice" button.</p>
+                <p><u>Check your answer using the "Check Answer" button. Once you have the correct answer, submit the
+                        practice using the "Submit Practice" button.</u></p>
 
-            <!-- container for symbols -->
-        <div class="imgcontainer2">
-            <div class="image-container2">
-                <div class="image2"><img src="{% static 'images/common.png' %}" alt=""></div>
-                <div class="image2"><img src="{% static 'images/uncommon.png' %}" alt=""></div>
-                <div class="image2"><img src="{% static 'images/rare.png' %}" alt=""></div>
-            </div>
+                <!-- container for symbols -->
+                <div class="imgcontainer2">
+                    <div class="image-container2">
+                        <div class="image2"><img src="{% static 'images/common.png' %}" alt=""></div>
+                        <div class="image2"><img src="{% static 'images/uncommon.png' %}" alt=""></div>
+                        <div class="image2"><img src="{% static 'images/rare.png' %}" alt=""></div>
+                    </div>
 
-            <div class="popup-image2">
-                <span>&times;</span>
-                <img src="" alt="" />
-            </div>
-        </div>
-        <br>
-        <!-- practice submission and feedback -->
-        <form id="practice-form" onsubmit="checkAnswer(event)"
-            action="{% url 'learning:submit_practice' practice.slug %}" method="post">
-            {% csrf_token %}
-            <label>
-                <input type="radio" name="TF" value="true"> True
-            </label><br>
-            <label>
-                <input type="radio" name="TF" value="false"> False
-            </label><br>
-            <input type="submit" value="Check Answer" id="submitBtn">
-        </form>
-        <p id="feedback"></p>
-        <form id="final-form" method="post" action="{% url 'learning:submit_practice' practice.slug %}"
-            style="display: none;">
-            {% csrf_token %}
-            <input type="hidden" name="correct" value="True">
-            <button type="submit">Submit Practice</button>
-        </form>
-</main>
+                    <div class="popup-image2">
+                        <span>&times;</span>
+                        <img src="" alt="" />
+                    </div>
+                </div>
+                <br>
+                <!-- practice submission and feedback -->
+                <form id="practice-form" onsubmit="checkAnswer(event)"
+                    action="{% url 'learning:submit_practice' practice.slug %}" method="post">
+                    {% csrf_token %}
+                    <label>
+                        <input type="radio" name="TF" value="true"> True
+                    </label><br>
+                    <label>
+                        <input type="radio" name="TF" value="false"> False
+                    </label><br>
+                    <input type="submit" value="Check Answer" id="submitBtn">
+                </form>
+                <p id="feedback"></p>
+                <form id="final-form" method="post" action="{% url 'learning:submit_practice' practice.slug %}"
+                    style="display: none;">
+                    {% csrf_token %}
+                    <input type="hidden" name="correct" value="True">
+                    <button type="submit">Submit Practice</button>
+                </form>
+        </main>
+    </div>
+    <div class="details">
+        <h1>Geometry Content</h1>
+        <ul>
+            <li><a href="{% url 'learning:practice_detail' practice_slug='lines-of-symmetry' %}">Lines of Symmetry</a>
+            </li>
+            <li><a href="{% url 'learning:practice_detail' practice_slug='identifying-geometric-shapes' %}">Identifying
+                    Geometric Shapes</a></li>
+            <li><a href="{% url 'learning:quiz_detail' quiz_slug='geometry-quiz' %}">Geometry Quiz</a></li>
+        </ul>
+    </div>
 
-<script>
-    // function to check the You Try answer
-    function checkAnswer(event) {
-        event.preventDefault(); // prevent default form submission
+    <script>
+        // function to check the You Try answer
+        function checkAnswer(event) {
+            event.preventDefault(); // prevent default form submission
 
-        var selectedOption = document.querySelector('input[name="TF"]:checked');
-        var feedback = document.getElementById('feedback');
-        var submitButton = document.getElementById('submitBtn');
-        var finalForm = document.getElementById('final-form'); // form to submit once the answer is correct
+            var selectedOption = document.querySelector('input[name="TF"]:checked');
+            var feedback = document.getElementById('feedback');
+            var submitButton = document.getElementById('submitBtn');
+            var finalForm = document.getElementById('final-form'); // form to submit once the answer is correct
 
-        if (!selectedOption) {
-            feedback.textContent = 'Please select an answer.';
-            return;
+            if (!selectedOption) {
+                feedback.textContent = 'Please select an answer.';
+                return;
+            }
+
+            var selectedValue = selectedOption.value;
+            var correctAnswer = 'true';
+
+            if (selectedValue === correctAnswer) {
+                feedback.textContent = 'Correct! All 3 symbols have vertical symmmetry. Well done!';
+                submitButton.disabled = true; // disable submit button
+                finalForm.style.display = 'block'; // show the final submission form
+            } else {
+                feedback.textContent = 'Incorrect. Please try again.';
+            }
         }
 
-        var selectedValue = selectedOption.value;
-        var correctAnswer = 'true';
+        // Function to handle popup image display (for cards)
+        document.querySelectorAll(".image img").forEach(image => {
+            image.onclick = () => {
+                document.querySelector(".popup-image").style.display = "block";
+                document.querySelector(".popup-image img").src = image.getAttribute("src");
+            };
+        });
 
-        if (selectedValue === correctAnswer) {
-            feedback.textContent = 'Correct! All 3 symbols have vertical symmmetry. Well done!';
-            submitButton.disabled = true; // disable submit button
-            finalForm.style.display = 'block'; // show the final submission form
-        } else {
-            feedback.textContent = 'Incorrect. Please try again.';
-        }
-    }
-
-    // Function to handle popup image display (for cards)
-    document.querySelectorAll(".image img").forEach(image => {
-        image.onclick = () => {
-            document.querySelector(".popup-image").style.display = "block";
-            document.querySelector(".popup-image img").src = image.getAttribute("src");
+        // Close the popup when clicking outside the image (for cards)
+        document.querySelector(".popup-image").onclick = (event) => {
+            if (event.target.classList.contains('popup-image')) {
+                document.querySelector(".popup-image").style.display = "none";
+            }
         };
-    });
 
-    // Close the popup when clicking outside the image (for cards)
-    document.querySelector(".popup-image").onclick = (event) => {
-        if (event.target.classList.contains('popup-image')) {
-            document.querySelector(".popup-image").style.display = "none";
-        }
-    };
+        // Function to handle popup image display (for symbols)
+        document.querySelectorAll(".image2 img").forEach(image => {
+            image.onclick = () => {
+                document.querySelector(".popup-image2").style.display = "block";
+                document.querySelector(".popup-image2 img").src = image.getAttribute("src");
+            };
+        });
 
-    // Function to handle popup image display (for symbols)
-    document.querySelectorAll(".image2 img").forEach(image => {
-        image.onclick = () => {
-            document.querySelector(".popup-image2").style.display = "block";
-            document.querySelector(".popup-image2 img").src = image.getAttribute("src");
+        // Close the popup when clicking outside the image (for symbols)
+        document.querySelector(".popup-image2").onclick = (event) => {
+            if (event.target.classList.contains('popup-image2')) {
+                document.querySelector(".popup-image2").style.display = "none";
+            }
         };
-    });
-
-    // Close the popup when clicking outside the image (for symbols)
-    document.querySelector(".popup-image2").onclick = (event) => {
-        if (event.target.classList.contains('popup-image2')) {
-            document.querySelector(".popup-image2").style.display = "none";
-        }
-    };
-</script>
-
+    </script>
+</div><br>
 {% endblock %}

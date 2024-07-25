@@ -4,9 +4,36 @@
 {% block title_block %}
 Data Analysis Quiz
 {% endblock %}
-
 {% block body_block %}
 <style>
+    .details {
+        font-size: 28px;
+        flex: 1;
+        border: 5px solid #316cbc;
+        padding: 25px;
+        margin: 20px;
+        height: auto;
+    }
+
+    .content {
+        flex: 2;
+        display: flex;
+        flex-direction: column;
+        border: 5px solid #ffcb13;
+        padding: 25px;
+        margin: 20px;
+    }
+
+    .quiz-container {
+        display: flex;
+        font-size: 20px;
+        align-items: flex-start;
+    }
+
+    .details h1 {
+        text-align: center;
+    }
+
     .imgcontainer {
         max-width: 100%;
         padding: 10px;
@@ -79,55 +106,75 @@ Data Analysis Quiz
         }
     }
 </style>
-<main>
-    <header>
-        <h1>Data Analysis - Quiz</h1>
-    </header>
-    <h2>Instructions: The following data was collected from EUIC 2024. These are the decks that made Day 2. Use the data
-        to answer the questions below.</h2>
+<header>
+    <h1>Data Analysis Quiz</h1>
+</header>
 
-    <div class="imgcontainer">
-        <div class="image-container">
-            <div class="image"><img src="{% static 'images/EUIC.jpeg' %}" alt=""></div>
-        </div>
+<div class="quiz-container">
+    <div class="content">
+        <main>
+            <section>
+                <h2>Instructions:</h2>
+                <p>The following data was collected from EUIC 2024. These are the decks that made Day 2.
+                    Use the data to answer the questions below.</p>
+                <p><u>When you are finished with the quiz, press the "Submit Quiz" button.</u></p>
 
-        <div class="popup-image">
-            <span>&times;</span>
-            <img src="" alt="" />
-        </div>
+                <div class="imgcontainer">
+                    <div class="image-container">
+                        <div class="image"><img src="{% static 'images/EUIC.jpeg' %}" alt=""></div>
+                    </div>
+
+                    <div class="popup-image">
+                        <span>&times;</span>
+                        <img src="" alt="" />
+                    </div>
+                </div>
+            </section> <br>
+
+            <form method="post" action="{% url 'learning:submit_quiz' quiz_slug=quiz.slug %}">
+                {% csrf_token %}
+                <div class="question">
+                    <p>1.) Which deck has the second greatest meta share?</p>
+                    <label><input type="radio" name="question1" value="Chien-Pao ex" required>Chien-Pao ex</label><br>
+                    <label><input type="radio" name="question1" value="Other" required>Other</label><br>
+                    <label><input type="radio" name="question1" value="Charizard ex" required>Charizard ex</label><br>
+                </div> <br>
+                <div class="question">
+                    <p>2.) True or False: Charizard ex, Chien-Pao ex, and Arceus VSTAR make up half of the meta.</p>
+                    <label><input type="radio" name="question2" value="True" required>True</label><br>
+                    <label><input type="radio" name="question2" value="False" required>False</label><br>
+                </div> <br>
+                <div class="question">
+                    <p>3.) Ancient Box and another deck are tied for the lowest meta share. What is the other deck?</p>
+                    <label><input type="radio" name="question3" value="Snorlax Stall" required>Snorlax Stall</label><br>
+                    <label><input type="radio" name="question3" value="Pidgeot Control" required>Pidgeot Control</label><br>
+                    <label><input type="radio" name="question3" value="None of the above" required>None of the above</label><br>
+                </div> <br>
+                <div class="question">
+                    <p>4.) Charizard ex makes up approximately what percentage of the meta?</p>
+                    <label><input type="radio" name="question4" value="25" required>25</label><br>
+                    <label><input type="radio" name="question4" value="20" required>20</label><br>
+                    <label><input type="radio" name="question4" value="10" required>10</label><br>
+                </div> <br>
+                <div class="question">
+                    <p>5.) What is another data representation that could be used to display this information?</p>
+                    <input type="text" name="question5" style="width: 100px;" required>
+                </div> <br>
+                <button type="submit">Submit Quiz</button>
+            </form>            
+        </main>
+    </div>
+    <div class="details">
+        <h1>Data Analysis Content</h1>
+        <ul>
+            <li><a href="{% url 'learning:practice_detail' practice_slug='representing-data' %}">Representing Data</a>
+            </li>
+            <li><a href="{% url 'learning:practice_detail' practice_slug='interpreting-data' %}">Interpreting Data</a>
+            </li>
+            <li><a href="{% url 'learning:quiz_detail' quiz_slug='data-analysis-quiz' %}">Data Analysis Quiz</a></li>
+        </ul>
     </div>
 
-    <form method="post" action="{% url 'learning:submit_quiz' quiz_slug=quiz.slug %}">
-        {% csrf_token %}
-        <div class="question">
-            <p>1.) Which deck has the second greatest meta share?</p>
-            <label><input type="radio" name="question1" value="Chien-Pao ex">Chien-Pao ex</label><br>
-            <label><input type="radio" name="question1" value="Other">Other</label><br>
-            <label><input type="radio" name="question1" value="Charizard ex">Charizard ex</label><br>
-        </div> <br>
-        <div class="question">
-            <p>2.) True or False: Charizard ex, Chien-Pao ex, and Arceus VSTAR make up half of the meta.</p>
-            <label><input type="radio" name="question2" value="True">True</label><br>
-            <label><input type="radio" name="question2" value="False">False</label><br>
-        </div> <br>
-        <div class="question">
-            <p>3.) Ancient Box and another deck are tied for the lowest meta share. What is the other deck?</p>
-            <label><input type="radio" name="question3" value="Snorlax Stall">Snorlax Stall</label><br>
-            <label><input type="radio" name="question3" value="Pidgeot Control">Pidgeot Control</label><br>
-            <label><input type="radio" name="question3" value="None of the above">None of the above</label><br>
-        </div> <br>
-        <div class="question">
-            <p>4.) Charizard ex makes up approximately what percentage of the meta?</p>
-            <label><input type="radio" name="question4" value="25">25</label><br>
-            <label><input type="radio" name="question4" value="20">20</label><br>
-            <label><input type="radio" name="question4" value="10">10</label><br>
-        </div> <br>
-        <div class="question">
-            <p>5.) What is another data representation that could be used to display this information?</p>
-            <input type="text" name="question5" style="width: 100px;">
-        </div> <br>
-        <button type="submit">Submit Quiz</button>
-    </form> <br>
     <script>
         // Function to handle popup display
         document.querySelectorAll(".image img").forEach(image => {
@@ -144,4 +191,5 @@ Data Analysis Quiz
             }
         };
     </script>
-    {% endblock %}
+</div><br>
+{% endblock %}

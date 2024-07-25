@@ -138,12 +138,13 @@
                         <li><a href="{% url 'learning:learning_home' %}">Learning Homepage</a></li>
                     </ul>
                     {% if user.is_authenticated %}
+                    <h2>Dashboard:</h2>
                     {% if user.profile.is_student %}
                     <!-- Student content -->
                     <ul>
                         <li><a href="{% url 'learning:student_dashboard' user.id %}">Student Dashboard</a></li>
                     </ul>
-                    <h4>Math Content:</h4>
+                    <h2>Math Content:</h2>
                     <ul>
                         <li><a href="{% url 'learning:gr1' %}">Grade 1</a></li>
                         <li><a href="{% url 'learning:gr2' %}">Grade 2</a></li>
@@ -169,6 +170,7 @@
                     {% endif %}
                     {% else %}
                     <!-- Content for non-authenticated user -->
+                    <h2>Account:</h2>
                     <ul>
                         <li><a href="{% url 'registration_register' %}">Create an Account</a></li>
                         <li><a href="{% url 'auth_login' %}">Login to Your Account</a></li>
@@ -328,7 +330,7 @@
                         text-align: center;
                     }
 
-                    .homepage-container h1{
+                    .homepage-container h1 {
                         text-align: center;
                     }
                 </style>
@@ -343,7 +345,7 @@
                         <p>PokéMath is an educational platform that combines mathematics education with the Pokémon
                             Trading Card Game (TCG). Learn by completing interactive problems and striving to earn
                             badges, just like a true Pokémon trainer!</p>
-                        <p class="learn-more">Learn more <a href="{% url 'about:site' %}">here</a>, or <a
+                        <p class="learn-more">Learn more <a href="{% url 'about:site' %}">here</a> or <a
                                 href="{% url 'registration_register' %}">sign up</a> today!</p>
                         <div class="image-1"><img src="{% static 'images/ash_ketchum.jpg' %}"
                                 alt="Ash Ketchum with his Pokémon team andchampionship trophy"></div>

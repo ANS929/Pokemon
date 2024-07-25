@@ -4,9 +4,36 @@
 {% block title_block %}
 Algebraic Thinking Quiz
 {% endblock %}
-
 {% block body_block %}
 <style>
+    .details {
+        font-size: 28px;
+        flex: 1;
+        border: 5px solid #316cbc;
+        padding: 25px;
+        margin: 20px;
+        height: auto;
+    }
+
+    .content {
+        flex: 2;
+        display: flex;
+        flex-direction: column;
+        border: 5px solid #ffcb13;
+        padding: 25px;
+        margin: 20px;
+    }
+
+    .quiz-container {
+        display: flex;
+        font-size: 20px;
+        align-items: flex-start;
+    }
+
+    .details h1 {
+        text-align: center;
+    }
+
     .imgcontainer {
         max-width: 100%;
         padding: 10px;
@@ -80,77 +107,99 @@ Algebraic Thinking Quiz
     }
 </style>
 <header>
-    <h1>Algebraic Thinking - Quiz</h1>
+    <h1>Algebraic Thinking Quiz</h1>
 </header>
 
-<h2>Instructions:</h2>
-<p>Use the cards to answer the five questions below.</p>
+<div class="quiz-container">
+    <div class="content">
+        <main>
+            <section>
+                <h2>Instructions:</h2>
+                <p>Use the cards to answer the five questions below.</p>
+                <p><u>When you are finished with the quiz, press the "Submit Quiz" button.</u></p>
+                <div class="imgcontainer">
+                    <div class="image-container">
+                        <div class="image"><img src="{% static 'images/Venusaur151.png' %}" alt=""></div>
+                        <div class="image"><img src="{% static 'images/Charizard151.png' %}" alt=""></div>
+                        <div class="image"><img src="{% static 'images/Blastoise151.png' %}" alt=""></div>
+                    </div>
 
-<div class="imgcontainer">
-    <div class="image-container">
-        <div class="image"><img src="{% static 'images/Venusaur151.png' %}" alt=""></div>
-        <div class="image"><img src="{% static 'images/Charizard151.png' %}" alt=""></div>
-        <div class="image"><img src="{% static 'images/Blastoise151.png' %}" alt=""></div>
+                    <div class="popup-image">
+                        <span>&times;</span>
+                        <img src="" alt="" />
+                    </div>
+                </div>
+            </section> <br>
+
+            <form method="post" action="{% url 'learning:submit_quiz' quiz_slug=quiz.slug %}">
+                {% csrf_token %}
+                <div class="question">
+                    <p>1.) Your Venusaur ex was attacked for 250 damage. At the beginning of your turn, you use its
+                        Tranquil Flower ability. How many Hit Points does your Venusaur ex now have?</p>
+                    <input type="number" min="0" name="question1" style="width: 100px;" required>
+                </div> <br>
+                <div class="question">
+                    <p>2.) Your Charizard ex has 3 damage counters on it. How much damage will its Brave Wing attack do?
+                    </p>
+                    <input type="number" min="0" name="question2" style="width: 100px;" required>
+                </div> <br>
+                <div class="question">
+                    <p>3.) You have 9 Basic Energy cards in your deck. 2 are Darkness, and the rest are Psychic. What
+                        fraction of your Basic Energy cards are Psychic?</p>
+                    <input type="number" min="0" name="question3" style="width: 100px;" required>
+                </div> <br>
+                <div class="question">
+                    <p>4.) True or False: If Charizard ex attacks Blastoise ex with Explosive Vortex, Blastoise will be
+                        Knocked Out.
+                    </p>
+                    <select name="question4" required>
+                        <option value="">Select an answer</option>
+                        <option value="True">True</option>
+                        <option value="False">False</option>
+                    </select>
+                </div> <br>
+                <div class="question">
+                    <p>5.) 15 of the cards in your deck are Pokémon. What fraction of the cards are NOT Pokémon? Write
+                        your answer
+                        as a fraction in simplest form.</p>
+                    <select name="question5" required>
+                        <option value="">Select an answer</option>
+                        <option value="1/4">1/4</option>
+                        <option value="3/4">3/4</option>
+                        <option value="2/3">2/3</option>
+                    </select>
+                </div> <br>
+                <button type="submit">Submit Quiz</button>
+            </form>
+        </main>
+    </div>
+    <div class="details">
+        <h1>Algebraic Thinking Content</h1>
+        <ul>
+            <li><a href="{% url 'learning:practice_detail' practice_slug='real-world-problems-with-whole-numbers' %}">Real-World
+                    Problems with Whole Numbers</a></li>
+            <li><a href="{% url 'learning:practice_detail' practice_slug='real-world-problems-with-fractions' %}">Real-World
+                    Problems with Fractions</a></li>
+            <li><a href="{% url 'learning:quiz_detail' quiz_slug='algebraic-thinking-quiz' %}">Algebraic Thinking
+                    Quiz</a></li>
+        </ul>
     </div>
 
-    <div class="popup-image">
-        <span>&times;</span>
-        <img src="" alt="" />
-    </div>
-</div>
+    <script>
+        // Function to handle popup display
+        document.querySelectorAll(".image img").forEach(image => {
+            image.onclick = () => {
+                document.querySelector(".popup-image").style.display = "block";
+                document.querySelector(".popup-image img").src = image.getAttribute("src");
+            };
+        });
 
-<form method="post" action="{% url 'learning:submit_quiz' quiz_slug=quiz.slug %}">
-    {% csrf_token %}
-    <div class="question">
-        <p>1.) Your Venusaur ex was attacked for 250 damage. At the beginning of your turn, you use its Tranquil Flower
-            ability. How many Hit Points does your Venusaur ex now have?</p>
-        <input type="text" name="question1" style="width: 40px;">
-    </div> <br>
-    <div class="question">
-        <p>2.) Your Charizard ex has 3 damage counters on it. How much damage will its Brave Wing attack do?</p>
-        <input type="text" name="question2" style="width: 40px;">
-    </div> <br>
-    <div class="question">
-        <p>3.) You have 9 Basic Energy cards in your deck. 2 are Darkness, and the rest are Psychic. What fraction of
-            your Basic Energy cards are Psychic?</p>
-        <input type="text" name="question3" style="width: 40px;">
-    </div> <br>
-    <div class="question">
-        <p>4.) True or False: If Charizard ex attacks Blastoise ex with Explosive Vortex, Blastoise will be Knocked Out.
-        </p>
-        <select name="question4">
-            <option value="">Select an answer</option>
-            <option value="True">True</option>
-            <option value="False">False</option>
-        </select>
-    </div> <br>
-    <div class="question">
-        <p>5.) 15 of the cards in your deck are Pokémon. What fraction of the cards are NOT Pokémon? Write your answer
-            as a fraction in simplest form.</p>
-        <select name="question5">
-            <option value="">Select an answer</option>
-            <option value="1/4">1/4</option>
-            <option value="3/4">3/4</option>
-            <option value="2/3">2/3</option>
-        </select>
-    </div> <br>
-    <button type="submit">Submit Quiz</button>
-</form> <br>
-
-<script>
-    // Function to handle popup display
-    document.querySelectorAll(".image img").forEach(image => {
-        image.onclick = () => {
-            document.querySelector(".popup-image").style.display = "block";
-            document.querySelector(".popup-image img").src = image.getAttribute("src");
+        // Close popup when clicking outside the image
+        document.querySelector(".popup-image").onclick = (event) => {
+            if (event.target.classList.contains('popup-image')) {
+                document.querySelector(".popup-image").style.display = "none";
+            }
         };
-    });
-
-    // Close popup when clicking outside the image
-    document.querySelector(".popup-image").onclick = (event) => {
-        if (event.target.classList.contains('popup-image')) {
-            document.querySelector(".popup-image").style.display = "none";
-        }
-    };
-</script>
+    </script>
+</div><br>
 {% endblock %}

@@ -4,9 +4,36 @@
 {% block title_block %}
 Geometry Quiz
 {% endblock %}
-
 {% block body_block %}
 <style>
+    .details {
+        font-size: 28px;
+        flex: 1;
+        border: 5px solid #316cbc;
+        padding: 25px;
+        margin: 20px;
+        height: auto;
+    }
+
+    .content {
+        flex: 2;
+        display: flex;
+        flex-direction: column;
+        border: 5px solid #ffcb13;
+        padding: 25px;
+        margin: 20px;
+    }
+
+    .quiz-container {
+        display: flex;
+        font-size: 20px;
+        align-items: flex-start;
+    }
+
+    .details h1 {
+        text-align: center;
+    }
+
     .imgcontainer {
         max-width: 100%;
         padding: 10px;
@@ -69,7 +96,7 @@ Geometry Quiz
         transform: translate(-50%, -50%);
         border: 5px solid #fff;
         border-radius: 5px;
-        width: 60vw;
+        width: 750px;
         object-fit: cover;
     }
 
@@ -80,60 +107,79 @@ Geometry Quiz
     }
 </style>
 <header>
-    <h1>Geometry - Quiz</h1>
-    <h2>Instructions: Use the cards to answer the five questions below.</h2>
+    <h1>Geometry Quiz</h1>
 </header>
 
-<main>
-    <div class="imgcontainer">
-        <div class="image-container">
-            <div class="image"><img src="{% static 'images/basicenergy.jpg' %}" alt=""></div>
-        </div>
+<div class="quiz-container">
+    <div class="content">
+        <main>
+            <section>
+                <h2>Instructions:</h2>
+                <p>Use the cards to answer the five questions below.</p>
+                <p><u>When you are finished with the quiz, press the "Submit Quiz" button.</u></p>
+                <div class="imgcontainer">
+                    <div class="image-container">
+                        <div class="image"><img src="{% static 'images/basicenergy.jpg' %}" alt=""></div>
+                    </div>
 
-        <div class="popup-image">
-            <span>&times;</span>
-            <img src="" alt="" />
-        </div>
+                    <div class="popup-image">
+                        <span>&times;</span>
+                        <img src="" alt="" />
+                    </div>
+                </div>
+            </section> <br>
+
+            <form method="post" action="{% url 'learning:submit_quiz' quiz_slug=quiz.slug %}">
+                {% csrf_token %}
+                <div class="question">
+                    <p>1.) Yes or No: Do any of the Basic Energy symbols have BOTH vertical and horizontal symmetry?</p>
+                    <input type="text" name="question1" style="width: 100px;" required>
+                </div> <br>
+                <div class="question">
+                    <p>2.) How many of the Basic Energy symbols are symmetrical?</p>
+                    <input type="text" name="question2" style="width: 100px;" required>
+                </div> <br>
+                <div class="question">
+                    <p>3.) The shape of a Pokémon card has what kind of symmetry?</p>
+                    <select name="question3" required>
+                        <option value="">Select an answer</option>
+                        <option value="vertical">Vertical</option>
+                        <option value="horizontal">Horizontal</option>
+                        <option value="both">Both</option>
+                    </select>
+                </div> <br>
+                <div class="question">
+                    <p>4.) <b>True</b> or <b>False</b>: The Psychic Energy symbol is symmetrical.</p>
+                    <select name="question4" required>
+                        <option value="">Select an answer</option>
+                        <option value="True">True</option>
+                        <option value="False">False</option>
+                    </select>
+                </div> <br>
+                <div class="question">
+                    <p>5.) Of the following Basic Energy symbols, which does NOT have vertical symmetry?</p>
+                    <select name="question5" required>
+                        <option value="">Select an answer</option>
+                        <option value="Darkness">Darkness</option>
+                        <option value="Metal">Metal</option>
+                        <option value="Fighting">Fighting</option>
+                    </select>
+                </div> <br>
+                <button type="submit">Submit Quiz</button>
+            </form>
+        </main>
+    </div>
+    <div class="details">
+        <h1>Geometry Content</h1>
+        <ul>
+            <li><a href="{% url 'learning:practice_detail' practice_slug='lines-of-symmetry' %}">Lines of Symmetry</a>
+            </li>
+            <li><a href="{% url 'learning:practice_detail' practice_slug='identifying-geometric-shapes' %}">Identifying
+                    Geometric Shapes</a></li>
+            <li><a href="{% url 'learning:quiz_detail' quiz_slug='geometry-quiz' %}">Geometry Quiz</a></li>
+        </ul>
     </div>
 
-    <form method="post" action="{% url 'learning:submit_quiz' quiz_slug=quiz.slug %}">
-        {% csrf_token %}
-        <div class="question">
-            <p>1.) Yes or No: Do any of the Basic Energy symbols have BOTH vertical and horizontal symmetry?</p>
-            <input type="text" name="question1" style="width: 100px;">
-        </div> <br>
-        <div class="question">
-            <p>2.) How many of the Basic Energy symbols are symmetrical?</p>
-            <input type="text" name="question2" style="width: 100px;">
-        </div> <br>
-        <div class="question">
-            <p>3.) The shape of a Pokémon card has what kind of symmetry?</p>
-            <select name="question3">
-                <option value="">Select an answer</option>
-                <option value="vertical">Vertical</option>
-                <option value="horizontal">Horizontal</option>
-                <option value="both">Both</option>
-            </select>
-        </div> <br>
-        <div class="question">
-            <p>4.) True or False: The Psychic Energy symbol is symmetrical.</p>
-            <select name="question4">
-                <option value="">Select an answer</option>
-                <option value="True">True</option>
-                <option value="False">False</option>
-            </select>
-        </div> <br>
-        <div class="question">
-            <p>5.) Of the following Basic Energy symbols, which does NOT have vertical symmetry?</p>
-            <select name="question5">
-                <option value="">Select an answer</option>
-                <option value="Darkness">Darkness</option>
-                <option value="Metal">Metal</option>
-                <option value="Fighting">Fighting</option>
-            </select>
-        </div> <br>
-        <button type="submit">Submit Quiz</button>
-    </form> <br>
     <script>
         // Function to handle popup display
         document.querySelectorAll(".image img").forEach(image => {
@@ -150,4 +196,5 @@ Geometry Quiz
             }
         };
     </script>
-    {% endblock %}
+</div><br>
+{% endblock %}

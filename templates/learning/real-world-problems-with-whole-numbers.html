@@ -4,9 +4,36 @@
 {% block title_block %}
 Real-World Problems with Whole Numbers
 {% endblock %}
-
 {% block body_block %}
 <style>
+    .details {
+        font-size: 28px;
+        flex: 1;
+        border: 5px solid #316cbc;
+        padding: 25px;
+        margin: 20px;
+        height: auto;
+    }
+
+    .content {
+        flex: 2;
+        display: flex;
+        flex-direction: column;
+        border: 5px solid #ffcb13;
+        padding: 25px;
+        margin: 20px;
+    }
+
+    .lesson-container {
+        display: flex;
+        font-size: 20px;
+        align-items: flex-start;
+    }
+
+    .details h1 {
+        text-align: center;
+    }
+
     .imgcontainer {
         max-width: 100%;
         padding: 10px;
@@ -80,102 +107,113 @@ Real-World Problems with Whole Numbers
     }
 </style>
 <header>
-    <h1>Algebraic Thinking - Real-World Problems with Whole Numbers</h1>
+    <h1>Real-World Problems with Whole Numbers</h1>
 </header>
+<div class="lesson-container">
+    <div class="content">
+        <main>
+            <section>
+                <h2>Introduction:</h2>
+                <p> Content here</p>
+            </section>
 
-<main>
-    <section>
-        <h2>Introduction:</h2>
-        <p> Content here
-        </p>
-    </section>
+            <section>
+                <h2>Header 1:</h2>
+                <p>Content here</p>
+            </section>
 
-    <section>
-        <h2>Example 1:</h2>
-        <p>Content here
+            <section>
+                <h2>Header 2:</h2>
+                <p>Content here</p>
+            </section>
 
-        </p>
-    </section>
+            <section>
+                <h2>You Try:</h2>
+                <p> Your opponent attacks your Iron Leaves ex with Raging Bolt ex's Bellowing Thunder, discarding 3
+                    Basic Energy. Your opponent claims this is enough damage to knock out your Iron Leaves, but you disagree.
+                    How many hit points does your Iron Leaves have left after the attack?</p>
 
-    <section>
-        <h2>Example 2:</h2>
-        <p>Content here</p>
+                <p><u>Check your answer using the "Check Answer" button. Once you have the correct answer, submit the
+                        practice using the "Submit Practice" button.</u></p>
 
-    </section>
+                <div class="imgcontainer">
+                    <div class="image-container">
+                        <div class="image"><img src="{% static 'images/IronLeaves.png' %}" alt=""></div>
+                        <div class="image"><img src="{% static 'images/RagingBolt.png' %}" alt=""></div>
+                    </div>
 
-    <section>
-        <h2>You Try:</h2>
-        <p> Your opponent attacks your Iron Leaves ex with Raging Bolt ex's Bellowing Thunder, discarding 3 Basic
-            Energy. Your opponent claims this is enough damage to knock out your Iron Leaves, but you disagree. How
-            many hit points does your Iron Leaves have left after the attack?</p>
+                    <div class="popup-image">
+                        <span>&times;</span>
+                        <img src="" alt="" />
+                    </div>
+                </div>
+                <br>
+                <!-- practice submission and feedback -->
+                <form id="practice-form" onsubmit="checkAnswer(event)"
+                    action="{% url 'learning:submit_practice' practice.slug %}" method="post">
+                    {% csrf_token %}
+                    <label for="remainingHP"><b>Iron Leaves' remaining HP</b></label>
+                    <input type="number" min="0" id="remainingHP" name="remainingHP" style="width: 100px;" required>
+                    <input type="submit" value="Check Answer" id="submitBtn">
+                </form>
+                <p id="feedback"></p>
+                <form id="final-form" method="post" action="{% url 'learning:submit_practice' practice.slug %}"
+                    style="display: none;">
+                    {% csrf_token %}
+                    <input type="hidden" name="correct" value="True">
+                    <button type="submit">Submit Practice</button>
+                </form>
+            </section>
+        </main>
+    </div>
+    <div class="details">
+        <h1>Algebraic Thinking Content</h1>
+        <ul>
+            <li><a href="{% url 'learning:practice_detail' practice_slug='real-world-problems-with-whole-numbers' %}">Real-World
+                    Problems with Whole Numbers</a></li>
+            <li><a href="{% url 'learning:practice_detail' practice_slug='real-world-problems-with-fractions' %}">Real-World
+                    Problems with Fractions</a></li>
+            <li><a href="{% url 'learning:quiz_detail' quiz_slug='algebraic-thinking-quiz' %}">Algebraic Thinking
+                    Quiz</a></li>
+        </ul>
+    </div>
 
-        <p>Check your answer using the "Check Answer" button. Once you have the correct answer, submit the practice
-            using the "Submit Practice" button.</p>
+    <script>
+        function checkAnswer(event) {
+            event.preventDefault(); // prevent default form submission
 
-        <div class="imgcontainer">
-            <div class="image-container">
-                <div class="image"><img src="{% static 'images/IronLeaves.png' %}" alt=""></div>
-                <div class="image"><img src="{% static 'images/RagingBolt.png' %}" alt=""></div>
-            </div>
+            var remainingHP = document.getElementById('remainingHP').value.trim();
+            var correctAnswer = 10;
+            var feedback = document.getElementById('feedback');
+            var inputField = document.getElementById('remainingHP');
+            var submitButton = document.getElementById('submitBtn');
+            var finalForm = document.getElementById('final-form'); // form to submit once the answer is correct
 
-            <div class="popup-image">
-                <span>&times;</span>
-                <img src="" alt="" />
-            </div>
-        </div>
-        <br>
-        <!-- practice submission and feedback -->
-        <form id="practice-form" onsubmit="checkAnswer(event)"
-            action="{% url 'learning:submit_practice' practice.slug %}" method="post">
-            {% csrf_token %}
-            <label for="remainingHP"><b>Iron Leaves' remaining HP</b></label>
-            <input type="number" min="0" id="remainingHP" name="remainingHP" style="width: 60px;" required>
-            <input type="submit" value="Check Answer" id="submitBtn">
-        </form>
-        <p id="feedback"></p>
-        <form id="final-form" method="post" action="{% url 'learning:submit_practice' practice.slug %}"
-            style="display: none;">
-            {% csrf_token %}
-            <input type="hidden" name="correct" value="True">
-            <button type="submit">Submit Practice</button>
-        </form>
-    </section>
-</main>
-<script>
-    function checkAnswer(event) {
-        event.preventDefault(); // prevent default form submission
-
-        var remainingHP = document.getElementById('remainingHP').value.trim();
-        var correctAnswer = 10;
-        var feedback = document.getElementById('feedback');
-        var inputField = document.getElementById('remainingHP');
-        var submitButton = document.getElementById('submitBtn');
-        var finalForm = document.getElementById('final-form'); // form to submit once the answer is correct
-
-        // check for correct answer and provide feedback
-        if (parseInt(remainingHP) === correctAnswer) {
-            feedback.textContent = 'Correct! 70 * 3 = 210 and 220 - 210 = 10. Well done!';
-            inputField.disabled = true; // disable input field
-            submitButton.disabled = true; // disable submit button
-            finalForm.style.display = 'block'; // show the final submission form
-        } else {
-            feedback.textContent = 'Incorrect. Please try again.';
+            // check for correct answer and provide feedback
+            if (parseInt(remainingHP) === correctAnswer) {
+                feedback.textContent = 'Correct! 70 * 3 = 210 and 220 - 210 = 10. Well done!';
+                inputField.disabled = true; // disable input field
+                submitButton.disabled = true; // disable submit button
+                finalForm.style.display = 'block'; // show the final submission form
+            } else {
+                feedback.textContent = 'Incorrect. Please try again.';
+            }
         }
-    }
 
-    // Function to handle popup image display
-    document.querySelectorAll(".image img").forEach(image => {
-        image.onclick = () => {
-            document.querySelector(".popup-image").style.display = "block";
-            document.querySelector(".popup-image img").src = image.getAttribute("src");
+        // Function to handle popup image display
+        document.querySelectorAll(".image img").forEach(image => {
+            image.onclick = () => {
+                document.querySelector(".popup-image").style.display = "block";
+                document.querySelector(".popup-image img").src = image.getAttribute("src");
+            };
+        });
+
+        // Close the popup when clicking outside the image
+        document.querySelector(".popup-image").onclick = (event) => {
+            if (event.target.classList.contains('popup-image')) {
+                document.querySelector(".popup-image").style.display = "none";
+            }
         };
-    });
-
-    // Close the popup when clicking outside the image
-    document.querySelector(".popup-image").onclick = (event) => {
-        if (event.target.classList.contains('popup-image')) {
-            document.querySelector(".popup-image").style.display = "none";
-        }
-    };
-</script>
+    </script>
+</div><br>
 {% endblock %}
