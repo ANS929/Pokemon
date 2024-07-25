@@ -7,20 +7,20 @@ Interpreting Data
 
 {% block body_block %}
 <style>
-    .container {
+    .imgcontainer {
         max-width: 100%;
         padding: 10px;
         margin-left: 0;
     }
 
-    .container .image-container {
+    .imgcontainer .image-container {
         display: flex;
         gap: 15px;
         justify-content: flex-start;
         align-items: flex-start;
     }
 
-    .container .image-container .image {
+    .imgcontainer .image-container .image {
         height: 290px;
         width: 295px;
         border: 10px solid #fff;
@@ -29,18 +29,18 @@ Interpreting Data
         cursor: pointer;
     }
 
-    .container .image-container .image img {
+    .imgcontainer .image-container .image img {
         height: 100%;
         width: 100%;
         object-fit: cover;
         transition: .2s linear;
     }
 
-    .container .image-container .image:hover {
+    .imgcontainer .image-container .image:hover {
         transform: scale(1.1)
     }
 
-    .container .popup-image {
+    .imgcontainer .popup-image {
         position: fixed;
         top: 0;
         left: 0;
@@ -51,7 +51,7 @@ Interpreting Data
         display: none;
     }
 
-    .container .popup-image span {
+    .imgcontainer .popup-image span {
         position: absolute;
         top: 0;
         right: 10px;
@@ -62,7 +62,7 @@ Interpreting Data
         z-index: 100;
     }
 
-    .container .popup-image img {
+    .imgcontainer .popup-image img {
         position: absolute;
         top: 50%;
         left: 50%;
@@ -74,7 +74,7 @@ Interpreting Data
     }
 
     @media (max-width:768px) {
-        .container .popup-image img {
+        .imgcontainer .popup-image img {
             width: 95%;
         }
     }
@@ -102,7 +102,7 @@ Interpreting Data
         <p>Check your answer using the "Check Answer" button. Once you have the correct answer, submit the practice
             using the "Submit Practice" button.</p>
 
-        <div class="container">
+        <div class="imgcontainer">
             <div class="image-container">
                 <div class="image"><img src="{% static 'images/Indianapolis.jpeg' %}" alt=""></div>
             </div>
@@ -112,7 +112,7 @@ Interpreting Data
                 <img src="" alt="" />
             </div>
         </div>
-
+        <br>
         <!-- practice submission and feedback -->
         <form id="practice-form" onsubmit="checkAnswer(event)"
             action="{% url 'learning:submit_practice' practice.slug %}" method="post">

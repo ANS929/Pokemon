@@ -8,24 +8,59 @@ Grade 1
 <style>
     .unit-list {
         font-size: 28px;
+        flex: 1;
+        border: 5px solid #316cbc;
+        padding: 25px;
+        margin: 20px;
+        height: auto;
+    }
+
+    .content {
+        flex: 2;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .grade1-container {
+        display: flex;
+        font-size: 20px;
+        align-items: flex-start;
+    }
+
+    .unit-list h1 {
+        text-align: center;
+    }
+
+    .content img {
+        max-width: 75%;
+        height: auto;
+        margin: auto;
+        display: block;
     }
 </style>
 <header>
-    <h1>Grade 1 Units</h1>
+    <h1>Grade 1</h1>
 </header>
 
-{% if user.is_authenticated %}
-<p>Grade 1 covers a, b, c, d, e, and f. Select a unit to view its contents.</p>
-{% else %}
-<p>Please <a href="{% url 'auth_login' %}">login</a> to view the contents of each unit.</p>
-{% endif %}
-
-<ol class="unit-list">
-    <li><a href="">Unit 1</a></li>
-    <li><a href="">Unit 2</a></li>
-    <li><a href="">Unit 3</a></li>
-    <li><a href="">Unit 4</a></li>
-    <li><a href="">Unit 5</a></li>
-    <li><a href="">Unit 6</a></li>
-</ol>
+<div class="grade1-container">
+    <div class="content">
+        {% if user.is_authenticated %}
+        <p>Grade 1 covers A, B, C, D, E, and, F. Select a unit to view its contents.</p>
+        {% else %}
+        <p>Please <a href="{% url 'auth_login' %}">login</a> to view the contents of each unit.</p>
+        {% endif %}
+        <img src="{% static 'images/classroom.jpg' %}" alt="classroom">
+    </div>
+    <div class="unit-list">
+        <h1>Units</h1>
+        <ol>
+            <li><a href="">Unit 1</a></li>
+            <li><a href="">Unit 2</a></li>
+            <li><a href="">Unit 3</a></li>
+            <li><a href="">Unit 4</a></li>
+            <li><a href="">Unit 5</a></li>
+            <li><a href="">Unit 6</a></li>
+        </ol>
+    </div>
+</div><br>
 {% endblock %}

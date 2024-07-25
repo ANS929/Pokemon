@@ -1,21 +1,62 @@
 {% extends 'learning/base.html' %}
+{% load static %}
 
 {% block title_block %}
 Algebraic Thinking
 {% endblock %}
-
 {% block body_block %}
 <style>
-    .unit-content {
+    .content-list {
         font-size: 28px;
+        flex: 1;
+        border: 5px solid #316cbc;
+        padding: 25px;
+        margin: 20px;
+        height: auto;
+    }
+
+    .content {
+        flex: 2;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .algebraicthinking-container {
+        display: flex;
+        font-size: 20px;
+        align-items: flex-start;
+    }
+
+    .content-list h1 {
+        text-align: center;
+    }
+
+    .content img {
+        max-width: 75%;
+        height: auto;
+        margin: auto;
+        display: block;
     }
 </style>
-<h1>Algebraic Thinking - 4th Grade</h1>
-<ul class="unit-content">
-    <li><a href="{% url 'learning:practice_detail' practice_slug='real-world-problems-with-whole-numbers' %}">Real-World
-            Problems with Whole Numbers</a></li>
-    <li><a href="{% url 'learning:practice_detail' practice_slug='real-world-problems-with-fractions' %}">Real-World
-            Problems with Fractions</a></li>
-    <li><a href="{% url 'learning:quiz_detail' quiz_slug='algebraic-thinking-quiz' %}">Algebraic Thinking Quiz</a></li>
-</ul>
+<header>
+    <h1>Algebraic Thinking - 4th Grade</h1>
+</header>
+
+<div class="algebraicthinking-container">
+    <div class="content">
+        <p>The Algebraic Thinking Unit is made up of two lessons and a quiz.</p>
+        <img src="{% static 'images/algebraic_thinking.jpg' %}" alt="algebraic thinking">
+    </div>
+    <div class="content-list">
+        <h1>Content</h1>
+        <ul>
+            <li><a href="{% url 'learning:practice_detail' practice_slug='real-world-problems-with-whole-numbers' %}">Real-World
+                    Problems with Whole Numbers</a></li>
+            <li><a href="{% url 'learning:practice_detail' practice_slug='real-world-problems-with-fractions' %}">Real-World
+                    Problems with Fractions</a></li>
+            <li><a href="{% url 'learning:quiz_detail' quiz_slug='algebraic-thinking-quiz' %}">Algebraic Thinking
+                    Quiz</a></li>
+        </ul>
+    </div>
+</div><br>
 {% endblock %}

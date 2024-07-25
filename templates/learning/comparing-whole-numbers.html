@@ -4,23 +4,50 @@
 {% block title_block %}
 Comparing Whole Numbers
 {% endblock %}
-
 {% block body_block %}
 <style>
-    .container {
+    .details {
+        font-size: 28px;
+        flex: 1;
+        border: 5px solid #316cbc;
+        padding: 25px;
+        margin: 20px;
+        height: auto;
+    }
+
+    .content {
+        flex: 2;
+        display: flex;
+        flex-direction: column;
+        border: 5px solid #ffcb13;
+        padding: 25px;
+        margin: 20px;
+    }
+
+    .comparingwholenumbers-container {
+        display: flex;
+        font-size: 20px;
+        align-items: flex-start;
+    }
+
+    .details h1 {
+        text-align: center;
+    }
+
+    .imgcontainer {
         max-width: 100%;
         padding: 10px;
         margin-left: 0;
     }
 
-    .container .image-container {
+    .imgcontainer .image-container {
         display: flex;
         gap: 15px;
         justify-content: flex-start;
         align-items: flex-start;
     }
 
-    .container .image-container .image {
+    .imgcontainer .image-container .image {
         height: 345px;
         width: 247.5px;
         border: 10px solid #fff;
@@ -29,18 +56,18 @@ Comparing Whole Numbers
         cursor: pointer;
     }
 
-    .container .image-container .image img {
+    .imgcontainer .image-container .image img {
         height: 100%;
         width: 100%;
         object-fit: cover;
         transition: .2s linear;
     }
 
-    .container .image-container .image:hover {
+    .imgcontainer .image-container .image:hover {
         transform: scale(1.1)
     }
 
-    .container .popup-image {
+    .imgcontainer .popup-image {
         position: fixed;
         top: 0;
         left: 0;
@@ -51,7 +78,7 @@ Comparing Whole Numbers
         display: none;
     }
 
-    .container .popup-image span {
+    .imgcontainer .popup-image span {
         position: absolute;
         top: 0;
         right: 10px;
@@ -62,7 +89,7 @@ Comparing Whole Numbers
         z-index: 100;
     }
 
-    .container .popup-image img {
+    .imgcontainer .popup-image img {
         position: absolute;
         top: 50%;
         left: 50%;
@@ -74,7 +101,7 @@ Comparing Whole Numbers
     }
 
     @media (max-width:768px) {
-        .container .popup-image img {
+        .imgcontainer .popup-image img {
             width: 95%;
         }
     }
@@ -83,112 +110,134 @@ Comparing Whole Numbers
     <h1>Number Sense - Comparing Whole Numbers</h1>
 </header>
 
-<main>
-    <section>
-        <h2>Introduction:</h2>
-        <p>Two whole numbers can be compared using &gt; (greater than), = (equals), and &lt; (less than) symbols.</p>
-    </section>
+<div class="comparingwholenumbers-container">
+    <div class="content">
+        <main>
+            <section>
+                <h2>Introduction:</h2>
+                <p>Two whole numbers can be compared using <b>&gt;</b> (greater than), <b>&lt;</b> (less than), and
+                    <b>=</b> (equals) symbols.
+                </p>
+            </section>
 
-    <section>
-        <h2>Greater Than:</h2>
-        <p>The greater than symbol (&gt;) is used to show that the number to the left has a higher value than the number
-            on the right. For example, 100 &gt; 92. This would be read as “100 is greater than 92.”</p>
-    </section>
+            <section>
+                <h2>Greater Than:</h2>
+                <p>The greater than symbol (<b>&gt;</b>) is used to show that the number to the left has a higher value
+                    than the number on the right. For example, 100 &gt; 92. This would be read as “100 is greater than
+                    92.”
+                </p>
+            </section>
 
-    <section>
-        <h2>Less Than:</h2>
-        <p>The less than symbol (&lt;) is used to show that the number to the left has a lesser value than the number on
-            the right. For example, 31 &lt; 34. This would be read as “31 is less than 34.”</p>
-    </section>
+            <section>
+                <h2>Less Than:</h2>
+                <p>The less than symbol (<b>&lt;</b>) is used to show that the number to the left has a lesser value
+                    than the number on the right. For example, 31 &lt; 34. This would be read as “31 is less than 34.”
+                </p>
+            </section>
 
-    <section>
-        <h2>Equals:</h2>
-        <p>The equals symbol (=) is used to show that two numbers are equal in value. For example, 29 = 29. This would
-            be read as “29 equals 29.”</p>
-    </section>
+            <section>
+                <h2>Equals:</h2>
+                <p>The equals symbol (<b>=</b>) is used to show that two numbers are equal in value. For example, 29 =
+                    29. This would be read as “29 equals 29.”</p>
+            </section>
 
-    <section>
-        <h2>You Try:</h2>
-        <p>Look at the HP of Charizard ex and Pidgeot ex. Compare the two values using <b>&gt;</b>, <b>=</b>, or
-            <b>&lt;</b>. </p>
-        <p>Check your answer using the "Check Answer" button. Once you have the correct answer, submit the practice
-            using the "Submit Practice" button.
+            <section>
+                <h2>You Try:</h2>
+                <p>Look at the HP of Charizard ex and Pidgeot ex. Compare the two values using <b>&gt;</b>, <b>=</b>, or
+                    <b>&lt;</b>.
+                </p>
+                <p><u>Check your answer using the "Check Answer" button. Once you have the correct answer, submit the
+                        practice using the "Submit Practice" button.</u>
+                </p>
+                <div class="imgcontainer">
+                    <div class="image-container">
+                        <div class="image"><img src="{% static 'images/Charizard.png' %}" alt="Charizard ex"></div>
+                        <div class="image"><img src="{% static 'images/Pidgeot.png' %}" alt="Pidgeot ex"></div>
+                    </div>
+
+                    <div class="popup-image">
+                        <span>&times;</span>
+                        <img src="" alt="" />
+                    </div>
+                </div>
+                <br>
+                <!-- practice submission and feedback -->
+                <form id="practice-form" onsubmit="checkAnswer(event)"
+                    action="{% url 'learning:submit_practice' practice.slug %}" method="post">
+                    {% csrf_token %}
+                    <label for="comparisonSymbol"><b>Charizard ex's HP</b></label>
+                    <input type="text" id="comparisonSymbol" name="comparisonSymbol" style="width: 40px;" required>
+                    <b>Pidgeot ex's HP</b>
+                    <input type="submit" value="Check Answer" id="submitBtn">
+                </form>
+                <p id="feedback"></p>
+                <form id="final-form" method="post" action="{% url 'learning:submit_practice' practice.slug %}"
+                    style="display: none;">
+                    {% csrf_token %}
+                    <input type="hidden" name="correct" value="True">
+                    <button type="submit">Submit Practice</button>
+                </form>
+            </section>
+        </main>
+    </div>
+    <div class="details">
+        <h1>Number Sense Content</h1>
+        <p>
+        <ul>
+            <li><a href="{% url 'learning:practice_detail' practice_slug='comparing-whole-numbers' %}">Comparing Whole
+                    Numbers</a></li>
+            <li><a href="{% url 'learning:practice_detail' practice_slug='comparing-decimals' %}">Comparing Decimals</a>
+            </li>
+            <li><a href="{% url 'learning:quiz_detail' quiz_slug='number-sense-quiz' %}">Number Sense Quiz</a></li>
+        </ul>
         </p>
-        <div class="container">
-            <div class="image-container">
-                <div class="image"><img src="{% static 'images/Charizard.png' %}" alt="Charizard ex"></div>
-                <div class="image"><img src="{% static 'images/Pidgeot.png' %}" alt="Pidgeot ex"></div>
-            </div>
+    </div>
 
-            <div class="popup-image">
-                <span>&times;</span>
-                <img src="" alt="" />
-            </div>
-        </div>
+    <script>
+        // function to check the answer of the practice problem
+        function checkAnswer(event) {
+            event.preventDefault(); // prevent default form submission
 
-        <!-- practice submission and feedback -->
-        <form id="practice-form" onsubmit="checkAnswer(event)"
-            action="{% url 'learning:submit_practice' practice.slug %}" method="post">
-            {% csrf_token %}
-            <label for="comparisonSymbol"><b>Charizard ex's HP</b></label>
-            <input type="text" id="comparisonSymbol" name="comparisonSymbol" style="width: 40px;" required>
-            <b>Pidgeot ex's HP</b>
-            <input type="submit" value="Check Answer" id="submitBtn">
-        </form>
-        <p id="feedback"></p>
-        <form id="final-form" method="post" action="{% url 'learning:submit_practice' practice.slug %}"
-            style="display: none;">
-            {% csrf_token %}
-            <input type="hidden" name="correct" value="True">
-            <button type="submit">Submit Practice</button>
-        </form>
-    </section>
-</main>
+            var comparisonSymbol = document.getElementById('comparisonSymbol').value.trim();
+            var correctAnswer = '>';
+            var feedback = document.getElementById('feedback');
+            var inputField = document.getElementById('comparisonSymbol');
+            var submitButton = document.getElementById('submitBtn');
+            var finalForm = document.getElementById('final-form'); // form to submit once the answer is correct
 
-<script>
-    // function to check the answer of the practice problem
-    function checkAnswer(event) {
-        event.preventDefault(); // prevent default form submission
+            var allowedSymbols = ['>', '<', '='];
 
-        var comparisonSymbol = document.getElementById('comparisonSymbol').value.trim();
-        var correctAnswer = '>';
-        var feedback = document.getElementById('feedback');
-        var inputField = document.getElementById('comparisonSymbol');
-        var submitButton = document.getElementById('submitBtn');
-        var finalForm = document.getElementById('final-form'); // form to submit once the answer is correct
+            // validate input
+            if (allowedSymbols.indexOf(comparisonSymbol) === -1) {
+                feedback.textContent = 'Invalid input. Please enter >, =, or <.';
+                return;
+            }
 
-        var allowedSymbols = ['>', '<', '='];
-
-        // validate input
-        if (allowedSymbols.indexOf(comparisonSymbol) === -1) {
-            feedback.textContent = 'Invalid input. Please enter >, =, or <.';
-            return;
+            // check for correct answer and provide feedback
+            if (comparisonSymbol === correctAnswer) {
+                feedback.textContent = 'Correct! 330 is greater than 280, so ">" is the correct symbol. Well done!';
+                inputField.disabled = true; // disable input field
+                submitButton.disabled = true; // disable submit button
+                finalForm.style.display = 'block'; // show the final submission form
+            } else {
+                feedback.textContent = 'Incorrect. Please try again.';
+            }
         }
 
-        // check for correct answer and provide feedback
-        if (comparisonSymbol === correctAnswer) {
-            feedback.textContent = 'Correct! 330 is greater than 280, so ">" is the correct symbol. Well done!';
-            inputField.disabled = true; // disable input field
-            submitButton.disabled = true; // disable submit button
-            finalForm.style.display = 'block'; // show the final submission form
-        } else {
-            feedback.textContent = 'Incorrect. Please try again.';
-        }
-    }
+        // Function to handle popup image display
+        document.querySelectorAll(".image img").forEach(image => {
+            image.onclick = () => {
+                document.querySelector(".popup-image").style.display = "block";
+                document.querySelector(".popup-image img").src = image.getAttribute("src");
+            };
+        });
 
-    // Function to handle popup image display
-    document.querySelectorAll(".image img").forEach(image => {
-        image.onclick = () => {
-            document.querySelector(".popup-image").style.display = "block";
-            document.querySelector(".popup-image img").src = image.getAttribute("src");
+        // Close the popup when clicking outside the image
+        document.querySelector(".popup-image").onclick = (event) => {
+            if (event.target.classList.contains('popup-image')) {
+                document.querySelector(".popup-image").style.display = "none";
+            }
         };
-    });
-
-    // Close the popup when clicking outside the image
-    document.querySelector(".popup-image").onclick = (event) => {
-        if (event.target.classList.contains('popup-image')) {
-            document.querySelector(".popup-image").style.display = "none";
-        }
-    };
-</script>
+    </script>
+</div><br>
 {% endblock %}
