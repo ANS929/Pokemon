@@ -1,0 +1,68 @@
+{% extends 'learning/base.html' %}
+{% block title_block %}
+Quiz Explanations - {{ quiz.title }}
+{% endblock %}
+
+{% block body_block %}
+<style>
+    table {
+        font-family: arial, sans-serif;
+        font-size: 16px;
+        border-collapse: collapse;
+        width: 66%;
+    }
+
+    td,
+    th {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+    }
+
+    tr:nth-child(even) {
+        background-color: #dddddd;
+    }
+</style>
+<h1>{{ quiz.title }} - Explanations</h1>
+<table>
+    <tr>
+        <th style="width:15%">Question</th>
+        <th style="width:15%">Correct Answer</th>
+        <th>Explanation</th>
+    </tr>
+    {% for question, correct_answer in correct_answers.items %}
+    <tr>
+        <td> {% if question == "question1" %}
+            Question 1
+            {% elif question == "question2" %}
+            Question 2
+            {% elif question == "question3" %}
+            Question 3
+            {% elif question == "question4" %}
+            Question 4
+            {% elif question == "question5" %}
+            Question 5
+            {% else %}
+            No question number available.
+            {% endif %}</td>
+        <td>{{ correct_answer }}</td>
+        <td>
+            {% if question == "question1" %}
+            340 - 250 = 90. 90 + 60 = 150.
+            {% elif question == "question2" %}
+            60 + 100 = 160.
+            {% elif question == "question3" %}
+            2 are Darkness, so 9 - 2 = 7 are Psychic. Therefore, 7/9 of your Basic Energy cards are Psychic.
+            {% elif question == "question4" %}
+            Blastoise takes 30 less damage from attacks due to its Solid Shell Ability. So Charizard's Explosive Vortex
+            does 330 - 30 = 300 damage, which is not enough for Blastoise to be Knocked Out. Therefore, the answer is False.
+            {% elif question == "question5" %}
+            15 cards are Pokémon, so 60 - 15 = 45 are not Pokémon. 45/60 simplifies to 3/4.
+            {% else %}
+            No explanation available.
+            {% endif %}
+        </td>
+    </tr>
+    {% endfor %}
+</table><br>
+{% endblock %}

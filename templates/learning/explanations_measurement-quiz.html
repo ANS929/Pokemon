@@ -1,0 +1,67 @@
+{% extends 'learning/base.html' %}
+{% block title_block %}
+Quiz Explanations - {{ quiz.title }}
+{% endblock %}
+
+{% block body_block %}
+<style>
+    table {
+        font-family: arial, sans-serif;
+        font-size: 16px;
+        border-collapse: collapse;
+        width: 66%;
+    }
+
+    td,
+    th {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+    }
+
+    tr:nth-child(even) {
+        background-color: #dddddd;
+    }
+</style>
+<h1>{{ quiz.title }} - Explanations</h1>
+<table>
+    <tr>
+        <th style="width:15%">Question</th>
+        <th style="width:15%">Correct Answer</th>
+        <th>Explanation</th>
+    </tr>
+    {% for question, correct_answer in correct_answers.items %}
+    <tr>
+        <td> {% if question == "question1" %}
+            Question 1
+            {% elif question == "question2" %}
+            Question 2
+            {% elif question == "question3" %}
+            Question 3
+            {% elif question == "question4" %}
+            Question 4
+            {% elif question == "question5" %}
+            Question 5
+            {% else %}
+            No question number available.
+            {% endif %}</td>
+        <td>{{ correct_answer }}</td>
+        <td>
+            {% if question == "question1" %}
+            13 * 12 = 156.
+            {% elif question == "question2" %}
+            23 * 24 = 552.
+            {% elif question == "question3" %}
+            23*2 + 24*2 = 46 + 48 = 94.
+            {% elif question == "question4" %}
+            63 * 88 = 5544.
+            {% elif question == "question5" %}
+            You are 5 * 12 = 60 inches tall. 63 > 60, so Decidueye is taller.
+            {% else %}
+            No explanation available.
+            {% endif %}
+        </td>
+    </tr>
+    {% endfor %}
+</table><br>
+{% endblock %}

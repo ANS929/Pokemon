@@ -1,0 +1,70 @@
+{% extends 'learning/base.html' %}
+{% block title_block %}
+Quiz Explanations - {{ quiz.title }}
+{% endblock %}
+
+{% block body_block %}
+<style>
+    table {
+        font-family: arial, sans-serif;
+        font-size: 16px;
+        border-collapse: collapse;
+        width: 66%;
+    }
+
+    td,
+    th {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+    }
+
+    tr:nth-child(even) {
+        background-color: #dddddd;
+    }
+</style>
+<h1>{{ quiz.title }} - Explanations</h1>
+<table>
+    <tr>
+        <th style="width:15%">Question</th>
+        <th style="width:15%">Correct Answer</th>
+        <th>Explanation</th>
+    </tr>
+    {% for question, correct_answer in correct_answers.items %}
+    <tr>
+        <td> {% if question == "question1" %}
+            Question 1
+            {% elif question == "question2" %}
+            Question 2
+            {% elif question == "question3" %}
+            Question 3
+            {% elif question == "question4" %}
+            Question 4
+            {% elif question == "question5" %}
+            Question 5
+            {% else %}
+            No question number available.
+            {% endif %}</td>
+        <td>{{ correct_answer }}</td>
+        <td>
+            {% if question == "question1" %}
+            Charizard ex has the greatest meta share because it takes up the largest portion of the circle. Chien-Pao
+            has the second greatest meta share since it takes up the second largest portion of the circle.
+            {% elif question == "question2" %}
+            Charizard ex, Chien-Pao ex, and Arceus VSTAR do not quite take up half of the circle, so the answer is
+            False.
+            {% elif question == "question3" %}
+            Snorlax Stall takes up the same portion of the circle as Ancient Box, so they have the same meta share.
+            {% elif question == "question4" %}
+            Charizard ex does not quite take up a quarter of the circle, so it is not 25%. It is also larger than 10%.
+            Therefore, Charizard ex makes up approximately 20% of the meta.
+            {% elif question == "question5" %}
+            This is True because a bar graph can also be used to display and compare the sizes of data categories.
+            {% else %}
+            No explanation available.
+            {% endif %}
+        </td>
+    </tr>
+    {% endfor %}
+</table><br>
+{% endblock %}

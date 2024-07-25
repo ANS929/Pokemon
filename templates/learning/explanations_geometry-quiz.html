@@ -1,0 +1,67 @@
+{% extends 'learning/base.html' %}
+{% block title_block %}
+Quiz Explanations - {{ quiz.title }}
+{% endblock %}
+
+{% block body_block %}
+<style>
+    table {
+        font-family: arial, sans-serif;
+        font-size: 16px;
+        border-collapse: collapse;
+        width: 66%;
+    }
+
+    td,
+    th {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+    }
+
+    tr:nth-child(even) {
+        background-color: #dddddd;
+    }
+</style>
+<h1>{{ quiz.title }} - Explanations</h1>
+<table>
+    <tr>
+        <th style="width:15%">Question</th>
+        <th style="width:15%">Correct Answer</th>
+        <th>Explanation</th>
+    </tr>
+    {% for question, correct_answer in correct_answers.items %}
+    <tr>
+        <td> {% if question == "question1" %}
+            Question 1
+            {% elif question == "question2" %}
+            Question 2
+            {% elif question == "question3" %}
+            Question 3
+            {% elif question == "question4" %}
+            Question 4
+            {% elif question == "question5" %}
+            Question 5
+            {% else %}
+            No question number available.
+            {% endif %}</td>
+        <td>{{ correct_answer }}</td>
+        <td>
+            {% if question == "question1" %}
+            No, the only symmetry any of the cards have is vertical symmetry.
+            {% elif question == "question2" %}
+            2; Both the Metal and Darkness symbols have vertical symmetry.
+            {% elif question == "question3" %}
+            A Pokémon card is a rectangle, which has both vertical and horizontal symmetry.
+            {% elif question == "question4" %}
+            The Psychic symbol is not symmetrical due to the position of the dot in the middle of the eye.
+            {% elif question == "question5" %}
+            The Fighting symbol is not vertically symmetrical due to the empy space in the bottom of the fist.
+            {% else %}
+            No explanation available.
+            {% endif %}
+        </td>
+    </tr>
+    {% endfor %}
+</table><br>
+{% endblock %}

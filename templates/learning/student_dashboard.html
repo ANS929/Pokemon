@@ -74,6 +74,8 @@ Student Dashboard
 </header>
 <p style="font-size: 20px;">Welcome to the Student Dashboard! Here you can view your completed practices and quizzes as
     well as the badges you have earned.</p>
+<p style="font-size: 20px;">Once you have earned 100% on a quiz, you can click on its name to view the explanations of
+    each answer.</p>
 
 <div class="student-dashboard-container">
 
@@ -112,7 +114,12 @@ Student Dashboard
             {% if completed_quizzes %}
             {% for quiz in completed_quizzes %}
             <tr>
-                <td>{{ quiz.quiz.title }}</td>
+                <td>{% if quiz.perfect_score %}
+                    <a href="{% url 'learning:quiz_explanations' quiz.quiz.slug %}">{{ quiz.quiz.title }}</a>
+                    {% else %}
+                    {{ quiz.quiz.title }}
+                    {% endif %}
+                </td>
                 <td>{{ quiz.quiz.grade_level }}</td>
                 <td>{{ quiz.quiz.unit }}</td>
                 <td>{{ quiz.date_completed }}</td>

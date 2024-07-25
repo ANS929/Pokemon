@@ -17,7 +17,7 @@ class QuizAdmin(admin.ModelAdmin):
 
 @admin.register(CompletedQuiz)
 class CompletedQuizAdmin(admin.ModelAdmin):
-    list_display = ('student', 'quiz', 'score', 'date_completed')
+    list_display = ('student', 'quiz', 'score', 'date_completed', 'perfect_score')
     search_fields = ('student__username', 'quiz__title')
 
 @admin.register(CompletedPractice)

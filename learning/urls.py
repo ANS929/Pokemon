@@ -21,6 +21,7 @@ urlpatterns = [
     path('students/gr4/quiz/<slug:quiz_slug>/', views.quiz_detail, name='quiz_detail'),
     path('students/gr4/practice/<slug:practice_slug>/', views.practice_detail, name='practice_detail'),
     path('students/gr4/quiz/<slug:quiz_slug>/submit/', views.submit_quiz, name='submit_quiz'),
+    path('students/gr4/quiz/<slug:quiz_slug>/explanations/', views.quiz_explanations, name='quiz_explanations'),
     path('students/gr4/practice/<slug:practice_slug>/submit/', views.submit_practice, name='submit_practice'),
     
     # teacher paths

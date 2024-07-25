@@ -55,6 +55,7 @@ class CompletedQuiz(models.Model):
     quiz = models.ForeignKey(Quiz, on_delete=models.CASCADE)
     score = models.IntegerField(default=0)
     date_completed = models.DateTimeField(default=timezone.now)
+    perfect_score = models.BooleanField(default=False)
 
     def __str__(self):
         return f"{self.student.username} - {self.quiz.title}"

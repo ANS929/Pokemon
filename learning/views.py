@@ -153,12 +153,18 @@ def submit_quiz(request, quiz_slug):
     if request.method == 'POST':
         correct_answers = quiz.correct_answers
 
+        # check if the student has already achieved a perfect score for the quiz
+        if CompletedQuiz.objects.filter(student=user, quiz=quiz, score=5).exists():
+            messages.error(request, "You have already achieved a perfect score for this quiz.")
+            return redirect('learning:student_dashboard', user_id=user.id)
+
         for question, correct_answer in correct_answers.items():
             user_answer = request.POST.get(question).strip()
             if user_answer.lower() == correct_answer.lower():
                 score += 1
 
-        completed_quiz = CompletedQuiz.objects.create(student=user, quiz=quiz, score=score)
+        perfect_score = (score == 5)
+        completed_quiz = CompletedQuiz.objects.create(student=user, quiz=quiz, score=score, perfect_score=perfect_score)
 
         # check for Beta Badge (completion of first quiz)
         if not CompletedBadge.objects.filter(student=user, badge__name='Beta Badge').exists():
@@ -465,3 +471,24 @@ def check_grade_level_completion(request, user):
                 badge = Badge.objects.get(name='Infinity Badge')
                 CompletedBadge.objects.create(student=user, badge=badge)
                 messages.success(request, "Congratulations! You've earned the Infinity Badge!")
+
+# quiz answer explanations
+@login_required
+def quiz_explanations(request, quiz_slug):
+    quiz = get_object_or_404(Quiz, slug=quiz_slug)
+    user = request.user
+
+    completed_quizzes = CompletedQuiz.objects.filter(student=user, quiz=quiz, score=5).order_by('-date_completed')
+
+    if not completed_quizzes.exists():
+        messages.error(request, "You must score 5/5 on this quiz to view the explanations.")
+        return redirect('learning:student_dashboard', user_id=user.id)
+
+    completed_quiz = completed_quizzes.first()
+
+    context = {
+        'quiz': quiz,
+        'correct_answers': quiz.correct_answers,
+        'completed_quiz': completed_quiz
+    }
+    return render(request, f'learning/explanations_{quiz_slug}.html', context)
