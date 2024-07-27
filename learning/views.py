@@ -431,23 +431,60 @@ def unenroll_student(request, course_id, student_id):
 def check_unit_completion(request, user):
     units = Unit.objects.all()
     for unit in units:
+        print(f"Unit: {unit.name}, Grade Level: {unit.grade_level.name}")
+    
+    for unit in units:
         completed_practices = all(
             CompletedPractice.objects.filter(student=user, practice=practice).exists()
             for practice in unit.practices.all()
         )
         completed_quiz = CompletedQuiz.objects.filter(student=user, quiz=unit.quiz).exists()
+        
+        print(f"Unit: {unit.name}, Completed Practices: {completed_practices}, Completed Quiz: {completed_quiz}")
+
         if completed_practices and completed_quiz:
             if not CompletedUnit.objects.filter(student=user, unit=unit).exists():
                 CompletedUnit.objects.create(student=user, unit=unit)
+                print(f"Unit Completed: {unit.name} for user {user.username}")
 
             # check for Pi Badge (completion of a unit)
             if not CompletedBadge.objects.filter(student=user, badge__name='Pi Badge').exists():
                 badge = Badge.objects.get(name='Pi Badge')
                 CompletedBadge.objects.create(student=user, badge=badge)
                 messages.success(request, "Congratulations! You've earned the Pi Badge!")
+                print(f"Pi Badge Awarded to {user.username}")
 
-# check whether a grade level has been completed
-# def check_grade_level_completion(request, user):
+    grade_levels = GradeLevel.objects.all()
+    print(f"Available Grade Levels: {[grade_level.name for grade_level in grade_levels]}")
+
+    for grade_level in grade_levels:
+        units_in_grade_level = Unit.objects.filter(grade_level=grade_level)
+        print(f"Grade Level: {grade_level.name}, Units in Grade Level: {[unit.name for unit in units_in_grade_level]}")
+
+        if not units_in_grade_level.exists():
+            print(f"No units found for grade level: {grade_level.name}")
+            continue
+
+        completed_units_count = CompletedUnit.objects.filter(student=user, unit__in=units_in_grade_level).count()
+        print(f"Grade Level: {grade_level.name}, Total Units: {units_in_grade_level.count()}, Completed Units: {completed_units_count}")
+
+        all_units_completed = completed_units_count == units_in_grade_level.count()
+
+        if all_units_completed:
+            all_units_quiz_completed = all(
+                CompletedQuiz.objects.filter(student=user, quiz=unit.quiz).exists()
+                for unit in units_in_grade_level
+            )
+            
+            print(f"All Quizzes Completed for Grade Level {grade_level.name}: {all_units_quiz_completed}")
+
+            if all_units_quiz_completed:
+                # check for Infinity Badge (completion of a grade level)
+                if not CompletedBadge.objects.filter(student=user, badge__name='Infinity Badge').exists():
+                    badge = Badge.objects.get(name='Infinity Badge')
+                    CompletedBadge.objects.create(student=user, badge=badge)
+                    messages.success(request, "Congratulations! You've earned the Infinity Badge!")
+                    print(f"Infinity Badge Awarded to {user.username}")
 
 # quiz answer explanations
 @login_required

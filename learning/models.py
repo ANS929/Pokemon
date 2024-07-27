@@ -6,6 +6,7 @@ from django.utils.text import slugify
 # Grade level (1st, 2nd, etc.)
 class GradeLevel(models.Model):
     name = models.CharField(max_length=3)
+    unit_count = models.PositiveIntegerField(default=0)
 
     def __str__(self):
         return self.name
@@ -178,3 +179,6 @@ class CompletedUnit(models.Model):
 
     class Meta:
         unique_together = ('student', 'unit')
+
+    def __str__(self):
+        return f"{self.student.username} - {self.unit.name}"
