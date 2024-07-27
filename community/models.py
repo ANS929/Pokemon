@@ -38,7 +38,7 @@ class MathComment(models.Model):
     date_created = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
-        return '%s - %s' % (self.question.title, self.name)
+        return '%s - %s' % (self.question.title, self.question.user)
 
     def get_absolute_url(self):
         return reverse('community:math_question_details', kwargs={'pk': self.question.pk})
@@ -54,7 +54,7 @@ class TCGComment(models.Model):
     date_created = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
-        return '%s - %s' % (self.question.title, self.name)
+        return '%s - %s' % (self.question.title, self.question.user)
 
     def get_absolute_url(self):
         return reverse('community:tcg_question_details', kwargs={'pk': self.question.pk})

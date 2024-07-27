@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
-from .models import Practice, CompletedPractice, Quiz, CompletedQuiz, Student, EnrolledStudent, Course, RegisteredStudent, User, Child, RegisteredChild, Student, Badge, CompletedBadge, Unit
+from .models import Practice, CompletedPractice, Quiz, CompletedQuiz, Student, EnrolledStudent, Course, RegisteredStudent, User, RegisteredChild, Student, Badge, CompletedBadge, Unit, GradeLevel, CompletedUnit
 from .forms import AddStudentForm, RemoveStudentForm, EnrollStudentForm, NewCourseForm, AddChildForm, RemoveChildForm
 from community.models import MathQuestion, TCGQuestion
 from django.contrib import messages
@@ -435,42 +435,19 @@ def check_unit_completion(request, user):
             CompletedPractice.objects.filter(student=user, practice=practice).exists()
             for practice in unit.practices.all()
         )
-
         completed_quiz = CompletedQuiz.objects.filter(student=user, quiz=unit.quiz).exists()
-
-        # award the Pi Badge for completion of a unit
         if completed_practices and completed_quiz:
+            if not CompletedUnit.objects.filter(student=user, unit=unit).exists():
+                CompletedUnit.objects.create(student=user, unit=unit)
+
+            # check for Pi Badge (completion of a unit)
             if not CompletedBadge.objects.filter(student=user, badge__name='Pi Badge').exists():
                 badge = Badge.objects.get(name='Pi Badge')
                 CompletedBadge.objects.create(student=user, badge=badge)
                 messages.success(request, "Congratulations! You've earned the Pi Badge!")
 
 # check whether a grade level has been completed
-def check_grade_level_completion(request, user):
-
-    grade_levels = Unit.objects.values_list('grade_level', flat=True).distinct()
-
-    for grade_level in grade_levels:
-        units = Unit.objects.filter(grade_level=grade_level)
-
-        all_units_completed = True
-        for unit in units:
-            completed_practices = all(
-                CompletedPractice.objects.filter(student=user, practice=practice).exists()
-                for practice in unit.practices.all()
-            )
-            completed_quiz = CompletedQuiz.objects.filter(student=user, quiz=unit.quiz).exists()
-
-            if not (completed_practices and completed_quiz):
-                all_units_completed = False
-                break
-
-        if all_units_completed:
-            # award the Infinity Badge for completion of a grade level
-            if not CompletedBadge.objects.filter(student=user, badge__name='Infinity Badge').exists():
-                badge = Badge.objects.get(name='Infinity Badge')
-                CompletedBadge.objects.create(student=user, badge=badge)
-                messages.success(request, "Congratulations! You've earned the Infinity Badge!")
+# def check_grade_level_completion(request, user):
 
 # quiz answer explanations
 @login_required

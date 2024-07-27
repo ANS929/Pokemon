@@ -3,13 +3,20 @@ from django.contrib.auth.models import User
 from django.utils import timezone
 from django.utils.text import slugify
 
+# Grade level (1st, 2nd, etc.)
+class GradeLevel(models.Model):
+    name = models.CharField(max_length=3)
+
+    def __str__(self):
+        return self.name
+
 # Practice problem
 class Practice (models.Model):
     title = models.CharField(max_length=100)
     description = models.TextField()
-    grade_level = models.CharField(max_length=3, default='')
     slug = models.SlugField(default='', unique=True)
     unit = models.ForeignKey('Unit', on_delete=models.CASCADE, related_name='practices_in_unit')
+    grade_level = models.ForeignKey(GradeLevel, on_delete=models.SET_NULL, null=True, blank=True, related_name='practices')
 
     def __str__(self):
         return self.title
@@ -33,11 +40,11 @@ class CompletedPractice(models.Model):
 # Lesson quiz
 class Quiz(models.Model):
     title = models.CharField(max_length=100)
-    grade_level = models.CharField(max_length=3, default=0)
     description = models.TextField()
     correct_answers = models.JSONField(default=dict)
     slug = models.SlugField(default='', unique=True)
     unit = models.ForeignKey('Unit', on_delete=models.CASCADE, related_name='quizzes')
+    grade_level = models.ForeignKey(GradeLevel, on_delete=models.SET_NULL, null=True, blank=True, related_name='quizzes')
 
     def __str__(self):
         return self.title
@@ -151,10 +158,10 @@ class RegisteredChild(models.Model):
 # Unit (two practices and one quiz)
 class Unit(models.Model):
     name = models.CharField(max_length=100)
-    grade_level = models.CharField(max_length=3, default='')
     slug = models.SlugField(default='', unique=True)
     practices = models.ManyToManyField('Practice', related_name='units')
     quiz = models.OneToOneField('Quiz', on_delete=models.CASCADE, related_name='unit_quiz')
+    grade_level = models.ForeignKey(GradeLevel, on_delete=models.SET_NULL, null=True, blank=True, related_name='units')
     
     def __str__(self):
         return self.name
@@ -162,3 +169,12 @@ class Unit(models.Model):
     def save(self, *args, **kwargs):
         self.slug = slugify(self.name)
         super().save(*args, **kwargs)
+
+# Completed unit
+class CompletedUnit(models.Model):
+    student = models.ForeignKey(User, on_delete=models.CASCADE)
+    unit = models.ForeignKey(Unit, on_delete=models.CASCADE)
+    date_completed = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        unique_together = ('student', 'unit')

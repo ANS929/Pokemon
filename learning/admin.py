@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Quiz, CompletedQuiz, Practice, CompletedPractice, Student, Course, RegisteredStudent, Child, RegisteredChild, Badge, CompletedBadge, Unit
+from .models import Quiz, CompletedQuiz, Practice, CompletedPractice, Student, Course, RegisteredStudent, Child, RegisteredChild, Badge, CompletedBadge, Unit, GradeLevel, CompletedUnit
 
 admin.site.register(Course)
 admin.site.register(RegisteredStudent)
@@ -9,11 +9,11 @@ admin.site.register(CompletedBadge)
 
 @admin.register(Practice)
 class PracticeAdmin(admin.ModelAdmin):
-    list_display = ('title', 'grade_level',)
+    list_display = ('title', 'grade_level', 'unit')
 
 @admin.register(Quiz)
 class QuizAdmin(admin.ModelAdmin):
-    list_display = ('title', 'grade_level',)
+    list_display = ('title', 'grade_level', 'unit')
 
 @admin.register(CompletedQuiz)
 class CompletedQuizAdmin(admin.ModelAdmin):
@@ -34,4 +34,12 @@ class BadgeAdmin(admin.ModelAdmin):
 
 @admin.register(Unit)
 class PracticeAdmin(admin.ModelAdmin):
-    list_display = ('name', 'grade_level',)
+    list_display = ('name', 'grade_level')
+
+@admin.register(GradeLevel)
+class GradeLevelAdmin(admin.ModelAdmin):
+    list_display = ('name',)
+
+@admin.register(CompletedUnit)
+class CompletedUnitAdmin(admin.ModelAdmin):
+    list_display = ('student', 'unit', 'date_completed')
