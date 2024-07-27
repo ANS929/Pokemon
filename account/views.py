@@ -11,10 +11,6 @@ from community.models import MathComment, MathQuestion
 def index(request):
     return render(request, 'learning/base.html')
 
-# account page
-def account(request):
-    return render(request, 'account/account.html')
-
 # login
 def login_page(request):
     return render(request, 'registration/login.html')

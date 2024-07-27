@@ -5,7 +5,6 @@ from .views import custom_registration_view
 app_name = 'account'
 
 urlpatterns = [
-    path('', views.account, name='account'),
 
     # registration
     path('register/', custom_registration_view.as_view(), name='registration_register'),

@@ -184,7 +184,7 @@ class TCGCommentDetailView(CreateView):
         return reverse_lazy('community:tcg_question_details', kwargs={'pk': self.kwargs['pk']})
 
 # comment on a math post
-class AddMathCommentView(CreateView):
+class AddMathCommentView(LoginRequiredMixin, CreateView):
     model = MathComment
     form_class = MathCommentForm
     template_name = 'community/mathquestion_answer.html'
@@ -209,7 +209,7 @@ class AddMathCommentView(CreateView):
         return reverse_lazy('community:math_question_details', kwargs={'pk': self.kwargs['pk']})
 
 # comment on a tcg post
-class AddTCGCommentView(CreateView):
+class AddTCGCommentView(LoginRequiredMixin, CreateView):
     model = TCGComment
     form_class = TCGCommentForm
     template_name = 'community/tcgquestion_answer.html'

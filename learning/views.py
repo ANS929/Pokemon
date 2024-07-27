@@ -59,6 +59,7 @@ def gr8(request):
     return render(request, 'learning/gr8.html')
 
 # quiz slug
+@login_required
 def quiz_detail(request, quiz_slug):
     quiz = get_object_or_404(Quiz, slug=quiz_slug)
     context = {
@@ -67,6 +68,7 @@ def quiz_detail(request, quiz_slug):
     return render(request, f'learning/{quiz_slug}.html', context)
 
 # practice slug
+@login_required
 def practice_detail(request, practice_slug):
     practice = get_object_or_404(Practice, slug=practice_slug)
     context = {

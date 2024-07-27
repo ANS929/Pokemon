@@ -179,6 +179,11 @@ Lines of Symmetry
             width: 95%;
         }
     }
+
+    .horizontal {
+        width: 50%;
+        height: auto;
+    }
 </style>
 <header>
     <h1>Lines of Symmetry</h1>
@@ -188,7 +193,11 @@ Lines of Symmetry
         <main>
             <section>
                 <h2>Introduction:</h2>
-                <p> Content here</p>
+                <p>A shape has <b>symmetry</b> when it is the same on both sides. If you imagine folding the shape in
+                    half, all of the lines should match up on both sides. There are two types of symmetry:
+                    <b>horizontal</b> and <b>vertical</b>. Some Pokémon cards have examples of symmetry. Check out the
+                    Kingambit and Palafin cards below.
+                </p>
 
                 <!-- container for cards -->
                 <div class="imgcontainer">
@@ -207,19 +216,26 @@ Lines of Symmetry
 
             <section>
                 <h2>Horizontal Symmetry:</h2>
-                <p>Content here</p>
-                <p><u>Example</u>:</p>
+                <p>Horizontal symmetry is when you can draw a line across the middle of a shape, and the top part looks
+                    the same as the bottom part.</p>
+                <p><u>Example</u>: This arrowhead has horizontal symmetry.</p>
+                <img class="horizontal" src="{% static 'images/horizontal_symmetry.png' %}"
+                    alt="arrowhead with horizontal symmetry">
             </section>
 
             <section>
                 <h2>Vertical Symmetry:</h2>
-                <p>Content here</p>
-                <p><u>Example</u>:</p>
+                <p>Vertical symmetry is when you can draw a line down the middle of a shape, and the left part looks the
+                    same as the right part.</p>
+                <p><u>Example</u>: This trapezoid has vertical symmetry.</p>
+                <img class="horizontal" src="{% static 'images/vertical_symmetry.png' %}"
+                    alt="trapezoid with vertical symmetry">
             </section>
 
             <section>
                 <h2>You Try:</h2>
-                <p><b>True</b> or <b>False</b>: The three rarity symbols pictured below are all symmetrical.</p>
+                <p><b>True</b> or <b>False</b>: The three rarity symbols pictured below are all symmetrical. <b>Click on
+                        a rarity symbol to view it in a larger size</b>.</p>
 
                 <p><u>Check your answer using the "Check Answer" button. Once you have the correct answer, submit the
                         practice using the "Submit Practice" button.</u></p>
@@ -289,7 +305,7 @@ Lines of Symmetry
             var correctAnswer = 'true';
 
             if (selectedValue === correctAnswer) {
-                feedback.textContent = 'Correct! All 3 symbols have vertical symmmetry. Well done!';
+                feedback.textContent = 'Correct! All 3 symbols have vertical symmetry. Well done!';
                 submitButton.disabled = true; // disable submit button
                 finalForm.style.display = 'block'; // show the final submission form
             } else {

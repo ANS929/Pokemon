@@ -48,8 +48,8 @@ Area and Perimeter of Rectangles
     }
 
     .imgcontainer .image-container .image {
-        height: 150px;
-        width: 255;
+        height: 225px;
+        width: 382.5px;
         border: 10px solid #fff;
         box-shadow: 0 5px 15px rgba(0, 0, 0, .1);
         overflow: hidden;
@@ -105,6 +105,11 @@ Area and Perimeter of Rectangles
             width: 95%;
         }
     }
+
+    .rectangle {
+        width: 50%;
+        height: auto;
+    }
 </style>
 <header>
     <h1>Area and Perimeter of Rectangles</h1>
@@ -124,17 +129,24 @@ Area and Perimeter of Rectangles
             <section>
                 <h2>Area: </h2>
                 <p>Area is the amount of space inside a shape. For a rectangle, this is calculated by multiplying the
-                    length times the width.</p>
-                <p><u>Example</u>:</p>
+                    length times the width. Area is written in square units.</p>
+                <p><u>Example</u>: To find the area of the rectangle below, we multiply the length times the width. The
+                    area is 14 *
+                    6 = 84 square inches.</p>
+                <img class="rectangle" src="{% static 'images/rectangle.jpg' %}"
+                    alt="a rectangle with sides of 14 and 6 feet">
             </section>
 
             <section>
                 <h2>Perimeter:</h2>
                 <p>Perimeter is the distance around the outisde of a shape. For a rectangle, this is calculated by
                     multiplying two times the length, multiplying two times the width, and then adding those values
-                    together.
+                    together. Perimeter is written in units.
                 </p>
-                <p><u>Example</u>:</p>
+                <p><u>Example</u>: To find the perimeter of the rectangle below, we multiply two times the length and
+                    add it to two times the width. The perimeter is 14*2 + 6*2 = 28 + 12 = 40 inches.</p>
+                <img class="rectangle" src="{% static 'images/rectangle.jpg' %}"
+                    alt="a rectangle with sides of 14 and 6 feet">
             </section>
 
             <section>

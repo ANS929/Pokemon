@@ -48,8 +48,8 @@ Representing Data
     }
 
     .imgcontainer .image-container .image {
-        height: 250px;
-        width: 160px;
+        height: 375px;
+        width: 240px;
         border: 10px solid #fff;
         box-shadow: 0 5px 15px rgba(0, 0, 0, .1);
         overflow: hidden;
@@ -105,6 +105,13 @@ Representing Data
             width: 95%;
         }
     }
+
+    .frequency,
+    .line,
+    .bar {
+        width: 50%;
+        height: auto;
+    }
 </style>
 <header>
     <h1>Representing Data</h1>
@@ -115,35 +122,45 @@ Representing Data
         <main>
             <section>
                 <h2>Introduction:</h2>
-                <p>Content here</p>
+                <p>We can display data in many different ways. We will learn about <b>frequency tables</b>, <b>line
+                        plots</b>, and <b>bar graphs</b>.</p>
             </section>
 
             <section>
                 <h2>Frequency Tables:</h2>
-                <p>Content here</p>
-                <p><u>Example</u>:</p>
+                <p><b>Frequency</b> is the number of times a value occurs. A frequency table lists items and shows the
+                    number of times the items occur.</p>
+                <p><u>Example</u>: The frequency table below shows the results of asking 20 students to tell their
+                    favorite subject.</p>
+                <img class="frequency" src="{% static 'images/frequency_table.jpg' %}"
+                    alt="frequency table showing popularity of school subjects">
             </section>
 
             <section>
                 <h2>Line Plots:</h2>
-                <p>Content here</p>
-                <p><u>Example</u>:</p>
+                <p>A line plot displays data as points above a number line, showing the frequency of each value.</p>
+                <p><u>Example</u>: The line plot below shows the number of students in several different classrooms.</p>
+                <img class="line" src="{% static 'images/line_plot.jpg' %}"
+                    alt="line plot showing the number of students per classroom">
             </section>
 
             <section>
                 <h2>Bar Graphs:</h2>
-                <p>Content here</p>
-                <p><u>Example</u>:</p>
+                <p>A bar graph displays bars of different heights. The bars represent a frequency or a number of items
+                    for each category.</p>
+                <p><u>Example</u>: The bar grapg below shows the percentage of sales for each product category in a
+                    store.</p>
+                <img class="bar" src="{% static 'images/bar_graph.jpg' %}"
+                    alt="bar graph showing the percentage of sales for each product category in a store">
             </section>
 
             <section>
                 <h2>You Try:</h2>
                 <p> The following data was collected from NAIC 2024. These are the decks that made Day 2. True or False:
-                    A bar
-                    graph could NOT be used to display this information.</p>
+                    A bar graph could NOT be used to display this information. <b>Click on the image to view it in a
+                        larger size</b>.</p>
                 <p><u>Check your answer using the "Check Answer" button. Once you have the correct answer, submit the
-                        practice
-                        using the "Submit Practice" button.</u></p>
+                        practice using the "Submit Practice" button.</u></p>
 
                 <div class="imgcontainer">
                     <div class="image-container">
