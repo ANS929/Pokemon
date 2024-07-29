@@ -28,6 +28,10 @@ TCG Forum
         font-size: 15px;
         font-weight: normal;
     }
+
+    .about p {
+        font-size: 16px;
+    }
 </style>
 
 <body>
@@ -37,11 +41,17 @@ TCG Forum
         <a href="{% url 'community:tcg_question_create' %}" id="question-button" class="btn btn-primary">Ask a
             Question</a>
         {% else %}
-        <a href="{% url 'auth_login' %}" id="question-button" class="btn btn-primary">Ask a Question</a>
         {% endif %}
     </div>
 
-    <p style="font-size: 16px;">This forum is for asking and answering TCG-related questions.</p>
+    <div class="about">
+        <p>This forum is for asking and answering TCG-related questions.</p>
+
+        {% if user.is_authenticated %}
+        {% else %}
+        <p>Please <a href="{% url 'auth_login' %}">login</a> to ask and answer questions on the forum.</p>
+        {% endif %}
+    </div>
 
     <div class="container">
         <div class="list-question">

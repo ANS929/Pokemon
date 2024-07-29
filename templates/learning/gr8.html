@@ -5,44 +5,14 @@
 Grade 8
 {% endblock %}
 {% block body_block %}
-<style>
-    .unit-list {
-        font-size: 28px;
-        flex: 1;
-        border: 5px solid #316cbc;
-        padding: 25px;
-        margin: 20px;
-        height: auto;
-    }
 
-    .content {
-        flex: 2;
-        display: flex;
-        flex-direction: column;
-    }
+<link rel="stylesheet" href="{% static 'css/grade.css' %}">
 
-    .grade8-container {
-        display: flex;
-        font-size: 20px;
-        align-items: flex-start;
-    }
-
-    .unit-list h1 {
-        text-align: center;
-    }
-
-    .content img {
-        max-width: 75%;
-        height: auto;
-        margin: auto;
-        display: block;
-    }
-</style>
 <header>
     <h1>Grade 8</h1>
 </header>
 
-<div class="grade8-container">
+<div class="grade-container">
     <div class="content">
         {% if user.is_authenticated %}
         <p>Grade 8 covers A, B, C, D, E, and, F. Select a unit to view its contents.</p>

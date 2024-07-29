@@ -1,0 +1,32 @@
+    .unit-list {
+        font-size: 2vw;
+        flex: 1 1 300px;
+        border: 5px solid #316cbc;
+        padding: 25px;
+        margin: 20px;
+        height: auto;
+    }
+
+    .content {
+        flex: 2 1 500px;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .grade-container {
+        display: flex;
+        font-size: 20px;
+        align-items: flex-start;
+        flex-wrap: wrap;
+    }
+
+    .unit-list h1 {
+        text-align: center;
+    }
+
+    .content img {
+        max-width: 75%;
+        height: auto;
+        margin: auto;
+        display: block;
+    }

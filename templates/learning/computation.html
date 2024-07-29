@@ -5,44 +5,14 @@
 Computation
 {% endblock %}
 {% block body_block %}
-<style>
-    .content-list {
-        font-size: 28px;
-        flex: 1;
-        border: 5px solid #316cbc;
-        padding: 25px;
-        margin: 20px;
-        height: auto;
-    }
 
-    .content {
-        flex: 2;
-        display: flex;
-        flex-direction: column;
-    }
+<link rel="stylesheet" href="{% static 'css/unit.css' %}">
 
-    .computation-container {
-        display: flex;
-        font-size: 20px;
-        align-items: flex-start;
-    }
-
-    .content-list h1 {
-        text-align: center;
-    }
-
-    .content img {
-        max-width: 75%;
-        height: auto;
-        margin: auto;
-        display: block;
-    }
-</style>
 <header>
     <h1>Computation - 4th Grade</h1>
 </header>
 
-<div class="computation-container">
+<div class="unit-container">
     <div class="content">
         <p>The Computation Unit is made up of two lessons and a quiz.</p>
         <img src="{% static 'images/computation.jpg' %}" alt="computation">

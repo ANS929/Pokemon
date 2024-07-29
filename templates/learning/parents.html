@@ -8,54 +8,10 @@ Parent Homepage
 
 {% block body_block %}
 
-<style>
-    * {
-        box-sizing: border-box;
-    }
-
-    .content {
-        font-size: 20px;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        padding: 25px;
-        margin: 0 10px;
-        flex: 1;
-    }
-
-    .parent-page {
-        display: flex;
-        width: 100%;
-        justify-content: space-between;
-    }
-
-    @media (max-width: 400px) {
-        .parent-page {
-            flex-direction: column;
-        }
-    }
-
-    .parent-page h1,
-    .parent-page p {
-        text-align: center;
-    }
-
-    .parent-image-container {
-        display: flex;
-        justify-content: center;
-        padding: 20px;
-        margin: 0 10px;
-        flex: 1;
-    }
-
-    .parent-image-container img {
-        max-width: 50%;
-        height: auto;
-    }
-</style>
+<link rel="stylesheet" href="{% static 'css/role.css' %}">
 
 <h1>Parent Homepage</h1>
-<div class="parent-page">
+<div class="role-container">
     <div class="content">
         <p>Welcome to the parent page! Here you can access the Parent Dashboard to manage your children.</p>
         {% if user.is_authenticated %}
@@ -65,7 +21,7 @@ Parent Homepage
         {% endif %}
     </div>
 
-    <div class="parent-image-container">
+    <div class="role-image-container">
         <img src="{% static 'images/math_homework.jpg' %}" alt="math homework on a table">
     </div>
 </div>

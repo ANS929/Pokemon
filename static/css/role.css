@@ -1,0 +1,43 @@
+    * {
+        box-sizing: border-box;
+    }
+
+    .content {
+        font-size: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 25px;
+        margin: 0 10px;
+        flex: 1;
+    }
+
+    .role-container {
+        display: flex;
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    @media (max-width: 400px) {
+        .role-container {
+            flex-direction: column;
+        }
+    }
+
+    .role-container h1,
+    .role-container p {
+        text-align: center;
+    }
+
+    .role-image-container {
+        display: flex;
+        justify-content: center;
+        padding: 20px;
+        margin: 0 10px;
+        flex: 1;
+    }
+
+    .role-image-container img {
+        max-width: 50%;
+        height: auto;
+    }

@@ -9,7 +9,7 @@ About the Pokémon TCG
 <style>
     .details-container,
     .rules-strategies-container {
-        flex: 1;
+        flex: 1 1 45%;
         border: 5px solid #316cbc;
         padding: 25px;
         margin: 20px;
@@ -20,6 +20,7 @@ About the Pokémon TCG
 
     .tcg-info-container {
         display: flex;
+        flex-wrap: wrap;
     }
 
     .tcg-info-container h1 {
@@ -55,7 +56,7 @@ About the Pokémon TCG
             <img src="{% static 'images/pokemon_cards.jpeg' %}" alt="Pokémon cards">
         </div>
     </div>
-    <div class=" rules-strategies-container">
+    <div class="rules-strategies-container">
         <h1>Rules and Strategies</h1>
         <ul>
             <li>The offical Pokémon website is a great resource for <a

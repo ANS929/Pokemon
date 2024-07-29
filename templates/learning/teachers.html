@@ -8,54 +8,10 @@ Teacher Homepage
 
 {% block body_block %}
 
-<style>
-    * {
-        box-sizing: border-box;
-    }
-
-    .content {
-        font-size: 20px;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        padding: 25px;
-        margin: 0 10px;
-        flex: 1;
-    }
-
-    .teacher-page {
-        display: flex;
-        width: 100%;
-        justify-content: space-between;
-    }
-
-    @media (max-width: 400px) {
-        .teacher-page {
-            flex-direction: column;
-        }
-    }
-
-    .teacher-page h1,
-    .teacher-page p {
-        text-align: center;
-    }
-
-    .teacher-image-container {
-        display: flex;
-        justify-content: center;
-        padding: 20px;
-        margin: 0 10px;
-        flex: 1;
-    }
-
-    .teacher-image-container img {
-        max-width: 100%;
-        height: auto;
-    }
-</style>
+<link rel="stylesheet" href="{% static 'css/role.css' %}">
 
 <h1>Teacher Homepage</h1>
-<div class="teacher-page">
+<div class="role-container">
     <div class="content">
         <p>Welcome to the teacher page! Here you can access the Teacher Dashboard to manage your students.</p>
         {% if user.is_authenticated %}
@@ -65,7 +21,7 @@ Teacher Homepage
         {% endif %}
     </div>
 
-    <div class="teacher-image-container">
+    <div class="role-image-container">
         <img src="{% static 'images/teacher_books.jpg' %}" alt="math textbooks on a desk">
     </div>
 </div>

@@ -5,105 +5,14 @@
 Interpreting Data
 {% endblock %}
 {% block body_block %}
+
+<link rel="stylesheet" href="{% static 'css/lesson.css' %}">
+<link rel="stylesheet" href="{% static 'css/popupimage.css' %}">
+
 <style>
-    .details {
-        font-size: 28px;
-        flex: 1;
-        border: 5px solid #316cbc;
-        padding: 25px;
-        margin: 20px;
-        height: auto;
-    }
-
-    .content {
-        flex: 2;
-        display: flex;
-        flex-direction: column;
-        border: 5px solid #ffcb13;
-        padding: 25px;
-        margin: 20px;
-    }
-
-    .lesson-container {
-        display: flex;
-        font-size: 20px;
-        align-items: flex-start;
-    }
-
-    .details h1 {
-        text-align: center;
-    }
-
-    .imgcontainer {
-        max-width: 100%;
-        padding: 10px;
-        margin-left: 0;
-    }
-
-    .imgcontainer .image-container {
-        display: flex;
-        gap: 15px;
-        justify-content: flex-start;
-        align-items: flex-start;
-    }
-
     .imgcontainer .image-container .image {
-        height: 290px;
-        width: 295px;
-        border: 10px solid #fff;
-        box-shadow: 0 5px 15px rgba(0, 0, 0, .1);
-        overflow: hidden;
-        cursor: pointer;
-    }
-
-    .imgcontainer .image-container .image img {
-        height: 100%;
-        width: 100%;
-        object-fit: cover;
-        transition: .2s linear;
-    }
-
-    .imgcontainer .image-container .image:hover {
-        transform: scale(1.1)
-    }
-
-    .imgcontainer .popup-image {
-        position: fixed;
-        top: 0;
-        left: 0;
-        background: rgba(0, 0, 0, .9);
-        height: 100%;
-        width: 100%;
-        z-index: 100;
-        display: none;
-    }
-
-    .imgcontainer .popup-image span {
-        position: absolute;
-        top: 0;
-        right: 10px;
-        font-size: 10px;
-        font-weight: bolder;
-        color: #fff;
-        cursor: pointer;
-        z-index: 100;
-    }
-
-    .imgcontainer .popup-image img {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        border: 5px solid #fff;
-        border-radius: 5px;
-        width: 750px;
-        object-fit: cover;
-    }
-
-    @media (max-width:768px) {
-        .imgcontainer .popup-image img {
-            width: 95%;
-        }
+        height: 290px !important;
+        width: 295px !important;
     }
 
     .circle {

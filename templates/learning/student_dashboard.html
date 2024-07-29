@@ -5,46 +5,21 @@ Student Dashboard
 {% endblock %}
 
 {% block body_block %}
+
+<link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+
 <style>
-    table {
-        font-family: arial, sans-serif;
-        border-collapse: collapse;
-        width: 90%;
-    }
-
-    td,
-    th {
-        border: 1px solid #dddddd;
-        text-align: left;
-        padding: 8px;
-    }
-
-    tr:nth-child(even) {
-        background-color: #dddddd;
-    }
-
-    .assignment-container {
-        flex: 2;
-    }
-
-    .badge-container {
-        flex: 1;
-        border: 5px solid black;
-        padding: 25px;
-        margin: 20px;
-        height: auto;
-    }
-
-    .student-dashboard-container {
-        display: flex;
-        font-size: 16px;
+    .dashboard-container {
         align-items: flex-start;
     }
 
-    @media (max-width: 400px) {
-        .student-dashboard-container {
-            flex-direction: column;
-        }
+    .container-1 {
+        flex: 2;
+    }
+
+    .container-2 {
+        flex: 1;
+        height: auto;
     }
 
     .badge-icon {
@@ -77,9 +52,8 @@ Student Dashboard
 <p style="font-size: 20px;">Once you have earned 100% on a quiz, you can click on its name to view the explanations of
     each answer.</p>
 
-<div class="student-dashboard-container">
-
-    <div class="assignment-container">
+<div class="dashboard-container">
+    <div class="container-1">
         <h2>Completed Practices:</h2>
         <table>
             <tr>
@@ -132,7 +106,7 @@ Student Dashboard
         </table> <br>
     </div>
 
-    <div class="badge-container">
+    <div class="container-2">
         <h2>Badges:</h2>
         <ul>
             {% for item in badges_with_status %}

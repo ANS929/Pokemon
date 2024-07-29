@@ -1,59 +1,22 @@
 {% extends 'learning/base.html' %}
 
+{% load static %}
+
 {% block title_block %}
 Teacher Dashboard
 {% endblock %}
 
 {% block body_block %}
+
+<link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+
 <style>
-    table {
-        font-family: arial, sans-serif;
-        border-collapse: collapse;
-        width: 100%;
-    }
-
-    td,
-    th {
-        border: 1px solid #dddddd;
-        text-align: left;
-        padding: 8px;
-    }
-
-    tr:nth-child(even) {
-        background-color: #dddddd;
-    }
-
-    .student-container {
+    .container-1,
+    .container-2 {
         flex: 1;
-        border: 5px solid black;
-        padding: 25px;
-        margin: 20px;
-    }
-
-    .class-container {
-        flex: 1;
-        border: 5px solid black;
-        padding: 25px;
-        margin: 20px;
-    }
-
-    .teacher-dashboard-container {
-        display: flex;
-        font-size: 16px;
-    }
-
-    @media (max-width: 400px) {
-        .teacher-dashboard-container {
-            flex-direction: column;
-        }
-    }
-
-    .student-container .btn,
-    .class-container .btn {
-        float: right;
-        margin: 10px;
     }
 </style>
+
 {% if messages %}
 {% for message in messages %}
 <div class="alert alert-{{ message.tags }}">{{ message }}</div>
@@ -64,8 +27,8 @@ Teacher Dashboard
 </header>
 <p style="font-size: 28px;">Welcome to the Teacher Dashboard!</p>
 
-<div class="teacher-dashboard-container">
-    <div class="student-container">
+<div class="dashboard-container">
+    <div class="container-1">
         <button class="btn btn-outline-danger" type="button">
             <a href="{% url 'learning:remove_student' %}" style="text-decoration: none; color:inherit;">Remove a
                 Student</a>
@@ -98,7 +61,7 @@ Teacher Dashboard
         {% endif %}
     </div>
 
-    <div class="class-container">
+    <div class="container-2">
         <a href="{% url 'learning:new_class' %}" name="add-class-button" class="btn btn-primary">Add a Class</a>
         <h2>Your Classes:</h2>
         {% if courses %}

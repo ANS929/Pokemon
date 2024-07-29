@@ -24,11 +24,14 @@ Student Homepage
 
     .student-page {
         display: flex;
+        flex-direction: column;
+        align-items: center;
     }
 
-    @media (max-width: 400px) {
+    @media (min-width: 600px) {
         .student-page {
-            flex-direction: column;
+            flex-direction: row;
+            justify-content: space-between;
         }
     }
 
@@ -44,22 +47,18 @@ Student Homepage
 
     .button-container {
         display: grid;
-        grid-template-columns: repeat(2, minmax(0, 150px));
+        grid-template-columns: repeat(2, 150px);
         gap: 10px;
         justify-content: center;
-        max-width: 320px;
-        margin: 0 auto;
     }
 
     .button-container .btn {
-        margin: 10px;
-        width: 100px;
+        width: 100%;
         height: 40px;
         display: flex;
         align-items: center;
         justify-content: center;
         text-align: center;
-        overflow: hidden;
     }
 
     .button-container h1 {
@@ -71,8 +70,13 @@ Student Homepage
         .button-container {
             grid-template-columns: 1fr;
         }
+
+        .button-container .btn {
+            width: 100%;
+        }
     }
 </style>
+
 <h1>Student Homepage</h1>
 <div class="student-page">
     <div class="content">
