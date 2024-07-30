@@ -1,34 +1,20 @@
 {% extends 'learning/base.html' %}
 
+{% load static %}
+
 {% block title_block %}
 Question Details
 {% endblock %}
 
 {% block body_block %}
-<style>
-    #header-content {
-        text-align: center;
-    }
 
-    body {
-        margin-top: 100px;
-        font-family: 'Poppins', sans-serif;
-    }
+<link rel="stylesheet" href="{% static 'css/questiondetails.css' %}">
 
-    #fh3 {
-        text-align: center;
-        font-size: 30px;
-        padding-top: 20px;
-        text-align: left;
-    }
-
-    #fh6 {
-        text-align: left;
-        font-size: 15px;
-        padding-bottom: 20px;
-        font-weight: normal;
-    }
-</style>
+{% if messages %}
+{% for message in messages %}
+<div class="alert alert-{{ message.tags }}">{{ message }}</div>
+{% endfor %}
+{% endif %}
 
 <body>
     <div id="header-content">

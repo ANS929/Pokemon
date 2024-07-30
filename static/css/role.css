@@ -38,6 +38,10 @@
     }
 
     .role-image-container img {
-        max-width: 50%;
+        max-width: 66%;
         height: auto;
+    }
+
+    .content .btn {
+        margin: 10px;
     }

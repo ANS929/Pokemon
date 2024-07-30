@@ -5,14 +5,23 @@ Math Question Deletion
 {% endblock %}
 
 {% block body_block %}
+
+<style>
+    .container11 {
+        width: 100%;
+        text-align: center;
+    }
+</style>
+
 <form action="{% url 'community:math_question_delete' pk=question.pk %}" method="POST">
     {% csrf_token %}
     <div class="container" style="background-color: #f2f2f2; height: 200px;">
-        <h2 style="text-align: center; padding-top: 35px; font-family: 'Poppins', sans-serif;">Do you want to delete this
-            question? <b>{{ question.title }}</b></h2>
+        <h2 style="text-align: center; padding-top: 35px; font-family: 'Poppins', sans-serif;">Do you want to delete
+            this question? <b>{{ question.title }}</b></h2>
         <div class="container11">
             <button type="submit" class="btn btn-outline-danger">Delete</button>
-            <a href="{% url 'community:math_question_details' pk=question.pk %}" class="btn btn-outline-success">Cancel</a>
+            <a href="{% url 'community:math_question_details' pk=question.pk %}"
+                class="btn btn-outline-success">Cancel</a>
         </div>
     </div>
 </form>

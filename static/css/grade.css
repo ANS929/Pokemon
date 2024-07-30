@@ -1,5 +1,5 @@
     .unit-list {
-        font-size: 2vw;
+        font-size: 20px;
         flex: 1 1 300px;
         border: 5px solid #316cbc;
         padding: 25px;
@@ -8,7 +8,7 @@
     }
 
     .content {
-        flex: 2 1 500px;
+        flex: 2 1 600px;
         display: flex;
         flex-direction: column;
     }

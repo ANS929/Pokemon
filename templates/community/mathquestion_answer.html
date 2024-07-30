@@ -5,7 +5,7 @@ Answer a Math Question
 {% endblock %}
 
 {% block body_block %}
-<h4>Answer the Question</h4>
+<h2>Answer the Question</h2>
 <form action="" method="POST">
     {% csrf_token %}
     {{ form.as_p }}

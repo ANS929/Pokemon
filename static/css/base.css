@@ -1,0 +1,16 @@
+.custom-navbar-color {
+    background-color: #316cbc;
+}
+
+.search-form {
+    border: 2px solid #ffcb13;
+}
+
+.username-link {
+    color: #ffcb13 !important;
+    font-weight: bold;
+}
+
+.sidebar-sticky {
+    font-size: 20px;
+}

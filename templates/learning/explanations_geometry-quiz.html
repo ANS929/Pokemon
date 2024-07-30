@@ -4,30 +4,14 @@ Quiz Explanations - {{ quiz.title }}
 {% endblock %}
 
 {% block body_block %}
-<style>
-    table {
-        font-family: arial, sans-serif;
-        font-size: 16px;
-        border-collapse: collapse;
-        width: 66%;
-    }
 
-    td,
-    th {
-        border: 1px solid #dddddd;
-        text-align: left;
-        padding: 8px;
-    }
+<link rel="stylesheet" href="{% static 'css/explanations.css' %}">
 
-    tr:nth-child(even) {
-        background-color: #dddddd;
-    }
-</style>
 <h1>{{ quiz.title }} - Explanations</h1>
 <table>
     <tr>
-        <th style="width:15%">Question</th>
-        <th style="width:15%">Correct Answer</th>
+        <th style="width: 20%;">Question</th>
+        <th style="width: 20%;">Correct Answer</th>
         <th>Explanation</th>
     </tr>
     {% for question, correct_answer in correct_answers.items %}

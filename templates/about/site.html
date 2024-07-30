@@ -6,27 +6,10 @@ About PokéMath
 {% endblock %}
 
 {% block body_block %}
+
+<link rel="stylesheet" href="{% static 'css/about.css' %}">
+
 <style>
-    .details-container,
-    .creator-container {
-        flex: 1 1 45%;
-        border: 5px solid #316cbc;
-        padding: 25px;
-        margin: 20px;
-        font-size: 20px;
-        display: flex;
-        flex-direction: column;
-    }
-
-    .site-info-container {
-        display: flex;
-        flex-wrap: wrap;
-    }
-
-    .site-info-container h1 {
-        text-align: center;
-    }
-
     .NAIC-image img {
         height: 463.2px;
         width: 347.4px;
@@ -37,31 +20,32 @@ About PokéMath
     .registration-section {
         text-align: center;
         margin-top: auto;
+        font-size: 30px;
     }
 </style>
-<div class="site-info-container">
-    <div class="details-container">
+<div class="info-container">
+    <div class="container-1">
         <h1>About PokéMath</h1>
         <p>Launched in 2024, PokéMath is an innovative educational platform designed by an experienced former educator.
             It integrates mathematics curriculum with the Pokémon Trading Card Game (TCG), providing an engaging
             experience for students in grades first through eighth.</p>
-        <h3>Features:</h3>
+        <h2><b>Features:</b></h2>
         <ul>
-            <li><b>Comprehensive Curriculum</b>
+            <li><u>Comprehensive Curriculum</u>
                 <ul>
                     <li>Standards-based content aligned with grade-level expectations</li>
                     <li>Structured into units, each containing lessons and quizzes designed to reinforce mathematical
                         concepts</li>
                 </ul>
             </li>
-            <li><b>Interactive Learning</b>
+            <li><u>Interactive Learning</u>
                 <ul>
                     <li>Lessons include knowledge checks to ensure students grasp the material effectively</li>
                     <li>Engaging activities featuring Pokémon TCG elements to maintain student interest and motivation
                     </li>
                 </ul>
             </li>
-            <li><b>Community Collaboration</b>
+            <li><u>Community Collaboration</u>
                 <ul>
                     <li>Forum feature allows all members to interact, discuss topics, and collaborate on learning
                         strategies</li>
@@ -69,24 +53,24 @@ About PokéMath
                 </ul>
             </li>
         </ul>
-        <h3>How it Works:</h3>
+        <h2><b>How it Works:</b></h2>
         <ul>
             <li>
-                <b>For Students</b>
+                <u>For Students</u>
                 <ul>
                     <li>Explore grade-appropriate lessons that combine mathematics with Pokémon-themed activities</li>
                     <li>Complete quizzes and knowledge checks to reinforce understanding</li>
                 </ul>
             </li>
             <li>
-                <b>For Teachers</b>
+                <u>For Teachers</u>
                 <ul>
                     <li>Create and manage class rosters</li>
                     <li>Monitor student progress and performance</li>
                 </ul>
             </li>
             <li>
-                <b>For Parents</b>
+                <u>For Parents</u>
                 <ul>
                     <li>Track their child's learning journey</li>
                     <li>Gain insight into areas where their child may need support or encouragement</li>
@@ -94,13 +78,11 @@ About PokéMath
             </li>
         </ul>
         <div class="registration-section">
-            <a href="{% url 'registration_register' %}" class="reg-link">
-                <h3>Join PokéMath for free today</h3>
-            </a>
+            <a href="{% url 'registration_register' %}" class="reg-link">Join PokéMath for free today</a>
             <p>Sign up now for a unique educational experience. Engage, learn, and excel with us!</p>
         </div>
     </div>
-    <div class="creator-container">
+    <div class="container-2">
         <h1>About the Creator</h1>
         <p>Alex Smith, the creator of PokéMath, is a lifelong learner with a passion for math and Pokémon. She graduated
             from Trine University in 2011 with a Bachelor's in Mathematics and Mathematics Education. After spending

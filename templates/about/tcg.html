@@ -6,27 +6,10 @@ About the Pokémon TCG
 {% endblock %}
 
 {% block body_block %}
+
+<link rel="stylesheet" href="{% static 'css/about.css' %}">
+
 <style>
-    .details-container,
-    .rules-strategies-container {
-        flex: 1 1 45%;
-        border: 5px solid #316cbc;
-        padding: 25px;
-        margin: 20px;
-        font-size: 20px;
-        display: flex;
-        flex-direction: column;
-    }
-
-    .tcg-info-container {
-        display: flex;
-        flex-wrap: wrap;
-    }
-
-    .tcg-info-container h1 {
-        text-align: center;
-    }
-
     .tcg-logo img,
     .pokemon-cards img {
         margin: auto;
@@ -43,8 +26,8 @@ About the Pokémon TCG
         width: 450px;
     }
 </style>
-<div class="tcg-info-container">
-    <div class="details-container">
+<div class="info-container">
+    <div class="container-1">
         <h1>About the Pokémon TCG</h1>
         <p>Pokémon was invented by Satoshi Tajiri and Ken Sugimori. The first two Pokémon games, Red and Green, were
             released in Japan on 27 February 1996. The games were released in the US in 1998 as Red and Blue. The
@@ -56,7 +39,7 @@ About the Pokémon TCG
             <img src="{% static 'images/pokemon_cards.jpeg' %}" alt="Pokémon cards">
         </div>
     </div>
-    <div class="rules-strategies-container">
+    <div class="container-2">
         <h1>Rules and Strategies</h1>
         <ul>
             <li>The offical Pokémon website is a great resource for <a

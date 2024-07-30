@@ -21,24 +21,9 @@
 
     <!-- Custom styles for this template -->
     <link href="https://getbootstrap.com/docs/4.2/examples/dashboard/dashboard.css" rel="stylesheet">
-    <style>
-        .custom-navbar-color {
-            background-color: #316cbc;
-        }
 
-        .search-form {
-            border: 2px solid #ffcb13;
-        }
-
-        .username-link {
-            color: #ffcb13 !important;
-            font-weight: bold;
-        }
-
-        .sidebar-sticky {
-            font-size: 16px;
-        }
-    </style>
+    <link rel="stylesheet" href="{% static 'css/homepage.css' %}">
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
 </head>
 
 <body>
@@ -182,161 +167,8 @@
 
             <main role="main" class="col-md-9  ml-sm-auto col-lg-10 px-4">
                 {% block body_block %}
-                <style>
-                    .homepage-container {
-                        display: flex;
-                        flex-wrap: wrap;
-                        width: 100%;
-                        box-sizing: border-box;
-                    }
-
-                    .first-container,
-                    .second-container,
-                    .third-container,
-                    .fourth-container {
-                        flex: 1 1 45%;
-                        border: 5px solid #316cbc;
-                        padding: 25px;
-                        margin: 20px;
-                        box-sizing: border-box;
-                        min-width: 0;
-                        font-size: 20px;
-                        display: flex;
-                        flex-direction: column;
-                    }
-
-                    .first-container,
-                    .second-container {
-                        order: 1;
-                    }
-
-                    .third-container,
-                    .fourth-container {
-                        order: 2;
-                    }
-
-                    .title {
-                        display: flex;
-                        flex-direction: column;
-                        justify-content: center;
-                        align-items: center;
-                        text-align: center;
-                    }
-
-                    .image-1,
-                    .image-2,
-                    .image-3 {
-                        display: flex;
-                        justify-content: center;
-                        align-items: center;
-                    }
-
-                    .image-1 img,
-                    .image-2 img,
-                    .image-3 img {
-                        max-width: 100%;
-                        height: auto;
-                        margin: auto;
-                        display: block;
-                    }
-
-                    .image-2 img {
-                        max-height: 320px;
-                    }
-
-                    .imgcontainer {
-                        max-width: 100%;
-                        padding: 10px;
-                        margin-left: 0;
-                        display: flex;
-                        justify-content: center;
-                    }
-
-                    .imgcontainer .image-container {
-                        display: flex;
-                        flex-wrap: wrap;
-                        gap: 15px;
-                        justify-content: center;
-                    }
-
-                    .imgcontainer .image-row {
-                        display: flex;
-                        gap: 15px;
-                        justify-content: center;
-                    }
-
-                    .imgcontainer .image {
-                        flex: 1 1 150px;
-                        max-width: 150px;
-                        height: auto;
-                        border: 10px solid #fff;
-                        box-shadow: 0 5px 15px rgba(0, 0, 0, .1);
-                        overflow: hidden;
-                        cursor: pointer;
-                    }
-
-                    .imgcontainer .image img {
-                        height: 100%;
-                        width: 100%;
-                        object-fit: cover;
-                        transition: .2s linear;
-                    }
-
-                    .imgcontainer .image:hover {
-                        transform: scale(1.1);
-                    }
-
-                    .imgcontainer .popup-image {
-                        position: fixed;
-                        top: 0;
-                        left: 0;
-                        background: rgba(0, 0, 0, .9);
-                        height: 100%;
-                        width: 100%;
-                        z-index: 100;
-                        display: none;
-                    }
-
-                    .imgcontainer .popup-image span {
-                        position: absolute;
-                        top: 0;
-                        right: 10px;
-                        font-size: 10px;
-                        font-weight: bolder;
-                        color: #fff;
-                        cursor: pointer;
-                        z-index: 100;
-                    }
-
-                    .imgcontainer .popup-image img {
-                        position: absolute;
-                        top: 50%;
-                        left: 50%;
-                        transform: translate(-50%, -50%);
-                        border: 5px solid #fff;
-                        border-radius: 5px;
-                        width: 750px;
-                        object-fit: cover;
-                    }
-
-                    @media (max-width: 768px) {
-                        .imgcontainer .image {
-                            max-width: calc(50% - 15px);
-                        }
-                    }
-
-                    .learn-more {
-                        font-size: 30px !important;
-                        text-align: center;
-                    }
-
-                    .homepage-container h1 {
-                        text-align: center;
-                    }
-                </style>
                 <div class="title">
-                    <p style="font-size: 50px;">Welcome to <img src="{% static 'images/logo.png' %}"
-                            alt="PokéMath logo">!</p>
+                    <p style="font-size: 50px;">Welcome to <img src="{% static 'images/logo.png' %}" alt="PokéMath logo">!</p>
                     <p style="font-size: 30px;">Strengthen your math skills while becoming a <b>Pokémon Master</b>!</p>
                 </div>
                 <div class="homepage-container">
@@ -366,7 +198,7 @@
                             <li><b>Infinity (∞) Badge</b> - earned for completion of a grade level</li>
                         </ul>
                         </p>
-                        <div class="imgcontainer">
+                        <div class="imagecontainer">
                             <div class="image-container">
                                 <div class="image-row">
                                     <div class="image"><img src="{% static 'images/alpha_badge.png' %}" alt=""></div>
@@ -405,7 +237,7 @@
                     </div>
                     <div class="fourth-container">
                         <h1>Recent Forum Posts</h1>
-                        <h4>Math Forum</h4>
+                        <h2>Math Forum</h2>
                         <ul>
                             {% for question in recent_math_questions %}
                             <li><a href="{{ question.get_absolute_url }}">{{ question.title }}</a> -
@@ -415,7 +247,7 @@
                             {% endfor %}
                         </ul>
 
-                        <h4>TCG Forum</h4>
+                        <h2>TCG Forum</h2>
                         <ul>
                             {% for question in recent_tcg_questions %}
                             <li><a href="{{ question.get_absolute_url }}">{{ question.title }}</a> -

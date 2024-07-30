@@ -8,48 +8,15 @@ Student Homepage
 
 {% block body_block %}
 
+<link rel="stylesheet" href="{% static 'css/role.css' %}">
+
 <style>
-    .content,
-    .button-container {
-        padding: 25px;
-        margin: 20px;
-    }
-
-    .content {
-        font-size: 20px;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .student-page {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-    }
-
-    @media (min-width: 600px) {
-        .student-page {
-            flex-direction: row;
-            justify-content: space-between;
-        }
-    }
-
-    .content .btn,
-    .button-container .btn {
-        margin: 10px;
-    }
-
-    .student-page h1,
-    .student-page p {
-        text-align: center;
-    }
-
     .button-container {
         display: grid;
         grid-template-columns: repeat(2, 150px);
         gap: 10px;
         justify-content: center;
+        flex: 1;
     }
 
     .button-container .btn {
@@ -59,6 +26,7 @@ Student Homepage
         align-items: center;
         justify-content: center;
         text-align: center;
+        margin: 10px;
     }
 
     .button-container h1 {
@@ -78,7 +46,7 @@ Student Homepage
 </style>
 
 <h1>Student Homepage</h1>
-<div class="student-page">
+<div class="role-container">
     <div class="content">
         <p>Welcome to the student page! Select a grade level to view the available units or visit the Student Dashboard
             to view your progress.</p>

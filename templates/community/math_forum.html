@@ -1,38 +1,14 @@
 {% extends "learning/base.html" %}
 
+{% load static %}
+
 {% block title_block %}
 Math Forum
 {% endblock %}
 
 {% block body_block %}
-<style>
-    body {
-        margin-top: 100px;
-        font-family: 'Poppins', sans-serif;
-    }
 
-    #header-content {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-    }
-
-    #fh3 {
-        text-align: left;
-        font-size: 19px;
-        padding-top: 15px;
-    }
-
-    #fh6 {
-        text-align: right;
-        font-size: 15px;
-        font-weight: normal;
-    }
-
-    .about p {
-        font-size: 16px;
-    }
-</style>
+<link rel="stylesheet" href="{% static 'css/forum.css' %}">
 
 <body>
     <div id="header-content">
