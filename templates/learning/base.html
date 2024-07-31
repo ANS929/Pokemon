@@ -167,8 +167,16 @@
 
             <main role="main" class="col-md-9  ml-sm-auto col-lg-10 px-4">
                 {% block body_block %}
+
+                {% if messages %}
+                {% for message in messages %}
+                <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+                {% endfor %}
+                {% endif %}
+
                 <div class="title">
-                    <p style="font-size: 50px;">Welcome to <img src="{% static 'images/logo.png' %}" alt="PokéMath logo">!</p>
+                    <p style="font-size: 50px;">Welcome to <img src="{% static 'images/logo.png' %}"
+                            alt="PokéMath logo">!</p>
                     <p style="font-size: 30px;">Strengthen your math skills while becoming a <b>Pokémon Master</b>!</p>
                 </div>
                 <div class="homepage-container">

@@ -73,7 +73,7 @@ class MathQuestionCreateView(LoginRequiredMixin, CreateView):
         user = self.request.user
 
         # check for Factorial Badge (creation of first math forum post)
-        if not CompletedBadge.objects.filter(student=user, badge__name='Factorial Badge').exists():
+        if user.profile.is_student and not CompletedBadge.objects.filter(student=user, badge__name='Factorial Badge').exists():
             if MathQuestion.objects.filter(user=user).count() == 1:
                 badge = Badge.objects.get(name='Factorial Badge')
                 CompletedBadge.objects.create(student=user, badge=badge)
@@ -197,7 +197,7 @@ class AddMathCommentView(LoginRequiredMixin, CreateView):
         user = self.request.user
 
         # check for Sigma Badge (creation of first math forum comment)
-        if not CompletedBadge.objects.filter(student=user, badge__name='Sigma Badge').exists():
+        if user.profile.is_student and not CompletedBadge.objects.filter(student=user, badge__name='Sigma Badge').exists():
             if MathComment.objects.filter(user=user).count() == 1:
                 badge = Badge.objects.get(name='Sigma Badge')
                 CompletedBadge.objects.create(student=user, badge=badge)

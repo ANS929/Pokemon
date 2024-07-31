@@ -13,7 +13,10 @@ def index(request):
 
 # login
 def login_page(request):
-    return render(request, 'registration/login.html')
+    if 'next' in request.POST:
+        return redirect(request.POST.get('next'))
+    else:
+        return render(request, 'registration/login.html')
 
 # registration complete
 def registration_complete(request):

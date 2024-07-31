@@ -10,11 +10,6 @@ User Profile
 
 <body>
     <div class="page-content page-container" id="page-content">
-        {% if messages %}
-        {% for message in messages %}
-        <div class="alert alert-{{ message.tags }}">{{ message }}</div>
-        {% endfor %}
-        {% endif %}
         <div class="padding">
             <div class="row  d-flex justify-content-center">
                 <div class="col-xl-6 col-md-12">
@@ -83,7 +78,7 @@ User Profile
                                                 <ul>
                                                     {% for question in commented_questions %}
                                                     <li><a href="{{ question.get_absolute_url }}">
-                                                        {{ question.title }}</a></li>
+                                                            {{ question.title }}</a></li>
                                                     {% endfor %}
                                                 </ul>
                                                 {% else %}

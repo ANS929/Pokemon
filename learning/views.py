@@ -130,18 +130,21 @@ def submit_practice(request, practice_slug):
         return redirect('learning:student_dashboard', user_id=user.id)
 
     if request.method == 'POST':
-        CompletedPractice.objects.create(student=user, practice=practice)
-        
-        # check for Alpha Badge (completion of first practice)
-        if not CompletedBadge.objects.filter(student=user, badge__name='Alpha Badge').exists():
-            if CompletedPractice.objects.filter(student=user).count() == 1:
-                badge = Badge.objects.get(name='Alpha Badge')
-                CompletedBadge.objects.create(student=user, badge=badge)
-                messages.success(request, "Congratulations! You've earned the Alpha Badge!")
+        if user.profile.is_student:
+            CompletedPractice.objects.create(student=user, practice=practice)
+            
+            # check for Alpha Badge (completion of first practice)
+            if not CompletedBadge.objects.filter(student=user, badge__name='Alpha Badge').exists():
+                if CompletedPractice.objects.filter(student=user).count() == 1:
+                    badge = Badge.objects.get(name='Alpha Badge')
+                    CompletedBadge.objects.create(student=user, badge=badge)
+                    messages.success(request, "Congratulations! You've earned the Alpha Badge!")
 
-        check_unit_completion(request, user)
+            check_unit_completion(request, user)
 
-        return redirect('learning:student_dashboard', user_id=user.id)
+            return redirect('learning:student_dashboard', user_id=user.id)
+        else:
+            return HttpResponse("Only students can submit practices.")
 
     return render(request, '', {'practice': practice})
 
@@ -153,39 +156,42 @@ def submit_quiz(request, quiz_slug):
     score = 0
 
     if request.method == 'POST':
-        correct_answers = quiz.correct_answers
+        if user.profile.is_student:
+            correct_answers = quiz.correct_answers
 
-        # check if the student has already achieved a perfect score for the quiz
-        if CompletedQuiz.objects.filter(student=user, quiz=quiz, score=5).exists():
-            messages.error(request, "You have already achieved a perfect score for this quiz.")
+            # check if the student has already achieved a perfect score for the quiz
+            if CompletedQuiz.objects.filter(student=user, quiz=quiz, score=5).exists():
+                messages.error(request, "You have already achieved a perfect score for this quiz.")
+                return redirect('learning:student_dashboard', user_id=user.id)
+
+            for question, correct_answer in correct_answers.items():
+                user_answer = request.POST.get(question).strip()
+                if user_answer.lower() == correct_answer.lower():
+                    score += 1
+
+            perfect_score = (score == 5)
+            completed_quiz = CompletedQuiz.objects.create(student=user, quiz=quiz, score=score, perfect_score=perfect_score)
+
+            # check for Beta Badge (completion of first quiz)
+            if not CompletedBadge.objects.filter(student=user, badge__name='Beta Badge').exists():
+                if CompletedQuiz.objects.filter(student=user).count() == 1:
+                    badge = Badge.objects.get(name='Beta Badge')
+                    CompletedBadge.objects.create(student=user, badge=badge)
+                    messages.success(request, "Congratulations! You've earned the Beta Badge!")
+
+            # check for Delta Badge (improvement of a previous quiz score)
+            if not CompletedBadge.objects.filter(student=user, badge__name='Delta Badge').exists():
+                improvement = completed_quiz.get_improvement()
+                if improvement > 0:
+                    badge = Badge.objects.get(name='Delta Badge')
+                    CompletedBadge.objects.create(student=user, badge=badge)
+                    messages.success(request, "Congratulations! You've earned the Delta Badge!")
+
+            check_unit_completion(request, user)
+
             return redirect('learning:student_dashboard', user_id=user.id)
-
-        for question, correct_answer in correct_answers.items():
-            user_answer = request.POST.get(question).strip()
-            if user_answer.lower() == correct_answer.lower():
-                score += 1
-
-        perfect_score = (score == 5)
-        completed_quiz = CompletedQuiz.objects.create(student=user, quiz=quiz, score=score, perfect_score=perfect_score)
-
-        # check for Beta Badge (completion of first quiz)
-        if not CompletedBadge.objects.filter(student=user, badge__name='Beta Badge').exists():
-            if CompletedQuiz.objects.filter(student=user).count() == 1:
-                badge = Badge.objects.get(name='Beta Badge')
-                CompletedBadge.objects.create(student=user, badge=badge)
-                messages.success(request, "Congratulations! You've earned the Beta Badge!")
-
-        # check for Delta Badge (improvement of a previous quiz score)
-        if not CompletedBadge.objects.filter(student=user, badge__name='Delta Badge').exists():
-            improvement = completed_quiz.get_improvement()
-            if improvement > 0:
-                badge = Badge.objects.get(name='Delta Badge')
-                CompletedBadge.objects.create(student=user, badge=badge)
-                messages.success(request, "Congratulations! You've earned the Delta Badge!")
-
-        check_unit_completion(request, user)
-
-        return redirect('learning:student_dashboard', user_id=user.id)
+        else:
+            return HttpResponse("Only students can submit quizzes.")
 
     context = {
         'quiz': quiz,
@@ -431,6 +437,9 @@ def unenroll_student(request, course_id, student_id):
 
 # check whether a unit has been completed
 def check_unit_completion(request, user):
+    if not user.profile.is_student:
+        return
+    
     units = Unit.objects.all()
     for unit in units:
         print(f"Unit: {unit.name}, Grade Level: {unit.grade_level.name}")

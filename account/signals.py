@@ -21,7 +21,7 @@ def check_consecutive_logins(request, user, required_days=3):
 
     if len(logged_in_dates) == required_days:
         # check for Theta Badge (consecuitve login for 3 days)
-        if not CompletedBadge.objects.filter(student=user, badge__name='Theta Badge').exists():
+        if user.profile.is_student and not CompletedBadge.objects.filter(student=user, badge__name='Theta Badge').exists():
             badge = Badge.objects.get(name='Theta Badge')
             CompletedBadge.objects.create(student=user, badge=badge)
             messages.success(request, "Congratulations! You've earned the Theta Badge!")
