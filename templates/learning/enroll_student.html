@@ -12,7 +12,8 @@ Enroll Student
     }
 </style>
 <h1>Enroll a Student</h1>
-<p>Enroll a student in a class</p>
+<p style="font-size: 16px;">Select a student from the dropdown list to enroll them in the class
+    "{{ course.title }}".</p>
 <form method="post">
     {% csrf_token %}
     {{ form.as_p }}

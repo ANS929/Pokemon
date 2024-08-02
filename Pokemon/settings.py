@@ -42,7 +42,8 @@ INSTALLED_APPS = [
     'community',
     'about',
     'account',
-    'ckeditor'
+    'ckeditor',
+    'django_extensions',
 ]
 
 MIDDLEWARE = [

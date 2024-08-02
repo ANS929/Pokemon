@@ -67,10 +67,14 @@ View Class
     }
 </style>
 {% if messages %}
-        {% for message in messages %}
-                <div class="alert alert-{{ message.tags }}">{{ message }}</div>
-        {% endfor %}
-    {% endif %}
+{% for message in messages %}
+<div class="alert alert-{{ message.tags }}">{{ message }}</div>
+{% endfor %}
+{% endif %}
+
+<h1>Class Information</h1>
+<p style="font-size: 16px;">Here you can edit your class or add students to the class.</p>
+
 <div class="class-detail-container">
     <div class="details">
         <button class="btn btn-secondary " type="button">
@@ -84,7 +88,7 @@ View Class
             <a href="{% url 'learning:edit_class' course.id %}" style="text-decoration: none; color:inherit;">Edit
                 Class</a>
         </button>
-        <h2>Class Details</h2>
+        <h2>Details:</h2>
         <u>Name</u>: {{ course.title }} <br><br>
         <u>Description</u>: {{ course.description }}
     </div>

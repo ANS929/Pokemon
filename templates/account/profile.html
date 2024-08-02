@@ -8,6 +8,12 @@ User Profile
 
 <link rel="stylesheet" href="{% static 'css/profile.css' %}">
 
+{% if messages %}
+{% for message in messages %}
+<div class="alert alert-{{ message.tags }}">{{ message }}</div>
+{% endfor %}
+{% endif %}
+
 <body>
     <div class="page-content page-container" id="page-content">
         <div class="padding">

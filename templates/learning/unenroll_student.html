@@ -12,7 +12,8 @@ Unenroll Student
     }
 </style>
 <h1>Unenroll a Student</h1>
-<p>Are you sure you want to unenroll {{ enrolled_student.student.get_full_name }} from {{ course.title }}?</p>
+<p style="font-size: 16px;">Are you sure you want to unenroll {{ enrolled_student.student.get_full_name }} from
+    {{ course.title }}?</p>
 <form method="post">
     {% csrf_token %}
     {{ form.as_p }}
