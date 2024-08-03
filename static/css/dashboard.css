@@ -1,40 +1,47 @@
 table {
-        font-family: arial, sans-serif;
-        border-collapse: collapse;
-        width: 100%;
-    }
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
 
-    td,
-    th {
-        border: 1px solid #dddddd;
-        text-align: left;
-        padding: 8px;
-    }
+td,
+th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+}
 
-    tr:nth-child(even) {
-        background-color: #dddddd;
-    }
+tr:nth-child(even) {
+    background-color: #dddddd;
+}
 
 .container-1,
-    .container-2 {
-        border: 5px solid black;
-        padding: 25px;
-        margin: 20px;
-    }
+.container-2,
+.container-3 {
+    border: 5px solid black;
+    padding: 25px;
+    margin: 20px;
+}
 
+.dashboard-container {
+    display: flex;
+    font-size: 16px;
+}
+
+@media (max-width: 400px) {
     .dashboard-container {
-        display: flex;
-        font-size: 16px;
+        flex-direction: column;
     }
+}
 
-    @media (max-width: 400px) {
-        .dashboard-container {
-            flex-direction: column;
-        }
-    }
+.container-1 .btn,
+.container-2 .btn {
+    float: right;
+    margin: 10px;
+}
 
-    .container-1 .btn,
-    .container-2 .btn {
-        float: right;
-        margin: 10px;
-    }
+.box-container {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}

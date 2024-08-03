@@ -96,6 +96,32 @@ def student_dashboard(request, user_id):
         
         completed_practices = CompletedPractice.objects.filter(student=user).order_by('-date_completed')
         completed_quizzes = CompletedQuiz.objects.filter(student=user).order_by('-date_completed')
+        completed_units = CompletedUnit.objects.filter(student=user)
+        
+        grade_levels = GradeLevel.objects.all()
+        progress_data = []
+        total_practices = 12
+        total_quizzes = 6
+        total_units = 6
+        for level in grade_levels:
+            practice_count = completed_practices.filter(practice__grade_level=level).count()
+            quiz_count = completed_quizzes.filter(quiz__grade_level=level).count()
+            unit_count = completed_units.filter(unit__grade_level=level).count()
+            practice_percentage = (practice_count / total_practices * 100) if total_practices > 0 else 0
+            quiz_percentage = (quiz_count / total_quizzes * 100) if total_quizzes > 0 else 0
+            unit_percentage = (unit_count / total_units * 100) if total_units > 0 else 0
+
+            if practice_count > 0 or quiz_count > 0 or unit_count > 0:
+                progress_data.append({
+                    'level': level,
+                    'practice_count': practice_count,
+                    'quiz_count': quiz_count,
+                    'unit_count': unit_count,
+                    'practice_percentage': practice_percentage,
+                    'quiz_percentage': quiz_percentage,
+                    'unit_percentage': unit_percentage,
+                })
+
         badges = Badge.objects.all()
         completed_badges = CompletedBadge.objects.filter(student=user).select_related('badge')
 
@@ -113,6 +139,10 @@ def student_dashboard(request, user_id):
             'completed_practices': completed_practices,
             'completed_quizzes': completed_quizzes,
             'badges_with_status': badges_with_status,
+            'progress_data': progress_data, 
+            'total_practices': total_practices,
+            'total_quizzes': total_quizzes,
+            'total_units': total_units,
         }
 
         return render(request, 'learning/student_dashboard.html', context)

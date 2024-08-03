@@ -35,17 +35,19 @@ Quiz Explanations - {{ quiz.title }}
         <td>{{ correct_answer }}</td>
         <td>
             {% if question == "question1" %}
-            340 - 250 = 90. 90 + 60 = 150.
+            Venusaur begins with 340 HP. After the attack, it has 340 - 250 = 90 HP remaining. The ability heals 60
+            damage, so Venusaur gains 60 HP. It now has 90 + 60 = 150 HP.
             {% elif question == "question2" %}
-            60 + 100 = 160.
+            Brave Wing does 60 base damage plus 100 additional damage, so it does 60 + 100 = 160 damage.
             {% elif question == "question3" %}
-            2 are Darkness, so 9 - 2 = 7 are Psychic. Therefore, 7/9 of your Basic Energy cards are Psychic.
+            2/9 are Darkness, so 9/9 - 2/9 = 7/9 of your Basic Energy cards are Psychic.
             {% elif question == "question4" %}
             Blastoise takes 30 less damage from attacks due to its Solid Shell Ability. So Charizard's Explosive Vortex
             does 330 - 30 = 300 damage, which is not enough for Blastoise to be Knocked Out. Therefore, the answer is
             False.
             {% elif question == "question5" %}
-            15 cards are Pokémon, so 60 - 15 = 45 are not Pokémon. 45/60 simplifies to 3/4.
+            15/60 cards are Pokémon, so 60/60 - 15/60 = 45/60 are not. 45/60 reduces to 3/4 because both 45 and 60 are
+            divisble by 15.
             {% else %}
             No explanation available.
             {% endif %}

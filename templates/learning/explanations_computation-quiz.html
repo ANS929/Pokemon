@@ -35,15 +35,17 @@ Quiz Explanations - {{ quiz.title }}
         <td>{{ correct_answer }}</td>
         <td>
             {% if question == "question1" %}
-            30 + 120 = 150.
+            Avenging Knuckle does 30 base damage plus 120 additional damage. 30 + 120 = 150 damage.
             {% elif question == "question2" %}
-            70 * 4 = 280.
+            Family Attack does 70 damage per Maushold in play, so it would do 70 * 4 = 280 damage.
             {% elif question == "question3" %}
-            10 + 30 * 5 = 10 + 150 = 160.
+            Ballistic Beak doees 10 base damage plus 30 more damage per damage counter on your Dodrio. Since Dodrio has
+            5 damage counters on it, we multiply 30 * 5 = 150 and add the base damage. 10 + 150 = 160.
             {% elif question == "question4" %}
-            130 - 90 = 40.
+            Lucario starts with 130 HP but currently has 90 HP left. To find out how much damage it took, we subtract
+            130 - 90 = 40 damage.
             {% elif question == "question5" %}
-            925 - 448 = 477.
+            To find the difference, we subtract the two Pokédex numbers. 925 - 448 = 477.
             {% else %}
             No explanation available.
             {% endif %}
