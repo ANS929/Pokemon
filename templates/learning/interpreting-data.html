@@ -96,6 +96,7 @@ Interpreting Data
             </li>
             <li><a href="{% url 'learning:quiz_detail' quiz_slug='data-analysis-quiz' %}">Data Analysis Quiz</a></li>
         </ul>
+        <p class="back"><a href="{% url 'learning:gr4' %}">Go back to the Grade 4 page</a></p>
     </div>
 
     <script>
@@ -112,7 +113,7 @@ Interpreting Data
 
             // check for correct answer and provide feedback
             if (greatest === correctAnswer) {
-                feedback.textContent = 'Correct! Charizard ex makes up the largest portion of the circle graph. Well done!';
+                feedback.textContent = 'Correct! Charizard ex makes up the largest portion of the circle graph, therefore it has the greatest share of the meta. Well done!';
                 selectField.disabled = true; // disable select field
                 submitButton.disabled = true; // disable submit button
                 finalForm.style.display = 'block'; // show the final submission form

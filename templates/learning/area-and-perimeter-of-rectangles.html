@@ -40,8 +40,7 @@ Area and Perimeter of Rectangles
                 <p>Area is the amount of space inside a shape. For a rectangle, this is calculated by multiplying the
                     length times the width. Area is written in square units.</p>
                 <p><u>Example</u>: To find the area of the rectangle below, we multiply the length times the width. The
-                    area is 14 *
-                    6 = 84 square inches.</p>
+                    area is 14 * 6 = 84 square inches.</p>
                 <img class="rectangle" src="{% static 'images/rectangle.jpg' %}"
                     alt="a rectangle with sides of 14 and 6 feet">
             </section>
@@ -60,7 +59,7 @@ Area and Perimeter of Rectangles
 
             <section>
                 <h2>You Try:</h2>
-                <p>A Pokémon playmat is approximately 61 centimeters wide and 36 centimeters long. Find the area and
+                <p>A Pokémon playmat is approximately 61 centimeters long and 36 centimeters wide. Find the area and
                     perimeter of a playmat.</p>
 
                 <p><u>Check your answers using the "Check
@@ -115,6 +114,7 @@ Area and Perimeter of Rectangles
                     Perimeter of Rectangles</a></li>
             <li><a href="{% url 'learning:quiz_detail' quiz_slug='measurement-quiz' %}">Measurement Quiz</a></li>
         </ul>
+        <p class="back"><a href="{% url 'learning:gr4' %}">Go back to the Grade 4 page</a></p>
     </div>
 
     <script>
@@ -133,7 +133,7 @@ Area and Perimeter of Rectangles
 
             // check for correct answer and provide feedback
             if (parseInt(area) === correctAnswer) {
-                feedback.textContent = 'Correct! 61 * 36 = 2196. Well done!';
+                feedback.textContent = 'Correct! Area is length times width, so 61 * 36 = 2196 square centimeters. Well done!';
                 inputField.disabled = true; // disable input field
                 question1Correct = true; // mark question 1 as correct
                 submitButton.disabled = true; // disable submit button
@@ -158,7 +158,7 @@ Area and Perimeter of Rectangles
 
             // check for correct answer and provide feedback
             if (parseInt(perimeter) === correctAnswer) {
-                feedback2.textContent = 'Correct! 2*61 + 2*36 = 194. Well done!';
+                feedback2.textContent = 'Correct! Perimeter is two times the length plust two times the width, so 2*61 + 2*36 = 122 + 72 = 194 centimeters. Well done!';
                 inputField.disabled = true; // disable input field
                 submitButton.disabled = true; // disable submit button
                 question2Correct = true; // mark question 2 as correct

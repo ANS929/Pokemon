@@ -30,3 +30,8 @@
     margin: auto;
     display: block;
 }
+
+.back {
+    font-size: 20px;
+    text-align: center;
+}

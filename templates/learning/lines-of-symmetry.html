@@ -121,6 +121,7 @@ Lines of Symmetry
                     Geometric Shapes</a></li>
             <li><a href="{% url 'learning:quiz_detail' quiz_slug='geometry-quiz' %}">Geometry Quiz</a></li>
         </ul>
+        <p class="back"><a href="{% url 'learning:gr4' %}">Go back to the Grade 4 page</a></p>
     </div>
 
     <script>
@@ -142,7 +143,7 @@ Lines of Symmetry
             var correctAnswer = 'true';
 
             if (selectedValue === correctAnswer) {
-                feedback.textContent = 'Correct! All 3 symbols have vertical symmetry. Well done!';
+                feedback.textContent = 'Correct! All 3 symbols have vertical symmetry. We can imagine folding each symbol in half, and its left side would match its right side exactly. Well done!';
                 submitButton.disabled = true; // disable submit button
                 finalForm.style.display = 'block'; // show the final submission form
             } else {

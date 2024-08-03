@@ -72,6 +72,7 @@ Converting Units
                     Perimeter of Rectangles</a></li>
             <li><a href="{% url 'learning:quiz_detail' quiz_slug='measurement-quiz' %}">Measurement Quiz</a></li>
         </ul>
+        <p class="back"><a href="{% url 'learning:gr4' %}">Go back to the Grade 4 page</a></p>
     </div>
 
     <script>
@@ -88,7 +89,7 @@ Converting Units
 
             // check for correct answer and provide feedback
             if (parseInt(height) === correctAnswer) {
-                feedback.textContent = 'Correct! 19 * 12 = 228. Well done!';
+                feedback.textContent = 'Correct! A foot is made up of 12 inches, so we multiply 19 * 12 = 228 inches. Well done!';
                 inputField.disabled = true; // disable input field
                 submitButton.disabled = true; // disable submit button
                 finalForm.style.display = 'block'; // show the final submission form

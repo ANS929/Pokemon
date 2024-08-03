@@ -91,6 +91,7 @@ Real-World Problems with Fractions
             <li><a href="{% url 'learning:quiz_detail' quiz_slug='algebraic-thinking-quiz' %}">Algebraic Thinking
                     Quiz</a></li>
         </ul>
+        <p class="back"><a href="{% url 'learning:gr4' %}">Go back to the Grade 4 page</a></p>
     </div>
 
     <script>
@@ -106,7 +107,7 @@ Real-World Problems with Fractions
 
             // check for correct answer and provide feedback
             if (notTrainers === correctAnswer) {
-                feedback.textContent = 'Correct! 36/60 cards are Trainers, so 24/60 (or 2/5) are not. Well done!';
+                feedback.textContent = 'Correct! 36/60 cards are Trainers, so 60/60 - 36/60 = 24/60 are not. 24/60 reduces to 2/5 since both 24 and 60 are divisble by 12. Well done!';
                 selectField.disabled = true; // disable input field
                 submitButton.disabled = true; // disable submit button
                 finalForm.style.display = 'block'; // show the final submission form
