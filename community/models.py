@@ -7,7 +7,7 @@ from ckeditor.fields import RichTextField
 # math forum post
 class MathQuestion(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, default=None)
-    title = models.CharField(max_length=10000)
+    title = models.CharField(max_length=100)
     content = RichTextField()
     date_created = models.DateTimeField(default=timezone.now)
 
@@ -20,7 +20,7 @@ class MathQuestion(models.Model):
 # tcg forum post    
 class TCGQuestion(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, default=None)
-    title = models.CharField(max_length=10000)
+    title = models.CharField(max_length=100)
     content = RichTextField()
     date_created = models.DateTimeField(default=timezone.now)
 

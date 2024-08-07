@@ -17,10 +17,10 @@ Student Dashboard
         flex: 2;
     }
 
-    .container-2 {
+    .container-2,
+    .container-3 {
         flex: 1;
         height: auto;
-        min-width: 400px;
     }
 
     .badge-icon {
@@ -36,6 +36,45 @@ Student Dashboard
 
     .badge-icon.locked {
         opacity: 0.3;
+    }
+
+    @media (max-width: 1024px) {
+        .dashboard-container {
+            flex-direction: column;
+        }
+
+        .box-container {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+
+        .container-1 {
+            flex: 1 1 100%;
+        }
+
+        .container-2,
+        .container-3 {
+            flex: 1 1 50%;
+            margin: 10px 0;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .dashboard-container {
+            flex-direction: column;
+        }
+
+        .box-container {
+            flex-direction: column;
+        }
+
+        .container-1,
+        .container-2,
+        .container-3 {
+            min-width: 100%;
+        }
     }
 </style>
 
@@ -144,14 +183,16 @@ Student Dashboard
                     <tr>
                         <td>{{ level.level.name }}</td>
                         <td>
-                            {{ level.practice_count }} / {{ total_practices }} = 
+                            {{ level.practice_count }} / {{ total_practices }} =
                             <b>{{ level.practice_percentage|floatformat:1 }}%</b>
                         </td>
                         <td>
-                            {{ level.quiz_count }} / {{ total_quizzes }} = <b>{{ level.quiz_percentage|floatformat:1 }}%</b>
+                            {{ level.quiz_count }} / {{ total_quizzes }} =
+                            <b>{{ level.quiz_percentage|floatformat:1 }}%</b>
                         </td>
                         <td>
-                            {{ level.unit_count }} / {{ total_units }} = <b>{{ level.unit_percentage|floatformat:1 }}%</b>
+                            {{ level.unit_count }} / {{ total_units }} =
+                            <b>{{ level.unit_percentage|floatformat:1 }}%</b>
                         </td>
                     </tr>
                     {% endfor %}
@@ -159,7 +200,8 @@ Student Dashboard
                     <p>No data yet...</p>
                     {% endif %}
                 </tbody>
-            </table>
+            </table><br>
+            <p><b>*Note that only quizzes with a score of 100% are included in the count</b></p>
         </div>
     </div>
 </div>
