@@ -171,6 +171,7 @@ def submit_practice(request, practice_slug):
                     messages.success(request, "Congratulations! You've earned the Alpha Badge!")
 
             check_unit_completion(request, user)
+            check_grade_level_completion(request, user)
 
             return redirect('learning:student_dashboard', user_id=user.id)
         else:
@@ -218,6 +219,7 @@ def submit_quiz(request, quiz_slug):
                     messages.success(request, "Congratulations! You've earned the Delta Badge!")
 
             check_unit_completion(request, user)
+            check_grade_level_completion(request, user)
 
             return redirect('learning:student_dashboard', user_id=user.id)
         else:
@@ -477,38 +479,51 @@ def check_unit_completion(request, user):
             CompletedPractice.objects.filter(student=user, practice=practice).exists()
             for practice in unit.practices.all()
         )
-        completed_quiz = CompletedQuiz.objects.filter(student=user, quiz=unit.quiz, score=5).exists()
+        
+        completed_quiz = CompletedQuiz.objects.filter(student=user, quiz=unit.quiz, perfect_score=True).exists()
         
         if completed_practices and completed_quiz:
             if not CompletedUnit.objects.filter(student=user, unit=unit).exists():
                 CompletedUnit.objects.create(student=user, unit=unit)
-
+            
             # check for Pi Badge (completion of a unit)
             if not CompletedBadge.objects.filter(student=user, badge__name='Pi Badge').exists():
                 badge = Badge.objects.get(name='Pi Badge')
                 CompletedBadge.objects.create(student=user, badge=badge)
                 messages.success(request, "Congratulations! You've earned the Pi Badge!")
 
-    grade_levels = GradeLevel.objects.all()
+# check whether a grade level has been completed
+def check_grade_level_completion(request, user):
+    if not user.profile.is_student:
+        return
 
+    grade_levels = GradeLevel.objects.all()
+    
     for grade_level in grade_levels:
         units_in_grade_level = Unit.objects.filter(grade_level=grade_level)
+        
+        if units_in_grade_level.exists():
+            completed_units_count = CompletedUnit.objects.filter(student=user, unit__in=units_in_grade_level).count()
+            all_units_completed = completed_units_count == units_in_grade_level.count()
 
-        completed_units_count = CompletedUnit.objects.filter(student=user, unit__in=units_in_grade_level).count()
-        all_units_completed = completed_units_count == units_in_grade_level.count()
+            if all_units_completed:
+                all_quizzes = Quiz.objects.filter(unit__in=units_in_grade_level)
+                perfect_quizzes_count = CompletedQuiz.objects.filter(student=user, quiz__in=all_quizzes, perfect_score=True).count()
+                total_quizzes_count = all_quizzes.count()
+                all_quizzes_perfect = perfect_quizzes_count == total_quizzes_count
 
-        if all_units_completed:
-            all_units_quiz_completed = all(
-                CompletedQuiz.objects.filter(student=user, quiz=unit.quiz, score=5).exists()
-                for unit in units_in_grade_level
-            )
-            
-            if all_units_quiz_completed:
-                # check for Infinity Badge (completion of a grade level)
-                if not CompletedBadge.objects.filter(student=user, badge__name='Infinity Badge').exists():
-                    badge = Badge.objects.get(name='Infinity Badge')
-                    CompletedBadge.objects.create(student=user, badge=badge)
-                    messages.success(request, "Congratulations! You've earned the Infinity Badge!")
+                if all_quizzes_perfect:
+                    # check for Infinity Badge (completion of a grade level)
+                    if not CompletedBadge.objects.filter(student=user, badge__name='Infinity Badge').exists():
+                        badge = Badge.objects.get(name='Infinity Badge')
+                        CompletedBadge.objects.create(student=user, badge=badge)
+                        messages.success(request, "Congratulations! You've earned the Infinity Badge!")
+                else:
+                    pass
+            else:
+                pass
+        else:
+            pass
 
 # quiz answer explanations
 @login_required

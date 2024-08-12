@@ -1,0 +1,58 @@
+{% extends 'learning/base.html' %}
+{% load static %}
+
+{% block title_block %}
+TCG Quick-start Guide
+{% endblock %}
+
+{% block body_block %}
+
+<link rel="stylesheet" href="{% static 'css/about.css' %}">
+
+<style>
+    .parts img,
+    .pikachu img {
+        margin: auto;
+        display: block;
+        width: 75%;
+        height: auto
+    }
+</style>
+
+<div class="info-container">
+    <div class="container-1">
+        <h1>Introduction</h1>
+        <p>PokéMath is for everyone! Whether you are just beginning your Pokémon journey or are an experienced trainer,
+            there is something here for you to discover.</p>
+        <p>Below are some common terms you will see:</p>
+        <ul>
+            <li><u>Attack</u> - When your Active Pokémon fights your opponent’s Pokémon. The text written on each
+                Pokémon card that shows what it does when it attacks (a Pokémon can have several attacks on it).</li>
+            <li><u>Damage</u> - What usually happens when one Pokémon attacks another. If a Pokémon has total damage
+                greater than or equal to its Hit Points, it is Knocked Out.</li>
+            <li><u>Hit Points (HP)</u> - A number every Pokémon has, telling you how much damage it can take before it
+                is Knocked Out.</li>
+            <li><u>Knocked Out</u> - A Pokémon is Knocked Out if it has damage greater than or equal to its Hit Points.
+                That Pokémon goes to the discard pile along with all cards attached to it. When one of your opponent’s
+                Pokémon is Knocked Out, take one of your Prize cards.</li>
+            <li><u>Resistance</u> - A Pokémon with Resistance takes less damage when attacked by Pokémon of a certain
+                type. The amount of Resistance is printed next to the type(s) of Resistance a Pokémon has, if any.</li>
+            <li><u>Weakness</u> - A Pokémon with Weakness takes more damage when attacked by Pokémon of a certain type.
+                The effect of the Weakness is indicated next to the type(s) of Weakness a Pokémon has, if any.</li>
+        </ul>
+        <p>More terms can be found by accessing the official <a
+                href="https://www.pokemon.com/uk/play-pokemon/about/pokemon-tcg-glossary">Pokémon TCG Glossary</a>.</p>
+        <div class="pikachu">
+            <img src="{% static 'images/pikachu.jpg' %}" alt="Pikachu">
+        </div>
+    </div>
+    <div class="container-2">
+        <h1>Parts of a Pokémon Card</h1>
+        <p>Each Pokémon card has a name, type, and HP. The Pokémon's attacks are also listed. Read each attack carefully
+            to see how much damage it does.</p>
+        <div class="parts">
+            <img src="{% static 'images/parts.png' %}" alt="parts of a Pokémon card">
+        </div>
+    </div>
+</div>
+{% endblock %}

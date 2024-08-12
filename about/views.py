@@ -15,3 +15,7 @@ def site(request):
 # about the tcg
 def tcg(request):
     return render(request, 'about/tcg.html')
+
+# tcg quick-start guide
+def quickstart(request):
+    return render(request, 'about/quickstart.html')

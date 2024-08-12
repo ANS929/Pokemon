@@ -46,7 +46,7 @@ TCG Forum
                         <h6 id="fh6" style="text-align: left;">{{ question.content|truncatewords_html:10|safe}}</h6>
                         {% endif %}
                         <h6 id="fh6" style="font-size: 10px; font-style: italic; color: rgb(155, 155, 155);">Asked By:
-                            <a href="">{{ question.user.username }}</a>&nbsp;&nbsp;&nbsp; |&nbsp;&nbsp;&nbsp; On:
+                            {{ question.user.username }}</a>&nbsp;&nbsp;&nbsp; |&nbsp;&nbsp;&nbsp; On:
                             {{question.date_created|date:"j F, Y"}}
                         </h6>
                 </div> <br>

@@ -5,7 +5,14 @@ Registration Complete
 {% endblock %}
 
 {% block body_block %}
-<h1>Registration Complete</h1>
-<p>You are now registered</p>
-<p>Please <a href="{% url 'auth_login' %}">Login</a></p>
+<style>
+    .complete p {
+        font-size: 20px;
+    }
+</style>
+<div class="complete">
+    <h1>Registration Complete</h1>
+    <p>You are now registered</p>
+    <p>Please <a href="{% url 'auth_login' %}">Login</a></p>
+</div>
 {% endblock %}
