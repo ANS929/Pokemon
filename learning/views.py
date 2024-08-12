@@ -507,23 +507,11 @@ def check_grade_level_completion(request, user):
             all_units_completed = completed_units_count == units_in_grade_level.count()
 
             if all_units_completed:
-                all_quizzes = Quiz.objects.filter(unit__in=units_in_grade_level)
-                perfect_quizzes_count = CompletedQuiz.objects.filter(student=user, quiz__in=all_quizzes, perfect_score=True).count()
-                total_quizzes_count = all_quizzes.count()
-                all_quizzes_perfect = perfect_quizzes_count == total_quizzes_count
-
-                if all_quizzes_perfect:
-                    # check for Infinity Badge (completion of a grade level)
-                    if not CompletedBadge.objects.filter(student=user, badge__name='Infinity Badge').exists():
-                        badge = Badge.objects.get(name='Infinity Badge')
-                        CompletedBadge.objects.create(student=user, badge=badge)
-                        messages.success(request, "Congratulations! You've earned the Infinity Badge!")
-                else:
-                    pass
-            else:
-                pass
-        else:
-            pass
+                # check for Infinity Badge (completion of a grade level)
+                if not CompletedBadge.objects.filter(student=user, badge__name='Infinity Badge').exists():
+                    badge = Badge.objects.get(name='Infinity Badge')
+                    CompletedBadge.objects.create(student=user, badge=badge)
+                    messages.success(request, "Congratulations! You've earned the Infinity Badge!")
 
 # quiz answer explanations
 @login_required
