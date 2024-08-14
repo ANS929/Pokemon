@@ -155,7 +155,7 @@ Student Dashboard
                 <li>
                     <img src="{% static 'images/'|add:item.badge.icon %}" alt="{{ item.badge.name }}"
                         class="badge-icon {% if item.completed %}unlocked{% else %}locked{% endif %}">
-                    {{ item.badge.name }}
+                    <b>{{ item.badge.name }}</b>
                     {% if item.completed %}
                     - completed on {{ item.date_completed }}
                     {% else %}
