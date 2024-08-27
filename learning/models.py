@@ -112,7 +112,7 @@ class RegisteredStudent(models.Model):
     student = models.ForeignKey(User, on_delete=models.CASCADE, related_name='registration')
 
     def __str__(self):
-        return self.student.get_full_name()
+        return f"{self.teacher.username}'s student, {self.student.get_full_name()}"
 
 # Student enrolled in a class
 class EnrolledStudent(models.Model):
@@ -132,7 +132,7 @@ class Course(models.Model):
         User, on_delete=models.CASCADE, related_name='courses')
 
     def __str__(self):
-        return self.title
+        return f"{self.teacher.username}'s course, {self.title}"
     
 # Child
 class Child(models.Model):
@@ -151,7 +151,7 @@ class RegisteredChild(models.Model):
     student = models.ForeignKey(User, on_delete=models.CASCADE, related_name='registered_by_parents')
 
     def __str__(self):
-        return f"{self.parent.username} - {self.student.username}"
+        return f"{self.parent.username}'s child, {self.student.username}"
     
     class Meta:
         verbose_name_plural = "Registered children"

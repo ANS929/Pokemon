@@ -1,10 +1,11 @@
 from django.contrib import admin
-from .models import Quiz, CompletedQuiz, Practice, CompletedPractice, Student, Course, RegisteredStudent, Child, RegisteredChild, Badge, CompletedBadge, Unit, GradeLevel, CompletedUnit
+from .models import Quiz, CompletedQuiz, Practice, CompletedPractice, Student, Course, RegisteredStudent, Child, RegisteredChild, Badge, CompletedBadge, Unit, GradeLevel, CompletedUnit, EnrolledStudent
 
 admin.site.register(Course)
 admin.site.register(RegisteredStudent)
 admin.site.register(Child)
 admin.site.register(RegisteredChild)
+admin.site.register(EnrolledStudent)
 
 @admin.register(Practice)
 class PracticeAdmin(admin.ModelAdmin):
